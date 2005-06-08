@@ -1,0 +1,9 @@
+panic()
+{
+	echo $@
+	if [ -e /bin/busybox ]; then
+		FS1='(initramfs) ' exec /bin/busybox sh
+	else
+		FS1='(initramfs) ' exec /bin/sh
+	fi
+}

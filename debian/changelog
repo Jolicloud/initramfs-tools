@@ -1,0 +1,64 @@
+initramfs-tools (0.6) breezy; urgency=low
+
+  The "Sweep! ....  Off!" release.
+
+  * Source in the net-${DEVICE}.conf file to get IP address information.
+
+  * Add commandline parameters for NFSROOT and BOOT.
+
+  * Moving loading of boot functions to after commandline parsing.
+
+  * Allow NFSROOT variable to be set to auto to pick up value from DHCP
+    Server.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Wed,  1 Jun 2005 12:02:40 -0400
+
+initramfs-tools (0.5) breezy; urgency=low
+
+  The "Climbing to the horizons" release.
+
+  * Update for newer udev, call "udevstart" rather than "udev udevstart"
+
+  * /etc/mkinitramfs/modules should not be a conffile.
+
+  * Support busybox.
+
+  * Fix bug where -k would delete the tmp files, and otherwise it would keep
+    them.
+
+  * Handle # for comments in the modules file.
+
+  * arch:all, not arch:any
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Tue, 31 May 2005 15:17:56 -0400
+
+initramfs-tools (0.4) breezy; urgency=low
+
+  * First upload to Ubuntu.
+
+  * Handle glibc compiled udev for now.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Tue, 24 May 2005 14:30:07 +0000
+
+initramfs-tools (0.3) unstable; urgency=low
+
+  * Fix init and root variables
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Sat, 29 Jan 2005 17:49:08 -0500
+
+initramfs-tools (0.2) unstable; urgency=low
+
+  * Include the modules in the initrd
+  * Drop the .ko ending from the module loads.
+  * Actually chain to the sub scripts.
+  * kilbc is now named properly
+  * First cut of an NFS root implementation
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Fri, 28 Jan 2005 16:50:53 -0500
+
+initramfs-tools (0.1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Thu, 27 Jan 2005 15:23:52 -0500
+

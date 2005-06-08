@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+if [ ! -e /etc/mkinitramfs/modules ]; then
+	cp /usr/share/doc/initramfs-tools/examples/modules /etc/mkinitramfs/
+fi
+
+#DEBHELPER#
+

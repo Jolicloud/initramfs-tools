@@ -1,0 +1,93 @@
+#!/bin/sh
+
+. /etc/mkinitramfs/initramfs.conf
+
+usage()
+{
+	echo "-o  Output"
+	echo "-v  version"
+	echo "-k  Keep temp files"
+	exit 1
+}
+
+# Defaults
+keep="n"
+
+while getopts "ko:v:" flag; do
+	case $flag in
+	o)
+		outfile="${OPTARG}"
+		;;
+	v)
+		version="${OPTARG}"
+		;;
+	k)
+		keep="y"
+		;;
+	esac
+done
+
+if [ x${outfile} = x ]; then
+	usage
+fi
+
+if [ -d ${outfile} ]; then
+	echo "${outfile} is a directory"
+	exit 1
+fi
+
+if [ ! -e /lib/modules/${version} ]; then
+	echo "Cannot find /lib/modules/${version}"
+	exit 1
+fi
+
+TMPDIR=$(mktemp -d) || exit 1
+mkdir -p ${TMPDIR}/modules ${TMPDIR}/conf ${TMPDIR}/etc
+mkdir -p ${TMPDIR}/bin ${TMPDIR}/lib ${TMPDIR}/scripts
+
+for x in $(sed -e '/^#/d' /etc/mkinitramfs/modules); do
+	for y in $(modprobe --set-version=${version} --show-depends ${x} | awk '{ print $2 }'); do
+		# Prune duplicates
+		if [ -e ${TMPDIR}/modules/$(basename ${y}) ]; then
+			continue
+		fi
+
+		ln -s ${y} ${TMPDIR}/modules
+		echo $(basename ${y}) >>${TMPDIR}/conf/modules
+	done
+done
+
+# Have to do each file, because cpio --dereference doesn't recurse down
+# symlinks.
+
+ln -s /usr/lib/klibc/bin/* ${TMPDIR}/bin
+ln -s /usr/lib/klibc/lib/* ${TMPDIR}/lib
+ln -s /usr/share/initramfs-tools/init ${TMPDIR}/init
+ln -s /usr/share/initramfs-tools/scripts/* ${TMPDIR}/scripts
+ln -s /etc/mkinitramfs/initramfs.conf ${TMPDIR}/conf
+ln -s /etc/udev ${TMPDIR}/etc
+
+# Hack until udev is built with klibc
+ln -s /sbin/udev ${TMPDIR}/bin
+ln -s /sbin/udevstart ${TMPDIR}/bin
+ln -s /lib/libc.so.* ${TMPDIR}/lib
+ln -s /lib/ld*.so.* ${TMPDIR}/lib
+rm ${TMPDIR}/lib/*lsb*
+
+# Busybox
+if [ "x${BUSYBOX}" = "xy" ]; then
+	rm ${TMPDIR}/bin/sh
+	ln -s /bin/busybox ${TMPDIR}/bin/sh
+fi
+
+# Raid
+ln -s /sbin/mdadm ${TMPDIR}/bin
+ln -s /sbin/mdrun ${TMPDIR}/bin
+
+(cd ${TMPDIR} && find . | cpio --quiet --dereference -o -H newc | gzip -9 >${outfile})
+
+if [ "${keep}" = "y" ]; then
+	echo "Working files in ${TMPDIR}"
+else
+	rm -rf "${TMPDIR}"
+fi

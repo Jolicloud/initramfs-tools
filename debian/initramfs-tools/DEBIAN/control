@@ -1,0 +1,10 @@
+Package: initramfs-tools
+Version: 0.6
+Section: utils
+Priority: optional
+Architecture: all
+Depends: klibc-utils
+Installed-Size: 100
+Maintainer: Jeff Bailey <jbailey@ubuntu.com>
+Description: tools for generting an Ubuntu-style initramfs
+ This package generates an initramfs for an Ubuntu system.

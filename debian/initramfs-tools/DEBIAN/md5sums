@@ -1,0 +1,9 @@
+741626a7104d48b15ee4f7f0f8973deb  usr/share/doc/initramfs-tools/TODO
+ed79de81154495c4c23a93b32471cb19  usr/share/doc/initramfs-tools/copyright
+12933b9f50570c11cf0f384eee619ee9  usr/share/doc/initramfs-tools/examples/modules
+35c556b7165396ffbb9daf1e33f75e80  usr/share/doc/initramfs-tools/changelog.gz
+614dec8a64e5f9798d4e0eb42219d96d  usr/share/initramfs-tools/init
+f18121fe1135572dbbea347371e8d730  usr/share/initramfs-tools/scripts/nfs
+9d5014b1fbc092a32526ffa52549193c  usr/share/initramfs-tools/scripts/local
+6ebc6e800720aab93d022fe8ef5063d5  usr/share/initramfs-tools/scripts/functions
+fd7c4a390d50d181203e0ca2007254e2  usr/sbin/mkinitramfs

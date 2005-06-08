@@ -1,0 +1,8 @@
+TODO
+====
+
+ o Get udev compiled against klibc
+
+ o Integrate hotplug-ng
+
+ o Add option to make-kpkg to use mkinitramfs
