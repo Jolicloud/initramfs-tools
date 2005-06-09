@@ -3,6 +3,8 @@
 # Parameter: Where to mount the filesystem
 mountroot ()
 {
+	run_scripts /scripts/local_top
+
 	# Get the root filesystem type
 	if [ ! -e ${ROOT} ]; then
 		panic "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
@@ -10,6 +12,10 @@ mountroot ()
 
 	eval $(fstype < ${ROOT})
 
+	run_scripts /scripts/local_premount
+
 	# Mount root
 	mount ${ro} -t ${FSTYPE} ${ROOT} ${rootmnt}
+
+	run_scripts /scripts/local_bottom
 }

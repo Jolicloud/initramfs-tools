@@ -7,3 +7,124 @@ panic()
 		FS1='(initramfs) ' exec /bin/sh
 	fi
 }
+
+# this function finds scripts with empty depends and adds them
+# to the ordered list
+dep_reduce()
+{
+	i=0
+	j=0
+	unset neworder
+
+	for entry in "${array[@]}"; do
+		set - ${entry}
+
+		if [ "$#" -eq "0" ]; then
+			continue
+		elif [ "$#" -eq "1" ]; then
+			if [ $end -eq 0 ] ||
+			   [ x"${order[$((end-1))]}" != x"$1" ]; then
+				order[$((end))]=$1
+				end=$((end+1))
+				neworder[$((j))]=$1
+				j=$((j+1))
+			fi
+
+			array[$((i))]=
+		fi
+
+		i=$((i+1))
+	done
+}
+
+dep_remove()
+{
+	i=0
+
+	# for each row in the array
+	for entry in "${array[@]}"; do
+		unset newentry
+
+		set - ${entry}
+
+		# for each dependency of the script
+		for dep in "$@"; do
+			new=1
+
+			# for each new dependency
+			for tmp in "${order[@]}"; do
+				if [ x"$dep" = x"$tmp" ]; then
+					new=0
+				fi
+			done
+
+			if [ x"$new" = x"1" ]; then
+				newentry="$newentry $dep"
+			fi
+		done
+
+		array[$((i))]="$newentry"
+		i=$((i+1))
+	done
+}
+
+run_scripts()
+{
+	initdir=${1}
+	scripts=$(ls ${initdir})
+	order=
+	end=0
+	array=
+
+	# FIXME: New algorithm
+	# array of strings: "$file $prereqs"
+	# iterate over all strings; find empty strings (just $file)
+	# add to order, delete from all strings and zero out entry
+	# repeat until all strings are empty
+	
+	i=0
+	for file in $scripts; do
+		# if it's not a regular file, or if it's not executable, skip it
+		if ! [ -f ${initdir}/${file} ] || ! [ -x ${initdir}/${file} ]; then
+			continue
+		fi
+	
+		array[$((i))]="$file $(${initdir}/${file} prereqs)"
+		i=$((i+1))
+	done
+
+	# No scripts in directory, bail.
+	if [ ${i} -eq 0 ]; then
+		return 0
+	fi
+	
+	while /bin/true; do
+		set - ${array[@]}
+	
+		if [ "$#" -eq "0" ]; then
+			break
+		fi
+		
+		dep_reduce
+	
+		dep_remove
+			
+		if [ "${#neworder}" -eq "0" ]; then
+			for x in "${array[@]}"; do
+				if [ x"$x" != x"" ]; then
+					printf "could not reduce further; "
+					printf "circular dependencies\n"
+					return 1
+				fi
+			done
+	
+			# we're done!
+			break
+		fi
+	done
+	
+	# run the initscripts
+	for script in "${order[@]}"; do
+		${initdir}/${script}
+	done
+}	

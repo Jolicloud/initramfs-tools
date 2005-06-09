@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# List the soft prerequisites here.  So if there's something you know
+# should be run first iff it exists.
+PREREQ=""
+
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+# Do the work here.
+echo "Got here!"

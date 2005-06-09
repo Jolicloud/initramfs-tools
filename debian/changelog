@@ -13,7 +13,12 @@ initramfs-tools (0.7) breezy; urgency=low
 
   * Add hookscript directories.
 
- -- Jeff Bailey <jbailey@localhost>  Thu,  9 Jun 2005 15:16:15 +0000
+  * Call hookscripts
+
+  Thanks to David Weinhall <tao@acc.umu.se> for the dependancy-based
+  hookscripts.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Thu,  9 Jun 2005 17:08:01 +0000
 
 initramfs-tools (0.6) breezy; urgency=low
 

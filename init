@@ -40,6 +40,8 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
+run_scripts /scripts/init_top
+
 . /scripts/${BOOT}
 
 # Load the modules
@@ -56,6 +58,8 @@ if [ x${break} = xyes ]; then
 fi
 
 mountroot
+
+run_scripts /scripts/init_bottom
 
 umount /sys
 umount /proc

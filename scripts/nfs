@@ -2,10 +2,18 @@
 # Paramter: Where the root should be mounted
 mountroot ()
 {
+	run_scripts /scripts/nfs_top
+
 	ipconfig ${DEVICE}
 	. /tmp/net-${DEVICE}.conf
 	if [ "x${NFSROOT}" = "xauto" ]; then
 		NFSROOT=${ROOTSERVER}:${ROOTPATH}
 	fi
+
+	run_scripts /scripts/nfs_premount
+
 	nfsmount ${NFSROOT} ${rootmnt}
+
+	run_scripts /scripts/nfs_bottom
+
 }
