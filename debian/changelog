@@ -1,3 +1,15 @@
+initramfs-tools (0.7) breezy; urgency=low
+
+  The "CONFORM!" release.
+
+  * Make command line arguments almost match mkinitrd.  The -m argument
+    doesn't make any sense, so it's not supported.  Add support for
+    overriding the confdir, and specifying version no longer expects -v.
+
+
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Thu,  9 Jun 2005 14:30:18 +0000
+
 initramfs-tools (0.6) breezy; urgency=low
 
   The "Sweep! ....  Off!" release.

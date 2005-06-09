@@ -1,20 +1,36 @@
 #!/bin/sh
 
-. /etc/mkinitramfs/initramfs.conf
-
 usage()
 {
-	echo "-o  Output"
-	echo "-v  version"
-	echo "-k  Keep temp files"
+	cat >&2 << EOF
+
+Usage: ${0} [OPTION]... <-o outfile> [version]
+
+Options:
+  -d confdir  Specify an alternative configuration directory.
+  -k          Keep temporary directory used to make the image.
+  -o outfile  Write to outfile.
+  -r root     Override ROOT setting in mkinitrd.conf.
+
+See ${0}(8) for further details.
+EOF
 	exit 1
+
 }
 
 # Defaults
 keep="n"
+CONFDIR="/etc/mkinitramfs"
 
-while getopts "ko:v:" flag; do
+while getopts "d:ko:r:" flag; do
 	case $flag in
+	d)
+		CONFDIR="${OPTAGS}"
+		if [ ! d "${CONFDIR}" ]; then
+			echo "${0}: ${CONFDIR}: Not a directory" >&2
+			exit 1
+		fi
+		;;
 	o)
 		outfile="${OPTARG}"
 		;;
@@ -27,7 +43,11 @@ while getopts "ko:v:" flag; do
 	esac
 done
 
-if [ x${outfile} = x ]; then
+shift $((${OPTIND} - 1))
+
+. ${CONFDIR}/initramfs.conf
+
+if [ x${outfile} = x ] || [ ${#} -ne 1 ]; then
 	usage
 fi
 
@@ -45,7 +65,7 @@ TMPDIR=$(mktemp -d) || exit 1
 mkdir -p ${TMPDIR}/modules ${TMPDIR}/conf ${TMPDIR}/etc
 mkdir -p ${TMPDIR}/bin ${TMPDIR}/lib ${TMPDIR}/scripts
 
-for x in $(sed -e '/^#/d' /etc/mkinitramfs/modules); do
+for x in $(sed -e '/^#/d' ${CONFDIR}/modules); do
 	for y in $(modprobe --set-version=${version} --show-depends ${x} | awk '{ print $2 }'); do
 		# Prune duplicates
 		if [ -e ${TMPDIR}/modules/$(basename ${y}) ]; then
@@ -64,7 +84,7 @@ ln -s /usr/lib/klibc/bin/* ${TMPDIR}/bin
 ln -s /usr/lib/klibc/lib/* ${TMPDIR}/lib
 ln -s /usr/share/initramfs-tools/init ${TMPDIR}/init
 ln -s /usr/share/initramfs-tools/scripts/* ${TMPDIR}/scripts
-ln -s /etc/mkinitramfs/initramfs.conf ${TMPDIR}/conf
+ln -s ${CONFDIR}/initramfs.conf ${TMPDIR}/conf
 ln -s /etc/udev ${TMPDIR}/etc
 
 # Hack until udev is built with klibc
