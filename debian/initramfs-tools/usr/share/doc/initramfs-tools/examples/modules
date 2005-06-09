@@ -1,7 +1,0 @@
-# List of modules that you want to include in your initramfs.
-# This might be good choices:
-#
-#ide-disk
-#ide-generic
-#ext2
-#ext3

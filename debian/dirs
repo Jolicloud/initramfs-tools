@@ -1,6 +1,7 @@
-etc/mkiniramfs/init-bottom
-etc/mkiniramfs/init-top
-etc/mkiniramfs/local-premount
-etc/mkiniramfs/local-top
-etc/mkiniramfs/nfs-premount
-etc/mkiniramfs/nfs-top
+etc/mkinitramfs/init-bottom
+etc/mkinitramfs/init-top
+etc/mkinitramfs/local-premount
+etc/mkinitramfs/local-top
+etc/mkinitramfs/nfs-premount
+etc/mkinitramfs/nfs-top
+usr/share/initramfs-tools/modules.d
