@@ -6,9 +6,14 @@ initramfs-tools (0.7) breezy; urgency=low
     doesn't make any sense, so it's not supported.  Add support for
     overriding the confdir, and specifying version no longer expects -v.
 
+  * Add sed and grep to the initramfs for now.  Will prune these
+    eventually, but for now mdrun needs them.
 
+  * Add mdadm and mdrun to the initramfs.
 
- -- Jeff Bailey <jbailey@ubuntu.com>  Thu,  9 Jun 2005 14:30:18 +0000
+  * Add hookscript directories.
+
+ -- Jeff Bailey <jbailey@localhost>  Thu,  9 Jun 2005 15:16:15 +0000
 
 initramfs-tools (0.6) breezy; urgency=low
 

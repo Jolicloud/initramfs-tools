@@ -1,0 +1,6 @@
+etc/mkiniramfs/init-bottom
+etc/mkiniramfs/init-top
+etc/mkiniramfs/local-premount
+etc/mkiniramfs/local-top
+etc/mkiniramfs/nfs-premount
+etc/mkiniramfs/nfs-top

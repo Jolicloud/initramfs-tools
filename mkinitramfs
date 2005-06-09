@@ -103,6 +103,8 @@ fi
 # Raid
 ln -s /sbin/mdadm ${TMPDIR}/bin
 ln -s /sbin/mdrun ${TMPDIR}/bin
+ln -s /bin/grep ${TMPDIR}/bin
+ln -s /bin/sed ${TMPDIR}/bin
 
 (cd ${TMPDIR} && find . | cpio --quiet --dereference -o -H newc | gzip -9 >${outfile})
 
