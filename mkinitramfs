@@ -112,8 +112,7 @@ rm ${TMPDIR}/lib/*lsb*
 
 # Busybox
 if [ "x${BUSYBOX}" = "xy" ]; then
-	rm ${TMPDIR}/bin/sh
-	ln -s /bin/busybox ${TMPDIR}/bin/sh
+	ln -s /bin/busybox ${TMPDIR}/bin
 fi
 
 # Raid
