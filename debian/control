@@ -7,6 +7,6 @@ Standards-Version: 3.6.1
 
 Package: initramfs-tools
 Architecture: all
-Depends: klibc-utils, busybox-cvs-static
+Depends: klibc-utils, busybox-cvs-static, mdadm
 Description: tools for generting an Ubuntu-style initramfs
  This package generates an initramfs for an Ubuntu system.
