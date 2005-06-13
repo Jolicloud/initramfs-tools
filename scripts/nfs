@@ -2,7 +2,7 @@
 # Paramter: Where the root should be mounted
 mountroot ()
 {
-	run_scripts /scripts/nfs_top
+	run_scripts /scripts/nfs-top
 
 	ipconfig ${DEVICE}
 	. /tmp/net-${DEVICE}.conf
@@ -10,10 +10,10 @@ mountroot ()
 		NFSROOT=${ROOTSERVER}:${ROOTPATH}
 	fi
 
-	run_scripts /scripts/nfs_premount
+	run_scripts /scripts/nfs-premount
 
 	nfsmount ${NFSROOT} ${rootmnt}
 
-	run_scripts /scripts/nfs_bottom
+	run_scripts /scripts/nfs-bottom
 
 }

@@ -99,7 +99,7 @@ done
 ln -s /usr/lib/klibc/bin/* ${TMPDIR}/bin
 ln -s /usr/lib/klibc/lib/* ${TMPDIR}/lib
 ln -s /usr/share/initramfs-tools/init ${TMPDIR}/init
-ln -s /usr/share/initramfs-tools/scripts/* ${TMPDIR}/scripts
+cp -a /usr/share/initramfs-tools/scripts/* ${TMPDIR}/scripts
 ln -s ${CONFDIR}/initramfs.conf ${TMPDIR}/conf
 ln -s /etc/udev ${TMPDIR}/etc
 
@@ -112,14 +112,16 @@ rm ${TMPDIR}/lib/*lsb*
 
 # Busybox
 if [ "x${BUSYBOX}" = "xy" ]; then
+	rm ${TMPDIR}/bin/sh
 	ln -s /bin/busybox ${TMPDIR}/bin
+	ln -s /bin/busybox ${TMPDIR}/bin/sh
 fi
 
 # Raid
 ln -s /sbin/mdadm ${TMPDIR}/bin
 ln -s /sbin/mdrun ${TMPDIR}/bin
-ln -s /bin/grep ${TMPDIR}/bin
-ln -s /bin/sed ${TMPDIR}/bin
+#ln -s /bin/grep ${TMPDIR}/bin
+#ln -s /bin/sed ${TMPDIR}/bin
 
 (cd ${TMPDIR} && find . | cpio --quiet --dereference -o -H newc | gzip -9 >${outfile})
 

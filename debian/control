@@ -2,11 +2,11 @@ Source: initramfs-tools
 Section: utils
 Priority: optional
 Maintainer: Jeff Bailey <jbailey@ubuntu.com>
-Build-Depends-Indep: debhelper (>= 4.0.0), cdbs, busybox-cvs-static
+Build-Depends-Indep: debhelper (>= 4.0.0), cdbs
 Standards-Version: 3.6.1
 
 Package: initramfs-tools
 Architecture: all
-Depends: klibc-utils
+Depends: klibc-utils, busybox-cvs-static
 Description: tools for generting an Ubuntu-style initramfs
  This package generates an initramfs for an Ubuntu system.

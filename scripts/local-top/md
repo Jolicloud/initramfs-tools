@@ -15,4 +15,4 @@ prereqs)
 	;;
 esac
 
-echo "Got here!"
+/bin/mdrun /dev

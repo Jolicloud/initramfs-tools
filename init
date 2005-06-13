@@ -1,4 +1,14 @@
 #!/bin/sh -x
+
+/bin/busybox ln -s /bin/busybox /bin/[
+/bin/busybox ln -s /bin/busybox /bin/basename
+/bin/busybox ln -s /bin/busybox /bin/mount
+/bin/busybox ln -s /bin/busybox /bin/mkdir
+/bin/busybox ln -s /bin/busybox /bin/umount
+/bin/busybox ln -s /bin/busybox /bin/sed
+/bin/busybox ln -s /bin/busybox /bin/grep
+/bin/busybox ln -s /bin/busybox /bin/cat
+
 mkdir /sys
 mkdir /proc
 mkdir /tmp
@@ -40,7 +50,7 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
-run_scripts /scripts/init_top
+run_scripts /scripts/init-top
 
 . /scripts/${BOOT}
 
@@ -59,7 +69,7 @@ fi
 
 mountroot
 
-run_scripts /scripts/init_bottom
+run_scripts /scripts/init-bottom
 
 umount /sys
 umount /proc

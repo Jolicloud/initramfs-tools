@@ -8,124 +8,104 @@ panic()
 	fi
 }
 
-# this function finds scripts with empty depends and adds them
-# to the ordered list
-dep_reduce()
+render()
 {
-	i=0
-	j=0
-	unset neworder
+	eval "echo -n \${$@}"
+}
 
-	for entry in "${array[@]}"; do
-		set - ${entry}
-
-		if [ "$#" -eq "0" ]; then
+set_initlist()
+{
+	unset initlist
+	for si_x in ${initdir}/*; do
+		if [ ! -x ${si_x} ]; then
 			continue
-		elif [ "$#" -eq "1" ]; then
-			if [ $end -eq 0 ] ||
-			   [ x"${order[$((end-1))]}" != x"$1" ]; then
-				order[$((end))]=$1
-				end=$((end+1))
-				neworder[$((j))]=$1
-				j=$((j+1))
-			fi
-
-			array[$((i))]=
 		fi
-
-		i=$((i+1))
+		initlist="${initlist} $(basename ${si_x})"
 	done
 }
 
-dep_remove()
+reduce_satisfied()
 {
-	i=0
+	deplist="$(render array_${1})"
+	for rs_x in ${runlist}; do
+		pop_list_item ${rs_x} ${deplist}
+		deplist=${tmppop}
+	done
+	eval array_${1}=\"${deplist}\"
+}
 
-	# for each row in the array
-	for entry in "${array[@]}"; do
-		unset newentry
+get_prereqs()
+{
+	set_initlist
+	for gp_x in ${initlist}; do
+		tmp=$(${initdir}/${gp_x} prereqs)
+		eval array_${gp_x}=\"${tmp}\"
+	done
+}
 
-		set - ${entry}
+count_unsatisfied()
+{
+	set - ${@}
+	return ${#}
+}
 
-		# for each dependency of the script
-		for dep in "$@"; do
-			new=1
+# Removes $1 from initlist
+pop_list_item()
+{
+	item=${1}
+	shift
+	set - ${@}
+	unset tmppop
+	# Iterate
+	for pop in ${@}; do
+		if [ ${pop} = ${item} ]; then
+			continue
+		fi
+		tmppop="${tmppop} ${pop}"
+	done
 
-			# for each new dependency
-			for tmp in "${order[@]}"; do
-				if [ x"$dep" = x"$tmp" ]; then
-					new=0
-				fi
-			done
+}
 
-			if [ x"$new" = x"1" ]; then
-				newentry="$newentry $dep"
+# This function generates the runlist, so we clear it first.
+reduce_prereqs()
+{
+	unset runlist
+	set_initlist
+	set - ${initlist}
+	i=$#
+	# Loop until there's no more in the queue to loop through
+	while [ ${i} -ne 0 ]; do
+		oldi=${i}
+		for rp_x in ${initlist}; do
+			reduce_satisfied ${rp_x}
+			count_unsatisfied $(render array_${rp_x})
+			cnt=${?}
+			if [ ${cnt} -eq 0 ]; then
+				runlist="${runlist} ${rp_x}"
+				pop_list_item ${rp_x} ${initlist}
+				initlist=${tmppop}
+				i=$((${i} - 1))
 			fi
 		done
+		if [ ${i} -eq ${oldi} ]; then
+			echo "PANIC: Circular dependancy.  Exiting." >&2
+			exit 1
+		fi
+	done
+}
 
-		array[$((i))]="$newentry"
-		i=$((i+1))
+call_scripts()
+{
+	echo ${runlist}
+	for cs_x in ${runlist}; do
+		${initdir}/${cs_x}
 	done
 }
 
 run_scripts()
 {
 	initdir=${1}
-	scripts=$(ls ${initdir})
-	order=
-	end=0
-	array=
-
-	# FIXME: New algorithm
-	# array of strings: "$file $prereqs"
-	# iterate over all strings; find empty strings (just $file)
-	# add to order, delete from all strings and zero out entry
-	# repeat until all strings are empty
-	
-	i=0
-	for file in $scripts; do
-		# if it's not a regular file, or if it's not executable, skip it
-		if ! [ -f ${initdir}/${file} ] || ! [ -x ${initdir}/${file} ]; then
-			continue
-		fi
-	
-		array[$((i))]="$file $(${initdir}/${file} prereqs)"
-		i=$((i+1))
-	done
-
-	# No scripts in directory, bail.
-	if [ ${i} -eq 0 ]; then
-		return 0
-	fi
-	
-	while /bin/true; do
-		set - ${array[@]}
-	
-		if [ "$#" -eq "0" ]; then
-			break
-		fi
-		
-		dep_reduce
-	
-		dep_remove
-			
-		if [ "${#neworder}" -eq "0" ]; then
-			for x in "${array[@]}"; do
-				if [ x"$x" != x"" ]; then
-					printf "could not reduce further; "
-					printf "circular dependencies\n"
-					return 1
-				fi
-			done
-	
-			# we're done!
-			break
-		fi
-	done
-	
-	# run the initscripts
-	for script in "${order[@]}"; do
-		${initdir}/${script}
-	done
-}	
-
+	get_prereqs
+	reduce_prereqs
+	call_scripts
+}

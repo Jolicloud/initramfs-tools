@@ -3,7 +3,7 @@
 # Parameter: Where to mount the filesystem
 mountroot ()
 {
-	run_scripts /scripts/local_top
+	run_scripts /scripts/local-top
 
 	# Get the root filesystem type
 	if [ ! -e ${ROOT} ]; then
@@ -12,10 +12,10 @@ mountroot ()
 
 	eval $(fstype < ${ROOT})
 
-	run_scripts /scripts/local_premount
+	run_scripts /scripts/local-premount
 
 	# Mount root
 	mount ${ro} -t ${FSTYPE} ${ROOT} ${rootmnt}
 
-	run_scripts /scripts/local_bottom
+	run_scripts /scripts/local-bottom
 }
