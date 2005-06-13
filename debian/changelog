@@ -1,3 +1,11 @@
+initramfs-tools (0.8) UNRELEASED; urgency=low
+
+  
+
+  * 
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Mon, 13 Jun 2005 01:53:01 +0000
+
 initramfs-tools (0.7) breezy; urgency=low
 
   The "CONFORM!" release.
