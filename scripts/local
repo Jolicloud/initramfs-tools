@@ -14,8 +14,14 @@ mountroot ()
 
 	run_scripts /scripts/local-premount
 
+	if [ ${readonly} = y ]; then
+		roflag=-r
+	else
+		roflag=-w
+	fi
+
 	# Mount root
-	mount ${ro} -t ${FSTYPE} ${ROOT} ${rootmnt}
+	mount ${roflag} -t ${FSTYPE} ${ROOT} ${rootmnt}
 
 	run_scripts /scripts/local-bottom
 }

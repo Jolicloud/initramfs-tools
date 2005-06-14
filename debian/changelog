@@ -1,10 +1,13 @@
-initramfs-tools (0.8) UNRELEASED; urgency=low
+initramfs-tools (0.8) breezy; urgency=low
 
-  
+  The "We are one in the spirit..." release
 
-  * 
+  * Export the command line variables so that the various scripts
+    can see them.
 
- -- Jeff Bailey <jbailey@ubuntu.com>  Mon, 13 Jun 2005 01:53:01 +0000
+  * Honour command line 'ro' or 'rw' settings for nfs.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Tue, 14 Jun 2005 21:35:14 +0000
 
 initramfs-tools (0.7) breezy; urgency=low
 

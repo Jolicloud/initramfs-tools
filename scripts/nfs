@@ -12,7 +12,13 @@ mountroot ()
 
 	run_scripts /scripts/nfs-premount
 
-	nfsmount ${NFSROOT} ${rootmnt}
+	if [ ${readonly} = y ]; then
+		roflag="-o ro"
+	else
+		roflag="-o rw"
+	fi
+
+	nfsmount ${roflag} ${NFSROOT} ${rootmnt}
 
 	run_scripts /scripts/nfs-bottom
 

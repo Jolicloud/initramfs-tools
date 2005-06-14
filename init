@@ -19,11 +19,11 @@ mount -t proc proc /proc
 . /scripts/functions
 
 # Parse command line options
-init=/sbin/init
-root=
-ro=-r
-break=
-rootmnt=/root
+export init=/sbin/init
+export root=
+export readonly=y
+export break=
+export rootmnt=/root
 for x in $(cat /proc/cmdline); do
 	case $x in
 	init=*)
@@ -39,10 +39,10 @@ for x in $(cat /proc/cmdline); do
 		BOOT=${x#boot=}
 		;;
 	ro)
-		ro=-r
+		readonly=yes
 		;;
 	rw)
-		ro=-w
+		readonly=no
 		;;
 	break)
 		break=yes
