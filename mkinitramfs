@@ -111,17 +111,16 @@ ln -s /lib/ld*.so.* ${TMPDIR}/lib
 rm ${TMPDIR}/lib/*lsb*
 
 # Busybox
-if [ "x${BUSYBOX}" = "xy" ]; then
-	rm ${TMPDIR}/bin/sh
-	ln -s /bin/busybox ${TMPDIR}/bin
-	ln -s /bin/busybox ${TMPDIR}/bin/sh
-fi
+rm ${TMPDIR}/bin/sh
+ln -s /usr/lib/initramfs-tools/bin/busybox ${TMPDIR}/bin/sh
+
+# Modutils
+ln -s /sbin/insmod ${TMPDIR}/bin
+ln -s /sbin/modprobe ${TMPDIR}/bin
 
 # Raid
 ln -s /sbin/mdadm ${TMPDIR}/bin
 ln -s /sbin/mdrun ${TMPDIR}/bin
-#ln -s /bin/grep ${TMPDIR}/bin
-#ln -s /bin/sed ${TMPDIR}/bin
 
 (cd ${TMPDIR} && find . | cpio --quiet --dereference -o -H newc | gzip -9 >${outfile})
 

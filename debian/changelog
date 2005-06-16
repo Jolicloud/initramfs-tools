@@ -1,3 +1,11 @@
+initramfs-tools (0.9) breezy; urgency=low
+
+  * Unconditionally require busybox.  Might revert this eventually
+    but it's too much of a pain right now do this without
+    a reasonably environment.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Thu, 16 Jun 2005 02:23:50 +0000
+
 initramfs-tools (0.8) breezy; urgency=low
 
   The "We are one in the spirit..." release

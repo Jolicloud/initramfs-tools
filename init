@@ -1,14 +1,5 @@
 #!/bin/sh -x
 
-/bin/busybox ln -s /bin/busybox /bin/[
-/bin/busybox ln -s /bin/busybox /bin/basename
-/bin/busybox ln -s /bin/busybox /bin/mount
-/bin/busybox ln -s /bin/busybox /bin/mkdir
-/bin/busybox ln -s /bin/busybox /bin/umount
-/bin/busybox ln -s /bin/busybox /bin/sed
-/bin/busybox ln -s /bin/busybox /bin/grep
-/bin/busybox ln -s /bin/busybox /bin/cat
-
 mkdir /sys
 mkdir /proc
 mkdir /tmp
