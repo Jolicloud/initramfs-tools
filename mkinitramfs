@@ -12,11 +12,13 @@ manual_add_modules()
 	for x in $(sed -e '/^#/d' ${1}); do
 		for y in $(modprobe --set-version=${version} --show-depends ${x} | awk '{ print $2 }'); do
 			# Prune duplicates
-			if [ -e ${TMPDIR}/modules/$(basename ${y}) ]; then
+			if [ -e ${TMPDIR}/${y} ]; then
 				continue
 			fi
 	
-			ln -s ${y} ${TMPDIR}/modules
+			mkdir -p ${TMPDIR}/$(dirname ${y})
+			ln -s ${y} ${TMPDIR}/$(dirname ${y})
+			depmod -b ${TMPDIR} ${version}
 			echo $(basename ${y}) >>${TMPDIR}/conf/modules
 		done
 	done
@@ -113,9 +115,10 @@ rm ${TMPDIR}/lib/*lsb*
 # Busybox
 rm ${TMPDIR}/bin/sh
 ln -s /usr/lib/initramfs-tools/bin/busybox ${TMPDIR}/bin/sh
+# This is ugly, but needed atm to make the builtins work =(
+ln -s /usr/lib/initramfs-tools/bin/busybox ${TMPDIR}/bin/busybox
 
 # Modutils
-ln -s /sbin/insmod ${TMPDIR}/bin
 ln -s /sbin/modprobe ${TMPDIR}/bin
 
 # Raid

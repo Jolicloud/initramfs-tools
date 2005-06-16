@@ -48,7 +48,7 @@ run_scripts /scripts/init-top
 # Load the modules
 # FIXME - do module options here
 for x in $(cat /conf/modules); do
-	insmod /modules/$x
+	modprobe $x
 done
 
 # Populate /dev tree
