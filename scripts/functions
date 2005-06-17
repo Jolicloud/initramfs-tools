@@ -111,14 +111,18 @@ load_modules()
 	depmod
 
 	for x in /sys/bus/pci/devices/*; do
-		modprobe -q $(cat ${x}/modalias)
+		if [ -e ${x}/modalias ]; then
+			modprobe -q $(cat ${x}/modalias)
+		fi
 	done
 
 	# Give the USB bus a moment to catch up
 	sleep 2
 
 	for x in /sys/bus/usb/devices/*; do
-		modprobe -q $(cat ${x}/modalias)
+		if [ -e ${x}/modalias ]; then
+			modprobe -q $(cat ${x}/modalias)
+		fi
 	done
 
 	# Load the modules

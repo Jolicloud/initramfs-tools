@@ -1,3 +1,20 @@
+initramfs-tools (0.11) breezy; urgency=low
+
+  "Illusion is the first of all pleasures" - Oscar Wilde
+
+  * Make the init much less noisy
+
+  * Pull in all the dependancies for nfs and af_packet
+
+  * Be compatible with misdocumented mkinitrd interface
+
+  Thanks to Matt Zimmerman for the bug reports and testing!
+
+  * Update debian/copyright to have the location of the bzr
+    archive
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Fri, 17 Jun 2005 21:23:25 +0000
+
 initramfs-tools (0.10) breezy; urgency=low
 
   The "I can see you!" release.

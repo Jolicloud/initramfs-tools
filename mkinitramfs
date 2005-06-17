@@ -51,7 +51,7 @@ auto_add_modules()
 	copy_modules_dir kernel/fs/xfs
 
 	# These aren't caught by the above but really need to be there:
-	for x in mbcache; do
+	for x in mbcache nfs af_packet; do
 		for y in $(modprobe --set-version=${version} --show-depends ${x} | awk '{ print $2 }'); do
 			# Prune duplicates
 			if [ -e ${TMPDIR}/${y} ]; then
@@ -116,7 +116,27 @@ if [ x${outfile} = x ] || [ ${#} -ne 1 ]; then
 	usage
 fi
 
+# And by "version" we really mean path to kernel modules
+# This is braindead, and exists to preserve the interface with mkinitrd
 version=${1}
+[ $# -gt 0 ] || unset version
+case ${version} in
+/lib/modules/*/[!/]*)
+        ;;
+/lib/modules/[!/]*)
+        version=${version#/lib/modules/}
+        version=${version%%/*}
+        ;;
+esac
+
+case ${version} in
+*/*)
+        echo $PROG: ${version} is not a valid kernel version >&2
+        exit 1
+        ;;
+esac
+
+version="${version-$(uname -r)}"
 
 if [ -d ${outfile} ]; then
 	echo "${outfile} is a directory"

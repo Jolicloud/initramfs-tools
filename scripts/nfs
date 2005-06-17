@@ -4,6 +4,10 @@ mountroot ()
 {
 	run_scripts /scripts/nfs-top
 
+	modprobe nfs
+	# For DHCP
+	modprobe af_packet
+
 	ipconfig ${DEVICE}
 	. /tmp/net-${DEVICE}.conf
 	if [ "x${NFSROOT}" = "xauto" ]; then

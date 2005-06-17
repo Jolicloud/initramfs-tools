@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 
 mkdir /sys
 mkdir /proc
