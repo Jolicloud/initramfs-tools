@@ -18,16 +18,40 @@ manual_add_modules()
 	
 			mkdir -p ${TMPDIR}/$(dirname ${y})
 			ln -s ${y} ${TMPDIR}/$(dirname ${y})
-			depmod -b ${TMPDIR} ${version}
 			echo $(basename ${y} .ko) >>${TMPDIR}/conf/modules
 		done
 	done
 }
 
+# Copy entire subtrees to the initramfs
+copy_modules_dir()
+{
+	tmpdir_modbase=${TMPDIR}/lib/modules/${version}
+	mkdir -p $(dirname ${tmpdir_modbase}/${1})
+	cp -a /lib/modules/${version}/${1} ${tmpdir_modbase}/${1}
+}
+
 # Modules that we always add to the initramfs
 auto_add_modules()
 {
-	for x in ext3 ext2 raid1 md sd_mod sata_svw usbhid ohci_hcd ehci_hcd; do
+	copy_modules_dir kernel/drivers/net
+	copy_modules_dir kernel/drivers/scsi
+	copy_modules_dir kernel/drivers/ide
+	copy_modules_dir kernel/drivers/md
+	copy_modules_dir kernel/drivers/usb
+	copy_modules_dir kernel/drivers/block
+	copy_modules_dir kernel/drivers/input
+	copy_modules_dir kernel/fs/ext2
+	copy_modules_dir kernel/fs/ext3
+	copy_modules_dir kernel/fs/isofs
+	copy_modules_dir kernel/fs/jbd
+	copy_modules_dir kernel/fs/jfs
+	copy_modules_dir kernel/fs/nfs
+	copy_modules_dir kernel/fs/reiserfs
+	copy_modules_dir kernel/fs/xfs
+
+	# These aren't caught by the above but really need to be there:
+	for x in mbcache; do
 		for y in $(modprobe --set-version=${version} --show-depends ${x} | awk '{ print $2 }'); do
 			# Prune duplicates
 			if [ -e ${TMPDIR}/${y} ]; then
@@ -140,11 +164,12 @@ ln -s /usr/lib/initramfs-tools/bin/busybox ${TMPDIR}/bin/busybox
 
 # Modutils
 ln -s /sbin/modprobe ${TMPDIR}/sbin
-ln -s /sbin/rmmod ${TMPDIR}/bin
+ln -s /sbin/depmod ${TMPDIR}/sbin
+ln -s /sbin/rmmod ${TMPDIR}/sbin
 
 # Raid
-ln -s /sbin/mdadm ${TMPDIR}/bin
-ln -s /sbin/mdrun ${TMPDIR}/bin
+ln -s /sbin/mdadm ${TMPDIR}/sbin
+ln -s /sbin/mdrun ${TMPDIR}/sbin
 
 (cd ${TMPDIR} && find . | cpio --quiet --dereference -o -H newc | gzip -9 >${outfile})
 

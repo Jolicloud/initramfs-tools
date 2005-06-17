@@ -1,0 +1,15 @@
+initramfs-tools (0.10) breezy; urgency=low
+
+  * This release includes hardware auto detection in the initramfs.
+    This means two things in particular that are important:
+
+    1) the resulting initramfs will be huge.  Like 10 megs huge.
+       I will shrink it down once it's correct.  If you're on an 
+       arch that doesn't like >4mb initramfs', then this won't boot.
+
+    2) Your network drivers are loaded in the initramfs, so hotplug
+       won't see a network event, so ifup won't be run.  This will
+       be fixed shortly in hotplug.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Fri, 17 Jun 2005 15:17:06 +0000
+

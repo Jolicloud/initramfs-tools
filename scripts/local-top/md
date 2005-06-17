@@ -15,4 +15,4 @@ prereqs)
 	;;
 esac
 
-/bin/mdrun /dev
+/sbin/mdrun /dev

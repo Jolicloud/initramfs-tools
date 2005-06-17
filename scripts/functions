@@ -108,6 +108,8 @@ run_scripts()
 
 load_modules()
 {
+	depmod
+
 	for x in /sys/bus/pci/devices/*; do
 		modprobe -q $(cat ${x}/modalias)
 	done

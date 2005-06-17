@@ -1,5 +1,7 @@
 initramfs-tools (0.10) breezy; urgency=low
 
+  The "I can see you!" release.
+
   * Unconditionally require busybox.  Might revert this eventually
     but it's too much of a pain right now do this without
     a reasonably environment
@@ -9,7 +11,14 @@ initramfs-tools (0.10) breezy; urgency=low
   * Iterate through /sys/bus/pci and /sys/bus/usb and load drivers
     based on their modalias
 
- -- Jeff Bailey <jbailey@ubuntu.com>  Thu, 16 Jun 2005 02:23:50 +0000
+  * Start to use /sbin for things
+
+  * Include depmod in the image.  Use it at boot time.
+
+  * Edit config example to show the modules that do need to be included
+    manually for this build.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Fri, 17 Jun 2005 12:45:07 +0000
 
 initramfs-tools (0.9) breezy; urgency=low
 
