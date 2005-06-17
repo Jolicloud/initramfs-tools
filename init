@@ -30,10 +30,10 @@ for x in $(cat /proc/cmdline); do
 		BOOT=${x#boot=}
 		;;
 	ro)
-		readonly=yes
+		readonly=y
 		;;
 	rw)
-		readonly=no
+		readonly=n
 		;;
 	break)
 		break=yes
@@ -45,11 +45,7 @@ run_scripts /scripts/init-top
 
 . /scripts/${BOOT}
 
-# Load the modules
-# FIXME - do module options here
-for x in $(cat /conf/modules); do
-	modprobe $x
-done
+load_modules
 
 # Populate /dev tree
 udevstart

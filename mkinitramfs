@@ -19,7 +19,24 @@ manual_add_modules()
 			mkdir -p ${TMPDIR}/$(dirname ${y})
 			ln -s ${y} ${TMPDIR}/$(dirname ${y})
 			depmod -b ${TMPDIR} ${version}
-			echo $(basename ${y}) >>${TMPDIR}/conf/modules
+			echo $(basename ${y} .ko) >>${TMPDIR}/conf/modules
+		done
+	done
+}
+
+# Modules that we always add to the initramfs
+auto_add_modules()
+{
+	for x in ext3 ext2 raid1 md sd_mod sata_svw usbhid ohci_hcd ehci_hcd; do
+		for y in $(modprobe --set-version=${version} --show-depends ${x} | awk '{ print $2 }'); do
+			# Prune duplicates
+			if [ -e ${TMPDIR}/${y} ]; then
+				continue
+			fi
+	
+			mkdir -p ${TMPDIR}/$(dirname ${y})
+			ln -s ${y} ${TMPDIR}/$(dirname ${y})
+			depmod -b ${TMPDIR} ${version}
 		done
 	done
 }
@@ -90,10 +107,13 @@ fi
 TMPDIR=$(mktemp -d) || exit 1
 mkdir -p ${TMPDIR}/modules ${TMPDIR}/conf ${TMPDIR}/etc
 mkdir -p ${TMPDIR}/bin ${TMPDIR}/lib ${TMPDIR}/scripts
+mkdir -p ${TMPDIR}/sbin
 
 for x in ${CONFDIR}/modules /usr/share/initramfs-tools/modules.d/*; do
 	manual_add_modules ${x}
 done
+
+auto_add_modules
 
 # Have to do each file, because cpio --dereference doesn't recurse down
 # symlinks.
@@ -119,7 +139,8 @@ ln -s /usr/lib/initramfs-tools/bin/busybox ${TMPDIR}/bin/sh
 ln -s /usr/lib/initramfs-tools/bin/busybox ${TMPDIR}/bin/busybox
 
 # Modutils
-ln -s /sbin/modprobe ${TMPDIR}/bin
+ln -s /sbin/modprobe ${TMPDIR}/sbin
+ln -s /sbin/rmmod ${TMPDIR}/bin
 
 # Raid
 ln -s /sbin/mdadm ${TMPDIR}/bin

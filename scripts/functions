@@ -105,3 +105,23 @@ run_scripts()
 	reduce_prereqs
 	call_scripts
 }
+
+load_modules()
+{
+	for x in /sys/bus/pci/devices/*; do
+		modprobe -q $(cat ${x}/modalias)
+	done
+
+	# Give the USB bus a moment to catch up
+	sleep 2
+
+	for x in /sys/bus/usb/devices/*; do
+		modprobe -q $(cat ${x}/modalias)
+	done
+
+	# Load the modules
+	# FIXME - do module options here
+	for x in $(cat /conf/modules); do
+		modprobe -v $x
+	done
+}

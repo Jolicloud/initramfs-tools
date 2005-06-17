@@ -20,6 +20,8 @@ mountroot ()
 		roflag=-w
 	fi
 
+	modprobe ${FSTYPE}
+
 	# Mount root
 	mount ${roflag} -t ${FSTYPE} ${ROOT} ${rootmnt}
 

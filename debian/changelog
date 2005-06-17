@@ -1,10 +1,21 @@
-initramfs-tools (0.9) breezy; urgency=low
+initramfs-tools (0.10) breezy; urgency=low
 
   * Unconditionally require busybox.  Might revert this eventually
     but it's too much of a pain right now do this without
-    a reasonably environment.
+    a reasonably environment
+
+  * Use modprobe to load modules
+
+  * Iterate through /sys/bus/pci and /sys/bus/usb and load drivers
+    based on their modalias
 
  -- Jeff Bailey <jbailey@ubuntu.com>  Thu, 16 Jun 2005 02:23:50 +0000
+
+initramfs-tools (0.9) breezy; urgency=low
+
+  * Be consistent about y/n vs. yes/no values for the readonly variable
+
+ -- Matt Zimmerman <mdz@ubuntu.com>  Thu, 16 Jun 2005 15:22:30 -0700
 
 initramfs-tools (0.8) breezy; urgency=low
 
