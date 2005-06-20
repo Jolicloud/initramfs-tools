@@ -1,3 +1,13 @@
+initramfs-tools (0.12) breezy; urgency=low
+
+  * Don't complain if /etc/mkinitramfs/modules doesn't exist.
+
+  * Make sure that raid1 is pulled in.
+
+  * Include /etc/modprobe.d/aliases in the initramfs
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Mon, 20 Jun 2005 23:05:04 +0000
+
 initramfs-tools (0.11) breezy; urgency=low
 
   "Illusion is the first of all pleasures" - Oscar Wilde

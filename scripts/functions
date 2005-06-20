@@ -127,7 +127,9 @@ load_modules()
 
 	# Load the modules
 	# FIXME - do module options here
-	for x in $(cat /conf/modules); do
-		modprobe -v $x
-	done
+	if [ -e /conf/modules ]; then
+		for x in $(cat /conf/modules); do
+			modprobe -v $x
+		done
+	fi
 }

@@ -51,7 +51,7 @@ auto_add_modules()
 	copy_modules_dir kernel/fs/xfs
 
 	# These aren't caught by the above but really need to be there:
-	for x in mbcache nfs af_packet; do
+	for x in mbcache nfs af_packet raid1; do
 		for y in $(modprobe --set-version=${version} --show-depends ${x} | awk '{ print $2 }'); do
 			# Prune duplicates
 			if [ -e ${TMPDIR}/${y} ]; then
@@ -186,6 +186,8 @@ ln -s /usr/lib/initramfs-tools/bin/busybox ${TMPDIR}/bin/busybox
 ln -s /sbin/modprobe ${TMPDIR}/sbin
 ln -s /sbin/depmod ${TMPDIR}/sbin
 ln -s /sbin/rmmod ${TMPDIR}/sbin
+mkdir -p ${TMPDIR}/etc/modprobe.d
+ln -s /etc/modprobe.d/aliases ${TMPDIR}/etc/modprobe.d
 
 # Raid
 ln -s /sbin/mdadm ${TMPDIR}/sbin
