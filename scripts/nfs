@@ -1,3 +1,4 @@
+# NFS filesystem mounting			*- shell-script -*-
 
 # Paramter: Where the root should be mounted
 mountroot ()

@@ -1,4 +1,4 @@
-# Local filesystem mounting
+# Local filesystem mounting			-*- shell-script -*-
 
 # Parameter: Where to mount the filesystem
 mountroot ()

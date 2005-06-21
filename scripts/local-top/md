@@ -15,4 +15,7 @@ prereqs)
 	;;
 esac
 
+# FIXME detect this!
+modprobe raid1
+
 /sbin/mdrun /dev

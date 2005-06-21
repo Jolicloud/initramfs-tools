@@ -1,3 +1,5 @@
+# -*- shell-script -*-
+
 panic()
 {
 	echo $@
@@ -92,7 +94,6 @@ reduce_prereqs()
 
 call_scripts()
 {
-	echo ${runlist}
 	for cs_x in ${runlist}; do
 		${initdir}/${cs_x}
 	done
@@ -106,9 +107,44 @@ run_scripts()
 	call_scripts
 }
 
+ide_boot_events() {
+	[ "$(echo /proc/ide/*/media)" = "/proc/ide/*/media" ] && return
+
+	for drive in /proc/ide/*/media; do
+		# nothing to do if the device has already been took in charge
+		unit=${drive#/proc/ide/}; unit=${unit%/media}
+		[ -d /sys/block/$unit ] && continue
+
+		read media < $drive
+		case "$media" in
+			disk)     MODULE=ide-disk ;;
+			cdrom)    MODULE=ide-cd ;;
+			tape)     MODULE=ide-tape ;;
+			floppy)   MODULE=ide-floppy ;;
+			*)        MODULE=ide-generic ;;
+		esac
+
+		modprobe -q ${MODULE}
+	done
+}
+
 load_modules()
 {
-	depmod
+	depmod -a
+
+	# Load custom modules first
+	if [ -e /conf/modules ]; then
+		cat /conf/modules | while read m; do
+			if [ -z "$m" ] \
+			    || expr "$m" : "#" >/dev/null \
+			    || expr "$m" : "[ \t]+#?" > /dev/null
+			then
+				continue;
+			else
+				modprobe -v $m
+			fi
+		done
+	fi
 
 	for x in /sys/bus/pci/devices/*; do
 		if [ -e ${x}/modalias ]; then
@@ -125,11 +161,6 @@ load_modules()
 		fi
 	done
 
-	# Load the modules
-	# FIXME - do module options here
-	if [ -e /conf/modules ]; then
-		for x in $(cat /conf/modules); do
-			modprobe -v $x
-		done
-	fi
+	ide_boot_events
+
 }

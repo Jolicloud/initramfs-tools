@@ -1,10 +1,30 @@
 initramfs-tools (0.12) breezy; urgency=low
 
+  "I am not young enough to know everything." - Oscar Wilde
+
   * Don't complain if /etc/mkinitramfs/modules doesn't exist.
 
   * Make sure that raid1 is pulled in.
 
   * Include /etc/modprobe.d/aliases in the initramfs
+
+  * Default to currently running kernel version.
+    Based on a patch from maximilian attems, thanks!
+
+  * Handle module arguments in /etc/mkinitramfs/modules
+
+  * Do hookscripts at generation time.  Drop things into
+    /usr/share/initramfs-tools/hooks or /etc/mkinitramfs/hooks
+
+  * Make sure local-bottom and nfs-bottom get created
+    Thanks to Karl Hegbloom for these three patches!
+
+  * Prune stray echo from call_scripts
+
+  * Load raid1 for now so that md setups will work.
+
+  * Detect ide modules load
+    Thanks to Jeff Waugh for initial testing of this!
 
  -- Jeff Bailey <jbailey@ubuntu.com>  Mon, 20 Jun 2005 23:05:04 +0000
 
