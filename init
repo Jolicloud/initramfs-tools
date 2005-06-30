@@ -10,10 +10,11 @@ mount -t proc proc /proc
 . /scripts/functions
 
 # Parse command line options
-export init=/sbin/init
-export root=
-export readonly=y
 export break=
+export init=/sbin/init
+export quiet=n
+export readonly=y
+export root=
 export rootmnt=/root
 for x in $(cat /proc/cmdline); do
 	case $x in
@@ -29,6 +30,9 @@ for x in $(cat /proc/cmdline); do
 	boot=*)
 		BOOT=${x#boot=}
 		;;
+	quiet)
+		quiet=y
+		;;
 	ro)
 		readonly=y
 		;;
@@ -41,22 +45,32 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
+log_begin_msg "Running /script/init-top"
 run_scripts /scripts/init-top
+log_end_msg
 
 . /scripts/${BOOT}
 
+log_begin_msg "Loading modules"
 load_modules
+log_end_msg
 
 # Populate /dev tree
+log_begin_msg "Initializing /dev"
 udevstart
+log_end_msg
 
 if [ x${break} = xyes ]; then 
 	panic "Spawning shell within the initramfs"
 fi
 
+log_begin_msg "Mounting root file system"
 mountroot
+log_end_msg
 
+log_begin_msg "Running /scripts/init-bottom"
 run_scripts /scripts/init-bottom
+log_end_msg
 
 umount /sys
 umount /proc
