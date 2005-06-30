@@ -1,12 +1,9 @@
 #!/bin/sh
 
-# For dependency ordered mkinitramfs hook scripts.
-. /usr/share/initramfs-tools/scripts/functions
-
-# Takes a file containing a list of modules to be added as an argument
-# Figures out dependancies and adds it in.
+# Takes a file containing a list of modules to be added as an
+# argument, figures out dependancies, and adds them.
 #
-# File syntax:
+# Input file syntax:
 #
 #   # comment
 #   modprobe_module_name [args ...]
@@ -22,13 +19,13 @@ manual_add_modules()
 	sed -e '/^#/d' ${1} | while read module rest; do
 		for y in $(modprobe --set-version=${version} --show-depends ${module} | awk '{ print $2 }'); do
 			# Prune duplicates
-			if [ -e ${TMPDIR}/${y} ]; then
+			if [ -e ${DESTDIR}/${y} ]; then
 				continue
 			fi
 	
-			mkdir -p ${TMPDIR}/$(dirname ${y})
-			ln -s ${y} ${TMPDIR}/$(dirname ${y})
-			echo $(basename ${y} .ko) "${rest}" >>${TMPDIR}/conf/modules
+			mkdir -p ${DESTDIR}/$(dirname ${y})
+			ln -s ${y} ${DESTDIR}/$(dirname ${y})
+			echo $(basename ${y} .ko) "${rest}" >>${DESTDIR}/conf/modules
 		done
 	done
 }
@@ -36,7 +33,7 @@ manual_add_modules()
 # Copy entire subtrees to the initramfs
 copy_modules_dir()
 {
-	tmpdir_modbase=${TMPDIR}/lib/modules/${version}
+	tmpdir_modbase=${DESTDIR}/lib/modules/${version}
 	mkdir -p $(dirname ${tmpdir_modbase}/${1})
 	cp -a /lib/modules/${version}/${1} ${tmpdir_modbase}/${1}
 }
@@ -64,13 +61,13 @@ auto_add_modules()
 	for x in mbcache nfs af_packet raid1 ide-cd ide-disk ide-generic; do
 		for y in $(modprobe --set-version=${version} --show-depends ${x} | awk '{ print $2 }'); do
 			# Prune duplicates
-			if [ -e ${TMPDIR}/${y} ]; then
+			if [ -e ${DESTDIR}/${y} ]; then
 				continue
 			fi
 	
-			mkdir -p ${TMPDIR}/$(dirname ${y})
-			ln -s ${y} ${TMPDIR}/$(dirname ${y})
-			depmod -b ${TMPDIR} ${version}
+			mkdir -p ${DESTDIR}/$(dirname ${y})
+			ln -s ${y} ${DESTDIR}/$(dirname ${y})
+			depmod -b ${DESTDIR} ${version}
 		done
 	done
 }
@@ -96,6 +93,8 @@ EOF
 # Defaults
 keep="n"
 CONFDIR="/etc/mkinitramfs"
+verbose="n"
+errors_to="2>/dev/null"
 
 while getopts "d:ko:r:" flag; do
 	case $flag in
@@ -116,6 +115,9 @@ while getopts "d:ko:r:" flag; do
 done
 
 shift $((${OPTIND} - 1))
+
+# For dependency ordered mkinitramfs hook scripts.
+. /usr/share/initramfs-tools/scripts/functions
 
 . ${CONFDIR}/initramfs.conf
 
@@ -157,10 +159,21 @@ if [ ! -e /lib/modules/${version} ]; then
 	exit 1
 fi
 
-TMPDIR=$(mktemp -d) || exit 1
-mkdir -p ${TMPDIR}/modules ${TMPDIR}/conf ${TMPDIR}/etc
-mkdir -p ${TMPDIR}/bin ${TMPDIR}/lib ${TMPDIR}/scripts
-mkdir -p ${TMPDIR}/sbin
+DESTDIR=$(mktemp -t -d mkinitramfs_XXXXXX) || exit 1
+__TMPCPIOGZ=$(mktemp -t mkinitramfs-OL_XXXXXX) || exit 1
+
+# Export environment for hook scripts.
+#
+export version
+export CONFDIR
+export DESTDIR
+
+# Private, used by 'catenate_cpiogz'.
+export __TMPCPIOGZ
+
+for d in bin conf etc lib modules sbin scripts; do
+    mkdir -p ${DESTDIR}/${d}
+done
 
 for x in ${CONFDIR}/modules /usr/share/initramfs-tools/modules.d/*; do
 	manual_add_modules ${x}
@@ -171,46 +184,51 @@ auto_add_modules
 # Have to do each file, because cpio --dereference doesn't recurse down
 # symlinks.
 
-ln -s /usr/lib/klibc/bin/* ${TMPDIR}/bin
-ln -s /usr/lib/klibc/lib/* ${TMPDIR}/lib
-ln -s /usr/share/initramfs-tools/init ${TMPDIR}/init
-cp -a /usr/share/initramfs-tools/scripts/* ${TMPDIR}/scripts
-ln -s ${CONFDIR}/initramfs.conf ${TMPDIR}/conf
-ln -s /etc/udev ${TMPDIR}/etc
+ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
+ln -s /usr/lib/klibc/lib/* ${DESTDIR}/lib
+ln -s /usr/share/initramfs-tools/init ${DESTDIR}/init
+cp -a /usr/share/initramfs-tools/scripts/* ${DESTDIR}/scripts
+ln -s ${CONFDIR}/initramfs.conf ${DESTDIR}/conf
+ln -s /etc/udev ${DESTDIR}/etc
 
 # Hack until udev is built with klibc
-ln -s /sbin/udev ${TMPDIR}/bin
-ln -s /sbin/udevstart ${TMPDIR}/bin
-ln -s /lib/libc.so.* ${TMPDIR}/lib
-ln -s /lib/ld*.so.* ${TMPDIR}/lib
-rm ${TMPDIR}/lib/*lsb*
+ln -s /sbin/udev ${DESTDIR}/bin
+ln -s /sbin/udevstart ${DESTDIR}/bin
+ln -s /lib/libc.so.* ${DESTDIR}/lib
+ln -s /lib/ld*.so.* ${DESTDIR}/lib
+rm ${DESTDIR}/lib/*lsb*
 
 # Busybox
-rm ${TMPDIR}/bin/sh
-ln -s /usr/lib/initramfs-tools/bin/busybox ${TMPDIR}/bin/sh
+rm ${DESTDIR}/bin/sh
+ln -s /usr/lib/initramfs-tools/bin/busybox ${DESTDIR}/bin/sh
 # This is ugly, but needed atm to make the builtins work =(
-ln -s /usr/lib/initramfs-tools/bin/busybox ${TMPDIR}/bin/busybox
+ln -s /usr/lib/initramfs-tools/bin/busybox ${DESTDIR}/bin/busybox
 
 # Modutils
-ln -s /sbin/modprobe ${TMPDIR}/sbin
-ln -s /sbin/depmod ${TMPDIR}/sbin
-ln -s /sbin/rmmod ${TMPDIR}/sbin
-mkdir -p ${TMPDIR}/etc/modprobe.d
-ln -s /etc/modprobe.d/aliases ${TMPDIR}/etc/modprobe.d
+ln -s /sbin/modprobe ${DESTDIR}/sbin
+ln -s /sbin/depmod ${DESTDIR}/sbin
+ln -s /sbin/rmmod ${DESTDIR}/sbin
+mkdir -p ${DESTDIR}/etc/modprobe.d
+ln -s /etc/modprobe.d/aliases ${DESTDIR}/etc/modprobe.d
 
 # Raid
-ln -s /sbin/mdadm ${TMPDIR}/sbin
-ln -s /sbin/mdrun ${TMPDIR}/sbin
+ln -s /sbin/mdadm ${DESTDIR}/sbin
+ln -s /sbin/mdrun ${DESTDIR}/sbin
 
 run_scripts /usr/share/initramfs-tools/hooks
 run_scripts /etc/mkinitramfs/hooks
 
-# FIXME catenate extra cpio.gz here >>${outfile}
+(cd ${DESTDIR} && find . | cpio --quiet --dereference -o -H newc | gzip -9 >${outfile})
 
-(cd ${TMPDIR} && find . | cpio --quiet --dereference -o -H newc | gzip -9 >${outfile})
+if [ -s ${__TMPCPIOGZ} ]; then
+    cat ${__TMPCPIOGZ} >>${outfile}
+fi
 
 if [ "${keep}" = "y" ]; then
-	echo "Working files in ${TMPDIR}"
+	echo "Working files in ${DESTDIR} and overlay in ${__TMPCPIOGZ}"
 else
-	rm -rf "${TMPDIR}"
+	rm -rf "${DESTDIR}"
+	rm -rf "${__TMPCPIOGZ}"
 fi
+
+exit 0

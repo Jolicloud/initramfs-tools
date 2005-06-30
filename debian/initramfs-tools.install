@@ -1,4 +1,4 @@
-mkinitramfs usr/sbin
-init usr/share/initramfs-tools
-scripts usr/share/initramfs-tools
-conf/initramfs.conf etc/mkinitramfs
+mkinitramfs		usr/sbin
+init			usr/share/initramfs-tools
+scripts			usr/share/initramfs-tools
+conf/initramfs.conf	etc/mkinitramfs

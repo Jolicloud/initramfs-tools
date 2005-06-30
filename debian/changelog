@@ -1,3 +1,42 @@
+initramfs-tools (0.13) breezy; urgency=low
+
+  "We live in age when unnecessary things are our only necessities."
+   - Oscar Wilde
+
+  * Use detailed logging now for debian/changelog.  We have at least
+    three people hacking now, and details would probably be useful.
+
+  * debian/TODO: Update
+
+  * debian/dirs: Sort and add usr/share/initramfs-tools/hooks
+
+  * debian/initramfs-tools.examples: Add docs/example_hook and
+    docs/example_hook_cpiogz
+
+  * debian/initramfs-tools.install: Pretty Print.
+
+  * debian/rules: Ensure that mkinitramfs is executable
+
+  * docs/example_script: New file
+
+  * init: Add concept of 'quiet', be verbose if not specified
+
+  * mkinitramfs: Do not load script functions until needed
+    Clear up comments / documentation
+    Use DESTDIR instead of TMPDIR
+    Add ability to link in extra hunks into the cpio file
+    Cosmetic cleanups
+    
+  * scripts/functions: Add lsb stype log_FOO_msg functions
+
+  * scripts/local: Add logging
+
+  * scripts/nfs: Add logging
+
+  Thanks to Karl Hegbloom for most of these patches!
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Wed, 29 Jun 2005 23:50:56 +0000
+
 initramfs-tools (0.12) breezy; urgency=low
 
   "I am not young enough to know everything." - Oscar Wilde

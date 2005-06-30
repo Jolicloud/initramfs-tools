@@ -1,9 +1,10 @@
 etc/mkinitramfs/init-bottom
 etc/mkinitramfs/init-top
-etc/mkinitramfs/local-top
-etc/mkinitramfs/local-premount
 etc/mkinitramfs/local-bottom
-etc/mkinitramfs/nfs-top
-etc/mkinitramfs/nfs-premount
+etc/mkinitramfs/local-premount
+etc/mkinitramfs/local-top
 etc/mkinitramfs/nfs-bottom
+etc/mkinitramfs/nfs-premount
+etc/mkinitramfs/nfs-top
+usr/share/initramfs-tools/hooks
 usr/share/initramfs-tools/modules.d

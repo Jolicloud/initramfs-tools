@@ -1,9 +1,45 @@
 # -*- shell-script -*-
 
+_log_msg()
+{
+    if [ "$quiet" = "y" ]; then return; fi
+    echo "$@"
+}
+
+log_success_msg()
+{
+    _log_msg "Success: $@"
+}
+
+log_failure_msg()
+{
+    _log_msg "Failure: $@"
+}
+
+log_warning_msg()
+{
+    _log_msg "Warning: $@"
+}
+
+log_begin_msg()
+{
+    _log_msg "Begin: $@ ..."
+}
+
+log_end_msg()
+{
+    _log_msg "Done."
+}
+
+# update_progress() # ToDo: NOP placeholder... what else for usplash?
+# {
+#     :
+# }
+
 panic()
 {
 	echo $@
-	FS1='(initramfs) ' exec /bin/sh
+	FS1='(initramfs) ' exec /bin/sh </dev/console >/dev/console 2>&1
 }
 
 render()
@@ -162,5 +198,4 @@ load_modules()
 	done
 
 	ide_boot_events
-
 }

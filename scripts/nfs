@@ -1,9 +1,13 @@
-# NFS filesystem mounting			*- shell-script -*-
+# NFS filesystem mounting			-*- shell-script -*-
+
+# FIXME This needs error checking
 
 # Paramter: Where the root should be mounted
 mountroot ()
 {
+	log_begin_msg "Running /scripts/nfs-top"
 	run_scripts /scripts/nfs-top
+	log_end_msg
 
 	modprobe nfs
 	# For DHCP
@@ -15,7 +19,9 @@ mountroot ()
 		NFSROOT=${ROOTSERVER}:${ROOTPATH}
 	fi
 
+	log_begin_msg "Running /scripts/nfs-premount"
 	run_scripts /scripts/nfs-premount
+	log_end_msg
 
 	if [ ${readonly} = y ]; then
 		roflag="-o ro"
@@ -25,6 +31,8 @@ mountroot ()
 
 	nfsmount ${roflag} ${NFSROOT} ${rootmnt}
 
+	log_begin_msg "Running /scripts/nfs-bottom"
 	run_scripts /scripts/nfs-bottom
+	log_end_msg
 
 }

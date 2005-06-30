@@ -3,7 +3,9 @@
 # Parameter: Where to mount the filesystem
 mountroot ()
 {
+	log_begin_msg "Running /scripts/local-top"
 	run_scripts /scripts/local-top
+	log_end_msg
 
 	# Get the root filesystem type
 	if [ ! -e ${ROOT} ]; then
@@ -12,7 +14,9 @@ mountroot ()
 
 	eval $(fstype < ${ROOT})
 
+	log_begin_msg "Running /scripts/local-premount"
 	run_scripts /scripts/local-premount
+	log_end_msg
 
 	if [ ${readonly} = y ]; then
 		roflag=-r
@@ -20,10 +24,14 @@ mountroot ()
 		roflag=-w
 	fi
 
+	# FIXME This has no error checking
 	modprobe ${FSTYPE}
 
+	# FIXME This has no error checking
 	# Mount root
 	mount ${roflag} -t ${FSTYPE} ${ROOT} ${rootmnt}
 
+	log_begin_msg "Running /scripts/log-bottom"
 	run_scripts /scripts/local-bottom
+	log_end_msg
 }

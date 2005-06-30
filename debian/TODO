@@ -1,6 +1,8 @@
 TODO
 ====
 
+ o Grep for TODO and FIXME and do those. =)
+
  o Get udev compiled against klibc
 
  o Integrate hotplug-ng
