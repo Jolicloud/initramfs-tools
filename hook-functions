@@ -1,0 +1,6 @@
+# -*- shell-script -*-
+
+catenate_cpiogz() {
+	cat "$1" >>${__TMPCPIOGZ}
+}
+
