@@ -9,7 +9,7 @@
 #   modprobe_module_name [args ...]
 #   [...]
 #
-manual_add_modules()
+add_modules_from_file()
 {
 	# Sanity check
 	if [ ! -e ${1} ]; then
@@ -17,16 +17,42 @@ manual_add_modules()
 	fi
 
 	sed -e '/^#/d' ${1} | while read module rest; do
-		for y in $(modprobe --set-version=${version} --show-depends ${module} | awk '{ print $2 }'); do
-			# Prune duplicates
-			if [ -e ${DESTDIR}/${y} ]; then
-				continue
-			fi
-	
-			mkdir -p ${DESTDIR}/$(dirname ${y})
-			ln -s ${y} ${DESTDIR}/$(dirname ${y})
-			echo $(basename ${y} .ko) "${rest}" >>${DESTDIR}/conf/modules
-		done
+		manual_add_modules ${module}
+		echo ${module}.ko "${rest}" >>${DESTDIR}/conf/modules
+	done
+}
+
+manual_add_modules()
+{
+	for mam_x in $(modprobe --set-version=${version} --show-depends ${1} | awk '{ print $2 }'); do
+		# Prune duplicates
+		if [ -e ${DESTDIR}/${mam_x} ]; then
+			continue
+		fi
+
+		mkdir -p ${DESTDIR}/$(dirname ${mam_x})
+		ln -s ${mam_x} ${DESTDIR}/$(dirname ${mam_x})
+		depmod -b ${DESTDIR} ${version}
+	done
+}
+
+# $1 is source
+# $2 is relative destination
+copy_exec() {
+	ln -s ${1} ${DESTDIR}/${2}  
+
+	# Copy the dependant libraries
+	for x in $(ldd ${1} 2>/dev/null | sed -e '
+	    /\//!d;
+	    /linux-gate/d;
+	    /=>/ {s/.*=>[[:blank:]]*\([^[:blank:]]*\).*/\1/};
+	    s/[[:blank:]]*\([^[:blank:]]*\) (.*)/\1/' 2>/dev/null); do
+		libname=$(basename ${x})
+		dirname=$(dirname ${x})
+		mkdir -p ${DESTDIR}/${dirname}
+		if [ ! -e ${DESTDIR}/${dirname}/${libname} ]; then
+			ln -s ${x} ${DESTDIR}/${dirname}
+		fi
 	done
 }
 
@@ -41,35 +67,26 @@ copy_modules_dir()
 # Modules that we always add to the initramfs
 auto_add_modules()
 {
-	copy_modules_dir kernel/drivers/net
-	copy_modules_dir kernel/drivers/scsi
-	copy_modules_dir kernel/drivers/ide
-	copy_modules_dir kernel/drivers/md
-	copy_modules_dir kernel/drivers/usb
-	copy_modules_dir kernel/drivers/block
-	copy_modules_dir kernel/drivers/input
-	copy_modules_dir kernel/fs/ext2
-	copy_modules_dir kernel/fs/ext3
-	copy_modules_dir kernel/fs/isofs
-	copy_modules_dir kernel/fs/jbd
-	copy_modules_dir kernel/fs/jfs
-	copy_modules_dir kernel/fs/nfs
-	copy_modules_dir kernel/fs/reiserfs
-	copy_modules_dir kernel/fs/xfs
-
-	# These aren't caught by the above but really need to be there:
-	for x in mbcache nfs af_packet raid1 ide-cd ide-disk ide-generic; do
-		for y in $(modprobe --set-version=${version} --show-depends ${x} | awk '{ print $2 }'); do
-			# Prune duplicates
-			if [ -e ${DESTDIR}/${y} ]; then
-				continue
-			fi
-	
-			mkdir -p ${DESTDIR}/$(dirname ${y})
-			ln -s ${y} ${DESTDIR}/$(dirname ${y})
-			depmod -b ${DESTDIR} ${version}
-		done
+	# base
+	for x in md raid0 raid1 raid5 raid6 ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 ext3 isofs nfs reiserfs xfs af_packet dm_mod; do
+		manual_add_modules ${x}
 	done
+
+	# Ethernet
+	for x in 3c59x 8139cp 8139too 8390 b44 bmac bnx2 defxx dl2k e1000 e100 epic100 eql fealnx famachi hp100 mace mv643xx_eth natsemi ne2k-pci netconsole ns83820 pcnet32 r8169 s2io sis900 skge slhc starfire sundance sungem sungem_phy sunhme tg3 tlan de2104x de4x5 dmfe tulip winbond-840 xircom_cb xircom_tulip_cb typhon via-rhine via-velocity yellowfin; do
+		manual_add_modules ${x}
+	done
+
+	# ide
+	for x in ide-cd ide-disk ide-generic aec62xx cmd64x generic hpt34x hpt366 ns87415 pdc202xx_new pdc202xx_old piix sc1200 siimage slc82c105 trm290 via82cxxx; do
+		manual_add_modules ${x}
+	done
+
+	# scsi
+	for x in 3w-9xxx 3w-xxxx a100u2x aacraid ahci aic79xx aic7xxx atp870u BusLogic ch dc395x dmx3191d dpt_i2o eata fdomain initio ipr ips lpfc mac53c94 megaraid megaraid_mbox megaraid_mm mesh nsp32 osst qla1280 qla2100 qla2200 qla2300 qla2322 qla2xxx qla6312 qlogicfas408 qlogicfc sata_promise sata_qstor sata_sil sata_sis sata_svw sata_sx4 sata_uli sata_via sata_vsc scsi_mod scsi_transport_fc scsi_transport_iscsi scsi_transport_spi sd_mod sym53c8xx tmscsim; do
+		manual_add_modules ${x}
+	done
+
 }
 
 usage()
@@ -176,7 +193,7 @@ for d in bin conf etc lib modules sbin scripts; do
 done
 
 for x in ${CONFDIR}/modules /usr/share/initramfs-tools/modules.d/*; do
-	manual_add_modules ${x}
+	add_modules_from_file ${x}
 done
 
 auto_add_modules
@@ -186,17 +203,14 @@ auto_add_modules
 
 ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
 ln -s /usr/lib/klibc/lib/* ${DESTDIR}/lib
-ln -s /usr/share/initramfs-tools/init ${DESTDIR}/init
+copy_exec /usr/share/initramfs-tools/init /init
 cp -a /usr/share/initramfs-tools/scripts/* ${DESTDIR}/scripts
-ln -s ${CONFDIR}/initramfs.conf ${DESTDIR}/conf
-ln -s /etc/udev ${DESTDIR}/etc
+copy_exec ${CONFDIR}/initramfs.conf /conf
+cp -a /etc/udev ${DESTDIR}/etc
 
 # Hack until udev is built with klibc
-ln -s /sbin/udev ${DESTDIR}/bin
-ln -s /sbin/udevstart ${DESTDIR}/bin
-ln -s /lib/libc.so.* ${DESTDIR}/lib
-ln -s /lib/ld*.so.* ${DESTDIR}/lib
-rm ${DESTDIR}/lib/*lsb*
+copy_exec /sbin/udev /sbin
+copy_exec /sbin/udevstart /sbin
 
 # Busybox
 rm ${DESTDIR}/bin/sh
@@ -205,15 +219,18 @@ ln -s /usr/lib/initramfs-tools/bin/busybox ${DESTDIR}/bin/sh
 ln -s /usr/lib/initramfs-tools/bin/busybox ${DESTDIR}/bin/busybox
 
 # Modutils
-ln -s /sbin/modprobe ${DESTDIR}/sbin
-ln -s /sbin/depmod ${DESTDIR}/sbin
-ln -s /sbin/rmmod ${DESTDIR}/sbin
+copy_exec /sbin/modprobe /sbin
+copy_exec /sbin/depmod /sbin
+copy_exec /sbin/rmmod /sbin
 mkdir -p ${DESTDIR}/etc/modprobe.d
-ln -s /etc/modprobe.d/aliases ${DESTDIR}/etc/modprobe.d
+copy_exec /etc/modprobe.d/aliases /etc/modprobe.d
 
 # Raid
-ln -s /sbin/mdadm ${DESTDIR}/sbin
-ln -s /sbin/mdrun ${DESTDIR}/sbin
+copy_exec /sbin/mdadm /sbin
+copy_exec /sbin/mdrun /sbin
+
+# LVM
+copy_exec /lib/lvm-200/vgchange /sbin
 
 run_scripts /usr/share/initramfs-tools/hooks
 run_scripts /etc/mkinitramfs/hooks

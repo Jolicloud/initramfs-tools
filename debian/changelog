@@ -35,6 +35,23 @@ initramfs-tools (0.13) breezy; urgency=low
 
   Thanks to Karl Hegbloom for most of these patches!
 
+  * debian/control: Get a much better description
+
+  Thanks to Maximilian Attems for this!
+
+  * scripts/functions: Add copy_exec function that copies a program
+    and all libraries that it depends on.
+
+  * mkinitramfs: Use it
+
+  * scripts/local-top/lvm: New file
+
+  * mkinitramfs: Specify the modules to copy rather than mass copying
+    directories
+
+  * scripts/functions: Always load ide-generic to cope with ide subsystem
+    suckage.
+
  -- Jeff Bailey <jbailey@ubuntu.com>  Wed, 29 Jun 2005 23:50:56 +0000
 
 initramfs-tools (0.12) breezy; urgency=low
