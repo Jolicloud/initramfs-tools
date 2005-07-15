@@ -1,0 +1,18 @@
+#!/bin/sh
+
+PREREQ="md"
+
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+vgchange -ay
