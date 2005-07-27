@@ -3,8 +3,22 @@ TODO
 
  o Grep for TODO and FIXME and do those. =)
 
- o Get udev compiled against klibc
+ o Only vgchange -ay the volume needed for the root partition
 
- o Integrate hotplug-ng
+ o Support raid0, 5 and 6 for /
 
- o Add option to make-kpkg to use mkinitramfs
+ o Eliminate udev.
+
+ o Support list and dep options
+
+ o Default to dep for PPC - Possibly to detect newworld?
+
+ o Support evms
+
+ o Support cryptroot
+
+ o Trace lilo bug
+
+ o Load scsi modules
+
+ o Capture udev events and pass them to udevsend
