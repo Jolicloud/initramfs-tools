@@ -14,12 +14,12 @@ export break=
 export init=/sbin/init
 export quiet=n
 export readonly=y
-export root=
+export ROOT=
 export rootmnt=/root
 for x in $(cat /proc/cmdline); do
 	case $x in
 	init=*)
-		INIT=${x#init=}
+		init=${x#init=}
 		;;
 	root=*)
 		ROOT=${x#root=}
