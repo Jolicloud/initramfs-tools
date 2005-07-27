@@ -3,10 +3,6 @@ TODO
 
  o Grep for TODO and FIXME and do those. =)
 
- o Only vgchange -ay the volume needed for the root partition
-
- o Support raid0, 5 and 6 for /
-
  o Eliminate udev.
 
  o Support list and dep options
@@ -18,7 +14,5 @@ TODO
  o Support cryptroot
 
  o Trace lilo bug
-
- o Load scsi modules
 
  o Capture udev events and pass them to udevsend
