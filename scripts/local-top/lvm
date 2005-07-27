@@ -15,4 +15,10 @@ prereqs)
 	;;
 esac
 
-vgchange -ay
+vg=$(echo ${ROOT} | sed -e 's#/dev/mapper/\(.*\)-.*#\1#')
+
+[ x${vg} != x ] || return
+
+modprobe -q dm-mod
+
+vgchange -ay ${vg}

@@ -15,7 +15,14 @@ prereqs)
 	;;
 esac
 
-# FIXME detect this!
-modprobe raid1
+unset raidlvl
+
+# Detect raid level
+for x in /dev/hd* /dev/sd*; do
+	raidlvl=$(mdadm --examine ${x} | grep "Level" | sed -e 's/.*Raid Level : \(.*\)/\1/')
+	modprobe -q ${raidlvl}
+done
+
+[ x${raidlvl} != x ] || return
 
 /sbin/mdrun /dev
