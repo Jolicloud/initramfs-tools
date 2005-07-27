@@ -1,3 +1,24 @@
+initramfs-tools (0.14) breezy; urgency=low
+
+  "The world is a stage, but the play is badly cast."
+  - Oscar Wilde
+
+  * scripts/functions: Add scsi_boot_events and call it to load sd_mod
+
+  * scripts/local-top/md: Autodetect raid level
+
+  * scripts/local-top/lvm: Only activate the volumegroup required by
+    the root device.  Don't bother with lvm if the root partition isn't
+    /dev/mapper/FOO.
+
+  * scripts/functions: Fix ide_boot_events.  This never worked, even
+    if I thought it did.
+
+  * init: init variable should be lower case.  Exported ROOT variable
+    should be upper case.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Tue, 26 Jul 2005 20:30:57 -0400
+
 initramfs-tools (0.13) breezy; urgency=low
 
   "We live in age when unnecessary things are our only necessities."
