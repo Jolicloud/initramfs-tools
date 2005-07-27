@@ -144,14 +144,17 @@ run_scripts()
 }
 
 ide_boot_events() {
-	[ "$(echo /proc/ide/*/media)" = "/proc/ide/*/media" ] && return
+	[ -e /proc/ide ] || return
 
-	for drive in /proc/ide/*/media; do
+	modprobe -q ide-generic
+
+	for drive in /proc/ide/*; do
+		[ -e ${drive}/media ] || continue
 		# nothing to do if the device has already been took in charge
-		unit=${drive#/proc/ide/}; unit=${unit%/media}
+		unit=${drive#/proc/ide/}
 		[ -d /sys/block/$unit ] && continue
 
-		read media < $drive
+		read media < $drive/media
 		case "$media" in
 			disk)     MODULE=ide-disk ;;
 			cdrom)    MODULE=ide-cd ;;
@@ -162,6 +165,20 @@ ide_boot_events() {
 
 		modprobe -q ${MODULE}
 	done
+}
+
+scsi_boot_events()
+{
+	[ -e /sys/bus/scsi/devices/ ] || return
+
+	for device in /sys/bus/scsi/devices/*; do
+		read media < ${device}/type
+		case "$media" in
+			0)	modprobe -q sd_mod;
+		esac	
+
+	done
+
 }
 
 load_modules()
@@ -198,6 +215,8 @@ load_modules()
 	done
 
 	ide_boot_events
+
+	scsi_boot_events
 }
 
 
