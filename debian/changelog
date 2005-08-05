@@ -1,3 +1,19 @@
+initramfs-tools (0.15) breezy; urgency=low
+
+  "Nothing looks so like innocence as an indiscretion."
+  - Oscar Wilde
+
+  * mkinitramfs: Handle putting DSDT.aml into the initramfs
+    Add sata_nv to list of modules to import for main mode.
+
+  * init: New scripts directory, init-premount for generic premount
+    handling (like usplash)
+
+  * debian/dirs: Make the /etc version of this directory for user
+    addons.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Fri,  5 Aug 2005 11:39:26 -0400
+
 initramfs-tools (0.14) breezy; urgency=low
 
   "The world is a stage, but the play is badly cast."

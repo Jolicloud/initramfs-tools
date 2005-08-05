@@ -64,6 +64,10 @@ if [ x${break} = xyes ]; then
 	panic "Spawning shell within the initramfs"
 fi
 
+log_begin_msg "Running /scripts/init-premount"
+run_scripts /scripts/init-premount
+log_end_msg
+
 log_begin_msg "Mounting root file system"
 mountroot
 log_end_msg

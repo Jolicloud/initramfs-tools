@@ -1,4 +1,5 @@
 etc/mkinitramfs/init-bottom
+etc/mkinitramfs/init-premount
 etc/mkinitramfs/init-top
 etc/mkinitramfs/local-bottom
 etc/mkinitramfs/local-premount
