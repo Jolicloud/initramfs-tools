@@ -1,0 +1,71 @@
+.TH MKINITRAMFS 8  "$Date: 2005/07/15 $" "" "mkinitramfs manual"
+
+.SH NAME
+mkinitramfs \- generate an initramfs image
+
+.SH SYNOPSIS
+.B mkinitramfs
+.RB [ \-d 
+.IR confdir ] 
+.RB [ \-k ] 
+.RB [ \-o 
+.IR outfile ] 
+.RB [ \-r 
+.IR root ] 
+.RI [ version ]
+.SH DESCRIPTION
+The
+.B mkinitramfs 
+script generates an initramfs image.  The initramfs is an cpio archive. 
+At boot time, the kernel unpacks that archive into ram disk, mounts and 
+uses it as initial root file system. All finding of the root device 
+happens in this early userspace.
+
+.SH OPTIONS
+.TP
+\fB \-d \fI confdir
+Set an alternate configuration directory.
+
+.TP
+\fB \-k
+Keep the temporary directory used to make the image.
+
+.TP
+\fB \-o \fI outfile
+Write the image to 
+.IR outfile .
+
+.TP
+\fB \-r \fI root
+Override the 
+.B ROOT 
+setting in 
+.IR mkinitramfs.conf .
+
+.SH FILES
+.TP
+.I /etc/mkinitramfs/initramfs.conf
+The default configuration file for the script. See
+.BR initramfs.conf (8)
+for a description of the available configuration parameter.
+
+.TP
+.I /etc/mkinitramfs/modules
+Specified modules will be put in the generated image and loaded when the system boots. The format - one per line - is identical to that of
+.I /etc/modules,
+which is described in
+.BR modules (5).
+
+.TP
+.I /etc/mkinitramfs/DSDT.aml
+If this file exists, it will be appended to the initramfs in a way that causes
+it to be loaded by ACPI.
+
+
+.SH AUTHOR
+The initramfs-tools are written by Jeff Bailey <jbailey@ubuntu.com>.
+This manual is maintained by Maximilian Attems <maks@sternwelten.at>.
+
+.SH SEE ALSO
+
+.BR initramfs.conf (8)

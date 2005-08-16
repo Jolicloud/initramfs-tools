@@ -1,0 +1,30 @@
+#!/bin/sh
+
+PREREQ=""
+
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+if [ "x${resume}" = "x" ]; then
+	exit
+fi
+
+if [ ! -e ${resume} ]; then
+	exit
+fi
+
+if [ -e /sys/power/resume ]; then
+	major=$((0x$(stat -c%t ${resume})))
+	minor=$((0x$(stat -c%T ${resume})))
+	echo ${major}:${minor} >/sys/power/resume
+fi

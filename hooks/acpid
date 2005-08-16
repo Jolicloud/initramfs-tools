@@ -1,0 +1,24 @@
+#!/bin/sh
+
+PREREQ=""
+
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+# Hooks for loading acpi bits into the initramfs
+
+. /usr/share/initramfs-tools/hook-functions
+
+for x in fan thermal; do
+	manual_add_modules ${x}
+done
