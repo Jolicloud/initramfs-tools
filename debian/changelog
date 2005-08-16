@@ -1,3 +1,9 @@
+initramfs-tools (0.20) breezy; urgency=low
+
+  * Depend on cpio.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 12 Aug 2005 10:43:04 +0100
+
 initramfs-tools (0.19) breezy; urgency=low
 
   "The basis of optimism is sheer terror."
