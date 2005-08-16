@@ -3,11 +3,11 @@ Section: utils
 Priority: optional
 Maintainer: Jeff Bailey <jbailey@ubuntu.com>
 Build-Depends-Indep: debhelper (>= 4.0.0), cdbs
-Standards-Version: 3.6.1
+Standards-Version: 3.6.2.0
 
 Package: initramfs-tools
 Architecture: all
-Depends: klibc-utils, busybox-cvs-initramfs, mdadm
+Depends: klibc-utils, busybox-cvs-initramfs (>= 20040623-1ubuntu19), mdadm, lvm2 (>= 2.01.04-5)
 Description: tools for generating an initramfs
  This package contains tools to create and boot an initramfs for prepackaged
  2.6 Linux kernel. The initramfs is an cpio archive. At boot time, the kernel

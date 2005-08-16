@@ -1,3 +1,98 @@
+initramfs-tools (0.19) breezy; urgency=low
+
+  "The basis of optimism is sheer terror."
+  - Oscar Wilde
+
+  * mkinitramfs: Honour MODULES=list and MODULES=dep.
+
+  * hook-functions: New function dep_add_modules.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Wed, 10 Aug 2005 23:20:11 -0400
+
+initramfs-tools (0.18) breezy; urgency=low
+
+  "We are all in the gutter, but some of us are looking at the stars."
+  - Oscar Wilde
+
+  * debian/initramfs-tools.postrm: Use rm -f for removing the modules
+    file, in case it doesn't exist for some reason. (Ubuntu #13335)
+    Thanks to Colin Watson for the bug report!
+
+  * mkinitramfs.8: Correct my email address to be jbailey@ubuntu.com
+    Document /etc/mkinitramfs/DSDT.aml
+
+  * debian/initramfs-tools.postinst: Attempt to inherit RESUME settings
+    from initrd-tools.  Also copy the DSDT from /etc/mkinitrd/DSDT to
+    /etc/mkinitramfs/DSDT.aml
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Wed, 10 Aug 2005 13:09:44 -0400
+
+initramfs-tools (0.17) breezy; urgency=low
+
+  "The public is wonderfully tolerant. It forgives everything except
+   genius."
+  - Oscar Wilde
+
+  * debian/initramfs-tools.postinst: Get the name of the config file 
+    right when seeding RESUME=.  Also fix the sed expression.
+    Thanks to Matthew Garrett for noticing this!  
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Wed, 10 Aug 2005 11:54:07 -0400
+
+initramfs-tools (0.16) breezy; urgency=low
+
+  "It is through art, and through art only, that we can realise our
+   perfection."
+   - Oscar Wilde
+
+  * mkinitramfs: Make sure all relevant ide modules are included.
+    Add RESUME= support.
+
+  * scripts/functions: Be silent when adding non-detected modules.
+
+  * conf/mkinitramfs.conf: MODULES=most by default, BUSYBOX=y
+    (Non-busybox isn't supported now.  It's not clear that it ever 
+     will be).  Add RESUME line for resuming from suspend-to-disk.
+
+  * scripts/local-premount/suspend: New script for suspend-to-disk.
+
+  * debian/control: Bump depends on busybox-cvs-initramfs to
+    20040623-1ubuntu19.  Add dependancy on lvm2.
+    Bump standards version to 3.6.2.0 (no-op)
+
+  * debian/control:
+    Force version depend on lvm2 (>= 2.01.04-5) to make sure newer kernels
+    will boot.
+    Thanks for Andrew Mitchell for discovering this.
+
+  * hooks/: New directory
+
+  * debian/dirs: Move hooks to ...
+  * debian/initramfs-tools.install: ... here.
+
+  * hooks/acpid: New file.
+
+  * scripts/init-premount/acpid: New file
+    Thanks for the hint from Matthew Garrett for this.
+
+  * debian/initramfs-tools.postinst: Add RESUME support on first install.
+
+  * debian/mkinitramfs: Move functions to ...
+  * debian/hook-functions: ... here.
+
+  * debian/initramfs-tools.install: Install hook-functions
+
+  * mkinitramfs.8: New file.
+    Thanks to Maximilian Attems for contributing this!
+
+  * scripts/local-top/md: Don't try to detect raid on non-existant devices
+    or on whole devices.  Quiet other warning messages.
+
+  * hook-functions: When generating initramfs, don't complain about missing
+    modules.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Tue,  9 Aug 2005 23:35:08 -0400
+
 initramfs-tools (0.15) breezy; urgency=low
 
   "Nothing looks so like innocence as an indiscretion."
@@ -12,7 +107,9 @@ initramfs-tools (0.15) breezy; urgency=low
   * debian/dirs: Make the /etc version of this directory for user
     addons.
 
- -- Jeff Bailey <jbailey@ubuntu.com>  Fri,  5 Aug 2005 11:39:26 -0400
+  * debian/rules: Use prebuild, rather than debian-build-arch.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Tue,  9 Aug 2005 11:29:10 -0400
 
 initramfs-tools (0.14) breezy; urgency=low
 

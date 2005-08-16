@@ -15,6 +15,7 @@ export init=/sbin/init
 export quiet=n
 export readonly=y
 export ROOT=
+export resume=${RESUME}
 export rootmnt=/root
 for x in $(cat /proc/cmdline); do
 	case $x in
@@ -29,6 +30,9 @@ for x in $(cat /proc/cmdline); do
 		;;
 	boot=*)
 		BOOT=${x#boot=}
+		;;
+	resume=*)
+		resume=${x#resume=}
 		;;
 	quiet)
 		quiet=y

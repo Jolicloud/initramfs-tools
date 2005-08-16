@@ -1,112 +1,5 @@
 #!/bin/sh
 
-# Takes a file containing a list of modules to be added as an
-# argument, figures out dependancies, and adds them.
-#
-# Input file syntax:
-#
-#   # comment
-#   modprobe_module_name [args ...]
-#   [...]
-#
-add_modules_from_file()
-{
-	# Sanity check
-	if [ ! -e ${1} ]; then
-		return
-	fi
-
-	sed -e '/^#/d' ${1} | while read module rest; do
-		manual_add_modules ${module}
-		echo ${module}.ko "${rest}" >>${DESTDIR}/conf/modules
-	done
-}
-
-manual_add_modules()
-{
-	for mam_x in $(modprobe --set-version=${version} --show-depends ${1} | awk '{ print $2 }'); do
-		# Prune duplicates
-		if [ -e ${DESTDIR}/${mam_x} ]; then
-			continue
-		fi
-
-		mkdir -p ${DESTDIR}/$(dirname ${mam_x})
-		ln -s ${mam_x} ${DESTDIR}/$(dirname ${mam_x})
-		depmod -b ${DESTDIR} ${version}
-	done
-}
-
-# $1 is source
-# $2 is relative destination
-copy_exec() {
-	ln -s ${1} ${DESTDIR}/${2}  
-
-	# Copy the dependant libraries
-	for x in $(ldd ${1} 2>/dev/null | sed -e '
-	    /\//!d;
-	    /linux-gate/d;
-	    /=>/ {s/.*=>[[:blank:]]*\([^[:blank:]]*\).*/\1/};
-	    s/[[:blank:]]*\([^[:blank:]]*\) (.*)/\1/' 2>/dev/null); do
-		libname=$(basename ${x})
-		dirname=$(dirname ${x})
-		mkdir -p ${DESTDIR}/${dirname}
-		if [ ! -e ${DESTDIR}/${dirname}/${libname} ]; then
-			ln -s ${x} ${DESTDIR}/${dirname}
-		fi
-	done
-}
-
-# Copy entire subtrees to the initramfs
-copy_modules_dir()
-{
-	tmpdir_modbase=${DESTDIR}/lib/modules/${version}
-	mkdir -p $(dirname ${tmpdir_modbase}/${1})
-	cp -a /lib/modules/${version}/${1} ${tmpdir_modbase}/${1}
-}
-
-# Modules that we always add to the initramfs
-auto_add_modules()
-{
-	# base
-	for x in md raid0 raid1 raid5 raid6 ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 ext3 isofs nfs reiserfs xfs af_packet dm_mod; do
-		manual_add_modules ${x}
-	done
-
-	# Ethernet
-	for x in 3c59x 8139cp 8139too 8390 b44 bmac bnx2 defxx dl2k e1000 e100 epic100 eql fealnx famachi hp100 mace mv643xx_eth natsemi ne2k-pci netconsole ns83820 pcnet32 r8169 s2io sis900 skge slhc starfire sundance sungem sungem_phy sunhme tg3 tlan de2104x de4x5 dmfe tulip winbond-840 xircom_cb xircom_tulip_cb typhon via-rhine via-velocity yellowfin; do
-		manual_add_modules ${x}
-	done
-
-	# ide
-	for x in ide-cd ide-disk ide-generic aec62xx cmd64x generic hpt34x hpt366 ns87415 pdc202xx_new pdc202xx_old piix sc1200 siimage slc82c105 trm290 via82cxxx; do
-		manual_add_modules ${x}
-	done
-
-	# scsi
-	for x in 3w-9xxx 3w-xxxx a100u2x aacraid ahci aic79xx aic7xxx atp870u BusLogic ch dc395x dmx3191d dpt_i2o eata fdomain initio ipr ips lpfc mac53c94 megaraid megaraid_mbox megaraid_mm mesh nsp32 osst qla1280 qla2100 qla2200 qla2300 qla2322 qla2xxx qla6312 qlogicfas408 qlogicfc sata_promise sata_nv sata_qstor sata_sil sata_sis sata_svw sata_sx4 sata_uli sata_via sata_vsc scsi_mod scsi_transport_fc scsi_transport_iscsi scsi_transport_spi sd_mod sym53c8xx tmscsim; do
-		manual_add_modules ${x}
-	done
-
-}
-
-usage()
-{
-	cat >&2 << EOF
-
-Usage: ${0} [OPTION]... <-o outfile> [version]
-
-Options:
-  -d confdir  Specify an alternative configuration directory.
-  -k          Keep temporary directory used to make the image.
-  -o outfile  Write to outfile.
-  -r root     Override ROOT setting in mkinitrd.conf.
-
-See ${0}(8) for further details.
-EOF
-	exit 1
-
-}
-
 # Defaults
 keep="n"
 CONFDIR="/etc/mkinitramfs"
@@ -135,6 +28,7 @@ shift $((${OPTIND} - 1))
 
 # For dependency ordered mkinitramfs hook scripts.
 . /usr/share/initramfs-tools/scripts/functions
+. /usr/share/initramfs-tools/hook-functions
 
 . ${CONFDIR}/initramfs.conf
 
@@ -148,6 +42,11 @@ if [ ${#} -ne 1 ]; then
 	version=$(uname -r)
 else 
 	version="${1}"
+fi
+
+if dpkg --compare-versions "${version}" lt 2.6.12; then
+	echo "Kernel version too old.  initramfs-tools requires at least 2.6.12."
+	exit 1
 fi
 
 case ${version} in
@@ -192,11 +91,18 @@ for d in bin conf etc lib modules sbin scripts; do
     mkdir -p ${DESTDIR}/${d}
 done
 
+# MODULES=list case.  Always honour.
 for x in ${CONFDIR}/modules /usr/share/initramfs-tools/modules.d/*; do
 	add_modules_from_file ${x}
 done
 
-auto_add_modules
+if [ "${MODULES}" = "dep" ]; then
+	dep_add_modules
+fi
+
+if [ "${MODULES}" = "most" ]; then
+	auto_add_modules
+fi
 
 # Have to do each file, because cpio --dereference doesn't recurse down
 # symlinks.

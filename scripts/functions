@@ -194,7 +194,7 @@ load_modules()
 			then
 				continue;
 			else
-				modprobe -v $m
+				modprobe -q $m
 			fi
 		done
 	fi
@@ -219,4 +219,18 @@ load_modules()
 	scsi_boot_events
 }
 
+parse_numeric() {
+	case $1 in
+	*:*)
+		minor=${1#*:}
+		major=${1%:*}
+		;;
+	*)
+		minor=$((0x${1#??}))
+		major=$((0x${1%??}))
+		;;
+	esac
+
+	mknod /dev/root b ${major} ${minor}
+}
 

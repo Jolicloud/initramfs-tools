@@ -4,3 +4,136 @@ catenate_cpiogz() {
 	cat "$1" >>${__TMPCPIOGZ}
 }
 
+add_modules_from_file()
+{
+	# Sanity check
+	if [ ! -e ${1} ]; then
+		return
+	fi
+
+	sed -e '/^#/d' ${1} | while read module rest; do
+		manual_add_modules ${module}
+		echo ${module}.ko "${rest}" >>${DESTDIR}/conf/modules
+	done
+}
+
+manual_add_modules()
+{
+	for mam_x in $(modprobe --set-version=${version} --show-depends ${1} 2>/dev/null | awk '{ print $2 }'); do
+		# Prune duplicates
+		if [ -e ${DESTDIR}/${mam_x} ]; then
+			continue
+		fi
+
+		mkdir -p ${DESTDIR}/$(dirname ${mam_x})
+		ln -s ${mam_x} ${DESTDIR}/$(dirname ${mam_x})
+		depmod -b ${DESTDIR} ${version}
+	done
+}
+
+# $1 is source
+# $2 is relative destination
+copy_exec() {
+	ln -s ${1} ${DESTDIR}/${2}  
+
+	# Copy the dependant libraries
+	for x in $(ldd ${1} 2>/dev/null | sed -e '
+	    /\//!d;
+	    /linux-gate/d;
+	    /=>/ {s/.*=>[[:blank:]]*\([^[:blank:]]*\).*/\1/};
+	    s/[[:blank:]]*\([^[:blank:]]*\) (.*)/\1/' 2>/dev/null); do
+		libname=$(basename ${x})
+		dirname=$(dirname ${x})
+		mkdir -p ${DESTDIR}/${dirname}
+		if [ ! -e ${DESTDIR}/${dirname}/${libname} ]; then
+			ln -s ${x} ${DESTDIR}/${dirname}
+		fi
+	done
+}
+
+# Copy entire subtrees to the initramfs
+copy_modules_dir()
+{
+	tmpdir_modbase=${DESTDIR}/lib/modules/${version}
+	mkdir -p $(dirname ${tmpdir_modbase}/${1})
+	cp -a /lib/modules/${version}/${1} ${tmpdir_modbase}/${1}
+}
+
+dep_add_modules()
+{
+
+	# Things that are too hard to autodetect.
+	for x in md raid0 raid1 raid5 raid6 ext2 ext3 isofs nfs reiserfs xfs af_packet dm_mod; do
+		manual_add_modules ${x}
+	done
+
+	for x in /sys/bus/pci/devices/*; do
+		if [ -e ${x}/modalias ]; then
+			manual_add_modules $(cat ${x}/modalias)
+		fi
+	done
+
+	# Give the USB bus a moment to catch up
+	sleep 2
+
+	for x in /sys/bus/usb/devices/*; do
+		if [ -e ${x}/modalias ]; then
+			manual_add_modules $(cat ${x}/modalias)
+		fi
+	done
+
+	if [ -e /proc/ide ]; then
+		for x in ide-generic ide-disk ide-cd; do
+			manual_add_modules ${x}
+		done
+	fi
+
+	if [ -e /sys/bus/scsi/devices/ ]; then
+		manual_add_modules sd_mod
+	fi
+}
+
+
+# Modules that we always add to the initramfs
+auto_add_modules()
+{
+	# base
+	for x in md raid0 raid1 raid5 raid6 ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 ext3 isofs nfs reiserfs xfs af_packet dm_mod; do
+		manual_add_modules ${x}
+	done
+
+	# Ethernet
+	for x in 3c59x 8139cp 8139too 8390 b44 bmac bnx2 defxx dl2k e1000 e100 epic100 eql fealnx famachi hp100 mace mv643xx_eth natsemi ne2k-pci netconsole ns83820 pcnet32 r8169 s2io sis900 skge slhc starfire sundance sungem sungem_phy sunhme tg3 tlan de2104x de4x5 dmfe tulip winbond-840 xircom_cb xircom_tulip_cb typhon via-rhine via-velocity yellowfin; do
+		manual_add_modules ${x}
+	done
+
+	# ide
+	for x in ide-cd ide-disk ide-generic aec62xx alim15x3 amd74xx atuuxo cmd64x cs5520 cs5530 cy82c693 generic hpt34x hpt366 ns87415 pdc202xx_new pdc202xx_old piix rz1000 sc1200 serverworks siimage sis5513 slc82c105 slc90e66 triflex trm290 via82cxxx; do
+		manual_add_modules ${x}
+	done
+
+	# scsi
+	for x in 3w-9xxx 3w-xxxx a100u2x aacraid ahci aic79xx aic7xxx ata_piix atari_scsi atp870u BusLogic ch dc395x dmx3191d dpt_i2o eata fdomain initio ipr ips isp1020 lpfc max_scsi mac53c94 megaraid megaraid_mbox megaraid_mm mesh nsp32 osst qla1280 qla2100 qla2200 qla2300 qla2322 qla2xxx qla6312 qlogicfas408 qlogicfc sata_promise sata_nv sata_qstor sata_sil sata_sis sata_svw sata_sx4 sata_uli sata_via sata_vsc scsi_mod scsi_transport_fc scsi_transport_iscsi scsi_transport_spi sd_mod sym53c8xx tmscsim; do
+		manual_add_modules ${x}
+	done
+
+}
+
+usage()
+{
+	cat >&2 << EOF
+
+Usage: ${0} [OPTION]... <-o outfile> [version]
+
+Options:
+  -d confdir  Specify an alternative configuration directory.
+  -k          Keep temporary directory used to make the image.
+  -o outfile  Write to outfile.
+  -r root     Override ROOT setting in mkinitrd.conf.
+
+See ${0}(8) for further details.
+EOF
+	exit 1
+
+}
+

@@ -16,3 +16,5 @@ TODO
  o Trace lilo bug
 
  o Capture udev events and pass them to udevsend
+
+ o Detect RESUME partition

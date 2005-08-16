@@ -18,9 +18,12 @@ esac
 unset raidlvl
 
 # Detect raid level
-for x in /dev/hd* /dev/sd*; do
-	raidlvl=$(mdadm --examine ${x} | grep "Level" | sed -e 's/.*Raid Level : \(.*\)/\1/')
-	modprobe -q ${raidlvl}
+for x in /dev/hd[a-z][0-9]* /dev/sd[a-z][0-9]*; do
+	if [ ! -e ${x} ]; then
+		continue
+	fi
+	raidlvl=$(mdadm --examine ${x} 2>/dev/null | grep "Level" | sed -e 's/.*Raid Level : \(.*\)/\1/')
+	modprobe -q ${raidlvl} 2>/dev/null
 done
 
 [ x${raidlvl} != x ] || return

@@ -2,6 +2,28 @@
 
 set -e
 
+if [ "$1" = configure ]; then
+	if [ x${2} = x ]; then
+
+		# First time install.  Can we autodetect the RESUME partition?
+		RESUME=$(tail -n $(($(wc -l /proc/swaps | awk ' { print $1 } ') - 1)) /proc/swaps | sort -rk3 | head -n 1 | awk ' { print $1 } ')
+
+		# Inhertic initrd-tools settings if possible.
+		if [ -e /etc/mkinitrd/mkinitrd.conf ]; then
+			 . /etc/mkinitrd/mkinitrd.conf
+		fi
+
+		if [ -e ${RESUME} ]; then
+			sed -i -e "s@#RESUME=@RESUME=${RESUME}@" /etc/mkinitramfs/initramfs.conf
+		fi
+
+		if [ -e /etc/mkinitrd/DSDT ]; then
+			cp /etc/mkinitrd/DSDT /etc/mkinitramfs/DSDT.aml
+		fi
+
+	fi
+fi
+
 if [ ! -e /etc/mkinitramfs/modules ]; then
 	cp /usr/share/doc/initramfs-tools/examples/modules /etc/mkinitramfs/
 fi
