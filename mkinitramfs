@@ -70,8 +70,10 @@ if [ -d ${outfile} ]; then
 	exit 1
 fi
 
-if [ ! -e /lib/modules/${version} ]; then
-	echo "Cannot find /lib/modules/${version}"
+MODULESDIR="/lib/modules/${version}"
+
+if [ ! -e ${MODULESDIR} ]; then
+	echo "Cannot find ${MODULESDIR}"
 	exit 1
 fi
 
@@ -80,6 +82,7 @@ __TMPCPIOGZ=$(mktemp -t mkinitramfs-OL_XXXXXX) || exit 1
 
 # Export environment for hook scripts.
 #
+export MODULESDIR
 export version
 export CONFDIR
 export DESTDIR

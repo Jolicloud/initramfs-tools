@@ -13,6 +13,10 @@ if [ "$1" = configure ]; then
 			 . /etc/mkinitrd/mkinitrd.conf
 		fi
 
+		if [ -e /etc/mkinitrd/modules ]; then
+			cp /etc/mkinitrd/modules /etc/mkinitramfs
+		fi
+
 		if [ -e ${RESUME} ]; then
 			sed -i -e "s@#RESUME=@RESUME=${RESUME}@" /etc/mkinitramfs/initramfs.conf
 		fi

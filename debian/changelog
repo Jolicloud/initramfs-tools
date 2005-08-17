@@ -1,3 +1,27 @@
+initramfs-tools (0.21) breezy; urgency=low
+
+  "All that I desire to point out is the general principle that
+   life imitates art far more than art imitates life."
+   - Oscar Wilde
+
+  * mkinitramfs: Define MODULESDIR and use it.
+
+  * hook-functions: Use MODULESDIR
+    (add_modules_from_file): Do not add .ko extension to file lists.
+    Call force_load instead of twiddling conf/modules directly.
+    (Ubuntu #13372)
+    (force_load): New function.
+    (copy_exec): Attempt to use non-optimsed libraries if available.
+    (Ubuntu #13470)
+    (auto_add_modules) Include forcedeth (Ubuntu #13448)
+
+  * hooks/kernelextras: New file. (Ubuntu #13414)
+
+  * debian/initramfs-tools.postinst: Preserve /etc/mkinitrd/modules if
+    possible on new install. (Ubuntu #13372)
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Tue, 16 Aug 2005 15:56:00 -0400
+
 initramfs-tools (0.20) breezy; urgency=low
 
   * Depend on cpio.
