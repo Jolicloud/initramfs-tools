@@ -1,3 +1,49 @@
+initramfs-tools (0.23) breezy; urgency=low
+
+  "This suspense is terrible. I hope it will last."
+  - Oscar Wilde
+
+  * scripts/local: Quote ${ROOT} so that an empty value causes us
+    to drop to a shell.
+    Thanks to Matt Zimmerman for this fix!
+
+  - hook-functions (auto_add_modules): Add atiixp and opti621 to
+    the IDE set.
+
+  - hook-functions (dep_add_modules): Detect i2o and add i2o_block
+    (auto_add_modules): Include i2o_block.
+
+  - scripts/functions (i2o_boot_events): New function
+    (load_modules): Call it. (Ubuntu# 13806)
+    Thanks to Tollef Fog Heen for the i2o patch!
+
+  - debian/control: Depend on udev.
+    Thanks to Alexander Butenko for troubleshooting this with me.
+
+  - init: Move the /dev directory to the root filesystem.
+    Handle all the udev bind mounts as needed.
+    Make sure input and output is associated with dev/console.
+
+  - scripts/functions (parse_numeric): Exit if we're refering to a path.
+    Otherwise override root setting to be /dev/root.
+  - init: Call parse_numeric when setting the root variable.
+  - scripts/local-top/lvm: When using a numeric root, call vgchange -ay
+    Don't attempt to start LVM on regular partitions.
+    (Ubuntu #13365, #13778, and some of #13399)
+
+  - scripts/local-top/lvm: Cope with -'s in the Volume Group and
+    logical volume names. (Ubuntu #13387)
+    Thanks to Stephen Shirley for the patch!
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Thu, 25 Aug 2005 11:48:15 -0400
+
+initramfs-tools (0.22) breezy; urgency=low
+
+  * Fix argument handling in force_load hook-function
+  * Add "sleep 3" to scripts/nfs as a nasty hack around bug #12942
+
+ -- Matt Zimmerman <mdz@ubuntu.com>  Fri, 19 Aug 2005 23:50:16 -0700
+
 initramfs-tools (0.21) breezy; urgency=low
 
   "All that I desire to point out is the general principle that
@@ -20,7 +66,7 @@ initramfs-tools (0.21) breezy; urgency=low
   * debian/initramfs-tools.postinst: Preserve /etc/mkinitrd/modules if
     possible on new install. (Ubuntu #13372)
 
- -- Jeff Bailey <jbailey@ubuntu.com>  Tue, 16 Aug 2005 15:56:00 -0400
+ -- Jeff Bailey <jbailey@ubuntu.com>  Thu, 18 Aug 2005 00:20:11 -0400
 
 initramfs-tools (0.20) breezy; urgency=low
 

@@ -61,6 +61,9 @@ log_end_msg
 
 # Populate /dev tree
 log_begin_msg "Initializing /dev"
+mount -t ramfs none /dev
+touch /dev/.initramfs-tools
+parse_numeric ${ROOT}
 udevstart
 log_end_msg
 
@@ -80,8 +83,15 @@ log_begin_msg "Running /scripts/init-bottom"
 run_scripts /scripts/init-bottom
 log_end_msg
 
+# Move our /dev to the real filesystem.  Do the setup that udev otherwise
+# would.
+mkdir -p /dev/.static/dev
+chmod 700 /dev/.static/
+mount -o bind /root/dev /dev/.static/dev
+mount -o move /dev /root/dev
+
 umount /sys
 umount /proc
 
 # Chain to real filesystem
-exec run-init ${rootmnt} ${init} "$@"
+exec run-init ${rootmnt} ${init} "$@" </root/dev/console >/root/dev/console

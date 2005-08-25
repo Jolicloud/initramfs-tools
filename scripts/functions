@@ -181,6 +181,15 @@ scsi_boot_events()
 
 }
 
+i2o_boot_events()
+{
+	[ -e /sys/bus/i2o/devices/ ] || return
+
+	for device in /sys/bus/i2o/devices/*; do
+		[ -e ${device}/block ] && modprobe i2o_block
+	done
+}
+
 load_modules()
 {
 	depmod -a
@@ -217,10 +226,15 @@ load_modules()
 	ide_boot_events
 
 	scsi_boot_events
+
+	i2o_boot_events
 }
 
 parse_numeric() {
 	case $1 in
+	/*)
+		return
+		;;
 	*:*)
 		minor=${1#*:}
 		major=${1%:*}
@@ -232,5 +246,6 @@ parse_numeric() {
 	esac
 
 	mknod /dev/root b ${major} ${minor}
+	ROOT=/dev/root
 }
 

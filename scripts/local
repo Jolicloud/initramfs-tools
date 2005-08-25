@@ -8,7 +8,7 @@ mountroot ()
 	log_end_msg
 
 	# Get the root filesystem type
-	if [ ! -e ${ROOT} ]; then
+	if [ ! -e "${ROOT}" ]; then
 		panic "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
 	fi
 

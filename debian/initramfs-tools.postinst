@@ -15,6 +15,7 @@ if [ "$1" = configure ]; then
 
 		if [ -e /etc/mkinitrd/modules ]; then
 			cp /etc/mkinitrd/modules /etc/mkinitramfs
+			sed -i -e 's/mkinitrd/mkinitramfs/g' /etc/mkinitramfs/modules
 		fi
 
 		if [ -e ${RESUME} ]; then

@@ -15,10 +15,21 @@ prereqs)
 	;;
 esac
 
-vg=$(echo ${ROOT} | sed -e 's#/dev/mapper/\(.*\)-.*#\1#')
+vg=${ROOT#/dev/mapper/}
 
-[ x${vg} != x ] || return
-
+case ${vg} in
+	/dev/root)
+		unset vg
+		;;
+	/*)
+		exit 0
+		;;
+esac
+	
 modprobe -q dm-mod
 
+# Cope with -'s in the volume group and node names.
+vg=$(echo ${vg} | sed -e 's#\(.*\)\([^-]\)-[^-].*#\1\2#')
+
 vgchange -ay ${vg}
+

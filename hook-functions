@@ -6,7 +6,7 @@ catenate_cpiogz() {
 
 force_load()
 {
-		manual_add_modules ${module}
+		manual_add_modules ${@}
 		echo ${@} >>${DESTDIR}/conf/modules
 }
 
@@ -106,6 +106,10 @@ dep_add_modules()
 	if [ -e /sys/bus/scsi/devices/ ]; then
 		manual_add_modules sd_mod
 	fi
+
+	if [ -e /sys/bus/i2o/devices/ ]; then
+		manual_add_modules i2o_block
+	fi
 }
 
 
@@ -123,12 +127,17 @@ auto_add_modules()
 	done
 
 	# ide
-	for x in ide-cd ide-disk ide-generic aec62xx alim15x3 amd74xx atuuxo cmd64x cs5520 cs5530 cy82c693 generic hpt34x hpt366 ns87415 pdc202xx_new pdc202xx_old piix rz1000 sc1200 serverworks siimage sis5513 slc82c105 slc90e66 triflex trm290 via82cxxx; do
+	for x in ide-cd ide-disk ide-generic aec62xx alim15x3 amd74xx atiixp atuuxo cmd64x cs5520 cs5530 cy82c693 generic hpt34x hpt366 ns87415 opti621 pdc202xx_new pdc202xx_old piix rz1000 sc1200 serverworks siimage sis5513 slc82c105 slc90e66 triflex trm290 via82cxxx; do
 		manual_add_modules ${x}
 	done
 
 	# scsi
 	for x in 3w-9xxx 3w-xxxx a100u2x aacraid ahci aic79xx aic7xxx ata_piix atari_scsi atp870u BusLogic ch dc395x dmx3191d dpt_i2o eata fdomain initio ipr ips isp1020 lpfc max_scsi mac53c94 megaraid megaraid_mbox megaraid_mm mesh nsp32 osst qla1280 qla2100 qla2200 qla2300 qla2322 qla2xxx qla6312 qlogicfas408 qlogicfc sata_promise sata_nv sata_qstor sata_sil sata_sis sata_svw sata_sx4 sata_uli sata_via sata_vsc scsi_mod scsi_transport_fc scsi_transport_iscsi scsi_transport_spi sd_mod sym53c8xx tmscsim; do
+		manual_add_modules ${x}
+	done
+
+	# i2o
+	for x in i2o_block; do
 		manual_add_modules ${x}
 	done
 
