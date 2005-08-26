@@ -16,7 +16,8 @@ while getopts "d:ko:r:" flag; do
 		fi
 		;;
 	o)
-		outfile="${OPTARG}"
+		touch ${OPTARG}
+		outfile="$(readlink -f ${OPTARG})"
 		;;
 	k)
 		keep="y"

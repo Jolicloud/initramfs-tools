@@ -232,6 +232,9 @@ load_modules()
 
 parse_numeric() {
 	case $1 in
+	"")
+		return
+		;;
 	/*)
 		return
 		;;
@@ -248,4 +251,3 @@ parse_numeric() {
 	mknod /dev/root b ${major} ${minor}
 	ROOT=/dev/root
 }
-
