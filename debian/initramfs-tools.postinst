@@ -15,7 +15,13 @@ if [ "$1" = configure ]; then
 
 		if [ -e /etc/mkinitrd/modules ]; then
 			cp /etc/mkinitrd/modules /etc/mkinitramfs
-			sed -i -e 's/mkinitrd/mkinitramfs/g' /etc/mkinitramfs/modules
+			sed -i \
+			  -e 's/mkinitrd/mkinitramfs/g' \
+			  -e '/^ide-generic/d' \
+			  -e '/^ide-disk/d' \
+			  -e '/^ext2/d' \
+			  -e '/^ext3/d' \
+			  /etc/mkinitramfs/modules
 		fi
 
 		if [ -e ${RESUME} ]; then

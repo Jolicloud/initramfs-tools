@@ -1,3 +1,23 @@
+initramfs-tools (0.25) breezy; urgency=low
+
+  "If there was less sympathy in the world, there would be less
+   trouble in the world."
+  - Oscar Wilde
+
+  * init: Module the /dev tmpfs earlier.  Make /dev/console, and
+    /dev/null on it at the beginning, just in case.
+
+  * debian/initramfs-tools.postinst: When copying the modules file over
+    from initrd-tools installations, filter out ext2, ext3, ide-generic
+    and ide-disk.  These are leftovers from Warty.
+    (Ubuntu #14242)
+
+  * hooks/udev: New File (Ubuntu #12915)
+
+  * init: panic if ${init} doesn't exist on the target filesystem.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Thu,  1 Sep 2005 00:13:47 -0400
+
 initramfs-tools (0.24) breezy; urgency=low
 
   "Experience is simply the name we give out mistakes."

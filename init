@@ -5,6 +5,10 @@ mkdir /proc
 mkdir /tmp
 mount -t sysfs sysfs /sys
 mount -t proc proc /proc
+mount -t ramfs none /dev
+touch /dev/.initramfs-tools
+mknod /dev/console c 5 1 
+mknod /dev/null c 1 3
 
 . /conf/initramfs.conf
 . /scripts/functions
@@ -61,8 +65,6 @@ log_end_msg
 
 # Populate /dev tree
 log_begin_msg "Initializing /dev"
-mount -t ramfs none /dev
-touch /dev/.initramfs-tools
 parse_numeric ${ROOT}
 udevstart
 log_end_msg
@@ -92,6 +94,10 @@ mount -o move /dev /root/dev
 
 umount /sys
 umount /proc
+
+if [ ! -x ${rootmnt}${init} ]; then
+	panic "Target filesystem doesn't have ${init}"
+fi
 
 # Chain to real filesystem
 exec run-init ${rootmnt} ${init} "$@" </root/dev/console >/root/dev/console
