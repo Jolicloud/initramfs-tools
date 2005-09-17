@@ -10,7 +10,8 @@ initramfs-tools (0.26) breezy; urgency=low
   * debian/dirs: Add /var/lib/initramfs-tools
 
   * hooks/evms: New file
-  * scripts/local-top: New file.
+  * scripts/local-top/evms: New file.
+    Thanks to Jerry Haltom for helping test this!
 
   * debian/control: Bump klibc depends to 1.0.14-1ubuntu2 for jfs support
 
