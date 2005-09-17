@@ -3,6 +3,7 @@
 mkdir /sys
 mkdir /proc
 mkdir /tmp
+mkdir -p /var/lock
 mount -t sysfs sysfs /sys
 mount -t proc proc /proc
 mount -t ramfs none /dev
@@ -53,7 +54,7 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
-log_begin_msg "Running /script/init-top"
+log_begin_msg "Running /scripts/init-top"
 run_scripts /scripts/init-top
 log_end_msg
 
@@ -89,8 +90,8 @@ log_end_msg
 # would.
 mkdir -p /dev/.static/dev
 chmod 700 /dev/.static/
-mount -o bind /root/dev /dev/.static/dev
-mount -o move /dev /root/dev
+mount -n -o bind ${rootmnt}/dev /dev/.static/dev
+mount -n -o move /dev ${rootmnt}/dev
 
 umount /sys
 umount /proc

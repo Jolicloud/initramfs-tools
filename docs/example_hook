@@ -39,6 +39,7 @@
 # TODO: Decide what environment variables are meaningful and defined
 #	in this context, then document them as part of the interface.
 #
+# TODO: May need a version_compare function for comparison of VERSION?
 
 
 #
@@ -66,18 +67,21 @@ esac
 #
 
 # Source the optional 'hook-functions' scriptlet, if you need the
-# functions defined within it:
+# functions defined within it.  Read it to see what is available to
+# you.  It contains functions for copying dynamically linked program
+# binaries, and kernel modules into the DESTDIR.
 #
-# . /usr/share/initramfs-tools/hook-functions
+. /usr/share/initramfs-tools/hook-functions
 
 
-# If this is a conffile, it must take care to do the right thing when
-# the package containing it is removed but not purged.  There of
+# If this hook script is a conffile (and thus stored in
+# /etc/mkinitramfs/hooks), it must take care to do the right thing
+# when the package containing it is removed but not purged.  There of
 # course may be other reasons to have custom logic deciding what to
-# install.
+# install.  The version variable may be useful for this.
 #
 if [ -x /usr/bin/myprog ]; then
-	install -D /usr/bin/myprog ${DESTDIR}/usr/bin
+	copy_exec /usr/bin/myprog usr/bin
 fi
 
 # To accompany this, there should usually be a script for inside the
@@ -108,4 +112,3 @@ then
 fi
 
 exit 0
-

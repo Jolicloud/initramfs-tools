@@ -1,5 +1,7 @@
 #!/bin/sh
 
+umask 0022
+
 # Defaults
 keep="n"
 CONFDIR="/etc/mkinitramfs"
@@ -97,7 +99,9 @@ done
 
 # MODULES=list case.  Always honour.
 for x in ${CONFDIR}/modules /usr/share/initramfs-tools/modules.d/*; do
-	add_modules_from_file ${x}
+	if [ -f "${x}" ]; then
+		add_modules_from_file ${x}
+	fi
 done
 
 if [ "${MODULES}" = "dep" ]; then
@@ -115,6 +119,12 @@ ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
 ln -s /usr/lib/klibc/lib/* ${DESTDIR}/lib
 copy_exec /usr/share/initramfs-tools/init /init
 cp -a /usr/share/initramfs-tools/scripts/* ${DESTDIR}/scripts
+for f in $(cd /etc/mkinitramfs/scripts && \
+	find . \( -name '*.dpkg*' -prune -o -name '*~' -prune \) \
+		-o -type f -print); do
+	mkdir --parents ${DESTDIR}/scripts/$(dirname ${f})
+cp -p /etc/mkinitramfs/scripts/${f} ${DESTDIR}/scripts/$(dirname ${f})
+done
 copy_exec ${CONFDIR}/initramfs.conf /conf
 cp -a /etc/udev ${DESTDIR}/etc
 

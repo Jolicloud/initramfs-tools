@@ -1,0 +1,12 @@
+etc/mkinitramfs/scripts/init-bottom
+etc/mkinitramfs/scripts/init-premount
+etc/mkinitramfs/scripts/init-top
+etc/mkinitramfs/scripts/local-bottom
+etc/mkinitramfs/scripts/local-premount
+etc/mkinitramfs/scripts/local-top
+etc/mkinitramfs/scripts/nfs-bottom
+etc/mkinitramfs/scripts/nfs-premount
+etc/mkinitramfs/scripts/nfs-top
+etc/mkinitramfs/hooks
+usr/share/initramfs-tools/modules.d
+/var/lib/initramfs-tools

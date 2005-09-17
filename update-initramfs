@@ -1,0 +1,281 @@
+#!/bin/sh
+
+STATEDIR=/var/lib/initramfs-tools
+BOOTDIR=/boot
+
+set -e
+
+usage()
+{
+	if [ -n "${1}" ]; then
+		printf "${@}\n\n" >&2
+	fi
+	cat >&2 << EOF
+Usage: ${0} [OPTION]...
+
+Options:
+ -k [version]	Specify kernel version or ALL
+ -c		Create a new initramfs
+ -u		Update an existing initramfs
+ -d		Remove an existing initramfs
+ -t		Take over a custom initramfs with this one
+ -v		Be verbose
+ -h		This message
+
+EOF
+	exit 1
+}
+
+mild_panic()
+{
+	if [ -n "${1}" ]; then
+		printf "${@}\n" >&2
+	fi
+	exit 0
+}
+
+panic()
+{
+	if [ -n "${1}" ]; then
+		printf "${@}\n" >&2
+	fi
+	exit 1
+}
+
+verbose()
+{
+	if [ "${verbose}" = 1 ]; then
+		printf "${@}\n"
+	fi
+}
+
+version_exists()
+{
+	[ -e "${STATEDIR}/${1}" ]
+	return $?
+}
+
+set_initramfs()
+{
+	initramfs="${BOOTDIR}/initrd.img-${version}"
+}
+
+generate_initramfs()
+{
+	verbose "Generating ${initramfs}"
+	mkinitramfs -o ${initramfs} ${version}
+	set_sha1
+}
+
+compare_sha1()
+{
+	sha1sum ${initramfs} | diff ${STATEDIR}/${version} - >/dev/null 2>&1
+	return $?
+}
+
+# Note that this must overwrite so that updates work.
+set_sha1()
+{
+	sha1sum ${initramfs} > ${STATEDIR}/${version}
+}
+
+delete_sha1()
+{
+	rm -f ${STATEDIR}/${version}
+}
+
+get_sorted_versions()
+{
+	version_list=""
+
+	for gsv_x in ${STATEDIR}/*; do
+		gsv_x=$(basename ${gsv_x})
+		if [ "${gsv_x}" = '*' ]; then
+			verbose "Nothing to do, exiting."
+			exit 0
+		fi
+		worklist=""
+		for gsv_i in $version_list; do
+			if dpkg --compare-versions "${gsv_x}" '>' "${gsv_i}"; then
+				worklist="${worklist} ${gsv_x} ${gsv_i}"
+				gsv_x=""
+			else
+				worklist="${worklist} ${gsv_i}"
+			fi
+		done
+		if [ "${gsv_x}" != "" ]; then
+			worklist="${worklist} ${gsv_x}"
+		fi
+		version_list=${worklist}
+	done
+
+	verbose "Available versions: ${version_list}"
+}
+
+set_linked_version()
+{
+	if [ -L /initrd.img ]; then
+		linktarget=$(readlink /initrd.img)
+	fi
+
+	if [ -L /boot/initrd.img ]; then
+		linktarget=$(readlink /boot/initrd.img)
+	fi
+
+	if [ -z "${linktarget}" ]; then
+		return
+	fi
+
+	version="${linktarget##initrd.img-}"
+}
+
+set_highest_version()
+{
+	get_sorted_versions
+	set - ${version_list}
+	version=${1}
+}
+
+create()
+{
+	if [ -z "${version}" ]; then
+		usage "Create mode requires a version argument"
+	fi
+
+	set_initramfs
+
+	if [ "${takeover}" = 0 ]; then
+		if version_exists ${version}; then
+			panic "Cannot create version ${version}: already exists"
+		fi
+	
+		if [ -e ${initramfs} ]; then
+			panic "${initramfs} already exists, cannot create."
+		fi
+	fi
+
+	generate_initramfs
+}
+
+update()
+{
+	if [ -z "${version}" ]; then
+		set_linked_version
+	fi
+
+	if [ -z "${version}" ]; then
+		set_highest_version
+	fi
+
+	if [ "${version}" = "all" ]; then
+		: FIXME check for --yes, and if not ask are you sure
+		get_sorted_versions
+		for u_version in ${version_list}; do
+			if [ "${verbose}" = "1" ]; then
+				vflag="-v"
+			fi
+			# Don't stop if one version doesn't work.
+			set +e
+			${0} ${vflag} -u -k ${u_version}
+			set -e
+		done
+		exit 0
+	fi
+
+	set_initramfs
+
+	altered_check
+
+	generate_initramfs
+
+}
+
+delete()
+{
+	if [ -z "${version}" ]; then
+		usage "Delete mode requires a version argument"
+	fi
+
+	set_initramfs
+
+	if [ ! -e ${initramfs} ]; then
+		panic "Cannot delete ${initramfs}, doesn't exist."
+	fi
+	
+	if ! version_exists ${version}; then
+		panic "Cannot delete version ${version}: Not created by this utility."
+	fi
+
+	altered_check
+
+	delete_sha1
+
+	rm -f "${initramfs}"
+}
+
+
+altered_check()
+{
+	if [ "${takeover}" = 0 ]; then
+		if ! compare_sha1; then
+			delete_sha1
+			mild_panic "${initramfs} was been altered.  Cannot update."
+		fi
+	fi
+}
+
+# Defaults
+verbose=0
+yes=0
+takeover=0
+
+##
+
+while getopts "k:cudyvht" flag; do
+	case "${flag}" in
+	k)
+		version="${OPTARG}"	
+		;;
+	c)
+		mode="c"
+		;;
+	d)
+		mode="d"
+		;;
+	u)
+		mode="u"
+		;;
+	v)
+		verbose="1"
+		;;
+	y)
+		yes="1"
+		;;
+	t)
+		takeover="1"
+		;;
+	h)
+		usage
+		;;
+	esac
+done
+
+# Validate arguments
+
+if [ -z "${mode}" ]; then
+	usage "You must specify at least one of -c, -u, or -d."
+fi
+
+case "${mode}" in
+	c)
+		create
+		;;
+	d)
+		delete
+		;;
+	u)
+		update
+		;;
+esac
+
+

@@ -1,3 +1,65 @@
+initramfs-tools (0.26) breezy; urgency=low
+
+  "Experience is one thing you can't get for nothing."
+  - Oscar Wilde 
+
+  * scripts/local-top/lvm: Reduce -- to - in VG strings for feeding
+    to vgchange.  (Ubuntu: #13387)
+
+  * update-initramfs: New file
+  * debian/dirs: Add /var/lib/initramfs-tools
+
+  * hooks/evms: New file
+  * scripts/local-top: New file.
+
+  * debian/control: Bump klibc depends to 1.0.14-1ubuntu2 for jfs support
+
+  * hook-scripts (manual_add_modules): Don't do unnecessary depmod
+    (dep_add_modules): No need for a sleep 2 here.
+    Thanks to Matt Zimmmerman for noticing these!
+
+  * scripts/functions: Attempt resume before loading USB or Network
+    modules to avoid resume issues with USB.
+    Thanks to Matthew Garrett for this patch!
+
+  * scripts/functions (ide_boot_events): Always load ide-generic
+    before going further.  This allows us to catch any hidden
+    IDE controllers that might not otherwise get found.
+
+  * initramfs.conf.5: New file
+  * debian/initramfs-tools.manpages: Install it.
+    Thanks to maximilian attems for the manpage!
+
+  * hook-functions (auto_add_modules): Add mptscsih (Ubuntu #15406)
+    Thanks to Jesper Krogh for the bug report!
+
+  * debian/dirs: Add etc/mkinitramfs/hooks, move all scripts subdirs
+    into etc/mkinitramfs/scripts.
+
+  * mkinitramfs: Set the umask.  Copy the scripts from  
+    /etc/mkinitramfs/scripts into the image.
+    Make sure that modules file lists is actually a regular file.
+
+  * init: Use ${rootmnt} instead of hardcoded /root, use mount -n
+    Fix typo.
+
+  * hook-functions (catenate_cpiogz): Add sanity check.
+    (add_modules_from_file): Document, quote variable, add warning.
+
+  * docs/example_hook: Update
+    Thanks to Karl Hegbloom for these previous 5 patches!
+
+  * init: Create /var/lock on the initramfs
+    Thanks to Jerry Haltom for noticing this!
+
+  * debian/dirs: rename to ...
+  * debian/initramfs-tools.dirs: ... this.
+
+  * scripts/functions (scsi_boot_events): Don't attempt to look
+    at ${device}/type if it doesn't actually exist.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Wed, 14 Sep 2005 14:12:24 -0400
+
 initramfs-tools (0.25) breezy; urgency=low
 
   "If there was less sympathy in the world, there would be less

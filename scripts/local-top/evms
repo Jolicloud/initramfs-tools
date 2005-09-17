@@ -1,0 +1,31 @@
+#!/bin/sh
+
+PREREQ="lvm"
+
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+evms=${ROOT#/dev/evms/}
+
+case ${evms} in
+	/dev/root)
+		unset evms
+		;;
+	/*)
+		exit 0
+		;;
+esac
+	
+modprobe -q dm-mod
+
+/sbin/evms_activate
