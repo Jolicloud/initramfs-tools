@@ -5,7 +5,8 @@ initramfs-tools (0.27) unstable; urgency=low
   * Add Jeff Bailey and myself as Uploaders, Debian kernel team as
     MAINTAINER.
 
-  * Upload to debian unstable. (Closes: #312561)
+  * Upload to debian unstable - allows use of nondevfs kernel >= 2.6.13
+    with initramfs image. (Closes: #312561, #315654)
 
  -- maximilian attems <maks@sternwelten.at>  Mon, 19 Sep 2005 15:09:26 +0200
 
