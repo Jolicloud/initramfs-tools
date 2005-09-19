@@ -1,3 +1,9 @@
+initramfs-tools (0.27) unstable; urgency=low
+
+  * Remove unused BUSYBOX config option as we use busybox anyway.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 19 Sep 2005 15:09:26 +0200
+
 initramfs-tools (0.26) breezy; urgency=low
 
   "Experience is one thing you can't get for nothing."
