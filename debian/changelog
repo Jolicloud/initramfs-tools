@@ -2,6 +2,9 @@ initramfs-tools (0.27) unstable; urgency=low
 
   * Remove unused BUSYBOX config option as we use busybox anyway.
 
+  * Add Jeff Bailey and myself as Uploaders, Debian kernel team as
+    MAINTAINER.
+
  -- maximilian attems <maks@sternwelten.at>  Mon, 19 Sep 2005 15:09:26 +0200
 
 initramfs-tools (0.26) breezy; urgency=low
