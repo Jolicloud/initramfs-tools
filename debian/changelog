@@ -8,7 +8,9 @@ initramfs-tools (0.27) unstable; urgency=low
   * Upload to debian unstable - allows use of nondevfs kernel >= 2.6.13
     with initramfs image. (Closes: #312561, #315654)
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 19 Sep 2005 15:09:26 +0200
+  * Fix busybox dependency to the relevant debian package.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 19 Sep 2005 18:14:59 +0200
 
 initramfs-tools (0.26) breezy; urgency=low
 
