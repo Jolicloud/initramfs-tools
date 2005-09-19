@@ -5,6 +5,8 @@ initramfs-tools (0.27) unstable; urgency=low
   * Add Jeff Bailey and myself as Uploaders, Debian kernel team as
     MAINTAINER.
 
+  * Upload to debian unstable. (Closes: #312561)
+
  -- maximilian attems <maks@sternwelten.at>  Mon, 19 Sep 2005 15:09:26 +0200
 
 initramfs-tools (0.26) breezy; urgency=low
