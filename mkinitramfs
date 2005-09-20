@@ -7,6 +7,8 @@ keep="n"
 CONFDIR="/etc/mkinitramfs"
 verbose="n"
 errors_to="2>/dev/null"
+# BUSYBOXDIR="/usr/lib/initramfs-tools/bin/"
+BUSYBOXDIR="/bin" 
 
 while getopts "d:ko:r:" flag; do
 	case $flag in
@@ -134,9 +136,9 @@ copy_exec /sbin/udevstart /sbin
 
 # Busybox
 rm ${DESTDIR}/bin/sh
-ln -s /bin/busybox ${DESTDIR}/bin/sh
+ln -s ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/sh
 # This is ugly, but needed atm to make the builtins work =(
-ln -s /bin/busybox ${DESTDIR}/bin/busybox
+ln -s ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/busybox
 
 # Modutils
 copy_exec /sbin/modprobe /sbin
