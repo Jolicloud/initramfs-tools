@@ -12,6 +12,8 @@ initramfs-tools (0.27) unstable; urgency=low
 
   * Reorder the initramfs.conf variables.
 
+  * Add question mark to the getopts for the help message.
+
  -- maximilian attems <maks@sternwelten.at>  Mon, 19 Sep 2005 18:14:59 +0200
 
 initramfs-tools (0.26) breezy; urgency=low

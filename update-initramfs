@@ -231,7 +231,7 @@ takeover=0
 
 ##
 
-while getopts "k:cudyvht" flag; do
+while getopts "k:cudyvht?" flag; do
 	case "${flag}" in
 	k)
 		version="${OPTARG}"	
@@ -254,7 +254,7 @@ while getopts "k:cudyvht" flag; do
 	t)
 		takeover="1"
 		;;
-	h)
+	h|?)
 		usage
 		;;
 	esac
