@@ -1,0 +1,60 @@
+.TH UPDATE-INITRAMFS 8  "$Date: 2005/09/20" $" "" "update-initramfs manual"
+
+.SH NAME
+update-initramfs \- generate an initramfs image
+
+.SH SYNOPSIS
+.B update-initramfs
+.RB [ \-k 
+.IR version ] 
+.RB [ \-c ] 
+.RB [ \-u ] 
+.RB [ \-t ] 
+.RB [ \-v ] 
+.RB [ \-h ] 
+.SH DESCRIPTION
+The
+.B update-initramfs 
+script manages your initramfs images.  The initramfs is an cpio archive. 
+At boot time, the kernel unpacks that archive into ram disk, mounts and 
+uses it as initial root file system. All finding of the root device 
+happens in this early userspace.
+
+.SH OPTIONS
+.TP
+\fB \-k \fI version
+Set the kernel for whom the initramfs will be generated.
+
+.TP
+\fB \-c
+Create a new initramfs.
+
+.TP
+\fB \-u
+Update an existing initramfs.
+
+.TP
+\fB \-d
+Remove an existing initramfs.
+
+.TP
+\fB \-t
+Take over a custom initramfs with this one.
+
+.TP
+\fB \-v
+This option increases the amount of information you are given during
+the chosen action.
+
+.TP
+\fB \-h
+Print a short help page describing the available options in 
+.B update-initramfs.
+
+.SH AUTHOR
+The initramfs-tools are written by Jeff Bailey <jbailey@ubuntu.com>.
+This manual is maintained by Maximilian Attems <maks@sternwelten.at>.
+
+.SH SEE ALSO
+
+.BR initramfs.conf (5)
