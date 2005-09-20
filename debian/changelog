@@ -16,6 +16,9 @@ initramfs-tools (0.27) unstable; urgency=low
 
   * update-initramfs.8 New file install it.
 
+  * The debian busybox-cvs-static installs into /bin/busybox:
+    fix pathes vis-à-vis ubuntu version.
+
  -- maximilian attems <maks@sternwelten.at>  Tue, 20 Sep 2005 13:52:00 +0200
 
 initramfs-tools (0.26) breezy; urgency=low

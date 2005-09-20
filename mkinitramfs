@@ -134,9 +134,9 @@ copy_exec /sbin/udevstart /sbin
 
 # Busybox
 rm ${DESTDIR}/bin/sh
-ln -s /usr/lib/initramfs-tools/bin/busybox ${DESTDIR}/bin/sh
+ln -s /bin/busybox ${DESTDIR}/bin/sh
 # This is ugly, but needed atm to make the builtins work =(
-ln -s /usr/lib/initramfs-tools/bin/busybox ${DESTDIR}/bin/busybox
+ln -s /bin/busybox ${DESTDIR}/bin/busybox
 
 # Modutils
 copy_exec /sbin/modprobe /sbin
