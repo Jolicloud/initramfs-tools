@@ -19,7 +19,7 @@ if [ "x${resume}" = "x" ]; then
 	exit
 fi
 
-if [ ! -e ${resume} ]; then
+if [ ! -e "${resume}" ]; then
 	exit
 fi
 

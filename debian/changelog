@@ -1,3 +1,42 @@
+initramfs-tools (0.30) unstable; urgency=low
+
+  Apparition Octobre Rouge
+
+  [ maximilian Attems ]
+
+  * Resynconise with latest upstream now we are in unstable.
+  
+  [ Jeff Bailey ]
+  * debian/rules: Make sure hooks and scripts are chmod +x
+
+  * hook-functions (auto_add_modules): Add advansys.
+
+  * debian/init: Add "Loading, please wait..." message.
+    Don't log for init-top scripts to avoid usplash noise.
+
+  * init: Add start of debug command line option.
+
+  * scripts/functions (log_begin_msg): Call usplash if available
+    (log_end_msg): Call usplash if available
+    (panic): Close usplash if available
+
+  * scripts/functions (load_modules): Quote resume variable.
+    Thanks to Christian Kellner for helping test that!
+
+  * scripts/local-premount/suspend: Quote resume variable.
+
+  * update-initramfs: Use basename on the link target to get the
+     version number.
+
+  * HACKING: Start of some notes on how this package actually works.
+  * debian/initramfs-tools.docs: Install it.
+
+  [ Matthew Garrett ]
+  * scripts/functions (load_modules): Run udevstart after loading block
+    drivers should fix resume from hibernate on non-LVM systems.
+
+ -- maximilian attems <maks@sternwelten.at>  Fri, 30 Sep 2005 19:34:55 +0200
+
 initramfs-tools (0.27) unstable; urgency=low
 
   * Remove unused BUSYBOX config option as we use busybox anyway.
@@ -17,7 +56,7 @@ initramfs-tools (0.27) unstable; urgency=low
   * update-initramfs.8 New file install it.
 
   * The debian busybox-cvs-static installs into /bin/busybox:
-    fix pathes vis-à-vis ubuntu version. make that a variable on top.
+    fix pathes vis-a-vis ubuntu version. make that a variable on top.
 
  -- maximilian attems <maks@sternwelten.at>  Tue, 20 Sep 2005 13:52:00 +0200
 

@@ -23,12 +23,18 @@ log_warning_msg()
 
 log_begin_msg()
 {
-    _log_msg "Begin: $@ ..."
+	if [ -x /sbin/usplash_write ]; then
+		/sbin/usplash_write "TEXT $@"
+	fi
+	_log_msg "Begin: $@ ..."
 }
 
 log_end_msg()
 {
-    _log_msg "Done."
+	if [ -x /sbin/usplash_write ]; then
+		/sbin/usplash_write "SUCCESS ok"
+	fi
+	_log_msg "Done."
 }
 
 # update_progress() # ToDo: NOP placeholder... what else for usplash?
@@ -38,6 +44,9 @@ log_end_msg()
 
 panic()
 {
+	if [ -x /sbin/usplash_write ]; then
+		/sbin/usplash_write "QUIT"
+	fi
 	echo $@
 	FS1='(initramfs) ' exec /bin/sh </dev/console >/dev/console 2>&1
 }
@@ -228,8 +237,12 @@ load_modules()
 
 	i2o_boot_events
 
+	# FIXME - need to start LVM here
+
+	udevstart
+
 	if [ -e /sys/power/resume ]; then
-		if [ -e ${resume} ]; then
+		if [ -e "${resume}" ]; then
 			major=$((0x$(stat -c%t ${resume})))
 			minor=$((0x$(stat -c%T ${resume})))
 			echo ${major}:${minor} >/sys/power/resume

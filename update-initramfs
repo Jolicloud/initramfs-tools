@@ -115,11 +115,11 @@ get_sorted_versions()
 set_linked_version()
 {
 	if [ -L /initrd.img ]; then
-		linktarget=$(readlink /initrd.img)
+		linktarget=$(basename $(readlink /initrd.img))
 	fi
 
 	if [ -L /boot/initrd.img ]; then
-		linktarget=$(readlink /boot/initrd.img)
+		linktarget=$(basename $(readlink /boot/initrd.img))
 	fi
 
 	if [ -z "${linktarget}" ]; then
