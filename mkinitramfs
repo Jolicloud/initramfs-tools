@@ -30,7 +30,7 @@ while true; do
 	-o)
 		touch $2
 		outfile="$(readlink -f "$2")"
-		shift $2
+		shift 2
 		;;
 	-k)
 		keep="y"
