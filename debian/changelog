@@ -10,6 +10,7 @@ initramfs-tools (0.33) unstable; urgency=low
   * Use udevsynthesize.
   * Add hotplug agents.
 
+  * Bump udev dependency to a working version.
   * init udev fixes
     - Start and kill udevd.
     - Create /dev/.udevdb.
