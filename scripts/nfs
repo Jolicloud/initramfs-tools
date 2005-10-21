@@ -5,9 +5,9 @@
 # Paramter: Where the root should be mounted
 mountroot ()
 {
-	log_begin_msg "Running /scripts/nfs-top"
+	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/nfs-top"
 	run_scripts /scripts/nfs-top
-	log_end_msg
+	[ "$quiet" != "y" ] && log_end_msg
 
 	modprobe nfs
 	# For DHCP
@@ -19,9 +19,13 @@ mountroot ()
 		NFSROOT=${ROOTSERVER}:${ROOTPATH}
 	fi
 
-	log_begin_msg "Running /scripts/nfs-premount"
+	if [ "x${NFSOPTS}" = "x" ]; then
+		NFSOPTS="-o retrans=10"
+	fi
+
+	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/nfs-premount"
 	run_scripts /scripts/nfs-premount
-	log_end_msg
+	[ "$quiet" != "y" ] && log_end_msg
 
 	if [ ${readonly} = y ]; then
 		roflag="-o ro"
@@ -30,10 +34,10 @@ mountroot ()
 	fi
 
 	sleep 3
-	nfsmount ${roflag} ${NFSROOT} ${rootmnt}
+	nfsmount ${roflag} ${NFSOPTS} ${NFSROOT} ${rootmnt}
 
-	log_begin_msg "Running /scripts/nfs-bottom"
+	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/nfs-bottom"
 	run_scripts /scripts/nfs-bottom
-	log_end_msg
+	[ "$quiet" != "y" ] && log_end_msg
 
 }

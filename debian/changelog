@@ -24,7 +24,24 @@ initramfs-tools (0.31) UNRELEASED; urgency=low
 
    * hook-functions: Add ibmvscsic to list of scsi modules.
 
- -- Bastian Blank <waldi@debian.org>  Mon, 10 Oct 2005 18:27:12 +0000
+  [ maximilian attems ]
+  * Resynchronise with latest upstream release.
+
+  [ Jeff Bailey ]
+  * scripts/nfs (mountroot): New variable: NFSOPTS, default to
+    -o retranfs=10. (Ubuntu 12942)
+    This can be overridden in the initramfs.conf file.
+    Thanks to Oliver Grawert for testing this!
+
+  * hook-scripts (auto_add_modules): Add jfs
+    (dep_add_modules): Ditto. (Ubuntu #16742)
+    Thanks to Colin Watson for this fix!
+
+  [ Adam Conrad ]
+  * Make us a bit more silent/tidy by default, unless "quiet" isn't on
+    the kernel's command line (then we're just as verbose as ever)
+
+ -- maximilian attems <maks@sternwelten.at>  Sun, 16 Oct 2005 19:22:55 +0200
 
 initramfs-tools (0.31) unstable; urgency=low
 
