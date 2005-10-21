@@ -1,4 +1,4 @@
-initramfs-tools (0.33) unstable; urgency=low
+initramfs-tools (0.34) unstable; urgency=low
 
   [ Bastian Blank ]
   * debian/control: Add mklibs-copy as dependency.
@@ -30,6 +30,7 @@ initramfs-tools (0.33) unstable; urgency=low
   * Place shift after variable outfile assignment.
   * Thanks to Bastian Blank for the fixes concerning the new busybox version.
     (Closes: #334467)
+  * Dont upload with .bzr.backup dirs.
 
   [ Jeff Bailey ]
   * scripts/nfs (mountroot): New variable: NFSOPTS, default to
@@ -50,7 +51,7 @@ initramfs-tools (0.33) unstable; urgency=low
   * Quote variables.
   * Use test options -n and -z.
 
- -- maximilian attems <maks@sternwelten.at>  Fri, 21 Oct 2005 19:19:06 +0200
+ -- maximilian attems <maks@sternwelten.at>  Fri, 21 Oct 2005 19:54:27 +0200
 
 initramfs-tools (0.31) unstable; urgency=low
 
