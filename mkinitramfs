@@ -149,7 +149,7 @@ cp /sbin/mdrun ${DESTDIR}/sbin
 # LVM
 cp /lib/lvm-200/vgchange ${DESTDIR}/sbin
 
-mklibs-small -d ${DESTDIR}/lib --root=${DESTDIR} $(find ${DESTDIR} -type f -perm +0111 -o -name '*.so')
+mklibs-copy -d ${DESTDIR}/lib --root=${DESTDIR} $(find ${DESTDIR} -type f -perm +0111 -o -name '*.so')
 
 ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
 ln -s /usr/lib/klibc/lib/* ${DESTDIR}/lib
