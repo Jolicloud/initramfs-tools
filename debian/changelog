@@ -1,4 +1,4 @@
-initramfs-tools (0.31) UNRELEASED; urgency=low
+initramfs-tools (0.33) unstable; urgency=low
 
   [ Bastian Blank ]
   * debian/control: Add mklibs-copy as dependency.
@@ -27,6 +27,8 @@ initramfs-tools (0.31) UNRELEASED; urgency=low
   [ maximilian attems ]
   * Resynchronise with latest upstream release.
   * Place shift after variable outfile assignment.
+  * Thanks to Bastian Blank for the fixes concerning the new busybox version.
+    (Closes: #334467)
 
   [ Jeff Bailey ]
   * scripts/nfs (mountroot): New variable: NFSOPTS, default to
