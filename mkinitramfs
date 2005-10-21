@@ -128,9 +128,11 @@ done
 cp ${CONFDIR}/initramfs.conf ${DESTDIR}/conf
 cp -a /etc/udev ${DESTDIR}/etc
 
-# Hack until udev is built with klibc
+# udev
 cp /sbin/udev ${DESTDIR}/sbin
-cp /sbin/udevstart ${DESTDIR}/sbin
+cp /sbin/udevd ${DESTDIR}/sbin
+cp /sbin/udevsynthesize ${DESTDIR}/sbin
+cp -a /lib/hotplug ${DESTDIR}/lib
 
 # Busybox
 cp ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/busybox

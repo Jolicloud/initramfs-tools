@@ -7,7 +7,20 @@ initramfs-tools (0.31) UNRELEASED; urgency=low
   * mkinitramfs
     - Use cp instead of copy_exec.
     - Call mklibs-copy to collect necessary libs.
+  * Use udevsynthesize.
+  * Add hotplug agents.
 
+  * init udev fixes
+    - Start and kill udevd.
+    - Create /dev/.udevdb.
+    - Use udevsynthesize.
+    - Call depmod.
+  * mkinitramfs udev fixes
+    - Install udevd and udevsynthesize instead of udevstart.
+    - Install hotplug agents.
+   * scripts/functions (load_modules)
+    - Don't call depmod and udevstart.
+    - Don't crawl pci devices ourself.
 
  -- Bastian Blank <waldi@debian.org>  Mon, 10 Oct 2005 18:27:12 +0000
 

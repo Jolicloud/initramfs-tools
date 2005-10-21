@@ -203,8 +203,6 @@ i2o_boot_events()
 
 load_modules()
 {
-	depmod -a
-
 	# Load custom modules first
 	if [ -e /conf/modules ]; then
 		cat /conf/modules | while read m; do
@@ -219,18 +217,6 @@ load_modules()
 		done
 	fi
 
-	for x in /sys/bus/pci/devices/*; do
-		if [ -e ${x}/class ]; then
-			case $(cat ${x}/class) in
-			0x0100*|0x0101*)
-				if [ -e ${x}/modalias ]; then
-					modprobe -q $(cat ${x}/modalias)
-				fi	
-			;;
-			esac
-		fi
-	done
-
 	ide_boot_events
 
 	scsi_boot_events
@@ -239,8 +225,6 @@ load_modules()
 
 	# FIXME - need to start LVM here
 
-	udevstart
-
 	if [ -e /sys/power/resume ]; then
 		if [ -e "${resume}" ]; then
 			major=$((0x$(stat -c%t ${resume})))
@@ -248,12 +232,6 @@ load_modules()
 			echo ${major}:${minor} >/sys/power/resume
 		fi
 	fi
-
-	for x in /sys/bus/pci/devices/*; do
-		if [ -e ${x}/modalias ]; then
-			modprobe -q $(cat ${x}/modalias)
-		fi
-	done
 
 	# Give the USB bus a moment to catch up
 	sleep 2

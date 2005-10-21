@@ -67,15 +67,21 @@ run_scripts /scripts/init-top
 
 . /scripts/${BOOT}
 
+depmod -a
+
+# Populate /dev tree
+log_begin_msg "Initializing /dev"
+mkdir /dev/.udevdb
+UDEVD_EXPECTED_SEQNUM=$(($(cat /sys/kernel/hotplug_seqnum) + 1)) udevd --daemon
+udevsynthesize
+sleep 2
+log_end_msg
+
 log_begin_msg "Loading modules"
 load_modules
 log_end_msg
 
-# Populate /dev tree
-log_begin_msg "Initializing /dev"
 parse_numeric ${ROOT}
-udevstart
-log_end_msg
 
 if [ x${break} = xyes ]; then 
 	panic "Spawning shell within the initramfs"
@@ -84,6 +90,8 @@ fi
 log_begin_msg "Running /scripts/init-premount"
 run_scripts /scripts/init-premount
 log_end_msg
+
+killall udevd
 
 log_begin_msg "Mounting root file system"
 mountroot
