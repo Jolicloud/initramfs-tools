@@ -114,7 +114,7 @@ auto_add_modules()
 	done
 
 	# scsi
-	for x in 3w-9xxx 3w-xxxx a100u2x aacraid advansys ahci aic79xx aic7xxx ata_piix atari_scsi atp870u BusLogic cciss ch dc395x dmx3191d dpt_i2o eata fdomain initio ipr ips isp1020 lpfc max_scsi mac53c94 megaraid megaraid_mbox megaraid_mm mesh mptscsih nsp32 osst qla1280 qla2100 qla2200 qla2300 qla2322 qla2xxx qla6312 qlogicfas408 qlogicfc sata_promise sata_nv sata_qstor sata_sil sata_sis sata_svw sata_sx4 sata_uli sata_via sata_vsc scsi_mod scsi_transport_fc scsi_transport_iscsi scsi_transport_spi sd_mod sym53c8xx tmscsim; do
+	for x in 3w-9xxx 3w-xxxx a100u2x aacraid advansys ahci aic79xx aic7xxx ata_piix atari_scsi atp870u BusLogic cciss ch dc395x dmx3191d dpt_i2o eata fdomain ibmvscsic initio ipr ips isp1020 lpfc max_scsi mac53c94 megaraid megaraid_mbox megaraid_mm mesh mptscsih nsp32 osst qla1280 qla2100 qla2200 qla2300 qla2322 qla2xxx qla6312 qlogicfas408 qlogicfc sata_promise sata_nv sata_qstor sata_sil sata_sis sata_svw sata_sx4 sata_uli sata_via sata_vsc scsi_mod scsi_transport_fc scsi_transport_iscsi scsi_transport_spi sd_mod sym53c8xx tmscsim; do
 		manual_add_modules ${x}
 	done
 

@@ -22,6 +22,8 @@ initramfs-tools (0.31) UNRELEASED; urgency=low
     - Don't call depmod and udevstart.
     - Don't crawl pci devices ourself.
 
+   * hook-functions: Add ibmvscsic to list of scsi modules.
+
  -- Bastian Blank <waldi@debian.org>  Mon, 10 Oct 2005 18:27:12 +0000
 
 initramfs-tools (0.31) unstable; urgency=low
