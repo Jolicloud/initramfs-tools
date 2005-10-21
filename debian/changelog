@@ -43,8 +43,10 @@ initramfs-tools (0.31) UNRELEASED; urgency=low
 
   [ Jonas Smedegaard ]
   * Use GNU getopt (instead of bash builtin getopts) for improved handling.
+  * Quote variables.
+  * Use test options -n and -z.
 
- -- Jonas Smedegaard <dr@jones.dk>  Tue, 18 Oct 2005 04:03:48 +0200
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 18 Oct 2005 04:16:30 +0200
 
 initramfs-tools (0.31) unstable; urgency=low
 
