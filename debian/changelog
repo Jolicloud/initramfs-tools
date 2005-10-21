@@ -41,7 +41,10 @@ initramfs-tools (0.31) UNRELEASED; urgency=low
   * Make us a bit more silent/tidy by default, unless "quiet" isn't on
     the kernel's command line (then we're just as verbose as ever)
 
- -- maximilian attems <maks@sternwelten.at>  Sun, 16 Oct 2005 19:22:55 +0200
+  [ Jonas Smedegaard ]
+  * Use GNU getopt (instead of bash builtin getopts) for improved handling.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 18 Oct 2005 04:03:48 +0200
 
 initramfs-tools (0.31) unstable; urgency=low
 
