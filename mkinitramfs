@@ -117,9 +117,7 @@ fi
 # Have to do each file, because cpio --dereference doesn't recurse down
 # symlinks.
 
-ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
-ln -s /usr/lib/klibc/lib/* ${DESTDIR}/lib
-copy_exec /usr/share/initramfs-tools/init /init
+cp /usr/share/initramfs-tools/init ${DESTDIR}/init
 cp -a /usr/share/initramfs-tools/scripts/* ${DESTDIR}/scripts
 for f in $(cd /etc/mkinitramfs/scripts && \
 	find . \( -name '*.dpkg*' -prune -o -name '*~' -prune \) \
@@ -127,39 +125,44 @@ for f in $(cd /etc/mkinitramfs/scripts && \
 	mkdir --parents ${DESTDIR}/scripts/$(dirname ${f})
 cp -p /etc/mkinitramfs/scripts/${f} ${DESTDIR}/scripts/$(dirname ${f})
 done
-copy_exec ${CONFDIR}/initramfs.conf /conf
+cp ${CONFDIR}/initramfs.conf ${DESTDIR}/conf
 cp -a /etc/udev ${DESTDIR}/etc
 
 # Hack until udev is built with klibc
-copy_exec /sbin/udev /sbin
-copy_exec /sbin/udevstart /sbin
+cp /sbin/udev ${DESTDIR}/sbin
+cp /sbin/udevstart ${DESTDIR}/sbin
 
 # Busybox
-rm ${DESTDIR}/bin/sh
-ln -s ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/sh
-# This is ugly, but needed atm to make the builtins work =(
-ln -s ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/busybox
+cp ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/busybox
 
 # Modutils
-copy_exec /sbin/modprobe /sbin
-copy_exec /sbin/depmod /sbin
-copy_exec /sbin/rmmod /sbin
+cp /sbin/modprobe ${DESTDIR}/sbin
+cp /sbin/depmod ${DESTDIR}/sbin
+cp /sbin/rmmod ${DESTDIR}/sbin
 mkdir -p ${DESTDIR}/etc/modprobe.d
-copy_exec /etc/modprobe.d/aliases /etc/modprobe.d
+cp /etc/modprobe.d/aliases ${DESTDIR}/etc/modprobe.d
 
 # Raid
-copy_exec /sbin/mdadm /sbin
-copy_exec /sbin/mdrun /sbin
+cp /sbin/mdadm ${DESTDIR}/sbin
+cp /sbin/mdrun ${DESTDIR}/sbin
 
 # LVM
-copy_exec /lib/lvm-200/vgchange /sbin
+cp /lib/lvm-200/vgchange ${DESTDIR}/sbin
+
+mklibs-small -d ${DESTDIR}/lib --root=${DESTDIR} $(find ${DESTDIR} -type f -perm +0111 -o -name '*.so')
+
+ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
+ln -s /usr/lib/klibc/lib/* ${DESTDIR}/lib
+
+rm ${DESTDIR}/bin/sh
+ln -s busybox ${DESTDIR}/bin/sh
 
 run_scripts /usr/share/initramfs-tools/hooks
 run_scripts /etc/mkinitramfs/hooks
 
 # Apply DSDT to initramfs
 if [ -e ${CONFDIR}/DSDT.aml ]; then
-	copy_exec ${CONFDIR}/DSDT.aml /
+	cp ${CONFDIR}/DSDT.aml ${DESTDIR}
 fi
 
 (cd ${DESTDIR} && find . | cpio --quiet --dereference -o -H newc | gzip -9 >${outfile})

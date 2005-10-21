@@ -1,3 +1,16 @@
+initramfs-tools (0.31) UNRELEASED; urgency=low
+
+  [ Bastian Blank ]
+  * debian/control: Add mklibs-copy as dependency.
+  * hook-functions use mklibs-copy: Remove copy_exec.
+  * hooks/evms: Use cp instead of copy_exec.
+  * mkinitramfs
+    - Use cp instead of copy_exec.
+    - Call mklibs-copy to collect necessary libs.
+
+
+ -- Bastian Blank <waldi@debian.org>  Mon, 10 Oct 2005 18:27:12 +0000
+
 initramfs-tools (0.31) unstable; urgency=low
 
   Quick fix for sluggish dep

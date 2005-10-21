@@ -51,36 +51,6 @@ manual_add_modules()
 	done
 }
 
-# $1 is source
-# $2 is relative destination
-copy_exec() {
-	ln -s ${1} ${DESTDIR}/${2}  
-
-	# Copy the dependant libraries
-	for x in $(ldd ${1} 2>/dev/null | sed -e '
-	    /\//!d;
-	    /linux-gate/d;
-	    /=>/ {s/.*=>[[:blank:]]*\([^[:blank:]]*\).*/\1/};
-	    s/[[:blank:]]*\([^[:blank:]]*\) (.*)/\1/' 2>/dev/null); do
-
-		# Try to use non-optimised libraries where possible.
-		# We assume that all HWCAP libraries will be in tls.
-		nonoptlib=$(echo ${x} | sed -e 's#/lib/tls.*/\(lib.*\)#/lib/\1#')
-
-		if [ -e ${nonoptlib} ]; then
-			x=${nonoptlib}
-		fi
-
-		libname=$(basename ${x})
-		dirname=$(dirname ${x})
-
-		mkdir -p ${DESTDIR}/${dirname}
-		if [ ! -e ${DESTDIR}/${dirname}/${libname} ]; then
-			ln -s ${x} ${DESTDIR}/${dirname}
-		fi
-	done
-}
-
 # Copy entire subtrees to the initramfs
 copy_modules_dir()
 {
