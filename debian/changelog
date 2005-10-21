@@ -26,6 +26,7 @@ initramfs-tools (0.31) UNRELEASED; urgency=low
 
   [ maximilian attems ]
   * Resynchronise with latest upstream release.
+  * Place shift after variable outfile assignment.
 
   [ Jeff Bailey ]
   * scripts/nfs (mountroot): New variable: NFSOPTS, default to
