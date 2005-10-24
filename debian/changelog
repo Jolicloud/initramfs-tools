@@ -5,7 +5,9 @@ initramfs-tools (0.35) unstable; urgency=low
   * mkinitramfs: Run the hooks before mklibs-copy, broke evms.
     thanks to Steinar H. Gunderson <sesse@debian.org>
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 24 Oct 2005 08:57:55 +0200
+  * Change name of virtual package that is provided into linux-initramfs-tool.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 24 Oct 2005 09:08:48 +0200
 
 initramfs-tools (0.32) unstable; urgency=low
 
