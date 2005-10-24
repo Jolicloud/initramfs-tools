@@ -3,7 +3,7 @@ initramfs-tools (0.35) unstable; urgency=low
   * mkinitramfs: Return 2 for failure path of --supported-(host|target)-version.
 
   * mkinitramfs: Run the hooks before mklibs-copy, broke evms.
-    thanks to Steinar H. Gunderson <sesse@debian.org>
+    Thanks for fix and testing to Steinar H. Gunderson <sesse@debian.org>
 
   * Change name of virtual package that is provided into linux-initramfs-tool.
 
@@ -11,7 +11,11 @@ initramfs-tools (0.35) unstable; urgency=low
 
   * Add hooks/md allowing to remove dependency on mdadm.
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 24 Oct 2005 09:49:48 +0200
+  * Remove the mdadm and lvm dependencies, they work as hooks when present.
+    The lvm2 version in sarge is good enough to address issues mentioned in
+    0.16. A woody backport will need newer lvm2 although..
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 24 Oct 2005 19:16:14 +0200
 
 initramfs-tools (0.32) unstable; urgency=low
 
