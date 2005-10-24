@@ -185,10 +185,6 @@ cp /sbin/rmmod "${DESTDIR}/sbin"
 mkdir -p "${DESTDIR}/etc/modprobe.d"
 cp /etc/modprobe.d/aliases "${DESTDIR}/etc/modprobe.d"
 
-# Raid
-cp /sbin/mdadm "${DESTDIR}/sbin"
-cp /sbin/mdrun "${DESTDIR}/sbin"
-
 run_scripts /usr/share/initramfs-tools/hooks
 run_scripts /etc/mkinitramfs/hooks
 

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+PREREQ=""
+
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+if [ ! -x /sbin/mdadm ]; then
+	exit 0
+fi
+
+. /usr/share/initramfs-tools/hook-functions
+
+cp /sbin/mdadm "${DESTDIR}/sbin"
+cp /sbin/mdrun "${DESTDIR}/sbin"
+
+for x in md raid0 raid1 raid5 raid6; do
+        manual_add_modules ${x}
+done
