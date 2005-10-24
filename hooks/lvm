@@ -1,0 +1,27 @@
+#!/bin/sh
+
+PREREQ=""
+
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+if [ ! -x /sbin/vgchange ]; then
+	exit 0
+fi
+
+. /usr/share/initramfs-tools/hook-functions
+
+cp /lib/lvm-200/vgchange "${DESTDIR}/sbin"
+
+for x in dm_mod; do
+        manual_add_modules ${x}
+done

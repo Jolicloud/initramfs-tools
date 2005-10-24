@@ -63,7 +63,7 @@ dep_add_modules()
 {
 
 	# Things that are too hard to autodetect.
-	for x in md raid0 raid1 raid5 raid6 ext2 ext3 isofs jfs nfs reiserfs xfs af_packet dm_mod; do
+	for x in md raid0 raid1 raid5 raid6 ext2 ext3 isofs jfs nfs reiserfs xfs af_packet; do
 		manual_add_modules "${x}"
 	done
 
@@ -99,7 +99,7 @@ dep_add_modules()
 auto_add_modules()
 {
 	# base
-	for x in md raid0 raid1 raid5 raid6 ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 ext3 isofs jfs nfs reiserfs xfs af_packet dm_mod; do
+	for x in md raid0 raid1 raid5 raid6 ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 ext3 isofs jfs nfs reiserfs xfs af_packet; do
 		manual_add_modules "${x}"
 	done
 

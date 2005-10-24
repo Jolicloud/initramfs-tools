@@ -7,7 +7,9 @@ initramfs-tools (0.35) unstable; urgency=low
 
   * Change name of virtual package that is provided into linux-initramfs-tool.
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 24 Oct 2005 09:08:48 +0200
+  * Add hooks/lvm, those remove dependency on lvm2.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 24 Oct 2005 09:38:41 +0200
 
 initramfs-tools (0.32) unstable; urgency=low
 

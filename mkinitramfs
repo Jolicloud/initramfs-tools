@@ -189,9 +189,6 @@ cp /etc/modprobe.d/aliases "${DESTDIR}/etc/modprobe.d"
 cp /sbin/mdadm "${DESTDIR}/sbin"
 cp /sbin/mdrun "${DESTDIR}/sbin"
 
-# LVM
-cp /lib/lvm-200/vgchange "${DESTDIR}/sbin"
-
 run_scripts /usr/share/initramfs-tools/hooks
 run_scripts /etc/mkinitramfs/hooks
 
