@@ -14,6 +14,7 @@ prereqs)
 	;;
 esac
 
+# FIXME: check /sys/block/dm-0/dev
 if [ ! -x /sbin/vgchange ]; then
 	exit 0
 fi
