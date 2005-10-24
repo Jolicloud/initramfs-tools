@@ -13,6 +13,12 @@ mkinitramfs \- generate an initramfs image
 .RB [ \-r 
 .IR root ] 
 .RI [ version ]
+.B mkinitramfs
+.RB [ \-\-supported-host-version=
+.IR hversion ]
+.RB [ \-\-supported-target-version=
+.IR tversion ]
+
 .SH DESCRIPTION
 The
 .B mkinitramfs 
@@ -41,6 +47,16 @@ Override the
 .B ROOT 
 setting in 
 .IR mkinitramfs.conf .
+
+.TP
+\fB\-\-supported-host-version=\fIhversion
+This option queries if mkinitramfs can create ramdisks on a running kernel of version
+.IR hversion .
+
+.TP
+\fB\-\-supported-target-version=\fItversion
+This option queries if mkinitramfs can create ramdisks for kernel version
+.IR tversion .
 
 .SH FILES
 .TP

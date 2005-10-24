@@ -1,36 +1,21 @@
-initramfs-tools (0.34) unstable; urgency=low
+initramfs-tools (0.32) unstable; urgency=low
 
   [ Bastian Blank ]
-  * debian/control: Add mklibs-copy as dependency.
-  * hook-functions use mklibs-copy: Remove copy_exec.
-  * hooks/evms: Use cp instead of copy_exec.
-  * mkinitramfs
-    - Use cp instead of copy_exec.
-    - Call mklibs-copy to collect necessary libs.
-  * Use udevsynthesize.
-  * Add hotplug agents.
+  * Use mklibs-copy.
+  * Use udevsynthesize instead of udevstart.
+  * hook-functions: Add ibmvscsic to list of scsi modules.
 
-  * Bump udev dependency to a working version.
-  * init udev fixes
-    - Start and kill udevd.
-    - Create /dev/.udevdb.
-    - Use udevsynthesize.
-    - Call depmod.
-  * mkinitramfs udev fixes
-    - Install udevd and udevsynthesize instead of udevstart.
-    - Install hotplug agents.
-   * scripts/functions (load_modules)
-    - Don't call depmod and udevstart.
-    - Don't crawl pci devices ourself.
-
-   * hook-functions: Add ibmvscsic to list of scsi modules.
+  [ Sven Luther ]
+  * Added --supported-(host|target)-version support for the new post-2.6.13
+    ramdisk-tool policy. Added linux-ramdisk-tool virtual package too.
+    (Closes: #333856)
 
   [ maximilian attems ]
   * Resynchronise with latest upstream release.
   * Place shift after variable outfile assignment.
+  * Fix strange chars in the Depends line resulting in no depends at all.
   * Thanks to Bastian Blank for the fixes concerning the new busybox version.
     (Closes: #334467)
-  * Dont upload with .bzr.backup dirs.
 
   [ Jeff Bailey ]
   * scripts/nfs (mountroot): New variable: NFSOPTS, default to
@@ -47,11 +32,12 @@ initramfs-tools (0.34) unstable; urgency=low
     the kernel's command line (then we're just as verbose as ever)
 
   [ Jonas Smedegaard ]
-  * Use GNU getopt (instead of bash builtin getopts) for improved handling.
+  * Use GNU getopt (instead of bash builtin getopts) for improved long-
+    opts handling.
   * Quote variables.
   * Use test options -n and -z.
 
- -- maximilian attems <maks@sternwelten.at>  Fri, 21 Oct 2005 19:54:27 +0200
+ -- maximilian attems <maks@sternwelten.at>  Wed, 19 Oct 2005 17:42:08 +0200
 
 initramfs-tools (0.31) unstable; urgency=low
 
