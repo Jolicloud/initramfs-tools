@@ -3,8 +3,13 @@ initramfs-tools (0.37) unstable; urgency=low
   * scripts/functions, scripts/local-premount/suspend: Use of "stat"
     which isn' any more provided by busybox (1.01-3).
     Thanks to Adrian Bridgett <adrian@smop.co.uk> for the patch using awk.
+    (Closes: #335801)
 
- -- maximilian attems <maks@sternwelten.at>  Wed, 26 Oct 2005 08:43:36 +0200
+  * hooks/kernelextras: Check for existence of ${MODULESDIR}/initrd/:
+    Exit if it doesn't exist before including current dir.
+    Thanks to Jean Charles Delepine <delepine@nnx.com> (Closes: #335505)
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 26 Oct 2005 09:07:39 +0200
 
 initramfs-tools (0.36) unstable; urgency=low
 

@@ -19,6 +19,10 @@ esac
 
 . /usr/share/initramfs-tools/hook-functions
 
+if [ ! -d ${MODULESDIR}/initrd ]; then
+        exit 0
+fi
+
 fbcon=n
 
 for x in ${MODULESDIR}/initrd/*; do
