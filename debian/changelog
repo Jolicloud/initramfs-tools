@@ -9,7 +9,10 @@ initramfs-tools (0.37) unstable; urgency=low
     Exit if it doesn't exist before including current dir.
     Thanks to Jean Charles Delepine <delepine@nnx.com> (Closes: #335505)
 
- -- maximilian attems <maks@sternwelten.at>  Wed, 26 Oct 2005 09:07:39 +0200
+  * hooks/lvm, hooks/md: Remove FIXME's at second thought.  You better want 
+    to check against the binaries for your not yet created raid/lvm.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 26 Oct 2005 09:22:58 +0200
 
 initramfs-tools (0.36) unstable; urgency=low
 

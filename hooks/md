@@ -14,7 +14,6 @@ prereqs)
 	;;
 esac
 
-# FIXME: check /proc/mdstat
 if [ ! -x /sbin/mdadm ]; then
 	exit 0
 fi
