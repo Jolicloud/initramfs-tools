@@ -1,3 +1,11 @@
+initramfs-tools (0.37) unstable; urgency=low
+
+  * scripts/functions, scripts/local-premount/suspend: Use of "stat"
+    which isn' any more provided by busybox (1.01-3).
+    Thanks to Adrian Bridgett <adrian@smop.co.uk> for the patch using awk.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 26 Oct 2005 08:43:36 +0200
+
 initramfs-tools (0.36) unstable; urgency=low
 
   "Sunny Autumn Release"
