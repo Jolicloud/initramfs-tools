@@ -29,3 +29,7 @@ mkdir -p ${DESTDIR}/lib/evms/${EVMS_VERSION}
 for x in disk lvm2 dos multipath; do
 	cp /lib/evms/${EVMS_VERSION}/${x}* ${DESTDIR}/lib/evms/${EVMS_VERSION}
 done
+
+for x in dm_mod; do
+        manual_add_modules ${x}
+done

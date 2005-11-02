@@ -2,7 +2,7 @@ initramfs-tools (0.38) unstable; urgency=low
 
   [ dann frazier ]
 
-  * initramfs.conf: Reference correct manpage.  Closes: #336095
+  * initramfs.conf: Reference correct manpage.  (Closes: #336095)
 
   [ maximilian attems ]
 
@@ -10,7 +10,12 @@ initramfs-tools (0.38) unstable; urgency=low
     by using decimal numbers. Thanks to Adrian Bridgett <adrian@smop.co.uk>
     for the patch. (Closes: #336936)
 
- -- maximilian attems <maks@sternwelten.at>  Wed,  2 Nov 2005 07:10:45 +0100
+  * hooks/evms: manual_add_module dm_mod, now we no longer pull it in by
+    default. Thanks to Steinar H. Gunderson <sesse@debian.org>
+    (Closes: #336617)
+
+
+ -- maximilian attems <maks@sternwelten.at>  Wed,  2 Nov 2005 07:21:29 +0100
 
 initramfs-tools (0.37) unstable; urgency=low
 
