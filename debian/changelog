@@ -1,3 +1,11 @@
+initramfs-tools (0.38) unstable; urgency=low
+
+  [ dann frazier ]
+
+  * Reference correct manpage in initramfs.conf.  Closes: #336095
+
+ -- maximilian attems <maks@sternwelten.at>  Wed,  2 Nov 2005 06:58:17 +0100
+
 initramfs-tools (0.37) unstable; urgency=low
 
   * scripts/functions, scripts/local-premount/suspend: Use of "stat"
