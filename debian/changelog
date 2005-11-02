@@ -14,7 +14,6 @@ initramfs-tools (0.38) unstable; urgency=low
     default. Thanks to Steinar H. Gunderson <sesse@debian.org>
     (Closes: #336617)
 
-
  -- maximilian attems <maks@sternwelten.at>  Wed,  2 Nov 2005 07:21:29 +0100
 
 initramfs-tools (0.37) unstable; urgency=low
