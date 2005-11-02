@@ -2,9 +2,15 @@ initramfs-tools (0.38) unstable; urgency=low
 
   [ dann frazier ]
 
-  * Reference correct manpage in initramfs.conf.  Closes: #336095
+  * initramfs.conf: Reference correct manpage.  Closes: #336095
 
- -- maximilian attems <maks@sternwelten.at>  Wed,  2 Nov 2005 06:58:17 +0100
+  [ maximilian attems ]
+
+  * scripts/functions, scripts/local-premount/suspend: Fix suspend to disk
+    by using decimal numbers. Thanks to Adrian Bridgett <adrian@smop.co.uk>
+    for the patch. (Closes: #336936)
+
+ -- maximilian attems <maks@sternwelten.at>  Wed,  2 Nov 2005 07:10:45 +0100
 
 initramfs-tools (0.37) unstable; urgency=low
 

@@ -24,6 +24,6 @@ if [ ! -e "${resume}" ]; then
 fi
 
 if [ -e /sys/power/resume ]; then
-	major_minor=$(ls -l ${resume} | awk '{printf "0x%x:0x%x", $5, $6}')
+	major_minor=$(ls -l ${resume} | awk '{printf "%d:%d", $5, $6}')
 	echo $major_minor >/sys/power/resume
 fi
