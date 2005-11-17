@@ -10,10 +10,25 @@ initramfs-tools (0.39) unstable; urgency=low
   * Pump udev dependency.
 
   * init: Pump timeout as there is currently no way to check which udevd
-    processes are still running and why. Cures hopefully breakage of missing
-    devices.
+    processes are still running and why. 
+    Cures hopefully breakage of missing devices on boot.
+
+  * Sync with latest Ubuntu.
 
  -- maximilian attems <maks@sternwelten.at>  Thu, 17 Nov 2005 19:59:47 +0100
+
+initramfs-tools (0.36ubuntu3) dapper; urgency=low
+
+  * mkinitramfs: only copy the klibc-*.so file, and not the development
+    pieces that happen to sit alongside it.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Thu, 10 Nov 2005 16:44:08 -0500
+
+initramfs-tools (0.36ubuntu2) dapper; urgency=low
+
+  * Fix typos in the handling of the mkinitramfs -d option (thanks, Colin).
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Thu, 10 Nov 2005 12:12:32 -0500
 
 initramfs-tools (0.38) unstable; urgency=low
 

@@ -22,7 +22,7 @@ while true; do
 	-d)
 		CONFDIR="$2"
 		shift 2
-		if [ ! d "${CONFDIR}" ]; then
+		if [ ! -d "${CONFDIR}" ]; then
 			echo "${0}: ${CONFDIR}: Not a directory" >&2
 			exit 1
 		fi
@@ -159,7 +159,7 @@ fi
 # symlinks.
 
 ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
-ln -s /usr/lib/klibc/lib/* ${DESTDIR}/lib
+ln -s /usr/lib/klibc/lib/klibc-*.so ${DESTDIR}/lib
 copy_exec /usr/share/initramfs-tools/init /init
 cp -a /usr/share/initramfs-tools/scripts/* "${DESTDIR}/scripts"
 for f in $(cd /etc/mkinitramfs/scripts && \
