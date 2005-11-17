@@ -74,7 +74,8 @@ log_begin_msg "Initializing /dev"
 mkdir /dev/.udevdb
 UDEVD_EXPECTED_SEQNUM=$(($(cat /sys/kernel/hotplug_seqnum) + 1)) udevd --daemon
 udevsynthesize
-sleep 2
+# FIXME: future udevd should have condition to test against
+sleep 5
 log_end_msg
 
 log_begin_msg "Loading modules"
