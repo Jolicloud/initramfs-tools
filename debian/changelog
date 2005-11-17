@@ -1,3 +1,11 @@
+initramfs-tools (0.39) unstable; urgency=low
+
+  * Revert the mklibs-small usage patch - reduces needed dependencies:
+    hook-fuctions: Readds copy_exec.
+    mkinitramfs, hooks/{evms,lvm,md}: Use copy_exec.
+
+ -- maximilian attems <maks@sternwelten.at>  Thu, 17 Nov 2005 18:43:19 +0100
+
 initramfs-tools (0.38) unstable; urgency=low
 
   [ dann frazier ]

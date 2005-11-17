@@ -20,8 +20,8 @@ fi
 
 . /usr/share/initramfs-tools/hook-functions
 
-cp /sbin/mdadm "${DESTDIR}/sbin"
-cp /sbin/mdrun "${DESTDIR}/sbin"
+copy_exec /sbin/mdadm /sbin
+copy_exec /sbin/mdrun /sbin
 
 for x in md raid0 raid1 raid5 raid6; do
         manual_add_modules ${x}

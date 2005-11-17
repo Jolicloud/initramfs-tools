@@ -20,14 +20,14 @@ if [ ! -x /sbin/evms_activate ]; then
 	exit 0
 fi
 
-cp /sbin/evms_activate ${DESTDIR}/sbin
+copy_exec /sbin/evms_activate /sbin
 
 EVMS_VERSION=$(/usr/sbin/evms_query info | grep "EVMS Version" | awk '{ print $3; }')
 
 mkdir -p ${DESTDIR}/lib/evms/${EVMS_VERSION}
 
 for x in disk lvm2 dos multipath; do
-	cp /lib/evms/${EVMS_VERSION}/${x}* ${DESTDIR}/lib/evms/${EVMS_VERSION}
+	copy_exec /lib/evms/${EVMS_VERSION}/${x}* /lib/evms/${EVMS_VERSION}
 done
 
 for x in dm_mod; do

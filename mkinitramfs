@@ -158,7 +158,9 @@ fi
 # Have to do each file, because cpio --dereference doesn't recurse down
 # symlinks.
 
-cp /usr/share/initramfs-tools/init "${DESTDIR}/init"
+ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
+ln -s /usr/lib/klibc/lib/* ${DESTDIR}/lib
+copy_exec /usr/share/initramfs-tools/init /init
 cp -a /usr/share/initramfs-tools/scripts/* "${DESTDIR}/scripts"
 for f in $(cd /etc/mkinitramfs/scripts && \
 	find . \( -name '*.dpkg*' -prune -o -name '*~' -prune \) \
@@ -166,39 +168,32 @@ for f in $(cd /etc/mkinitramfs/scripts && \
 	mkdir --parents "${DESTDIR}/scripts/$(dirname "${f}")"
 cp -p "/etc/mkinitramfs/scripts/${f}" "${DESTDIR}/scripts/$(dirname "${f}")"
 done
-cp "${CONFDIR}/initramfs.conf" "${DESTDIR}/conf"
+copy_exec "${CONFDIR}/initramfs.conf" /conf
 cp -a /etc/udev "${DESTDIR}/etc"
 
-# udev
-cp /sbin/udev "${DESTDIR}/sbin"
-cp /sbin/udevd "${DESTDIR}/sbin"
-cp /sbin/udevsynthesize "${DESTDIR}/sbin"
-cp -a /lib/hotplug "${DESTDIR}/lib"
+# Hack until udev is built with klibc
+copy_exec /sbin/udev /sbin
+copy_exec /sbin/udevd /sbin
+copy_exec /sbin/udevsynthesize /sbin
 
 # Busybox
-cp "${BUSYBOXDIR}/busybox" "${DESTDIR}/bin/busybox"
+rm ${DESTDIR}/bin/sh
+copy_exec ${BUSYBOXDIR}/busybox /bin/busybox
+ln -s ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/sh
 
 # Modutils
-cp /sbin/modprobe "${DESTDIR}/sbin"
-cp /sbin/depmod "${DESTDIR}/sbin"
-cp /sbin/rmmod "${DESTDIR}/sbin"
+copy_exec /sbin/modprobe /sbin
+copy_exec /sbin/depmod /sbin
+copy_exec /sbin/rmmod /sbin
 mkdir -p "${DESTDIR}/etc/modprobe.d"
-cp /etc/modprobe.d/aliases "${DESTDIR}/etc/modprobe.d"
+copy_exec /etc/modprobe.d/aliases /etc/modprobe.d
 
 run_scripts /usr/share/initramfs-tools/hooks
 run_scripts /etc/mkinitramfs/hooks
 
-mklibs-copy -d "${DESTDIR}/lib" --root="${DESTDIR}" $(find "${DESTDIR}" -type f -perm +0111 -o -name '*.so')
-
-ln -s /usr/lib/klibc/bin/* "${DESTDIR}/bin"
-ln -s /usr/lib/klibc/lib/* "${DESTDIR}/lib"
-
-rm "${DESTDIR}/bin/sh"
-ln -s busybox "${DESTDIR}/bin/sh"
-
 # Apply DSDT to initramfs
 if [ -e "${CONFDIR}/DSDT.aml" ]; then
-	cp "${CONFDIR}/DSDT.aml" "${DESTDIR}"
+	copy_exec "${CONFDIR}/DSDT.aml" /
 fi
 
 (cd "${DESTDIR}" && find . | cpio --quiet --dereference -o -H newc | gzip -9 >"${outfile}")

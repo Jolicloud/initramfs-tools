@@ -20,7 +20,7 @@ fi
 
 . /usr/share/initramfs-tools/hook-functions
 
-cp /lib/lvm-200/vgchange "${DESTDIR}/sbin"
+copy_exec /lib/lvm-200/vgchange /sbin
 
 for x in dm_mod; do
         manual_add_modules ${x}
