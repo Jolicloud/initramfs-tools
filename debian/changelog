@@ -4,7 +4,12 @@ initramfs-tools (0.39) unstable; urgency=low
     hook-fuctions: Readds copy_exec.
     mkinitramfs, hooks/{evms,lvm,md}: Use copy_exec.
 
- -- maximilian attems <maks@sternwelten.at>  Thu, 17 Nov 2005 18:43:19 +0100
+  * mkinitramfs: Newer udev no longer uses /sbin/udev - remove usage.
+    (Closes: #339568, #339365, #338814)
+
+  * Pump udev dependency.
+
+ -- maximilian attems <maks@sternwelten.at>  Thu, 17 Nov 2005 19:59:47 +0100
 
 initramfs-tools (0.38) unstable; urgency=low
 

@@ -172,7 +172,6 @@ copy_exec "${CONFDIR}/initramfs.conf" /conf
 cp -a /etc/udev "${DESTDIR}/etc"
 
 # Hack until udev is built with klibc
-copy_exec /sbin/udev /sbin
 copy_exec /sbin/udevd /sbin
 copy_exec /sbin/udevsynthesize /sbin
 
