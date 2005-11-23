@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PREREQ="lvm"
+PREREQ=""
 
 prereqs()
 {
@@ -26,6 +26,8 @@ case ${evms} in
 		;;
 esac
 	
-modprobe -q dm-mod
+for module in dm-mod linear raid0 raid1 raid10 raid5 raid6; do
+	modprobe -q $module
+done
 
 /sbin/evms_activate

@@ -21,15 +21,16 @@ if [ ! -x /sbin/evms_activate ]; then
 fi
 
 copy_exec /sbin/evms_activate /sbin
+cp /etc/evms.conf ${DESTDIR}/etc
 
 EVMS_VERSION=$(/usr/sbin/evms_query info | grep "EVMS Version" | awk '{ print $3; }')
 
 mkdir -p ${DESTDIR}/lib/evms/${EVMS_VERSION}
 
-for x in disk lvm2 dos multipath; do
+for x in bbr bbr_seg bsd disk dos drivelink gpt lvm2 mac md multipath; do
 	copy_exec /lib/evms/${EVMS_VERSION}/${x}* /lib/evms/${EVMS_VERSION}
 done
 
-for x in dm_mod; do
+for x in dm_mod linear raid0 raid1 raid10 raid5 raid6; do
         manual_add_modules ${x}
 done
