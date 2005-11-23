@@ -1,3 +1,14 @@
+initramfs-tools (0.40) unstable; urgency=high
+
+  * High urgency upload as udev changed under our feet. Fix RC bugs.
+
+  * Add needed bits under /lib/udev: udevsynthesize, udev_run_devd,
+    udev_run_hotplugd. 
+
+  * Pump udev dep on 0.074-3.
+
+ -- maximilian attems <max@sputnik.stro.at>  Wed, 23 Nov 2005 10:12:40 +0100
+
 initramfs-tools (0.39) unstable; urgency=medium
 
    * Setting urgency to medium to get this into testing.  This
