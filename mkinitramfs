@@ -169,15 +169,6 @@ for f in $(cd ${CONFDIR}/scripts && \
 cp -p "${CONFDIR}/scripts/${f}" "${DESTDIR}/scripts/$(dirname "${f}")"
 done
 copy_exec "${CONFDIR}/initramfs.conf" /conf
-cp -a /etc/udev "${DESTDIR}/etc"
-
-# Hack until udev is built with klibc
-copy_exec /sbin/udevd /sbin
-mkdir "${DESTDIR}/lib/udev"
-copy_exec /lib/udev/udevsynthesize /lib/udev
-cp /sbin/udevsynthesize "${DESTDIR}/sbin"
-copy_exec /lib/udev/udev_run_devd /lib/udev
-copy_exec /lib/udev/udev_run_hotplugd /lib/udev
 
 # Busybox
 rm ${DESTDIR}/bin/sh
