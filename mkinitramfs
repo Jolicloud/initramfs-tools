@@ -176,7 +176,8 @@ copy_exec /sbin/udevd /sbin
 mkdir "${DESTDIR}/lib/udev"
 copy_exec /lib/udev/udevsynthesize /lib/udev
 cp /sbin/udevsynthesize "${DESTDIR}/sbin"
-cp /lib/udev/udev_* "${DESTDIR}/lib/udev"
+copy_exec /lib/udev/udev_run_devd /lib/udev
+copy_exec /lib/udev/udev_run_hotplugd /lib/udev
 
 # Busybox
 rm ${DESTDIR}/bin/sh
