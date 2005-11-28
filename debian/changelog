@@ -9,6 +9,8 @@ initramfs-tools (0.41) unstable; urgency=low
 
   * Special thanks to Paul Traina for previous udev / emvs work.
 
+  * Sync with Ubuntu (0.36ubuntu6).
+
  -- maximilian attems <maks@sternwelten.at>  Mon, 28 Nov 2005 17:26:40 +0100
 
 initramfs-tools (0.40) unstable; urgency=high
@@ -48,6 +50,20 @@ initramfs-tools (0.39) unstable; urgency=medium
   * Sync with latest Ubuntu.
 
  -- maximilian attems <maks@sternwelten.at>  Thu, 17 Nov 2005 19:59:47 +0100
+
+initramfs-tools (0.36ubuntu6) dapper; urgency=low
+
+  * Rename "panic" to "breaknow"
+
+ -- Scott James Remnant <scott@ubuntu.com>  Wed, 23 Nov 2005 10:23:54 +0000
+
+initramfs-tools (0.36ubuntu5) dapper; urgency=low
+
+  * Abort the boot sequence as early as possible if "panic" is placed on the
+    kernel command-line, allowing debugging of scripts in init-top.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Mon, 21 Nov 2005 08:40:20 +0000
+
 
 initramfs-tools (0.36ubuntu4) dapper; urgency=low
 

@@ -59,6 +59,9 @@ for x in $(cat /proc/cmdline); do
 	break)
 		break=yes
 		;;
+	breaknow)
+		panic "Spawning shell within the initramfs"
+		;;
 	esac
 done
 
