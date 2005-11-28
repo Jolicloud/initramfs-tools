@@ -71,11 +71,18 @@ depmod -a
 
 # Populate /dev tree
 log_begin_msg "Initializing /dev"
-mkdir /dev/.udevdb
-UDEVD_EXPECTED_SEQNUM=$(($(cat /sys/kernel/hotplug_seqnum) + 1)) udevd --daemon
+udevd_timeout=30
+echo > /proc/sys/kernel/hotplug
+mkdir /dev/.udev /dev/.udev/db/ /dev/.udev/queue/
+udevd --daemon
 udevsynthesize
-# FIXME: future udevd should have condition to test against
-sleep 5
+while [ -d /dev/.udev/queue/ ]; do
+        sleep 1
+	udevd_timeout=$(($udevd_timeout - 1))
+	if [ $udevd_timeout -eq 0 ]; then
+		break
+	fi
+done
 log_end_msg
 
 log_begin_msg "Loading modules"
