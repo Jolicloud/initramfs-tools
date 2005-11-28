@@ -102,8 +102,6 @@ log_begin_msg "Running /scripts/init-premount"
 run_scripts /scripts/init-premount
 log_end_msg
 
-killall udevd
-
 log_begin_msg "Mounting root file system"
 mountroot
 log_end_msg
@@ -114,6 +112,7 @@ run_scripts /scripts/init-bottom
 
 # Move our /dev to the real filesystem.  Do the setup that udev otherwise
 # would.
+killall udevd
 mkdir -p /dev/.static/dev
 chmod 700 /dev/.static/
 mount -n -o bind ${rootmnt}/dev /dev/.static/dev

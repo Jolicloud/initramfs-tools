@@ -1,6 +1,6 @@
 initramfs-tools (0.41) unstable; urgency=low
 
- "Una mattina mi sono svegliato"
+  "Una mattina mi sono svegliato"
 
   * High urgency upload to cope with newer udev upstream - bonus:
     condition to test against when udev is ready. (Closes: #341014)
@@ -11,7 +11,10 @@ initramfs-tools (0.41) unstable; urgency=low
 
   * Sync with Ubuntu (0.36ubuntu6).
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 28 Nov 2005 17:26:40 +0100
+  * Kill udevd as late as possible. Thanks David Härdeman <david@2gen.com>
+    for the patch. (Closes: #339093)
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 28 Nov 2005 17:53:24 +0100
 
 initramfs-tools (0.40) unstable; urgency=high
 
