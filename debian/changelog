@@ -1,11 +1,13 @@
-initramfs-tools (0.41) unstable; urgency=low
+initramfs-tools (0.41) unstable; urgency=high
 
   "Una mattina mi sono svegliato"
 
   * High urgency upload to cope with newer udev upstream - bonus:
     condition to test against when udev is ready. (Closes: #341014)
+    Thanks Marco d'Itri <md@linux.it> for guidance and 
+    Heikki Henriksen <heikkih@gmail.com> for double check.
 
-  * Pump udev dep on 0.076-2.
+  * Pump udev dep on 0.076-3.
 
   * Special thanks to Paul Traina for previous udev / emvs work.
 
