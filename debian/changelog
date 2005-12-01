@@ -1,3 +1,11 @@
+initramfs-tools (0.42) unstable; urgency=low
+
+  * hook-functions: The mptspi module is required for at least some machines
+    that use the mptscsih. Thanks dann frazier <dannf@hp.com> for the patch.
+    (Closes: #341162)
+
+ -- maximilian attems <maks@sternwelten.at>  Thu,  1 Dec 2005 16:42:12 +0100
+
 initramfs-tools (0.41) unstable; urgency=high
 
   "Una mattina mi sono svegliato"
