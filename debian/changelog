@@ -1,3 +1,9 @@
+initramfs-tools (0.43) unstable; urgency=low
+
+  * initramfs.conf: Fix wording choice for resume option. (Closes: #337575)
+
+ -- maximilian attems <maks@sternwelten.at>  Mon,  5 Dec 2005 17:38:50 +0100
+
 initramfs-tools (0.42) unstable; urgency=low
 
   * hook-functions: The mptspi module is required for at least some machines
