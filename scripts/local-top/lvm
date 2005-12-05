@@ -28,10 +28,5 @@ esac
 	
 modprobe -q dm-mod
 
-# Split volume group from logical volume.
-vg=$(echo ${vg} | sed -e 's#\(.*\)\([^-]\)-[^-].*#\1\2#')
-# Reduce padded --'s to -'s
-vg=$(echo ${vg} | sed -e 's#--#-#g')
-
-vgchange -ay ${vg}
+vgchange -ay
 
