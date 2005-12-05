@@ -7,10 +7,17 @@ mountroot ()
 	run_scripts /scripts/local-top
 	[ "$quiet" != "y" ] && log_end_msg
 
+	# Wait for SCSI/USB/etc. devices for a bit
+	slumber=10
+	while [ ${slumber} -gt 0 -a ! -e "${ROOT}" ]; do
+		/bin/sleep 1
+		slumber=$(( ${slumber} - 1 ))
+	done
+
 	# Get the root filesystem type
-	if [ ! -e "${ROOT}" ]; then
+	while [ ! -e "${ROOT}" ]; do
 		panic "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
-	fi
+	done
 
 	eval $(fstype < ${ROOT})
 

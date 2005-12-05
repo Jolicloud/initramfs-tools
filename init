@@ -6,9 +6,12 @@ mkdir /sys
 mkdir /proc
 mkdir /tmp
 mkdir -p /var/lock
-mount -t sysfs sysfs /sys
-mount -t proc proc /proc
-mount -t ramfs none /dev
+mount -t sysfs none /sys
+mount -t proc none /proc
+
+# Note that this only becomes /dev on the real filesystem if udev's scripts
+# are used; which they will be, but it's worth pointing out
+mount -t tmpfs -o mode=0755 udev /dev
 touch /dev/.initramfs-tools
 mknod /dev/console c 5 1 
 mknod /dev/null c 1 3
@@ -56,74 +59,52 @@ for x in $(cat /proc/cmdline); do
 		exec >/tmp/initramfs.debug 2>&1
 		set -x
 		;;
-	break)
-		break=yes
+	break=*)
+		break=${x#break=}
 		;;
-	breaknow)
-		panic "Spawning shell within the initramfs"
+	break)
+		break=premount
 		;;
 	esac
 done
+
+depmod -a
+maybe_break top
 
 # Don't do log messages here to avoid confusing usplash
 run_scripts /scripts/init-top
 
 . /scripts/${BOOT}
+parse_numeric ${ROOT}
 
-depmod -a
-
-# Populate /dev tree
-log_begin_msg "Initializing /dev"
-udevd_timeout=30
-echo > /proc/sys/kernel/hotplug
-mkdir /dev/.udev /dev/.udev/db/ /dev/.udev/queue/
-udevd --daemon
-udevsynthesize
-while [ -d /dev/.udev/queue/ ]; do
-        sleep 1
-	udevd_timeout=$(($udevd_timeout - 1))
-	if [ $udevd_timeout -eq 0 ]; then
-		break
-	fi
-done
-log_end_msg
-
+maybe_break modules
 log_begin_msg "Loading modules"
 load_modules
 log_end_msg
 
-parse_numeric ${ROOT}
-
-if [ x${break} = xyes ]; then 
-	panic "Spawning shell within the initramfs"
-fi
-
+maybe_break premount
 log_begin_msg "Running /scripts/init-premount"
 run_scripts /scripts/init-premount
 log_end_msg
 
+maybe_break mount
 log_begin_msg "Mounting root file system"
 mountroot
 log_end_msg
 
+maybe_break mount
 [ "$quiet" != "y" ] && log_begin_msg "Running /scripts/init-bottom"
 run_scripts /scripts/init-bottom
 [ "$quiet" != "y" ] && log_end_msg
 
-# Move our /dev to the real filesystem.  Do the setup that udev otherwise
-# would.
-killall udevd
-mkdir -p /dev/.static/dev
-chmod 700 /dev/.static/
-mount -n -o bind ${rootmnt}/dev /dev/.static/dev
-mount -n -o move /dev ${rootmnt}/dev
+# Move virtual filesystems over to the real filesystem
+mount -n -o move /sys ${rootmnt}/sys
+mount -n -o move /proc ${rootmnt}/proc
 
-umount /sys
-umount /proc
-
-if [ ! -x ${rootmnt}${init} ]; then
+while [ ! -x ${rootmnt}${init} ]; do
 	panic "Target filesystem doesn't have ${init}"
-fi
+done
 
 # Chain to real filesystem
-exec run-init ${rootmnt} ${init} "$@" </root/dev/console >/root/dev/console
+maybe_break init
+exec run-init ${rootmnt} ${init} "$@" <${rootmnt}/dev/console >${rootmnt}/dev/console

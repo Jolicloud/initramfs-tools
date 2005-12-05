@@ -48,7 +48,14 @@ panic()
 		/sbin/usplash_write "QUIT"
 	fi
 	echo $@
-	FS1='(initramfs) ' exec /bin/sh </dev/console >/dev/console 2>&1
+	FS1='(initramfs) ' /bin/sh </dev/console >/dev/console 2>&1
+}
+
+maybe_break()
+{
+	if [ x$1 = x${break} ]; then
+		panic "Spawning shell within the initramfs"
+	fi
 }
 
 render()
@@ -152,58 +159,9 @@ run_scripts()
 	call_scripts
 }
 
-ide_boot_events() {
-
-	modprobe -q ide-generic
-
-	[ -e /proc/ide ] || return
-
-	for drive in /proc/ide/*; do
-		[ -e ${drive}/media ] || continue
-		# nothing to do if the device has already been took in charge
-		unit=${drive#/proc/ide/}
-		[ -d /sys/block/$unit ] && continue
-
-		read media < $drive/media
-		case "$media" in
-			disk)	MODULE=ide-disk ;;
-			cdrom)	MODULE=ide-cd ;;
-			tape)	MODULE=ide-tape ;;
-			floppy)	MODULE=ide-floppy ;;
-			*)	MODULE=ide-generic ;;
-		esac
-
-		modprobe -q ${MODULE}
-	done
-}
-
-scsi_boot_events()
-{
-	[ -e /sys/bus/scsi/devices/ ] || return
-
-	for device in /sys/bus/scsi/devices/*; do
-		[ -e "${device}"/type ] || continue
-		read media < ${device}/type
-		case "$media" in
-			0)	modprobe -q sd_mod;
-		esac	
-
-	done
-
-}
-
-i2o_boot_events()
-{
-	[ -e /sys/bus/i2o/devices/ ] || return
-
-	for device in /sys/bus/i2o/devices/*; do
-		[ -e ${device}/block ] && modprobe i2o_block
-	done
-}
-
+# Load custom modules first
 load_modules()
 {
-	# Load custom modules first
 	if [ -e /conf/modules ]; then
 		cat /conf/modules | while read m; do
 			if [ -z "$m" ] \
@@ -216,37 +174,15 @@ load_modules()
 			fi
 		done
 	fi
-
-	ide_boot_events
-
-	scsi_boot_events
-
-	i2o_boot_events
-
-	# FIXME - need to start LVM here
-
+	
+	# FIXME: wrong place, but it gets done ;)
 	if [ -e /sys/power/resume ]; then
 		if [ -e "${resume}" ]; then
-			major_minor=$(ls -l ${resume} | \
-				awk '{printf "%d:%d", $5, $6}')
-			echo $major_minor >/sys/power/resume
+			major=$((0x$(stat -c%t ${resume})))
+			minor=$((0x$(stat -c%T ${resume})))
+			echo ${major}:${minor} >/sys/power/resume
 		fi
 	fi
-
-	# Give the USB bus a moment to catch up
-	sleep 2
-
-	for x in /sys/bus/usb/devices/*; do
-		if [ -e ${x}/modalias ]; then
-			modprobe -q $(cat ${x}/modalias)
-		fi
-	done
-
-	ide_boot_events
-
-	scsi_boot_events
-
-	i2o_boot_events
 }
 
 parse_numeric() {

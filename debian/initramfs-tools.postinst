@@ -39,5 +39,10 @@ if [ ! -e /etc/mkinitramfs/modules ]; then
 	cp /usr/share/doc/initramfs-tools/examples/modules /etc/mkinitramfs/
 fi
 
+# Regenerate initramfs on upgrade
+if [ "$1" = "configure" -a -n "$2" ]; then
+	update-initramfs -u
+fi
+
 #DEBHELPER#
 

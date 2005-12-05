@@ -15,10 +15,14 @@ prereqs)
 	;;
 esac
 
-# Hooks for loading acpi bits into the initramfs
+# Hooks for loading thermal bits into the initramfs
 
 . /usr/share/initramfs-tools/hook-functions
 
+# ACPI Systems
 for x in fan thermal; do
 	manual_add_modules ${x}
 done
+
+# PPC64 Systems
+manual_add_modules therm_pm72
