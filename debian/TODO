@@ -3,18 +3,12 @@ TODO
 
  o Grep for TODO and FIXME and do those. =)
 
- o Eliminate udev.
+ o Eliminate ?udev?, klibc.
 
  o Support list and dep options
 
  o Default to dep for PPC - Possibly to detect newworld?
 
- o Support evms
+ o External hooks support for evms
 
- o Support cryptroot
-
- o Trace lilo bug
-
- o Capture udev events and pass them to udevsend
-
- o Detect RESUME partition
+ o Support cryptoroot

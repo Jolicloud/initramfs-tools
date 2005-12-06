@@ -12,10 +12,12 @@ initramfs-tools (0.43) unstable; urgency=low
     and how to use them. Thanks David Härdeman <david@2gen.com> for the patch.
     (Closes: #339091)
 
-  * initramfs.conf.5,  mkinitramfs.8, update-initramfs.8: Update 
+  * initramfs.conf.5,  mkinitramfs.8, update-initramfs.8: Update
     cross-references of the different manpages.
 
- -- maximilian attems <maks@sternwelten.at>  Tue,  6 Dec 2005 10:25:28 +0100
+  * TODO: update to current state.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue,  6 Dec 2005 12:25:48 +0100
 
 initramfs-tools (0.42) unstable; urgency=low
 
