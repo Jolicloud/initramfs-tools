@@ -5,7 +5,10 @@ initramfs-tools (0.43) unstable; urgency=low
   * local-top/lvm: Activate all lvm groups for future support of
     lvm-crypt roots. (Closes: #339087)
 
- -- maximilian attems <maks@sternwelten.at>  Mon,  5 Dec 2005 17:49:43 +0100
+  * hooks/kernelextras: Really fix #335505.
+    Don't expand wildcase to current dir. (Closes: #342153)
+
+ -- maximilian attems <maks@sternwelten.at>  Tue,  6 Dec 2005 01:16:41 +0100
 
 initramfs-tools (0.42) unstable; urgency=low
 
