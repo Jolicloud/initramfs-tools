@@ -1,0 +1,397 @@
+.TH INITRAMFS-TOOLS 8  "Date: 2005/12/06" "" "mkinitramfs script overview"
+
+.SH NAME
+initramfs-tools \- an introduction to writing scripts for mkinitramfs
+
+.SH DESCRIPTION
+initramfs-tools has one main script and two different sets of subscripts which 
+will be used during different phases of execution. Each of these will be
+discussed separately below with the help of an imaginary tool which performs a
+frobnication of a lvm partition prior to mounting the root partition.
+
+.SS Hook scripts
+These are used when an initramfs image is created and not included in the 
+image itself. They can however cause files to be included in the image.
+
+.SS Boot scripts
+These are included in the initramfs image and normally executed during 
+kernel boot in the early user-space before the root partition has been
+mounted.
+
+.SH INIT SCRIPT
+The script which is executed first and is in charge of running all other
+scripts can be found in /usr/share/initramfs-tools/init. It takes a number of
+arguments which influence the boot procedure:
+
+.SS Boot options
+
+.TP
+\fB \fI init
+the binary to hand over execution to on the root fs after the initramfs scripts are done.
+
+.TP
+\fB \fI root
+the device node to mount as the rootfs.
+
+.TP
+\fB \fI nfsroot
+can be either "auto" to try to get the relevant information from DHCP or a
+string of the form NFSSERVER:NFSPATH 
+
+.TP
+\fB \fI boot
+either local or nfs (affects which initramfs scripts are run, see the "Subdirectories" section under boot scripts).
+
+.TP
+\fB \fI resume
+device node which holds the result of a previous suspension using swsusp
+(usually the swap partition).
+
+.TP
+\fB \fI quiet
+reduces the amount of text output to the console during boot
+
+.TP
+\fB \fI ro
+mounts the rootfs read-only
+
+.TP
+\fB \fI rw
+mounts the rootfs read-write
+
+.TP
+\fB \fI debug
+generates lots of output to /tmp/initramfs.debug
+
+.TP
+\fB \fI break
+spawns a shell in the initramfs image at chosen run-time
+
+
+.SH HOOK SCRIPTS
+
+Hooks can be found in two places: /usr/share/initramfs-tools/hooks and
+/etc/mkinitramfs/hooks. They are executed during generation of the
+initramfs-image and are responsible for including all the necessary components
+in the image itself. No guarantees are made as to the order in which the
+different scripts are executed unless the prereqs are setup in the script. 
+
+.SS Header
+In order to support prereqs, each script should begin with the following lines:
+
+.RS
+.nf
+#!/bin/sh
+PREREQ=""
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+# Begin real processing below this line
+.fi
+.RE
+
+For example, if you are writing a new hook script which relies on lvm, the line
+starting with PREREQ should be changed to PREREQ="lvm" which will ensure that
+the lvm hook script is run before your custom script.
+
+.SS Help functions
+/usr/share/initramfs-tools/hook-functions contains a number of functions which
+deal with some common tasks in a hook script:
+.TP
+\fB \fI 
+manual_add_modules
+adds a module (and any modules which it depends on) to the initramfs image.
+.RS
+.PP
+.B Example:
+manual_add_modules reiserfs
+.RE
+
+.TP
+\fB \fI
+add_modules_from_file
+reads a file containing a list of modules (one per line) to be added to the
+initramfs image. The file can contain comments (lines starting with #) and
+arguments to the modules by writing the arguments on the same line as the name
+of the module.
+.RS
+.PP
+.B Example:
+add_modules_from_file /tmp/modlist
+.RE
+
+.TP
+\fB \fI
+force_load
+adds a module (and its dependencies) to the initramfs image and also
+unconditionally loads the module during boot. Also supports passing arguments
+to the module by listing them after the module name.
+.RS
+.PP
+.B Example:
+force_load cdrom debug=1
+.RE
+
+.TP
+\fB \fI
+copy_modules_dir
+copies an entire module directory from /lib/modules/KERNELVERSION/ into the
+initramfs image.
+.RS
+.PP
+.B Example:
+copy_modules_dir kernel/drivers/pci/foobar
+.RE
+
+.SS Including binaries
+If you need to copy binaries to the initramfs module, a command like this
+should be used:
+.PP
+.RS
+copy_exec /sbin/mdadm "${DESTDIR}/sbin"
+.RE
+
+mkinitramfs will automatically detect which libraries the executable depends on
+and copy them to the initramfs. This means that most executables, unless
+compiled with klibc, will automatically include glibc in the image which will
+increase its size by several hundred kilobytes.
+
+
+.SH BOOT SCRIPTS
+
+Similarly to hook scripts, boot scripts can be found in two places
+/usr/share/initramfs-tools/scripts/ and /etc/mkinitramfs/scripts/. There are a
+number of subdirectories to these two directories which control the boot stage
+at which the scripts are executed.
+
+.SS Header
+Like for hook scripts, there are no guarantees as to the order in which the
+different scripts in one subdirectory (see "Subdirectories" below) are
+executed. In order to define a certain order, a similar header as for hook
+scripts should be used:
+
+.RS
+.nf
+#!/bin/sh
+PREREQ=""
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+.fi
+.RE
+
+Where PREREQ is modified to list other scripts in the same subdirectory if necessary.
+
+.SS Help functions
+A number of functions (mostly dealing with output) are provided to boot scripts:
+
+.TP
+\fB \fI
+log_success_msg
+Logs a success message
+.RS
+.PP
+.B Example:
+log_success_msg "Frobnication successful"
+.RE
+
+.TP
+\fB \fI
+log_failure_msg
+Logs a failure message
+.RS
+.PP
+.B Example:
+log_failure_msg "Frobnication component froobz missing"
+.RE
+
+.TP
+\fB \fI
+log_warning_msg
+Logs a warning message
+.RS
+.PP
+.B Example:
+log_warning_msg "Only partial frobnication possible"
+.RE
+
+.TP
+\fB \fI
+log_begin_msg
+Logs a message that some processing step has begun
+
+.TP
+\fB \fI
+log_end_msg
+Logs a message that some processing step is finished
+.RS
+.PP
+.B Example:
+.PP
+.RS
+.nf
+log_begin_msg "Frobnication begun"
+# Do something
+log_end_msg
+.fi
+.RE
+.RE
+
+.TP
+\fB \fI
+panic
+Logs an error message and executes a shell in the initramfs image to allow the
+user to investigate the situation.
+.RS
+.PP
+.B Example:
+panic "Frobnication failed"
+.RE
+
+.SS Subdirectories
+Both /usr/share/initramfs-tools/scripts and /etc/mkinitramfs/scripts contains
+the following subdirectories.
+
+.TP
+\fB \fI
+init-top
+the scripts in this directory are the first scripts to be executed after sysfs
+and procfs have been mounted and /dev/console and /dev/null have been created.
+No other device files are present yet.
+
+.TP
+\fB \fI
+init-premount
+runs the udev hooks for populating the /dev tree (udev will keep running until
+init-bottom) after modules specified by hooks and /etc/mkinitramfs/modules have
+been loaded.
+
+.TP
+\fB \fI
+local-top OR nfs-top
+After these scripts have been executed, the root device node is expected to be
+present (local) or the network interface is expected to be usable (nfs).
+
+.TP
+\fB \fI
+local-premount OR nfs-premount
+are run after the sanity of the root device has been verified (local) or the
+network interface has been brought up (nfs), but before the actual root fs has
+been mounted.
+
+.TP
+\fB \fI
+local-bottom OR nfs-bottom
+are run after the rootfs has been mounted (local) or the nfs root share has
+been mounted. udev is stopped.
+
+.TP
+\fB \fI
+init-bottom
+are the last scripts to be executed before procfs and sysfs are moved to the
+real rootfs and execution is turned over to the init binary which should now be
+found in the mounted rootfs.
+
+.SH EXAMPLES
+
+.SS Hook script
+An example hook script would look something like this (and would usually be
+placed in /etc/mkinitramfs/hooks/frobnicate):
+
+.RS
+.nf
+#!/bin/sh
+# Example frobnication hook script
+
+PREREQ="lvm"
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+# Begin real processing below this line
+
+if [ ! -x "/sbin/frobnicate" ]; then
+	exit 0
+fi
+
+force_load frobnicator interval=10
+cp /sbin/frobnicate "${DESTDIR}/sbin"
+exit 0
+.fi
+.RE
+
+.SS Boot script
+An example boot script would look something like this (and would usually be placed in /etc/mkinitramfs/scripts/local-top/frobnicate):
+
+.RS
+.nf
+#!/bin/sh
+# Example frobnication boot script
+
+PREREQ="lvm"
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+# Begin real processing below this line
+if [ ! -x "/sbin/frobnicate" ]; then
+	panic "Frobnication executable not found"
+fi
+
+if [ ! -e "/dev/mapper/frobb" ]; then
+	panic "Frobnication device not found"
+fi
+
+log_begin_msg "Starting frobnication"		
+/sbin/frobnicate "/dev/mapper/frobb" || panic "Frobnication failed"
+log_end_msg
+
+exit 0
+.fi
+.RE
+
+.SH AUTHOR
+The initramfs-tools are written by Jeff Bailey <jbailey@ubuntu.com>.
+.PP
+This manual was written by David Härdeman <david@2gen.com>,
+updated by Maximilian Attems <maks@sternwelten.at>.
+
+.SH SEE ALSO
+.BR
+initramfs.conf (5), mkinitramfs (8), update-initramfs(8)
+
