@@ -174,15 +174,6 @@ load_modules()
 			fi
 		done
 	fi
-	
-	# FIXME: wrong place, but it gets done ;)
-	if [ -e /sys/power/resume ]; then
-		if [ -e "${resume}" ]; then
-			major=$((0x$(stat -c%t ${resume})))
-			minor=$((0x$(stat -c%T ${resume})))
-			echo ${major}:${minor} >/sys/power/resume
-		fi
-	fi
 }
 
 parse_numeric() {

@@ -17,7 +17,9 @@ initramfs-tools (0.43) unstable; urgency=low
 
   * TODO: update to current state.
 
- -- maximilian attems <maks@sternwelten.at>  Tue,  6 Dec 2005 12:25:48 +0100
+  * scripts/functions: remove old duplicate suspend support.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed,  7 Dec 2005 13:26:33 +0100
 
 initramfs-tools (0.42) unstable; urgency=low
 
