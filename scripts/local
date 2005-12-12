@@ -25,7 +25,7 @@ mountroot ()
 	fi
 
 	# FIXME This has no error checking
-	modprobe -Qb ${FSTYPE}
+	modprobe ${FSTYPE}
 
 	# FIXME This has no error checking
 	# Mount root

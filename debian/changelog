@@ -24,6 +24,8 @@ initramfs-tools (0.43) unstable; urgency=high
   * scripts/functions: remove old duplicate suspend support.
 
   * Sync with 0.40ubuntu8. (Closes: #337318)
+    - Revert the modprobe changes for now as modules-init-tools of
+      testing doesn't have yet the wanted interface.
 
  -- maximilian attems <maks@sternwelten.at>  Mon, 12 Dec 2005 11:22:15 +0100
 

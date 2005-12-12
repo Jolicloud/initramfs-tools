@@ -25,7 +25,7 @@ for x in /dev/hd[a-z][0-9]* /dev/sd[a-z][0-9]*; do
 	fi
 	raidlvl=$(mdadm --examine ${x} 2>/dev/null | grep "Level" | sed -e 's/.*Raid Level : \(.*\)/\1/')
 	if [ "$raidlvl" ]; then
-		modprobe -Qb ${raidlvl} 2>/dev/null
+		modprobe -q ${raidlvl} 2>/dev/null
 		gotraid=y
 	fi
 done

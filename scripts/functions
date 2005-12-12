@@ -170,7 +170,7 @@ load_modules()
 			then
 				continue;
 			else
-				modprobe -Qb $m
+				modprobe -q $m
 			fi
 		done
 	fi

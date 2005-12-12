@@ -26,7 +26,7 @@ esac
 unset evms
 	
 for module in dm-mod linear raid0 raid1 raid10 raid5 raid6; do
-	modprobe -Qb $module
+	modprobe -q $module
 done
 
 /sbin/evms_activate

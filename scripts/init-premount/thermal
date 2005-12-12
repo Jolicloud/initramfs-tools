@@ -16,8 +16,8 @@ prereqs)
 esac
 
 # For ACPI systems
-modprobe -Qb fan
-modprobe -Qb thermal
+modprobe -q fan
+modprobe -q thermal
 
 # For ppc64 systems
-modprobe -Qb therm_pm72
+modprobe -q therm_pm72
