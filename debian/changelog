@@ -1,13 +1,10 @@
-initramfs-tools (0.43) unstable; urgency=high
+initramfs-tools (0.44) unstable; urgency=high
 
   "O partigiano portami via"
 
   * Urgency high upload to stay in sync with udev for testing.
 
   * initramfs.conf: Fix wording choice for resume option. (Closes: #337575)
-
-  * local-top/lvm: Activate all lvm groups for future support of
-    lvm-crypt roots. (Closes: #339087)
 
   * hooks/kernelextras: Really fix #335505.
     Don't expand wildcase to current dir. (Closes: #342153)
