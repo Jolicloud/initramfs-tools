@@ -7,13 +7,6 @@ mountroot ()
 	run_scripts /scripts/local-top
 	[ "$quiet" != "y" ] && log_end_msg
 
-	# Wait for SCSI/USB/etc. devices for a bit
-	slumber=10
-	while [ ${slumber} -gt 0 -a ! -e "${ROOT}" ]; do
-		/bin/sleep 1
-		slumber=$(( ${slumber} - 1 ))
-	done
-
 	# Get the root filesystem type
 	while [ ! -e "${ROOT}" ]; do
 		panic "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
@@ -32,7 +25,7 @@ mountroot ()
 	fi
 
 	# FIXME This has no error checking
-	modprobe ${FSTYPE}
+	modprobe -Qb ${FSTYPE}
 
 	# FIXME This has no error checking
 	# Mount root

@@ -26,7 +26,7 @@ case ${vg} in
 		;;
 esac
 	
-modprobe -q dm-mod
+modprobe -Qb dm-mod
 
 vgchange -ay
 

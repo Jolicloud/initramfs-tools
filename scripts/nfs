@@ -9,9 +9,9 @@ mountroot ()
 	run_scripts /scripts/nfs-top
 	[ "$quiet" != "y" ] && log_end_msg
 
-	modprobe nfs
+	modprobe -Qb nfs
 	# For DHCP
-	modprobe af_packet
+	modprobe -Qb af_packet
 
 	ipconfig ${DEVICE}
 	. /tmp/net-${DEVICE}.conf

@@ -19,6 +19,8 @@ initramfs-tools (0.43) unstable; urgency=low
 
   * scripts/functions: remove old duplicate suspend support.
 
+  * Sync with 0.40ubuntu8. (Closes: #337318)
+
  -- maximilian attems <maks@sternwelten.at>  Wed,  7 Dec 2005 13:26:33 +0100
 
 initramfs-tools (0.42) unstable; urgency=low
@@ -37,6 +39,18 @@ initramfs-tools (0.42) unstable; urgency=low
       even if bootloader setting is preferred.
 
  -- maximilian attems <maks@sternwelten.at>  Mon,  5 Dec 2005 12:59:59 +0100
+
+initramfs-tools (0.40ubuntu8) dapper; urgency=low
+
+  * Call modprobe everywhere with "-Qb" to silence messages and allow user
+    blacklisting.
+  * Copy the entire /etc/modprobe.d directory to the initramfs, so we can
+    pick up all user blacklists and options.
+  * Remove the slumber for SCSI/USB devices from the local filesystem mount
+    script, udev's init-premount script will take care of this when
+    necessary.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Wed,  7 Dec 2005 16:18:12 +0000
 
 initramfs-tools (0.40ubuntu7) dapper; urgency=low
 
