@@ -1,4 +1,8 @@
-initramfs-tools (0.43) unstable; urgency=low
+initramfs-tools (0.43) unstable; urgency=high
+
+  "O partigiano portami via"
+
+  * Urgency high upload to stay in sync with udev for testing.
 
   * initramfs.conf: Fix wording choice for resume option. (Closes: #337575)
 
@@ -21,7 +25,7 @@ initramfs-tools (0.43) unstable; urgency=low
 
   * Sync with 0.40ubuntu8. (Closes: #337318)
 
- -- maximilian attems <maks@sternwelten.at>  Wed,  7 Dec 2005 13:26:33 +0100
+ -- maximilian attems <maks@sternwelten.at>  Mon, 12 Dec 2005 11:22:15 +0100
 
 initramfs-tools (0.42) unstable; urgency=low
 
