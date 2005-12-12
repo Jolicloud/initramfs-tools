@@ -20,7 +20,6 @@ esac
 . /usr/share/initramfs-tools/hook-functions
 
 fbcon=n
-set -x
 
 for x in ${MODULESDIR}/initrd/*; do
 	x=${x##*/}
