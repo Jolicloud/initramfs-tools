@@ -1,3 +1,9 @@
+initramfs-tools (0.45) unstable; urgency=low
+
+  * Unset debug before calling init, confuses /etc/init.d/rc.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 27 Dec 2005 19:12:31 +0100
+
 initramfs-tools (0.44) unstable; urgency=high
 
   "O partigiano portami via"

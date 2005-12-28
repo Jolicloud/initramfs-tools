@@ -105,6 +105,11 @@ while [ ! -x ${rootmnt}${init} ]; do
 	panic "Target filesystem doesn't have ${init}"
 done
 
+# Confuses /etc/init.d/rc
+if [ -n ${debug} ]; then
+	unset debug
+fi
+
 # Chain to real filesystem
 maybe_break init
 exec run-init ${rootmnt} ${init} "$@" <${rootmnt}/dev/console >${rootmnt}/dev/console
