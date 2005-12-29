@@ -1,3 +1,10 @@
+initramfs-tools (0.46) unstable; urgency=low
+
+  * Don't include .bzr dirs in source upload.
+    Thanks Frederik Schüler <fschueler-guest@costa.debian.org>
+
+ -- maximilian attems <maks@sternwelten.at>  Thu, 29 Dec 2005 14:07:07 +0100
+
 initramfs-tools (0.45) unstable; urgency=high
 
   "Che mi sento di morir."
@@ -6,9 +13,10 @@ initramfs-tools (0.45) unstable; urgency=high
 
   * scripts/init-premount/ide: Load uncondionally for ide boots ide-generic
     and also ide-disk, as udev ignores them. High urgency upload for rc bugs.
-    (Closes: #332824, #342925, #344754, #337045, #338406)
+    Thanks Frans Pop <fjp@debian.org> and Joey Hess <joeyh@debian.org> for
+    testing! (Closes: #332824, #342925, #344754, #337045, #338406)
 
- -- maximilian attems <maks@sternwelten.at>  Thu, 29 Dec 2005 10:28:11 +0100
+ -- maximilian attems <maks@sternwelten.at>  Thu, 29 Dec 2005 10:34:32 +0100
 
 initramfs-tools (0.44) unstable; urgency=high
 
