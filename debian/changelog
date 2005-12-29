@@ -1,9 +1,9 @@
 initramfs-tools (0.46) unstable; urgency=low
 
   * Don't include .bzr dirs in source upload.
-    Thanks Frederik Schüler <fschueler-guest@costa.debian.org>
+    Thanks Frederik SchÃ¼ler <fs@debian.org>
 
- -- maximilian attems <maks@sternwelten.at>  Thu, 29 Dec 2005 14:07:07 +0100
+ -- maximilian attems <maks@sternwelten.at>  Thu, 29 Dec 2005 14:23:46 +0100
 
 initramfs-tools (0.45) unstable; urgency=high
 
