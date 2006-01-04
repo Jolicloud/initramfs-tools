@@ -1,3 +1,11 @@
+initramfs-tools (0.48) unstable; urgency=low
+
+  * mkinitramfs: klibc 1.1.14 moved from /usr/lib/klibc/lib to /lib
+    Bonus: You can now execute any klibc bin directly.
+    Cope with the move and pump dep. (Closes: 345949)
+
+ -- maximilian attems <maks@sternwelten.at>  Wed,  4 Jan 2006 16:11:25 +0100
+
 initramfs-tools (0.47) unstable; urgency=low
 
   * mkinitramfs: Don't complain about missing /bin/sh - use rm -f.
