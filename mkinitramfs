@@ -171,7 +171,7 @@ done
 copy_exec "${CONFDIR}/initramfs.conf" /conf
 
 # Busybox
-rm ${DESTDIR}/bin/sh
+rm -f ${DESTDIR}/bin/sh
 copy_exec ${BUSYBOXDIR}/busybox /bin/busybox
 ln -s ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/sh
 

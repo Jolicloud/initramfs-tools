@@ -1,3 +1,10 @@
+initramfs-tools (0.47) unstable; urgency=low
+
+  * mkinitramfs: Don't complain about missing /bin/sh - use rm -f.
+    Minor cleanup for the newer packaging of klibc 1.1.14.
+
+ -- maximilian attems <maks@sternwelten.at>  Sat, 31 Dec 2005 14:17:31 +0100
+
 initramfs-tools (0.46) unstable; urgency=low
 
   * Don't include .bzr dirs in source upload.
