@@ -2,7 +2,9 @@ initramfs-tools (0.49) unstable; urgency=low
 
   * Pump dephelper to 4.1.0 dependency as pointed out by linda.
 
- -- maximilian attems <maks@sternwelten.at>  Wed,  4 Jan 2006 16:39:00 +0100
+  * initramfs-tools.8: Add DEBUG section, cheat how to check the initramfs.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 11 Jan 2006 03:33:24 +0100
 
 initramfs-tools (0.48) unstable; urgency=low
 

@@ -385,6 +385,19 @@ exit 0
 .fi
 .RE
 
+.SH DEBUG
+It is easy to check the generated initramfs for its content. One may need 
+to double-check if it contains the relevant binaries, libs or modules:
+.RS
+.nf
+mkdir tmp/initramfs
+cd tmp/initramfs
+gunzip -c -9 /boot/initrd.img-2.6.15-1-686 | \\
+cpio -i -d -H newc --no-absolute-filenames
+.fi
+.RE
+
+
 .SH AUTHOR
 The initramfs-tools are written by Jeff Bailey <jbailey@ubuntu.com>.
 .PP
