@@ -1,9 +1,13 @@
 initramfs-tools (0.50) unstable; urgency=low
 
-  * EVMS takes care of it's own hooks, rm: hooks/evms, scripts/local-top/evms.
+  * hook-functions: Fix MODULES=dep as `modprobe --show-depends' prints not 
+    only the insmod commands, but also the install ones.  Thanks for the patch
+    to Jean Charles Delepine <delepine@nnx.com>. (Closes: #342616)
+
+  * hooks/evms, scripts/local-top/evms: EVMS takes care of it's own hooks, rm.
     Thanks Steinar H. Gunderson <sesse@debian.org>. (Closes: 340258)
 
- -- maximilian attems <maks@sternwelten.at>  Sat, 14 Jan 2006 17:26:24 +0100
+ -- maximilian attems <maks@sternwelten.at>  Sat, 14 Jan 2006 17:38:08 +0100
 
 initramfs-tools (0.49) unstable; urgency=low
 
