@@ -1,3 +1,10 @@
+initramfs-tools (0.50) unstable; urgency=low
+
+  * EVMS takes care of it's own hooks, rm: hooks/evms, scripts/local-top/evms.
+    Thanks Steinar H. Gunderson <sesse@debian.org>. (Closes: 340258)
+
+ -- maximilian attems <maks@sternwelten.at>  Sat, 14 Jan 2006 17:26:24 +0100
+
 initramfs-tools (0.49) unstable; urgency=low
 
   * Pump dephelper to 4.1.0 dependency as pointed out by linda.
