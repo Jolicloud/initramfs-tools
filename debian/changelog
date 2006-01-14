@@ -17,7 +17,9 @@ initramfs-tools (0.49) unstable; urgency=low
 
   * initramfs-tools.8: Add DEBUG section, cheat how to check the initramfs.
 
- -- maximilian attems <maks@sternwelten.at>  Wed, 11 Jan 2006 03:33:24 +0100
+  * Add optional sarge busybox-cvs-static dep to ease backport.
+
+  -- maximilian attems <maks@sternwelten.at>  Thu, 12 Jan 2006 17:28:42 +0100
 
 initramfs-tools (0.48) unstable; urgency=low
 
