@@ -1,4 +1,4 @@
-initramfs-tools (0.50) unstable; urgency=low
+initramfs-tools (0.50c) unstable; urgency=low
 
   "E so io muoio da partigiano"
 
@@ -19,7 +19,7 @@ initramfs-tools (0.49) unstable; urgency=low
 
   * Add optional sarge busybox-cvs-static dep to ease backport.
 
-  -- maximilian attems <maks@sternwelten.at>  Thu, 12 Jan 2006 17:28:42 +0100
+ -- maximilian attems <maks@sternwelten.at>  Thu, 12 Jan 2006 17:28:42 +0100
 
 initramfs-tools (0.48) unstable; urgency=low
 
