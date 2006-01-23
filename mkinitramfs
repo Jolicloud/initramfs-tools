@@ -183,7 +183,7 @@ mkdir -p "${DESTDIR}/etc/modprobe.d"
 cp -a /etc/modprobe.d/* "${DESTDIR}/etc/modprobe.d"
 
 run_scripts /usr/share/initramfs-tools/hooks
-run_scripts /etc/mkinitramfs/hooks
+run_scripts "${CONFDIR}"/hooks
 
 # Apply DSDT to initramfs
 if [ -e "${CONFDIR}/DSDT.aml" ]; then

@@ -2,7 +2,9 @@ initramfs-tools (0.51) unstable; urgency=low
 
   * scripts/functions: Call panic on circular deps to get rescue shell.
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 23 Jan 2006 21:37:45 +0100
+  * mkinitramfs: Use ${CONFDIR} everywhere.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 23 Jan 2006 21:46:45 +0100
 
 initramfs-tools (0.50c) unstable; urgency=low
 
