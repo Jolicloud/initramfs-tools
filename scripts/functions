@@ -138,8 +138,7 @@ reduce_prereqs()
 			fi
 		done
 		if [ ${i} -eq ${oldi} ]; then
-			echo "PANIC: Circular dependancy.  Exiting." >&2
-			exit 1
+			panic "PANIC: Circular dependancy.  Exiting."
 		fi
 	done
 }
