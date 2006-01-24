@@ -1,3 +1,10 @@
+initramfs-tools (0.52) unstable; urgency=low
+
+  * hooks/lvm: manual_add_modules dm_snapshot, allows to boot from a snapshot
+    of your root device. (ubuntu: #3842)
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 24 Jan 2006 19:40:25 +0100
+
 initramfs-tools (0.51) unstable; urgency=low
 
   * scripts/functions: Call panic on circular deps to get rescue shell.
