@@ -8,13 +8,16 @@ initramfs-tools (0.51) unstable; urgency=low
     - skip 0.40ubuntu15 udev gets fixed to only call update-initramfs
       when /etc/mkinitramfs/initramfs.conf is there.
     - 0.40ubuntu13 don't take over all initramfs images in Debian.
-    
+
   * hook-functions: auto_add_modules atkb and i8042.
 
   * scripts/functions: on panic modprobe atkb and i8042 - work around for
     broken configs, where those are not build in. (Closes: #337497)
 
- -- maximilian attems <maks@sternwelten.at>  Tue, 24 Jan 2006 13:04:40 +0100
+  * scripts/functions: update_progress check if /dev/.initramfs/ exists
+    before writing into it.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 24 Jan 2006 13:11:24 +0100
 
 initramfs-tools (0.50c) unstable; urgency=low
 
