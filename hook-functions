@@ -137,7 +137,7 @@ dep_add_modules()
 auto_add_modules()
 {
 	# base
-	for x in ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 ext3 isofs jfs nfs reiserfs xfs af_packet; do
+	for x in ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 ext3 isofs jfs nfs reiserfs xfs af_packet atkbd i8042; do
 		manual_add_modules "${x}"
 	done
 

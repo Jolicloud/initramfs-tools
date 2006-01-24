@@ -57,6 +57,8 @@ panic()
 	if [ -x /sbin/usplash_write ]; then
 		/sbin/usplash_write "QUIT"
 	fi
+	modprobe -q i8042
+	modprobe -q atkbd
 	echo $@
 	FS1='(initramfs) ' /bin/sh </dev/console >/dev/console 2>&1
 }
