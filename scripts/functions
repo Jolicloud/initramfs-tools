@@ -35,12 +35,22 @@ log_end_msg()
 		/sbin/usplash_write "SUCCESS ok"
 	fi
 	_log_msg "Done."
+	update_progress
 }
 
-# update_progress() # ToDo: NOP placeholder... what else for usplash?
-# {
-#     :
-# }
+update_progress()
+{
+	if [ -z "$PROGRESS_STATE" ]; then
+		export PROGRESS_STATE=0
+	fi
+
+	PROGRESS_STATE=$(($PROGRESS_STATE + 1))
+	echo "PROGRESS_STATE=${PROGRESS_STATE}" > /dev/.initramfs/progress_state
+
+	if [ -x /sbin/usplash_write ]; then
+		/sbin/usplash_write "PROGRESS $PROGRESS_STATE"
+	fi
+}
 
 panic()
 {

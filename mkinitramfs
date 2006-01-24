@@ -126,12 +126,15 @@ fi
 DESTDIR="$(mktemp -t -d mkinitramfs_XXXXXX)" || exit 1
 __TMPCPIOGZ="$(mktemp -t mkinitramfs-OL_XXXXXX)" || exit 1
 
+DPKG_ARCH=`dpkg --print-installation-architecture`
+
 # Export environment for hook scripts.
 #
 export MODULESDIR
 export version
 export CONFDIR
 export DESTDIR
+export DPKG_ARCH
 
 # Private, used by 'catenate_cpiogz'.
 export __TMPCPIOGZ
@@ -168,6 +171,7 @@ for f in $(cd ${CONFDIR}/scripts && \
 	mkdir --parents "${DESTDIR}/scripts/$(dirname "${f}")"
 cp -p "${CONFDIR}/scripts/${f}" "${DESTDIR}/scripts/$(dirname "${f}")"
 done
+echo "DPKG_ARCH=${DPKG_ARCH}" > ${DESTDIR}/conf/arch.conf
 copy_exec "${CONFDIR}/initramfs.conf" /conf
 
 # Busybox

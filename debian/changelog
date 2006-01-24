@@ -4,7 +4,12 @@ initramfs-tools (0.51) unstable; urgency=low
 
   * mkinitramfs: Use ${CONFDIR} everywhere.
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 23 Jan 2006 21:46:45 +0100
+  * Sync with 0.40ubuntu16:
+    - skip 0.40ubuntu15 udev gets fixed to only call update-initramfs
+      when /etc/mkinitramfs/initramfs.conf is there.
+    - 0.40ubuntu13 don't take over all initramfs images in Debian.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 24 Jan 2006 11:12:18 +0100
 
 initramfs-tools (0.50c) unstable; urgency=low
 
@@ -108,6 +113,71 @@ initramfs-tools (0.42) unstable; urgency=low
       even if bootloader setting is preferred.
 
  -- maximilian attems <maks@sternwelten.at>  Mon,  5 Dec 2005 12:59:59 +0100
+
+initramfs-tools (0.40ubuntu16) dapper; urgency=low
+
+  * Bump klibc-utils dependency to (>= 1.1.16-1), for hppa and ia64.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Thu, 19 Jan 2006 04:00:39 +1100
+
+initramfs-tools (0.40ubuntu15) dapper; urgency=low
+
+  * Drop the udev dependency, so we always get configured before udev.
+    We can get away with this now that udev hooks/scripts have been split
+    into the udev package proper.  This should close Malone bug #28808.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Wed, 18 Jan 2006 22:50:27 +1100
+
+initramfs-tools (0.40ubuntu14) dapper; urgency=low
+
+  * If copy_exec is asked to copy to the same location twice, check if
+    we're copying the same file again.  If so, do nothing and carry on, if
+    not, warn that we asked it for an impossibility, and don't overwrite.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Thu, 12 Jan 2006 18:00:12 +1100
+
+initramfs-tools (0.40ubuntu13) dapper; urgency=low
+
+  * Default to taking over other initramfs images in Ubuntu, as this is
+    more consistent with what our packaging expects to be able to do.
+  * Make "update-initramfs -u" try to find the running kernel before it
+    attempts to search the symbolic link list and its own sha1 list.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Wed, 11 Jan 2006 16:25:20 +1100
+
+initramfs-tools (0.40ubuntu12) dapper; urgency=low
+
+  * Oops, move the progress state file into the new directory too.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Mon,  9 Jan 2006 21:26:44 +1100
+
+initramfs-tools (0.40ubuntu11) dapper; urgency=low
+
+  * Move the state directory from /dev/initramfs to /dev/.initramfs
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Mon,  9 Jan 2006 21:17:50 +1100
+
+initramfs-tools (0.40ubuntu10) dapper; urgency=low
+
+  * Create the /dev/initramfs directory as soon as we mount /dev, so other
+    packages that need a playground in /dev can do so in a uniform location.
+  * Update the usplash progress bar every time we are asked to output a
+    success or failure value from an init action, and write our progress to
+    /dev/initramfs for sysv-init to gather up and pick up where we left off.
+  * Export $DPKG_ARCH in both mkinitramfs (for use by hooks) and initramfs.
+  * Use $DPKG_ARCH in the thermal hook/script to divide the x86 stuff from
+    the powerpc stuff, not because we have to, but as an example to others.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Mon,  9 Jan 2006 10:51:51 +1100
+
+initramfs-tools (0.40ubuntu9) dapper; urgency=low
+
+  * Make some changes to cope with the new and improved klibc packaging:
+    - Add a force to the deletion of ${DESTDIR}/bin/sh, to avoid errors.
+    - Cope with libklibc moving from /usr/lib/klibc/lib to /lib.
+    - Bump dependency on klibc-utils to one new enough for the above.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Thu,  5 Jan 2006 15:13:15 +1100
 
 initramfs-tools (0.40ubuntu8) dapper; urgency=low
 

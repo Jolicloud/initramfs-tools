@@ -112,6 +112,13 @@ get_sorted_versions()
 	verbose "Available versions: ${version_list}"
 }
 
+set_current_version()
+{
+	if [ -f /boot/vmlinu?-`uname -r` ]; then
+		version=`uname -r`
+	fi
+}
+
 set_linked_version()
 {
 	if [ -L /initrd.img ]; then
@@ -159,6 +166,10 @@ create()
 
 update()
 {
+	if [ -z "${version}" ]; then
+		set_current_version
+	fi
+
 	if [ -z "${version}" ]; then
 		set_linked_version
 	fi
@@ -227,6 +238,7 @@ altered_check()
 # Defaults
 verbose=0
 yes=0
+# We default to takeover=1 in Ubuntu, but not Debian
 takeover=0
 
 ##

@@ -54,7 +54,15 @@ manual_add_modules()
 # $1 is source
 # $2 is relative destination
 copy_exec() {
-	ln -s ${1} ${DESTDIR}/${2}  
+	final_destination=${DESTDIR}/${2}/`basename ${1}`
+	if [ -L "$final_destination" ]; then
+		if ! [ `readlink ${final_destination}` = "${1}" ]; then
+			echo "W:copy_exec: Not copying ${1} to \$DESTDIR${2}/`basename ${1}`, which is already a copy of `readlink ${final_destination}`" >&2
+			return
+		fi
+	else
+		ln -s ${1} ${DESTDIR}/${2}
+	fi
 
 	# Copy the dependant libraries
 	for x in $(ldd ${1} 2>/dev/null | sed -e '
