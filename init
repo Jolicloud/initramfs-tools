@@ -98,7 +98,7 @@ log_begin_msg "Mounting root file system"
 mountroot
 log_end_msg
 
-maybe_break mount
+maybe_break bottom
 [ "$quiet" != "y" ] && log_begin_msg "Running /scripts/init-bottom"
 run_scripts /scripts/init-bottom
 [ "$quiet" != "y" ] && log_end_msg
