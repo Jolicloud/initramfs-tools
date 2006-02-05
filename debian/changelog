@@ -1,11 +1,13 @@
 initramfs-tools (0.52) unstable; urgency=low
 
-  * hooks/lvm: manual_add_modules dm_snapshot, allows to boot from a snapshot
-    of your root device. (ubuntu: #3842)
+  * hooks/lvm: manual_add_modules dm_snapshot, will allow boot from lvm
+    snapshot. (ubuntu: #3842)
 
   * init: Fix maybe_break test for the bottom stage.
+  
+  * scripts/init-premount/udev-helper: Renamed from scripts/init-premount/ide.
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 30 Jan 2006 00:56:04 +0100
+ -- maximilian attems <maks@sternwelten.at>  Mon,  6 Feb 2006 00:47:53 +0100
 
 initramfs-tools (0.51) unstable; urgency=low
 
