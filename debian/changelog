@@ -4,10 +4,12 @@ initramfs-tools (0.52) unstable; urgency=low
     snapshot. (ubuntu: #3842)
 
   * init: Fix maybe_break test for the bottom stage.
-  
+
   * scripts/init-premount/udev-helper: Renamed from scripts/init-premount/ide.
 
- -- maximilian attems <maks@sternwelten.at>  Mon,  6 Feb 2006 00:47:53 +0100
+  * update-initramfs: s/was/has/ been altered. (closes: #351939)
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 13 Feb 2006 11:18:11 +0100
 
 initramfs-tools (0.51) unstable; urgency=low
 

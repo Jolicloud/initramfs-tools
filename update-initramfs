@@ -230,7 +230,7 @@ altered_check()
 	if [ "${takeover}" = 0 ]; then
 		if ! compare_sha1; then
 			delete_sha1
-			mild_panic "${initramfs} was been altered.  Cannot update."
+			mild_panic "${initramfs} has been altered.  Cannot update."
 		fi
 	fi
 }
