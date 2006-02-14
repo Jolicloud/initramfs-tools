@@ -9,7 +9,10 @@ initramfs-tools (0.52) unstable; urgency=low
 
   * update-initramfs: s/was/has/ been altered. (closes: #351939)
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 13 Feb 2006 11:18:11 +0100
+  * update-initramfs(8), mkinitramfs(8): The point of the first is to be used
+    on your local box. The second cmd should help for advanced usage.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 14 Feb 2006 11:18:44 +0100
 
 initramfs-tools (0.51) unstable; urgency=low
 

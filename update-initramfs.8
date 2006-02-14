@@ -15,7 +15,11 @@ update-initramfs \- generate an initramfs image
 .SH DESCRIPTION
 The
 .B update-initramfs 
-script manages your initramfs images.  The initramfs is an cpio archive. 
+script manages your initramfs images on your local box.
+It keeps track of the existing initramfs archives in /boot.
+It helps to update, create and remove those.
+
+The initramfs is an cpio archive. 
 At boot time, the kernel unpacks that archive into ram disk, mounts and 
 uses it as initial root file system. All finding of the root device 
 happens in this early userspace.
