@@ -11,10 +11,15 @@ initramfs-tools (0.52) unstable; urgency=low
     (closes: #351939, #352633, #353087)
 
   * update-initramfs(8), mkinitramfs(8): The point of the first is to be used
-    on your local box. Highlight its mode of operations. The second cmd is 
+    on your local box. Highlight its mode of operations. The second cmd is
     only needed for advanced usage.
 
- -- maximilian attems <maks@sternwelten.at>  Fri, 17 Feb 2006 10:04:17 +0100
+  * mkinitramfs-kpkg: Add an compat call for kernel-package. Has the same
+    broken syntax than mkinitrd and adds an sha1sum for update-initramfs.
+
+  * mkinitramfs-kpkg.8: Add warnings to use update-initramfs instead.
+
+ -- maximilian attems <maks@sternwelten.at>  Fri, 17 Feb 2006 21:41:11 +0100
 
 initramfs-tools (0.51) unstable; urgency=low
 
