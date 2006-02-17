@@ -17,7 +17,8 @@ The
 .B update-initramfs 
 script manages your initramfs images on your local box.
 It keeps track of the existing initramfs archives in /boot.
-It helps to update, create and remove those.
+There are three modes of operation create, update or delete.
+You must at least specify one of those modes.
 
 The initramfs is an cpio archive. 
 At boot time, the kernel unpacks that archive into ram disk, mounts and 
@@ -31,19 +32,19 @@ Set the kernel for whom the initramfs will be generated.
 
 .TP
 \fB \-c
-Create a new initramfs.
+This mode creates a new initramfs.
 
 .TP
 \fB \-u
-Update an existing initramfs.
+This mode updates an existing initramfs.
 
 .TP
 \fB \-d
-Remove an existing initramfs.
+This mode removes an existing initramfs.
 
 .TP
 \fB \-t
-Take over a custom initramfs with this one.
+Allows to take over an custom initramfs with a newer one.
 
 .TP
 \fB \-v
