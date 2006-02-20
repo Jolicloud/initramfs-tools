@@ -1,5 +1,4 @@
 mkinitramfs.8
-mkinitramfs-kpkg.8
 initramfs.conf.5
 initramfs-tools.8
 update-initramfs.8
