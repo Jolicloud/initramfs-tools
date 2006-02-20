@@ -114,7 +114,7 @@ get_sorted_versions()
 
 set_current_version()
 {
-	if [ -f /boot/vmlinu?-`uname -r` ]; then
+	if [ -f /boot/initrd.img-`uname -r` ]; then
 		version=`uname -r`
 	fi
 }
