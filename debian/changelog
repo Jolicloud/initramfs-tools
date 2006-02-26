@@ -1,10 +1,20 @@
-initramfs-tools (0.52c) unstable; urgency=high
+initramfs-tools (0.53) unstable; urgency=high
 
   * update-initramfs: set_current_version needs to check against
-    /boot/initrd-`uname -r` and not /boot/vmlinu?-`uname -r`. 
+    /boot/initrd-`uname -r` and not /boot/vmlinu?-`uname -r`.
     Otherwise this builds initramfs for newer handbuild trees too.
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 20 Feb 2006 15:46:54 +0100
+  * Resync with 0.40ubuntu22:
+    - mptspi already included
+    - keep nfsmount for now, we don't want to add further busybox deps.
+  * Further reduce ubuntudiff:
+    - scripts/functions: remove duplicate dir check.
+    - scripts/nfs: add quiet to modules loading.
+
+  * Add kernel-package compat stuff, behaves like mkinitramfs,
+    but adds the sha1sum for update-initramfs.
+
+ -- maximilian attems <maks@sternwelten.at>  Thu, 23 Feb 2006 16:59:56 +0100
 
 initramfs-tools (0.52b) unstable; urgency=high
 
@@ -155,6 +165,53 @@ initramfs-tools (0.42) unstable; urgency=low
       even if bootloader setting is preferred.
 
  -- maximilian attems <maks@sternwelten.at>  Mon,  5 Dec 2005 12:59:59 +0100
+initramfs-tools (0.40ubuntu22) dapper; urgency=low
+
+  * Add mptspi to the list of SCSI modules put in the initramfs by default,
+    which is required for some LSI Logic controllers and for the VMware SCSI
+    controller in recent VMware versions (See launchpad.net/{27187,31229})
+  * Fix typo of /dev/disk/by-*, which I wrote as /dev/disks/by-{uuid,label}
+  * Load i2c-keywest before loading therm_pm72 in the PowerPC thermal hook,
+    since the latter sometimes needs the former (Closes launchpad.net/27269)
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Tue, 14 Feb 2006 23:28:35 +1100
+
+initramfs-tools (0.40ubuntu21) dapper; urgency=low
+
+  * Don't update the progress bar once udev has taken /dev away;
+    after all, we can't contact usplash anyway at this point.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Wed,  8 Feb 2006 14:34:10 +0000
+
+initramfs-tools (0.40ubuntu20) dapper; urgency=low
+
+  * Add ... to end of strings to match main boot sequence.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Tue,  7 Feb 2006 11:07:50 +0000
+
+initramfs-tools (0.40ubuntu19) dapper; urgency=low
+
+  * Change the first of many "Loading modules" to "Loading essential drivers"
+    to improve debugging when people say it breaks at that stage.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Tue,  7 Feb 2006 11:05:15 +0000
+
+initramfs-tools (0.40ubuntu18) dapper; urgency=low
+
+  * Add support for selecting root by UUID or LABEL with syntax such as:
+    root=LABEL=myrootfs or root=UUID=92addf34-0f02-4a0e-bfb2-cbaa1e907b77
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Fri,  3 Feb 2006 15:55:01 +0000
+
+initramfs-tools (0.40ubuntu17) dapper; urgency=low
+
+  * Make auto_add_modules take an argument, so you can use it to add only
+    some of the auto* modules (like "net" or "ide"), and create a "netboot"
+    option that only includes base and net (Closes launchpad.net/26426) 
+  * Change the nfs script to use "mount -o nolock" instead of "nfsmount",
+    to fix some timeouts for ltsp NFS roots (Closes launchpad.net/19196)
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Tue, 31 Jan 2006 11:55:11 +0000
 
 initramfs-tools (0.40ubuntu16) dapper; urgency=low
 

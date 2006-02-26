@@ -40,15 +40,14 @@ log_end_msg()
 
 update_progress()
 {
+	[ -d /dev/.initramfs ] || return
+
 	if [ -z "$PROGRESS_STATE" ]; then
 		export PROGRESS_STATE=0
 	fi
 
-	if [ -d /dev/.initramfs ]; then
-		PROGRESS_STATE=$(($PROGRESS_STATE + 1))
-		echo "PROGRESS_STATE=${PROGRESS_STATE}" \
-			> /dev/.initramfs/progress_state
-	fi
+	PROGRESS_STATE=$(($PROGRESS_STATE + 1))
+	echo "PROGRESS_STATE=${PROGRESS_STATE}" > /dev/.initramfs/progress_state
 
 	if [ -x /sbin/usplash_write ]; then
 		/sbin/usplash_write "PROGRESS $PROGRESS_STATE"

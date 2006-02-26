@@ -158,6 +158,11 @@ if [ "${MODULES}" = "most" ]; then
 	auto_add_modules
 fi
 
+if [ "${MODULES}" = "netboot" ]; then
+	auto_add_modules base
+	auto_add_modules net
+fi
+
 # Have to do each file, because cpio --dereference doesn't recurse down
 # symlinks.
 

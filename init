@@ -41,6 +41,14 @@ for x in $(cat /proc/cmdline); do
 		;;
 	root=*)
 		ROOT=${x#root=}
+		case $ROOT in
+		LABEL=*)
+			ROOT="/dev/disk/by-label/${ROOT#LABEL=}"
+			;;
+		UUID=*)
+			ROOT="/dev/disk/by-uuid/${ROOT#UUID=}"
+			;;
+		esac
 		;;
 	nfsroot=*)
 		NFSROOT=${x#nfsroot=}
@@ -84,7 +92,7 @@ run_scripts /scripts/init-top
 parse_numeric ${ROOT}
 
 maybe_break modules
-log_begin_msg "Loading modules"
+log_begin_msg "Loading essential drivers..."
 load_modules
 log_end_msg
 
@@ -94,7 +102,7 @@ run_scripts /scripts/init-premount
 log_end_msg
 
 maybe_break mount
-log_begin_msg "Mounting root file system"
+log_begin_msg "Mounting root file system..."
 mountroot
 log_end_msg
 
