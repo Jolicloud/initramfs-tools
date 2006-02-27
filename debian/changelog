@@ -4,15 +4,18 @@ initramfs-tools (0.53) unstable; urgency=high
     /boot/initrd-`uname -r` and not /boot/vmlinu?-`uname -r`.
     Otherwise this builds initramfs for newer handbuild trees too.
 
-  * Resync with 0.40ubuntu22:
+  * Resync with 0.40ubuntu24:
     - mptspi already included
     - keep nfsmount for now, we don't want to add further busybox deps.
+    - adds mptfc and mptsas modules (closes: #341930)
+    - adds MODULES=netboot support (closes: #352669)
   * Further reduce ubuntudiff:
     - scripts/functions: remove duplicate dir check.
     - scripts/nfs: add quiet to modules loading.
 
   * Add kernel-package compat stuff, behaves like mkinitramfs,
-    but adds the sha1sum for update-initramfs.
+    but adds the sha1sum for update-initramfs. Reset takeover=0.
+    (closes: #353809)
 
  -- maximilian attems <maks@sternwelten.at>  Thu, 23 Feb 2006 16:59:56 +0100
 
@@ -165,6 +168,24 @@ initramfs-tools (0.42) unstable; urgency=low
       even if bootloader setting is preferred.
 
  -- maximilian attems <maks@sternwelten.at>  Mon,  5 Dec 2005 12:59:59 +0100
+
+initramfs-tools (0.40ubuntu24) dapper; urgency=low
+
+  * Add support for LSI Logic's Fusion MPT SAS and FC controllers as well.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Thu, 23 Feb 2006 23:27:16 +1100
+
+initramfs-tools (0.40ubuntu23) dapper; urgency=low
+
+  * Grow a conf.d directory for config snippets, and toss the RESUME option
+    in there, to stop editing our own conffile in our maintainer scripts.
+  * Add a cleverly hackish preinst that will pull the RESUME setting from
+    old config files, migrate it to conf.d/resume, and reset that part of the
+    conffile to a factory fresh state.  This should fix the unwanted conffile
+    prompt in breezy->dapper upgrades for people who made no local changes.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Fri, 17 Feb 2006 15:34:53 +1100
+
 initramfs-tools (0.40ubuntu22) dapper; urgency=low
 
   * Add mptspi to the list of SCSI modules put in the initramfs by default,

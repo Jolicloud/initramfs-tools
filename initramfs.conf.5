@@ -12,6 +12,12 @@ Each line in the file can be a configuration variable, a blank line,
 or a comment. The value of an variable is assigned by an statement
 of the form: \fIname\fP=[\fIvalue\fP]
 
+Configuration options can be broken out into configuration snippets and
+placed in individual files in the /etc/mkinitramfs/conf.d directory.  Files
+in this directory are always read \fBafter\fP the main configuration file,
+so you can override the settings in the main config file without editing it
+directly.
+
 .SH GENERAL VARIABLES
 .TP
 \fB MODULES
@@ -30,7 +36,8 @@ The default setting is \fImost\fP.
 \fB RESUME
 Optional setting of the swap partition to resume from.
 The resume= passed on the command line of your boot loader 
-will override this setting.
+will override this setting.    By default, this is set in
+/etc/mkinitramfs/conf.d/resume.
 
 .SH NFS VARIABLES
 .TP

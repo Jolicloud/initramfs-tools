@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+[ -f /etc/mkinitramfs/initramfs.conf ] && . /etc/mkinitramfs/initramfs.conf
+if [ -z ${RESUME} ]; then
+       exit 0
+else
+       mkdir -p /etc/mkinitramfs/conf.d
+       echo "RESUME=${RESUME}" > /etc/mkinitramfs/conf.d/resume
+       sed -i -e "s/RESUME=.*/#RESUME=/" /etc/mkinitramfs/initramfs.conf
+fi
+
+#DEBHELPER#

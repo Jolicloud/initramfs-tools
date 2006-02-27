@@ -8,5 +8,6 @@ etc/mkinitramfs/scripts/nfs-bottom
 etc/mkinitramfs/scripts/nfs-premount
 etc/mkinitramfs/scripts/nfs-top
 etc/mkinitramfs/hooks
+etc/mkinitramfs/conf.d
 usr/share/initramfs-tools/modules.d
 /var/lib/initramfs-tools

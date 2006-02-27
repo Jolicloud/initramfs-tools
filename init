@@ -23,6 +23,9 @@ export DPKG_ARCH=
 
 # Bring in the main config
 . /conf/initramfs.conf
+for i in conf/conf.d/*; do
+       [ -f ${i} ] && . ${i}
+done
 . /scripts/functions
 
 # Parse command line options

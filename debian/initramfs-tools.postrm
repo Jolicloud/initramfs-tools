@@ -2,6 +2,7 @@
 
 if [ "x${1}" = "xpurge" ]; then
 	rm -f /etc/mkinitramfs/modules
+	rm -f /etc/mkinitramfs/conf.d/resume
 fi
 
 #DEBHELPER#
