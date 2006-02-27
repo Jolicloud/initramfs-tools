@@ -157,6 +157,11 @@ auto_add_modules()
 			manual_add_modules "${x}"
 		done
 	;;
+	ieee1394)
+		for x in ohci1394 sbp2; do
+			manual_add_modules "${x}"
+		done
+	;;
 	i2o)
 		for x in i2o_block; do
 			manual_add_modules "${x}"

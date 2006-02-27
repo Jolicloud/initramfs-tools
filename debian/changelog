@@ -24,7 +24,9 @@ initramfs-tools (0.53) unstable; urgency=high
   * mkinitramfs: When invoked with -r switch pass the hardcoded root device to
     /etc/mkinitramfs/conf.d/root inside the initramfs.
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 27 Feb 2006 01:45:56 +0100
+  * hook-functions: First shot at IEEE1394 support - add ohci1394 and sbp2.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 27 Feb 2006 09:45:54 +0100
 
 initramfs-tools (0.52b) unstable; urgency=high
 
