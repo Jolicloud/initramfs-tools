@@ -14,9 +14,9 @@ initramfs-tools (0.53) unstable; urgency=high
     - scripts/functions: remove duplicate dir check.
     - scripts/nfs: add quiet to modules loading.
 
-  * Add kernel-package compat stuff, behaves like mkinitramfs,
+  * mkinitramfs-kpkg: Add kernel-package compat stuff, behaves like mkinitramfs,
     but adds the sha1sum for update-initramfs. Reset takeover=0.
-    (closes: #353809)
+    (closes: #353809) Add small mkinitramf-kpkg.8.
 
   * init: Move the ROOT export up, so we actually source the hardcoded device
     in initramfs.conf. (closes: #352958)
@@ -26,7 +26,7 @@ initramfs-tools (0.53) unstable; urgency=high
 
   * hook-functions: First shot at IEEE1394 support - add ohci1394 and sbp2.
 
- -- maximilian attems <maks@sternwelten.at>  Mon, 27 Feb 2006 09:45:54 +0100
+ -- maximilian attems <maks@sternwelten.at>  Mon, 27 Feb 2006 10:20:03 +0100
 
 initramfs-tools (0.52b) unstable; urgency=high
 
