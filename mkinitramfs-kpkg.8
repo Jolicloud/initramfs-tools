@@ -1,0 +1,49 @@
+.TH MKINITRAMFS-KPKG 8  "$Date: 2006/02/17 $" "" "mkinitramfs-kpkg manual"
+
+.SH NAME
+mkinitramfs-kpkg \- generates an initramfs image for kernel-package
+
+.SH SYNOPSIS
+.B mkinitramfs
+.RB [ \-o 
+.IR outfile ] 
+.RI [ version ]
+.B mkinitramfs
+.RB [ \-\-supported-host-version=
+.IR hversion ]
+.RB [ \-\-supported-target-version=
+.IR tversion ]
+
+.SH DESCRIPTION
+The
+.B mkinitramfs-kpkg
+script calls
+.B mkinitramfs
+for kernel-package. It's usage is not recommended.
+See
+.B update-initramfs
+for an better alternative.
+
+.SH OPTIONS
+
+.TP
+\fB \-o \fI outfile
+Write the image to 
+.IR outfile .
+
+.TP
+\fB\-\-supported-host-version=\fIhversion
+This option queries if mkinitramfs can create ramdisks on a running kernel of version
+.IR hversion .
+
+.TP
+\fB\-\-supported-target-version=\fItversion
+This option queries if mkinitramfs can create ramdisks for kernel version
+.IR tversion .
+
+.SH AUTHOR
+mkinitramfs-kpkg is maintained by Maximilian Attems <maks@sternwelten.at>.
+
+.SH SEE ALSO
+
+.BR initramfs.conf (5), initramfs-tools (8), update-initramfs (8)
