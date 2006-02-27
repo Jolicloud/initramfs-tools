@@ -21,6 +21,9 @@ mknod /dev/null c 1 3
 export DPKG_ARCH=
 . /conf/arch.conf
 
+# Export it for root hardcoding
+export ROOT=
+
 # Bring in the main config
 . /conf/initramfs.conf
 for i in conf/conf.d/*; do
@@ -33,7 +36,6 @@ export break=
 export init=/sbin/init
 export quiet=n
 export readonly=y
-export ROOT=
 export resume=${RESUME}
 export rootmnt=/root
 export debug=

@@ -37,7 +37,7 @@ while true; do
 		shift
 		;;
 	-r)
-		# ignore (FIXME: manpage says differently?!?)
+		ROOT="$2"
 		shift 2
 		;;
 	--supported-host-version)
@@ -188,6 +188,7 @@ copy_exec "${CONFDIR}/initramfs.conf" /conf
 for i in ${EXTRA_CONF}; do
        copy_exec ${CONFDIR}/conf.d/${i} /conf/conf.d
 done
+echo "ROOT=${ROOT}" > ${DESTDIR}/conf/conf.d/root
 
 # Busybox
 rm -f ${DESTDIR}/bin/sh

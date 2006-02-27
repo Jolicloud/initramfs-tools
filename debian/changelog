@@ -5,7 +5,8 @@ initramfs-tools (0.53) unstable; urgency=high
     Otherwise this builds initramfs for newer handbuild trees too.
 
   * Resync with 0.40ubuntu24:
-    - mptspi already included
+    - New conf.d dir for config snippet.
+    - mptspi already included.
     - keep nfsmount for now, we don't want to add further busybox deps.
     - adds mptfc and mptsas modules (closes: #341930)
     - adds MODULES=netboot support (closes: #352669)
@@ -17,7 +18,13 @@ initramfs-tools (0.53) unstable; urgency=high
     but adds the sha1sum for update-initramfs. Reset takeover=0.
     (closes: #353809)
 
- -- maximilian attems <maks@sternwelten.at>  Thu, 23 Feb 2006 16:59:56 +0100
+  * init: Move the ROOT export up, so we actually source the hardcoded device
+    in initramfs.conf. (closes: #352958)
+
+  * mkinitramfs: When invoked with -r switch pass the hardcoded root device to
+    /etc/mkinitramfs/conf.d/root inside the initramfs.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 27 Feb 2006 01:45:56 +0100
 
 initramfs-tools (0.52b) unstable; urgency=high
 
