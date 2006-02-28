@@ -14,7 +14,7 @@ prereqs)
 	;;
 esac
 
-if [ ! -x /sbin/vgchange ]; then
+if [ ! -x /sbin/vgchange -a ! -d /lib/lvm-200 ]; then
 	exit 0
 fi
 

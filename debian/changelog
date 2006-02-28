@@ -1,3 +1,10 @@
+initramfs-tools (0.54) unstable; urgency=low
+
+  * hooks/lvm: lvm10 has also an vgchange -  exit if no lvm2 libs.
+    (closes: #354708)
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 28 Feb 2006 17:34:14 +0100
+
 initramfs-tools (0.53) unstable; urgency=high
 
   * update-initramfs: set_current_version needs to check against
