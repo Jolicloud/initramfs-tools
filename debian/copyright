@@ -5,8 +5,14 @@ Copyright:
 
 Author: Jeff Bailey <jbailey@ubuntu.com>
 
-The source code can be found by using "bzr" at:
+The source code up to 0.31 can be found by using "bzr" at:
 http://people.ubuntu.com/~jbailey/bzrtree/initramfs-tools
+
+The current ubuntu release can be found at:
+http://archive.ubuntu.com/ubuntu/pool/main/i/initramfs-tools/
+
+The Debian tree is maintained with "bzr" at:
+http://debian.stro.at/bzr-test/initramfs-tools/
 
 License:
 
