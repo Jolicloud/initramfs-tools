@@ -5,7 +5,9 @@ initramfs-tools (0.54) unstable; urgency=low
 
   * debian/copyright: Meniton current bzr archive. (closes: #352738)
 
- -- maximilian attems <maks@sternwelten.at>  Tue, 28 Feb 2006 17:43:57 +0100
+  * hook-function: Add dac960 scsi driver for alpha arch. (closes: #355162)
+
+ -- maximilian attems <maks@sternwelten.at>  Sat,  4 Mar 2006 00:05:35 +0100
 
 initramfs-tools (0.53) unstable; urgency=high
 
