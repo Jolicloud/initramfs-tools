@@ -7,7 +7,14 @@ initramfs-tools (0.54) unstable; urgency=low
 
   * hook-function: Add dac960 scsi driver for alpha arch. (closes: #355162)
 
- -- maximilian attems <maks@sternwelten.at>  Sat,  4 Mar 2006 00:05:35 +0100
+  * scripts/local-top/udev-helper: moved from
+    scripts/init-premount/udev-helper, add code by Scott James Remnant
+    <scott@ubuntu.com> from the ubuntu udev hook. We now wait on scsi
+    and usb devices to settle, load ide-generic on ide boot only if
+    no root device appeared.
+    The udev hook is adding ide.agent so no longer duplicate that code.
+
+ -- maximilian attems <maks@sternwelten.at>  Sat,  4 Mar 2006 00:14:00 +0100
 
 initramfs-tools (0.53) unstable; urgency=high
 
