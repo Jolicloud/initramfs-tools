@@ -27,7 +27,20 @@ initramfs-tools (0.54) unstable; urgency=low
 
   * modules.d/ide: Add it821x. (closes #352460)
 
- -- maximilian attems <maks@sternwelten.at>  Tue,  7 Mar 2006 00:49:46 +0100
+ -- maximilian attems <maks@sternwelten.at>  Wed,  8 Mar 2006 17:34:25 +0100
+
+initramfs-tools (0.53c) unstable; urgency=low
+
+  * update-initramfs: Really reset takeover to zero.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon,  6 Mar 2006 07:59:34 +0100
+
+initramfs-tools (0.53b) unstable; urgency=low
+
+  * scripts/init-premount/udev_helper: Renamed from udev-helper.
+    Thanks to Tollef Fog Heen <tfheen@err.no> (closes: #355235)
+
+ -- maximilian attems <maks@sternwelten.at>  Sat,  4 Mar 2006 15:26:13 +0100
 
 initramfs-tools (0.53) unstable; urgency=high
 
