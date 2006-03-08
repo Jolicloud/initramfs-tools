@@ -1,20 +1,33 @@
 initramfs-tools (0.54) unstable; urgency=low
 
-  * hooks/lvm: lvm10 has also an vgchange -  exit if no lvm2 libs.
+  * hooks/lvm: lvm10 has also an vgchange - exit if no lvm2 libs.
     (closes: #354708)
 
   * debian/copyright: Meniton current bzr archive. (closes: #352738)
 
-  * hook-function: Add dac960 scsi driver for alpha arch. (closes: #355162)
+  * hook-function: Add dac960 scsi driver. (closes: #355162)
 
-  * scripts/local-top/udev-helper: moved from
-    scripts/init-premount/udev-helper, add code by Scott James Remnant
+  * scripts/local-top/udev_helper: moved from
+    scripts/init-premount/udev_helper, add code by Scott James Remnant
     <scott@ubuntu.com> from the ubuntu udev hook. We now wait on scsi
     and usb devices to settle, load ide-generic on ide boot only if
     no root device appeared.
     The udev hook is adding ide.agent so no longer duplicate that code.
 
- -- maximilian attems <maks@sternwelten.at>  Sat,  4 Mar 2006 00:14:00 +0100
+  * hook-function: auto_add_modules, split 1000 char wide lines up.
+    Should allow better diffing. Splitting them out in proper files with
+    each modules / line costs too much initramfs generation time.
+    Should allow easier diffing.
+
+  * modules.d/scsi: Add sata_mv thanks Kenshi Muto <kmuto@debian.org>.
+    (closes: #355486)
+
+  * hook-function: Add dasd class to auto_add_modules and dd zfcp module.
+    Thanks to s390 support Bastian Blank <waldi@debian.org>. (closes: #355595)
+
+  * modules.d/ide: Add it821x. (closes #352460)
+
+ -- maximilian attems <maks@sternwelten.at>  Tue,  7 Mar 2006 00:49:46 +0100
 
 initramfs-tools (0.53) unstable; urgency=high
 

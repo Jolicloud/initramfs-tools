@@ -133,35 +133,50 @@ dep_add_modules()
 }
 
 
-# Modules that we always add to the initramfs
+# The modules "most" classes added per default to the initramfs
 auto_add_modules()
 {
 	case "$1" in
 	base)
-		for x in ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 ext3 isofs jfs nfs reiserfs xfs af_packet atkbd i8042; do
+		for x in ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 \
+		ext3 isofs jfs nfs reiserfs xfs af_packet atkbd i8042; do
 			manual_add_modules "${x}"
 		done
 	;;
 	net)
-		for x in 3c59x 8139cp 8139too 8390 b44 bmac bnx2 defxx dl2k e1000 e100 epic100 eql fealnx famachi forcedeth hp100 mace mv643xx_eth natsemi ne2k-pci netconsole ns83820 pcnet32 r8169 s2io sis900 skge slhc starfire sundance sungem sungem_phy sunhme tg3 tlan de2104x de4x5 dmfe tulip winbond-840 xircom_cb xircom_tulip_cb typhon via-rhine via-velocity yellowfin; do
+		for x in 3c59x 8139cp 8139too 8390 b44 bmac bnx2 defxx \
+		dl2k e1000 e100 epic100 eql fealnx famachi forcedeth \
+		hp100 mace mv643xx_eth natsemi ne2k-pci netconsole \
+		ns83820 pcnet32 r8169 s2io sis900 skge slhc starfire \
+		sundance sungem sungem_phy sunhme tg3 tlan de2104x \
+		de4x5 dmfe tulip winbond-840 xircom_cb xircom_tulip_cb \
+		typhon via-rhine via-velocity yellowfin; do
 			manual_add_modules "${x}"
 		done
 	;;
 	ide)
-		for x in ide-cd ide-disk ide-generic aec62xx alim15x3 amd74xx atiixp atuuxo cmd64x cs5520 cs5530 cy82c693 generic hpt34x hpt366 ns87415 opti621 pdc202xx_new pdc202xx_old piix rz1000 sc1200 serverworks siimage sis5513 slc82c105 slc90e66 triflex trm290 via82cxxx; do
+		for x in ide-cd ide-disk ide-generic aec62xx alim15x3 \
+		amd74xx atiixp atuuxo cmd64x cs5520 cs5530 cy82c693 \
+		generic hpt34x hpt366 it821x ns87415 opti621 pdc202xx_new \
+		pdc202xx_old piix rz1000 sc1200 serverworks siimage \
+		sis5513 slc82c105 slc90e66 triflex trm290 via82cxxx; do
 			manual_add_modules "${x}"
 		done
 	;;
 	scsi)
-		for x in 3w-9xxx 3w-xxxx a100u2x aacraid advansys ahci aic79xx aic7xxx ata_piix atari_scsi atp870u BusLogic cciss ch dc395x dmx3191d dpt_i2o eata fdomain ibmvscsic initio ipr ips isp1020 lpfc max_scsi mac53c94 megaraid megaraid_mbox megaraid_mm mesh mptfc mptscsih mptsas mptspi nsp32 osst qla1280 qla2100 qla2200 qla2300 qla2322 qla2xxx qla6312 qlogicfas408 qlogicfc sata_promise sata_nv sata_qstor sata_sil sata_sis sata_svw sata_sx4 sata_uli sata_via sata_vsc scsi_mod scsi_transport_fc scsi_transport_iscsi scsi_transport_spi sd_mod sym53c8xx tmscsim; do
+		for x in 3w-9xxx 3w-xxxx a100u2x aacraid advansys ahci \
+		aic79xx aic7xxx ata_piix atari_scsi atp870u BusLogic \
+		cciss ch dac960 dc395x dmx3191d dpt_i2o eata fdomain \
+		ibmvscsic initio ipr ips isp1020 lpfc max_scsi mac53c94 \
+		megaraid megaraid_mbox megaraid_mm mesh mptfc mptscsih \
+		mptsas mptspi nsp32 osst qla1280 qla2100 qla2200 qla2300 \
+		qla2322 qla2xxx qla6312 qlogicfas408 qlogicfc sata_mv \
+		sata_nv sata_promise sata_qstor sata_sil sata_sis sata_svw \
+		sata_sx4 sata_uli sata_via sata_vsc scsi_mod \
+		scsi_transport_fc scsi_transport_iscsi scsi_transport_spi \
+		sd_mod sym53c8xx tmscsim zfcp; do
 			manual_add_modules "${x}"
 		done
-	case "${DPKG_ARCH}" in
-	alpha)
-		for x in dac960; do
-			manual_add_modules "${x}"
-		done
-	esac
 	;;
 	ieee1394)
 		for x in ohci1394 sbp2; do
@@ -179,6 +194,7 @@ auto_add_modules()
 		auto_add_modules ide
 		auto_add_modules scsi
 		auto_add_modules i2o
+		auto_add_modules dasd
 	;;
 	esac
 }
