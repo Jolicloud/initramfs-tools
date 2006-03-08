@@ -188,6 +188,11 @@ auto_add_modules()
 			manual_add_modules "${x}"
 		done
 	;;
+	dasd)
+		for x in dasd_eckd_mod dasd_fba_mod; do
+			manual_add_modules "${x}"
+		done
+	;;
 	*)
 		auto_add_modules base
 		auto_add_modules net
