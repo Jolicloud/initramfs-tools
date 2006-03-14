@@ -19,8 +19,7 @@ initramfs-tools (0.54) unstable; urgency=low
 
   * hook-function: Add dac960 scsi driver. (closes: #355162)
 
-  * scripts/local-top/udev_helper: moved from
-    scripts/init-premount/udev_helper, add code by Scott James Remnant
+  * scripts/init-premount/udev_helper: add code by Scott James Remnant
     <scott@ubuntu.com> from the ubuntu udev hook. We now wait on scsi
     and usb devices to settle, load ide-generic on ide boot only if
     no root device appeared.
