@@ -200,6 +200,7 @@ auto_add_modules()
 		auto_add_modules scsi
 		auto_add_modules i2o
 		auto_add_modules dasd
+		auto_add_modules ieee1394
 	;;
 	esac
 }

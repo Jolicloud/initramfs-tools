@@ -5,7 +5,10 @@ initramfs-tools (0.55) unstable; urgency=low
 
   * scripts/local: Use quiet to load the fs. (closes: #339092)
 
- -- maximilian attems <maks@sternwelten.at>  Tue, 14 Mar 2006 10:20:03 +0100
+  * hook-functions: Really add the ieee1394 modules. 
+    Thanks to Michael Prokop <mikap@grml.org> for testing the fix.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 14 Mar 2006 10:21:34 +0100
 
 initramfs-tools (0.54) unstable; urgency=low
 
