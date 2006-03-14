@@ -61,7 +61,7 @@ ide)
 	# but might be an old fashioned ISA controller; in which case
 	# we need to load ide-generic.
 	if [ ! -e "${ROOT}" -o "${ROOT}" = "/dev/root" ]; then
-	    /sbin/modprobe -Qb ide-generic
+	    modprobe -q ide-generic
 	fi
 	;;
 
