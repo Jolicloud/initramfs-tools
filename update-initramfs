@@ -67,6 +67,20 @@ generate_initramfs()
 	set_sha1
 }
 
+# only run lilo if no grub is around
+run_bootloader()
+{
+	if [ -x /sbin/grub -o -e /boot/grub/menu.lst ]; then
+		return 0
+	fi
+	if [ -e /etc/lilo.conf ]; then
+		lilo -t > /dev/null
+		if [ $? -eq 0 ]; then
+			lilo
+		fi
+	fi
+}
+
 compare_sha1()
 {
 	sha1sum "${initramfs}" | diff "${STATEDIR}/${version}" - >/dev/null 2>&1
@@ -198,6 +212,8 @@ update()
 	altered_check
 
 	generate_initramfs
+
+	run_bootloader
 
 }
 
