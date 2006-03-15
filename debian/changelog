@@ -1,7 +1,7 @@
 initramfs-tools (0.55) unstable; urgency=low
 
-  * scripts/local-top/udev_helper: Fix modprobe args.
-    Thanks Frans Pop <fjp@debian.org>.
+  * scripts/init-premount/udev_helper: Fix modprobe args.
+    Thanks Frans Pop <fjp@debian.org> for testing 0.54.
 
   * scripts/local: Use quiet to load the fs. (closes: #339092)
 
@@ -12,7 +12,7 @@ initramfs-tools (0.55) unstable; urgency=low
     Thanks Adeodato Simó <adeodato@debian.org> for finding the issue.
     (Closes: #356850)
 
- -- maximilian attems <maks@sternwelten.at>  Wed, 15 Mar 2006 09:55:22 +0100
+ -- maximilian attems <maks@sternwelten.at>  Wed, 15 Mar 2006 11:29:12 +0100
 
 initramfs-tools (0.54) unstable; urgency=low
 
@@ -21,7 +21,7 @@ initramfs-tools (0.54) unstable; urgency=low
 
   * debian/copyright: Meniton current bzr archive. (closes: #352738)
 
-  * hook-function: Add dac960 scsi driver. (closes: #355162)
+  * hook-functions: Add dac960 scsi driver. (closes: #355162)
 
   * scripts/init-premount/udev_helper: add code by Scott James Remnant
     <scott@ubuntu.com> from the ubuntu udev hook. We now wait on scsi
@@ -29,18 +29,18 @@ initramfs-tools (0.54) unstable; urgency=low
     no root device appeared.
     The udev hook is adding ide.agent so no longer duplicate that code.
 
-  * hook-function: auto_add_modules, split 1000 char wide lines up.
+  * hook-functions: auto_add_modules, split 1000 char wide lines up.
     Should allow better diffing. Splitting them out in proper files with
     each modules / line costs too much initramfs generation time.
     Should allow easier diffing.
 
-  * modules.d/scsi: Add sata_mv thanks Kenshi Muto <kmuto@debian.org>.
+  * hook-functions: Add sata_mv thanks Kenshi Muto <kmuto@debian.org>.
     (closes: #355486)
 
-  * hook-function: Add dasd class to auto_add_modules and dd zfcp module.
+  * hook-functions: Add dasd class to auto_add_modules and dd zfcp module.
     Thanks to s390 support Bastian Blank <waldi@debian.org>. (closes: #355595)
 
-  * modules.d/ide: Add it821x. (closes #352460)
+  * hook-functions: Add it821x. (closes #352460)
 
  -- maximilian attems <maks@sternwelten.at>  Wed,  8 Mar 2006 17:34:25 +0100
 
