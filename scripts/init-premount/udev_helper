@@ -15,6 +15,10 @@ prereqs)
 	;;
 esac
 
+# Source the relevant scripts for later decisions
+. /conf/initramfs.conf
+. /scripts/functions
+
 # Nothing todo for nfs boot
 case "${BOOT}" in
 local)

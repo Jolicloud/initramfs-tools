@@ -1,3 +1,27 @@
+initramfs-tools (0.56) unstable; urgency=low
+
+  * hooks/md: Add linear module - thanks to Moshe Yudkowsky <moshe@pobox.com>.
+
+  * scripts/functions: Fix numerical minor parsing - thanks for the patch to
+    Wolfgang Weisselberg. (closes: #357332)
+
+  * mkinitramfs.8: Correct wrong referenced filename.
+
+  * update-initramfs.8: Define the argument 'version' - thanks to "Susan G.
+    Kleinmann" <sgk@debian.org>. (closes: #357282)
+
+  * scripts/init-premount/udev_helper: Source the relevant definition to get
+    it really run. Thanks to Maurice Massar <massar@unix-ag.uni-kl.de>.
+    (closes: #354458)
+
+ -- maximilian attems <maks@sternwelten.at>  Fri, 17 Mar 2006 19:09:11 +0100
+
+initramfs-tools (0.55b) unstable; urgency=low
+
+  * Thanks to Frederik Schüler for pointing to leftovers.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 15 Mar 2006 13:23:51 +0100
+
 initramfs-tools (0.55) unstable; urgency=low
 
   * scripts/init-premount/udev_helper: Fix modprobe args.
