@@ -12,7 +12,7 @@ initramfs-tools (0.56) unstable; urgency=low
 
   * scripts/init-premount/udev_helper: Source the relevant definition to get
     it really run. Thanks to Maurice Massar <massar@unix-ag.uni-kl.de>.
-    (closes: #354458)
+    (closes: #357450)
 
  -- maximilian attems <maks@sternwelten.at>  Fri, 17 Mar 2006 19:09:11 +0100
 
