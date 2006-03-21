@@ -16,7 +16,11 @@ image itself. They can however cause files to be included in the image.
 .SS Boot scripts
 These are included in the initramfs image and normally executed during 
 kernel boot in the early user-space before the root partition has been
-mounted.
+mounted. 
+
+initramfs-tools uses shell variable names for handling dependencies.
+Notice that `-' is not a valid shell variable name and thus should
+not be used as script filename.
 
 .SH INIT SCRIPT
 The script which is executed first and is in charge of running all other

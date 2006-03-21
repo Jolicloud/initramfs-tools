@@ -63,7 +63,11 @@ set_initramfs()
 generate_initramfs()
 {
 	verbose "Generating ${initramfs}"
-	mkinitramfs -o "${initramfs}" "${version}"
+	OPTS="-o"
+	if [ "${verbose}" = 1 ]; then
+		OPTS="-v $OPTS"
+	fi
+	mkinitramfs $OPTS "${initramfs}" "${version}"
 	set_sha1
 }
 

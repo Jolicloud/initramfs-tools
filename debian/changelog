@@ -1,3 +1,20 @@
+initramfs-tools (0.57) unstable; urgency=low
+
+  * mkinitramfs, update-initramfs, hook-functions:
+    On verbose mode show, which modules gets added to the initramfs.
+
+  * hook-functions: Add cpqarray to the scsi modules - thanks for the patch
+    to Petter Reinholdtsen <pere@hungry.com>. (closes: #357980)
+
+  * initramfs-tools.8: Document that `-' is not allowed to be used in a script
+    filename - the filenames get used as shell variable.  (closes: #355235)
+
+  * mkinitramfs: Don't exit succesfully in a case of a full fs. Leaves the
+    linux-image unconfigured. Thanks martin f krafft <madduck@debian.org>
+    for pointing to that potential boot failure. (closes: #350875)
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 21 Mar 2006 11:56:29 +0100
+
 initramfs-tools (0.56) unstable; urgency=low
 
   * hooks/md: Add linear module - thanks to Moshe Yudkowsky <moshe@pobox.com>.

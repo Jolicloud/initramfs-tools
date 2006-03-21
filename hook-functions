@@ -48,6 +48,9 @@ manual_add_modules()
 
 		mkdir -p "${DESTDIR}/$(dirname "${mam_x}")"
 		ln -s "${mam_x}" "${DESTDIR}/$(dirname "${mam_x}")"
+		if [ -n "${verbose}" -a "${verbose}" = "y" ]; then
+			echo "Adding module ${mam_x}"
+		fi
 	done
 }
 
@@ -166,7 +169,7 @@ auto_add_modules()
 	scsi)
 		for x in 3w-9xxx 3w-xxxx a100u2x aacraid advansys ahci \
 		aic79xx aic7xxx ata_piix atari_scsi atp870u BusLogic \
-		cciss ch dac960 dc395x dmx3191d dpt_i2o eata fdomain \
+		cciss ch cpqarray dac960 dc395x dmx3191d dpt_i2o eata fdomain \
 		ibmvscsic initio ipr ips isp1020 lpfc max_scsi mac53c94 \
 		megaraid megaraid_mbox megaraid_mm mesh mptfc mptscsih \
 		mptsas mptspi nsp32 osst qla1280 qla2100 qla2200 qla2300 \
