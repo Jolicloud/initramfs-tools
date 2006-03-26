@@ -7,7 +7,31 @@ mountroot ()
 	run_scripts /scripts/local-top
 	[ "$quiet" != "y" ] && log_end_msg
 
-	# Get the root filesystem type
+	# If the root device hasn't shown up yet, give it a little while
+	# to deal with removable devices
+	if [ ! -e "${ROOT}" ]; then
+		log_begin_msg "Waiting for root file system..."
+		if [ -x /sbin/usplash_write ]; then
+			/sbin/usplash_write "TIMEOUT 180" || true
+		fi
+
+		slumber=1800
+		while [ ${slumber} -gt 0 -a ! -e "${ROOT}" ]; do
+			/bin/sleep 0.1
+			slumber=$(( ${slumber} - 1 ))
+		done
+
+		if [ ${slumber} -gt 0 ]; then
+			log_end_msg 0
+		else
+			log_end_msg 1 || true
+               fi
+               if [ -x /sbin/usplash_write ]; then
+                       /sbin/usplash_write "TIMEOUT 15" || true
+               fi
+       fi
+
+       # We've given up, but we'll let the user fix matters if they can
 	while [ ! -e "${ROOT}" ]; do
 		panic "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
 	done

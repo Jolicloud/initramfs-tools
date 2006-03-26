@@ -2,7 +2,17 @@ initramfs-tools (0.59) unstable; urgency=low
 
   * debian/copyright: Add years of copyright and authors.
 
- -- maximilian attems <maks@sternwelten.at>  Sun, 26 Mar 2006 21:04:28 +0200
+  * Resync with 0.40ubuntu28:
+    - hooks/md: Add raid10 module.
+    - scripts/local: Move the "loop waiting for the root filesystem" code from
+      the udev premount script to the local mountroot() function where it truly
+      belongs.
+    - scripts/local-top/udev_helper: Leave the remaining ide-generic part
+      there, should be taken over by udev itself.
+    - make the md local-top scripts pre-requisite the udev one.
+      thanks Scott James Remnant <scott@ubuntu.com> 
+
+ -- maximilian attems <maks@sternwelten.at>  Sun, 26 Mar 2006 22:35:15 +0200
 
 initramfs-tools (0.58) unstable; urgency=low
 
