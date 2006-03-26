@@ -1,4 +1,28 @@
-initramfs-tools (0.57) unstable; urgency=low
+initramfs-tools (0.59) unstable; urgency=low
+
+  * debian/copyright: Add years of copyright and authors.
+
+ -- maximilian attems <maks@sternwelten.at>  Sun, 26 Mar 2006 21:04:28 +0200
+
+initramfs-tools (0.58) unstable; urgency=low
+
+  * hook-functions: Be more carefull about the minor parsing. The fix of
+    #357332 works for 3 digit roots, but not for hdc6 aka root=1606.
+    Thanks Martijn Pieters <mj@zopatista.com> for report
+    (closes: #358354, #358740).
+
+  * hook-functions: Add gdth to the scsi modules.
+
+  * mkinitramfs-kpkg: Use set -eu to capture full /boot.
+    Really (closes: #350875)
+
+  * Add dependency on module-init-tools. (closes: #358632)
+
+  * Don't include full path for man page reference. (closes: #358371)
+
+ -- maximilian attems <maks@sternwelten.at>  Sun, 26 Mar 2006 16:39:37 +0200
+
+initramfs-tools (0.57b) unstable; urgency=low
 
   * mkinitramfs, update-initramfs, hook-functions:
     On verbose mode show, which modules gets added to the initramfs.
@@ -7,7 +31,7 @@ initramfs-tools (0.57) unstable; urgency=low
     to Petter Reinholdtsen <pere@hungry.com>. (closes: #357980)
 
   * initramfs-tools.8: Document that `-' is not allowed to be used in a script
-    filename - the filenames get used as shell variable.  (closes: #355235)
+    filename - the filenames get used as shell variable.  (closes: #344639)
 
   * mkinitramfs: Don't exit succesfully in a case of a full fs. Leaves the
     linux-image unconfigured. Thanks martin f krafft <madduck@debian.org>

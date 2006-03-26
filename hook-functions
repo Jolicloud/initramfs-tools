@@ -170,7 +170,7 @@ auto_add_modules()
 		for x in 3w-9xxx 3w-xxxx a100u2x aacraid advansys ahci \
 		aic79xx aic7xxx ata_piix atari_scsi atp870u BusLogic \
 		cciss ch cpqarray dac960 dc395x dmx3191d dpt_i2o eata fdomain \
-		ibmvscsic initio ipr ips isp1020 lpfc max_scsi mac53c94 \
+		gdth ibmvscsic initio ipr ips isp1020 lpfc max_scsi mac53c94 \
 		megaraid megaraid_mbox megaraid_mm mesh mptfc mptscsih \
 		mptsas mptspi nsp32 osst qla1280 qla2100 qla2200 qla2300 \
 		qla2322 qla2xxx qla6312 qlogicfas408 qlogicfc sata_mv \
@@ -220,7 +220,7 @@ Options:
   -o outfile  Write to outfile.
   -r root     Override ROOT setting in mkinitrd.conf.
 
-See ${0}(8) for further details.
+See mkinitramfs(8) for further details.
 EOF
 	exit 1
 

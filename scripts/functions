@@ -189,6 +189,7 @@ load_modules()
 	fi
 }
 
+# lilo compatibility
 parse_numeric() {
 	case $1 in
 	"")
@@ -201,8 +202,12 @@ parse_numeric() {
 		minor=${1#*:}
 		major=${1%:*}
 		;;
-	*)
+	[0-9][0-9][0-9])
 		minor=$((0x${1#?}))
+		major=$((0x${1%??}))
+		;;
+	*)
+		minor=$((0x${1#??}))
 		major=$((0x${1%??}))
 		;;
 	esac

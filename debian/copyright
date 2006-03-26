@@ -1,9 +1,7 @@
 This package was debianized by Jeff Bailey <jbailey@ubuntu.com> on
 Thu, 27 Jan 2005 15:23:52 -0500.
 
-Copyright:
-
-Author: Jeff Bailey <jbailey@ubuntu.com>
+The current Debian maintainer is maximilian attems <maks@sternwelten.at>
 
 The source code up to 0.31 can be found by using "bzr" at:
 http://people.ubuntu.com/~jbailey/bzrtree/initramfs-tools
@@ -13,6 +11,15 @@ http://archive.ubuntu.com/ubuntu/pool/main/i/initramfs-tools/
 
 The Debian tree is maintained with "bzr" at:
 http://debian.stro.at/bzr-test/initramfs-tools/
+
+Authors: Jeff Bailey <jbailey@ubuntu.com>, Adam Conrad <adconrad@ubuntu.com>,
+	 Scott James Remnant <scott@ubuntu.com>, 
+	 maximilian attems <maks@sternwelten.at>
+
+Copyright: 2005 Jeff Bailey
+	   2005 - 2006 Adam Conrad
+	   2005 - 2006 Scott James Remnant
+	   2005 - 2006 maximilian attems
 
 License:
 
