@@ -1,3 +1,10 @@
+initramfs-tools (0.59b) unstable; urgency=low
+
+  * mkinitramfs-kpkg: Intialialize the variables. 
+    (closes: #359355, #359620, #359613, #359666, #359681)
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 28 Mar 2006 16:30:59 +0200
+
 initramfs-tools (0.59) unstable; urgency=low
 
   * debian/copyright: Add years of copyright and authors.

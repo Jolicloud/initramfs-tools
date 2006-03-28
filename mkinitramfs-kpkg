@@ -2,6 +2,9 @@
 set -eu
 
 STATEDIR=/var/lib/initramfs-tools
+supported_host_version=""
+supported_target_version=""
+outfile=""
 
 usage()
 {
