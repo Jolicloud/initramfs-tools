@@ -53,7 +53,7 @@ mountroot ()
 
 	# FIXME This has no error checking
 	# Mount root
-	mount ${roflag} -t ${FSTYPE} ${ROOT} ${rootmnt}
+	mount ${roflag} -t ${FSTYPE} ${ROOTFLAGS} ${ROOT} ${rootmnt}
 
 	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/log-bottom"
 	run_scripts /scripts/local-bottom

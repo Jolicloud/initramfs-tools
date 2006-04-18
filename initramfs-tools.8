@@ -118,7 +118,7 @@ adds a module (and any modules which it depends on) to the initramfs image.
 .RS
 .PP
 .B Example:
-manual_add_modules reiserfs
+manual_add_modules isofs
 .RE
 
 .TP
@@ -313,6 +313,13 @@ init-bottom
 are the last scripts to be executed before procfs and sysfs are moved to the
 real rootfs and execution is turned over to the init binary which should now be
 found in the mounted rootfs.
+
+.SS Boot parameters
+.TP
+\fB \fI
+/conf/param.conf
+allows boot scripts to change exported variables that are listed on top of init. Write the new values to it. It will be sourced after an boot script run if it exists.
+
 
 .SH EXAMPLES
 

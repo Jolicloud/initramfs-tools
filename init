@@ -39,6 +39,8 @@ export readonly=y
 export resume=${RESUME}
 export rootmnt=/root
 export debug=
+export cryptopts=${CRYPTOPTS}
+
 for x in $(cat /proc/cmdline); do
 	case $x in
 	init=*)
@@ -55,8 +57,17 @@ for x in $(cat /proc/cmdline); do
 			;;
 		esac
 		;;
+	rootflags=*)
+		ROOTFLAGS="-o ${x#rootflags=}"
+		;;
+	cryptopts=*)
+		cryptopts="${x#cryptopts=}"
+		;;
 	nfsroot=*)
-		NFSROOT=${x#nfsroot=}
+		NFSROOT="${x#nfsroot=}"
+		;;
+	nfsopts=*)
+		NFSOPTS="-o ${x#nfsopts=}"
 		;;
 	boot=*)
 		BOOT=${x#boot=}
@@ -93,9 +104,6 @@ maybe_break top
 # Don't do log messages here to avoid confusing usplash
 run_scripts /scripts/init-top
 
-. /scripts/${BOOT}
-parse_numeric ${ROOT}
-
 maybe_break modules
 log_begin_msg "Loading essential drivers..."
 load_modules
@@ -108,6 +116,8 @@ log_end_msg
 
 maybe_break mount
 log_begin_msg "Mounting root file system..."
+. /scripts/${BOOT}
+parse_numeric ${ROOT}
 mountroot
 log_end_msg
 

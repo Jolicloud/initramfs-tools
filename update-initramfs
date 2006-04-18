@@ -14,7 +14,7 @@ usage()
 Usage: ${0} [OPTION]...
 
 Options:
- -k [version]	Specify kernel version or ALL
+ -k [version]	Specify kernel version or all
  -c		Create a new initramfs
  -u		Update an existing initramfs
  -d		Remove an existing initramfs
@@ -75,6 +75,13 @@ generate_initramfs()
 run_bootloader()
 {
 	if [ -x /sbin/grub -o -e /boot/grub/menu.lst ]; then
+		if [ -e /etc/lilo.conf ]; then
+			echo
+			echo "WARNING: grub and lilo installed."
+			echo "If you use grub as bootloader everything is fine."
+			echo "If you use lilo as bootloader you must run lilo!"
+			echo
+		fi
 		return 0
 	fi
 	if [ -e /etc/lilo.conf ]; then
@@ -205,7 +212,7 @@ update()
 			fi
 			# Don't stop if one version doesn't work.
 			set +e
-			"${0}" "${vflag}" -u -k "${u_version}"
+			"${0}" -u -k "${u_version}" ${vflag}
 			set -e
 		done
 		exit 0

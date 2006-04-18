@@ -1,0 +1,3 @@
+cat /proc/cmdline >&3
+grep -v nodev /proc/filesystems >&3
+lsmod >&3

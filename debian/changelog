@@ -1,3 +1,35 @@
+initramfs-tools (0.60) unstable; urgency=low
+
+  "E ho trovato l'invasor"
+
+  * scripts/functions: Allow boot scripts to modify exported boot parameters.
+    Thanks David Härdeman <david@2gen.com> for the patch. (closes: 348147)
+    This allows the inclusion of cryptoroot hooks to cryptsetup!
+
+  * init: add cryptopts parsing and export.
+
+  * init: Move parse_numeric down to the "mounting root" block.
+
+  * init, scripts/local: Allow rootflags to be passed in kernel cmdline.
+    Thanks Thomas Luzat <thomas.luzat@gmx.net> for the patch. (closes: #358917)
+
+  * init: Allow passing nfs root mount option in kernel cmdline.  Thanks
+    Brian Brunswick <bdb@forbidden.co.uk> for the patch. (closes: #358649)
+
+  * update-initramfs: s/ALL/all/, fix it to actually run on update in non
+    verbose mode. (closes: #362568)
+
+  * update-initramfs: Warn in big letters about grub and lilo installs.
+    (closes: #362816)
+
+  * debian/bug: Add reportbug script with info about cmdline, fs and lsmod.
+
+  * initramfs-tools(8): Document the /conf/param.conf feature.
+
+  * mkinitramfs-kpkg(8): Spell out, why the wrapper script is needed.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 18 Apr 2006 13:33:18 +0200
+
 initramfs-tools (0.59b) unstable; urgency=low
 
   * mkinitramfs-kpkg: Intialialize the variables. 
