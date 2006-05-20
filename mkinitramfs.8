@@ -67,20 +67,20 @@ This option queries if mkinitramfs can create ramdisks for kernel version
 
 .SH FILES
 .TP
-.I /etc/mkinitramfs/initramfs.conf
+.I /etc/initramfs-tools/initramfs.conf
 The default configuration file for the script. See
 .BR initramfs.conf (5)
 for a description of the available configuration parameter.
 
 .TP
-.I /etc/mkinitramfs/modules
+.I /etc/initramfs-tools/modules
 Specified modules will be put in the generated image and loaded when the system boots. The format - one per line - is identical to that of
 .I /etc/modules,
 which is described in
 .BR modules (5).
 
 .TP
-.I /etc/mkinitramfs/DSDT.aml
+.I /etc/initramfs-tools/DSDT.aml
 If this file exists, it will be appended to the initramfs in a way that causes
 it to be loaded by ACPI.
 

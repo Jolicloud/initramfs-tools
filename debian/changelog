@@ -1,3 +1,35 @@
+initramfs-tools (0.61) unstable; urgency=low
+
+  Release "O partigiano portami via"
+
+  * debian/TODO: update to latest state.
+
+  * debian/bug: Fix reportbug script shebang line, add some descriptive echos.
+
+  * debian/control: Pump to 3.7.2 standard version without changes.
+
+  * init: Use 10M as tmpfs_size for the udev /dev. (closes: #352434)
+
+  * /etc/initramfs-tools: Use the much more intituive conf dir location.
+    Thanks for the idea to Andres Salomon <dilinger@debian.org>.
+
+  * debian/initramfs-tools.preinst: mv /etc/mkinitramfs /etc/initramfs-tools
+    on upgrade as this should work even with drive space issues.
+    Thanks to Jeff Bailey <jbailey@raspberryginger.com> for the posix atomic
+    mv hint and Daniel Blaschke <blaschke@hep.itp.tuwien.ac.at> for testing.
+
+  * mkinitramfs: Set CONFDIR to /etc/initramfs-tools.
+
+  * mkinitramfs.8, initramfs-tools.8: Document the new pathes.
+
+  * debian/control: Change Build-depends-indep to Build-depends as we need
+    debhelper and cdbs for the clean target, fulfills policy 7.6.
+
+  * debian/initramfs-tools.preinst: Warn and bail out if /etc/initramfs-tools
+    already exists.
+
+ -- maximilian attems <maks@sternwelten.at>  Thu, 18 May 2006 17:27:44 +0200
+
 initramfs-tools (0.60) unstable; urgency=low
 
   "E ho trovato l'invasor"

@@ -3,12 +3,12 @@ TODO
 
  o Grep for TODO and FIXME and do those. =)
 
- o Eliminate ?udev?, klibc.
+ o Eliminate ?udev?, ?klibc?, busybox (-> glibc).
 
  o Support list and dep options
 
  o Default to dep for PPC - Possibly to detect newworld?
 
- o External hooks support for evms
+ o lilo timeouts handling
 
- o Support cryptoroot
+ o mdadm + lvm2 hooks to their respective packages

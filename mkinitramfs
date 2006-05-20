@@ -4,7 +4,7 @@ umask 0022
 
 # Defaults
 keep="n"
-CONFDIR="/etc/mkinitramfs"
+CONFDIR="/etc/initramfs-tools"
 verbose="n"
 errors_to="2>/dev/null"
 # BUSYBOXDIR="/usr/lib/initramfs-tools/bin/"

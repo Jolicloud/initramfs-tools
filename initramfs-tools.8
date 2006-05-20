@@ -75,7 +75,7 @@ spawns a shell in the initramfs image at chosen run-time
 .SH HOOK SCRIPTS
 
 Hooks can be found in two places: /usr/share/initramfs-tools/hooks and
-/etc/mkinitramfs/hooks. They are executed during generation of the
+/etc/initramfs-tools/hooks. They are executed during generation of the
 initramfs-image and are responsible for including all the necessary components
 in the image itself. No guarantees are made as to the order in which the
 different scripts are executed unless the prereqs are setup in the script. 
@@ -174,9 +174,9 @@ increase its size by several hundred kilobytes.
 .SH BOOT SCRIPTS
 
 Similarly to hook scripts, boot scripts can be found in two places
-/usr/share/initramfs-tools/scripts/ and /etc/mkinitramfs/scripts/. There are a
-number of subdirectories to these two directories which control the boot stage
-at which the scripts are executed.
+/usr/share/initramfs-tools/scripts/ and /etc/initramfs-tools/scripts/. There
+are a number of subdirectories to these two directories which control the boot
+stage at which the scripts are executed.
 
 .SS Header
 Like for hook scripts, there are no guarantees as to the order in which the
@@ -271,8 +271,8 @@ panic "Frobnication failed"
 .RE
 
 .SS Subdirectories
-Both /usr/share/initramfs-tools/scripts and /etc/mkinitramfs/scripts contains
-the following subdirectories.
+Both /usr/share/initramfs-tools/scripts and /etc/initramfs-tools/scripts
+contains the following subdirectories.
 
 .TP
 \fB \fI
@@ -285,8 +285,8 @@ No other device files are present yet.
 \fB \fI
 init-premount
 runs the udev hooks for populating the /dev tree (udev will keep running until
-init-bottom) after modules specified by hooks and /etc/mkinitramfs/modules have
-been loaded.
+init-bottom) after modules specified by hooks and /etc/initramfs-tools/modules
+have been loaded.
 
 .TP
 \fB \fI
@@ -325,7 +325,7 @@ allows boot scripts to change exported variables that are listed on top of init.
 
 .SS Hook script
 An example hook script would look something like this (and would usually be
-placed in /etc/mkinitramfs/hooks/frobnicate):
+placed in /etc/initramfs-tools/hooks/frobnicate):
 
 .RS
 .nf
@@ -359,7 +359,7 @@ exit 0
 .RE
 
 .SS Boot script
-An example boot script would look something like this (and would usually be placed in /etc/mkinitramfs/scripts/local-top/frobnicate):
+An example boot script would look something like this (and would usually be placed in /etc/initramfs-tools/scripts/local-top/frobnicate):
 
 .RS
 .nf

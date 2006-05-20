@@ -14,29 +14,29 @@ if [ "$1" = configure ]; then
 		fi
 
 		if [ -e /etc/mkinitrd/modules ]; then
-			cp /etc/mkinitrd/modules /etc/mkinitramfs
+			cp /etc/mkinitrd/modules /etc/initramfs-tools
 			sed -i \
 			  -e 's/mkinitrd/mkinitramfs/g' \
 			  -e '/^ide-generic/d' \
 			  -e '/^ide-disk/d' \
 			  -e '/^ext2/d' \
 			  -e '/^ext3/d' \
-			  /etc/mkinitramfs/modules
+			  /etc/initramfs-tools/modules
 		fi
 
 		if [ -e ${RESUME} ]; then
-			echo "RESUME=${RESUME}" > /etc/mkinitramfs/conf.d/resume
+			echo "RESUME=${RESUME}" > /etc/initramfs-tools/conf.d/resume
 		fi
 
 		if [ -e /etc/mkinitrd/DSDT ]; then
-			cp /etc/mkinitrd/DSDT /etc/mkinitramfs/DSDT.aml
+			cp /etc/mkinitrd/DSDT /etc/initramfs-tools/DSDT.aml
 		fi
 
 	fi
 fi
 
-if [ ! -e /etc/mkinitramfs/modules ]; then
-	cp /usr/share/doc/initramfs-tools/examples/modules /etc/mkinitramfs/
+if [ ! -e /etc/initramfs-tools/modules ]; then
+	cp /usr/share/doc/initramfs-tools/examples/modules /etc/initramfs-tools/
 fi
 
 # Regenerate initramfs on upgrade

@@ -11,7 +11,11 @@ mount -t proc none /proc
 
 # Note that this only becomes /dev on the real filesystem if udev's scripts
 # are used; which they will be, but it's worth pointing out
-mount -t tmpfs -o mode=0755 udev /dev
+tmpfs_size="10M"
+if [ -e /etc/udev/udev.conf ]; then
+	. /etc/udev/udev.conf
+fi
+mount -t tmpfs -o size=$tmpfs_size,mode=0755 udev /dev
 touch /dev/.initramfs-tools
 mkdir /dev/.initramfs
 mknod /dev/console c 5 1 
