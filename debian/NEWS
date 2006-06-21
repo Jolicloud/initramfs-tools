@@ -1,3 +1,14 @@
+initramfs-tools (0.61) unstable; urgency=low
+
+  * This release moves the initramfs-tools confdir from /etc/mkinitramfs to
+    /etc/initramfs-tools. Packages are encouraged to ship files as scripts
+    under /usr/share/initramfs-tools.
+
+    Local tests behaved fine, but be warned that this could potentially
+    cause boot troubles on upgrade.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 21 Jun 2006 09:16:01 +0200
+
 initramfs-tools (0.10) breezy; urgency=low
 
   * This release includes hardware auto detection in the initramfs.

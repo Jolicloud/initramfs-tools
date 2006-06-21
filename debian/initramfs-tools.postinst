@@ -36,7 +36,12 @@ if [ "$1" = configure ]; then
 fi
 
 if [ ! -e /etc/initramfs-tools/modules ]; then
-	cp /usr/share/doc/initramfs-tools/examples/modules /etc/initramfs-tools/
+	if [ -e /usr/share/doc/initramfs-tools/examples/modules ]; then
+		cp /usr/share/doc/initramfs-tools/examples/modules \
+			/etc/initramfs-tools/
+	else
+		touch /etc/initramfs-tools/modules
+	fi
 fi
 
 # Regenerate initramfs on upgrade

@@ -1,3 +1,19 @@
+initramfs-tools (0.62) unstable; urgency=low
+
+  * debian/control: Tighten dep on udev. udev 0.086-1 loads ide-disk.
+    Can't lower to sarge version anyway as no coldplugg support there.
+    (closes: #358360, #362816)
+
+  * debian/initramfs-tools.postinst: Check if modules example is available
+    under doc before copying if not touch $CONFDIR/modules.
+    (closes: #368043)
+
+  * hook-functions: Add arcmsr to the scsi modules list.
+
+  * debian/NEWS: Add Notice about confdir mv as version 0.61.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 21 Jun 2006 09:22:23 +0200
+
 initramfs-tools (0.61) unstable; urgency=low
 
   Release "O partigiano portami via"
