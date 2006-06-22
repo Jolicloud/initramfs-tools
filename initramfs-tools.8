@@ -44,7 +44,7 @@ string of the form NFSSERVER:NFSPATH
 
 .TP
 \fB \fI boot
-either local or nfs (affects which initramfs scripts are run, see the "Subdirectories" section under boot scripts).
+either local or NFS (affects which initramfs scripts are run, see the "Subdirectories" section under boot scripts).
 
 .TP
 \fB \fI resume
@@ -292,19 +292,19 @@ have been loaded.
 \fB \fI
 local-top OR nfs-top
 After these scripts have been executed, the root device node is expected to be
-present (local) or the network interface is expected to be usable (nfs).
+present (local) or the network interface is expected to be usable (NFS).
 
 .TP
 \fB \fI
 local-premount OR nfs-premount
 are run after the sanity of the root device has been verified (local) or the
-network interface has been brought up (nfs), but before the actual root fs has
+network interface has been brought up (NFS), but before the actual root fs has
 been mounted.
 
 .TP
 \fB \fI
 local-bottom OR nfs-bottom
-are run after the rootfs has been mounted (local) or the nfs root share has
+are run after the rootfs has been mounted (local) or the NFS root share has
 been mounted. udev is stopped.
 
 .TP

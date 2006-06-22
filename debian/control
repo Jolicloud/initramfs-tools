@@ -12,8 +12,9 @@ Depends: klibc-utils (>= 1.1.16-1), busybox (>= 1:1.01-3) | busybox-cvs-static (
 Provides: linux-initramfs-tool
 Description: tools for generating an initramfs
  This package contains tools to create and boot an initramfs for prepackaged
- 2.6 Linux kernel. The initramfs is an cpio archive. At boot time, the kernel
- unpacks that archive into ram, mounts and uses it as initial root file system.
- From there on the mounting of the real root file system occurs in user space.
- klibc handles the boot-time networking setup. Supports nfs root system.
+ 2.6 Linux kernel. The initramfs is a gzipped cpio archive. At boot time, the
+ kernel unpacks that archive into RAM, mounts and uses it as initial root file
+ system. From there on the mounting of the real root file system occurs in user
+ space. klibc handles the boot-time networking setup. Having the root on NFS
+ is also supported.
  Any boot loader with initrd support is able to load an initramfs archive.

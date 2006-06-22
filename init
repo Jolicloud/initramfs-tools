@@ -16,7 +16,7 @@ if [ -e /etc/udev/udev.conf ]; then
 	. /etc/udev/udev.conf
 fi
 mount -t tmpfs -o size=$tmpfs_size,mode=0755 udev /dev
-touch /dev/.initramfs-tools
+> /dev/.initramfs-tools
 mkdir /dev/.initramfs
 mknod /dev/console c 5 1 
 mknod /dev/null c 1 3
