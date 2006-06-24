@@ -4,7 +4,7 @@ initramfs-tools (0.65) unstable; urgency=low
     The initialization got refractored in an function. (closes: #374891)
     Thanks for the patch to David Härdeman <david@2gen.com>.
 
-  * scripts/local-top/lvm: Be carefull to activate volume group on lilo boot
+  * scripts/local-top/lvm: Be careful to activate volume group on lilo boot
     too. Although in that case we don't know the precise volume group, we
     activate them all. Matches behaviour of previous hook.
 
@@ -12,7 +12,7 @@ initramfs-tools (0.65) unstable; urgency=low
     (closes: #374378)
 
   * mkinitramfs: Remove old kernel-package supported long param.
-    kernel-package uses since month make-kpkg.
+    kernel-package uses since 10.036 mkinitramfs-kpkg.
 
   * update-initramfs: Show by default which initramfs gets generated.
     (closes: #364301)
@@ -38,7 +38,7 @@ initramfs-tools (0.65) unstable; urgency=low
   * debian/initramfs-tools.postrm: We no longer need to explicitly remove
     /etc/initramfs-tools/modules.
 
- -- maximilian attems <maks@sternwelten.at>  Sat, 24 Jun 2006 11:42:07 +0200
+ -- maximilian attems <maks@sternwelten.at>  Sat, 24 Jun 2006 13:27:49 +0200
 
 initramfs-tools (0.64) unstable; urgency=low
 
