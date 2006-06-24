@@ -62,7 +62,7 @@ set_initramfs()
 
 generate_initramfs()
 {
-	verbose "Generating ${initramfs}"
+	echo "update-initramfs: Generating ${initramfs}"
 	OPTS="-o"
 	if [ "${verbose}" = 1 ]; then
 		OPTS="-v $OPTS"

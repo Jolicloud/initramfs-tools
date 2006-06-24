@@ -15,23 +15,41 @@ prereqs)
 	;;
 esac
 
-vg=${ROOT#/dev/mapper/}
+activate_vg()
+{
+	local vg="$1"
 
-case ${vg} in
-	/dev/root)
-		unset vg
-		;;
-	/*)
+	# Make sure that we have a non-empty argument
+	if [ -z "${vg}" ]; then
+		return 0
+	fi
+
+	# Take care of lilo boot arg, risky activating of all vg
+	vg_lilo=${vg:0:2}
+	if [ "${vg_lilo}" = fe ]; then
+		vgchange -ay
 		exit 0
-		;;
-esac
-	
+	fi
+
+	# Make sure that we have a d-m path
+	vg=${vg#/dev/mapper/}
+	if [ "$vg" = "$1" ]; then
+		return 0
+	fi
+
+	# Split volume group from logical volume.
+	vg=$(echo ${vg} | sed -e 's#\(.*\)\([^-]\)-[^-].*#\1\2#')
+	# Reduce padded --'s to -'s
+	vg=$(echo ${vg} | sed -e 's#--#-#g')
+
+	vgchange -ay ${vg}
+}
+
+if [ ! -e /sbin/vgchange ]; then
+	exit 0
+fi
+
 modprobe -q dm-mod
 
-# Split volume group from logical volume.
-vg=$(echo ${vg} | sed -e 's#\(.*\)\([^-]\)-[^-].*#\1\2#')
-# Reduce padded --'s to -'s
-vg=$(echo ${vg} | sed -e 's#--#-#g')
-
-vgchange -ay ${vg}
-
+activate_vg "$ROOT"
+activate_vg "$resume"

@@ -22,6 +22,6 @@ fi
 
 copy_exec /lib/lvm-200/vgchange /sbin
 
-for x in dm_mod dm_snapshot; do
+for x in dm_mod dm_snapshot dm_mirror; do
         manual_add_modules ${x}
 done

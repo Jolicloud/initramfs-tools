@@ -1,3 +1,24 @@
+initramfs-tools (0.65) unstable; urgency=low
+
+  * scripts/local-top/lvm: Activate root and resume volume group.
+    The initialization got refractored in an function. (closes: #374891)
+    Thanks for the patch to David Härdeman <david@2gen.com>.
+
+  * scripts/local-top/lvm: Be carefull to activate volume group on lilo boot
+    too. Although in that case we don't know the precise volume group, we
+    activate them all. Matches behaviour of previous hook.
+
+  * hooks/lvm: Add dm-mirror, allows to boot from an unfinished pvmove.
+    (closes: #374378)
+
+  * mkinitramfs: Remove old kernel-package supported long param.
+    kernel-package uses since month make-kpkg.
+
+  * update-initramfs: Show by default which initramfs gets generated.
+    (closes: #364301)
+
+ -- maximilian attems <maks@sternwelten.at>  Sat, 24 Jun 2006 10:46:40 +0200
+
 initramfs-tools (0.64) unstable; urgency=low
 
   RELEASE o bella, ciao! bella, ciao!
