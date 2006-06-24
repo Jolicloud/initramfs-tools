@@ -67,8 +67,17 @@ generate_initramfs()
 	if [ "${verbose}" = 1 ]; then
 		OPTS="-v $OPTS"
 	fi
-	mkinitramfs $OPTS "${initramfs}" "${version}"
-	set_sha1
+	if mkinitramfs $OPTS "${initramfs}" "${version}"; then
+		set_sha1
+	else
+		mkinitramfs_return="$?"
+		if [ "$mkinitramfs_return" = "2" ]; then
+			# minversion wasn't met, exit 0
+			exit 0
+		fi
+		verbose "mkinitramfs failed for ${initramfs}"
+		exit $mkinitramfs_return
+	fi
 }
 
 # only run lilo if no grub is around
@@ -192,15 +201,15 @@ create()
 update()
 {
 	if [ -z "${version}" ]; then
-		set_current_version
-	fi
-
-	if [ -z "${version}" ]; then
 		set_linked_version
 	fi
 
 	if [ -z "${version}" ]; then
 		set_highest_version
+	fi
+
+	if [ -z "${version}" ]; then
+		set_current_version
 	fi
 
 	if [ "${version}" = "all" ]; then

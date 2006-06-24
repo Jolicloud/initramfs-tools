@@ -17,7 +17,28 @@ initramfs-tools (0.65) unstable; urgency=low
   * update-initramfs: Show by default which initramfs gets generated.
     (closes: #364301)
 
- -- maximilian attems <maks@sternwelten.at>  Sat, 24 Jun 2006 10:46:40 +0200
+  * Resync with 0.40ubuntu32:
+   -  Make prereqs conditional on the script/hook actually existing.  From
+      now on, this means that 'PREREQ="udev"' means "run udev first, iff it
+      happens to be installed".  Having the files exist on the filesystem if
+      you have a HARD dependency should be enforced with package dependencies.
+      (closes: #369617)
+   -  Make "update-initramfs -u" try to find the running kernel *after* it
+      attempts to search the symbolic link list and its own sha1 list.
+      Using this as a fallback, rather than the default, should solve most
+      upgrade issues, where people found their initramfs was half-baked.
+   -  Abstract out the kernel minversion checking stuff into the function
+      library, so we can reuse it to check minversion requirements for hook
+      scripts as well (such as udev, which requires >= 2.6.15 in dapper)
+   -  Bump the kernel minversion to 2.6.15 on hppa and ia64, since they used
+      initrd-tools with their 2.6.12 kernels in breezy, not initramfs-tools.
+   -  If mkinitramfs fails due to minversion not being met, don't bail out
+      of update-initramfs, but just exit 0, so upgrades don't halt on it.
+
+  * debian/initramfs-tools.postrm: We no longer need to explicitly remove
+    /etc/initramfs-tools/modules.
+
+ -- maximilian attems <maks@sternwelten.at>  Sat, 24 Jun 2006 11:42:07 +0200
 
 initramfs-tools (0.64) unstable; urgency=low
 
