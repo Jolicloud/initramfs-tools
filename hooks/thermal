@@ -23,6 +23,7 @@ case "$DPKG_ARCH" in
 # copy the right modules
 powerpc|ppc64)
 	manual_add_modules therm_pm72
+	manual_add_modules i2c-powermac
 	;;
 i386|amd64|ia64)
 	manual_add_modules fan

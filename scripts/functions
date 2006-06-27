@@ -62,7 +62,7 @@ panic()
 	modprobe -q i8042
 	modprobe -q atkbd
 	echo $@
-	FS1='(initramfs) ' /bin/sh </dev/console >/dev/console 2>&1
+	PS1='(initramfs) ' /bin/sh </dev/console >/dev/console 2>&1
 }
 
 maybe_break()
