@@ -25,11 +25,12 @@ activate_vg()
 	fi
 
 	# Take care of lilo boot arg, risky activating of all vg
-	vg_lilo=${vg:0:2}
-	if [ "${vg_lilo}" = fe ]; then
+	case $vg in
+	fe[0-9]*)
 		vgchange -ay
 		exit 0
-	fi
+		;;
+	esac
 
 	# Make sure that we have a d-m path
 	vg=${vg#/dev/mapper/}
@@ -50,6 +51,8 @@ if [ ! -e /sbin/vgchange ]; then
 fi
 
 modprobe -q dm-mod
+modprobe -q dm-snapshot
+modprobe -q dm-mirror
 
 activate_vg "$ROOT"
 activate_vg "$resume"
