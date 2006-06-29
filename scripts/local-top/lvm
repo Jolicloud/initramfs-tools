@@ -30,6 +30,11 @@ activate_vg()
 		vgchange -ay
 		exit 0
 		;;
+	# FIXME: check major
+	/dev/root)
+		vgchange -ay
+		exit 0
+		;;
 	esac
 
 	# Make sure that we have a d-m path
