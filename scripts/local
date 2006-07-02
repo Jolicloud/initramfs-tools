@@ -55,7 +55,7 @@ mountroot ()
 	# Mount root
 	mount ${roflag} -t ${FSTYPE} ${ROOTFLAGS} ${ROOT} ${rootmnt}
 
-	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/log-bottom"
+	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/local-bottom"
 	run_scripts /scripts/local-bottom
 	[ "$quiet" != "y" ] && log_end_msg
 }

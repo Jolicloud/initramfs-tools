@@ -125,8 +125,7 @@ get_sorted_versions()
 	for gsv_x in "${STATEDIR}"/*; do
 		gsv_x="$(basename "${gsv_x}")"
 		if [ "${gsv_x}" = '*' ]; then
-			verbose "Nothing to do, exiting."
-			exit 0
+			return 0
 		fi
 		worklist=""
 		for gsv_i in $version_list; do
@@ -212,9 +211,18 @@ update()
 		set_current_version
 	fi
 
+	if [ -z "${version}" ]; then
+		verbose "Nothing to do, exiting."
+		exit 0
+	fi
+
 	if [ "${version}" = "all" ]; then
 		: FIXME check for --yes, and if not ask are you sure
 		get_sorted_versions
+		if [ -z "${version_list}" ]; then
+			verbose "Nothing to do, exiting."
+			exit 0
+		fi
 		for u_version in ${version_list}; do
 			if [ "${verbose}" = "1" ]; then
 				vflag="-v"

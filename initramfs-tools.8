@@ -48,8 +48,9 @@ either local or NFS (affects which initramfs scripts are run, see the "Subdirect
 
 .TP
 \fB \fI resume
-device node which holds the result of a previous suspension using swsusp
-(usually the swap partition).
+On install initramfs-tools tries to autodetect the resume partition. On success
+the RESUME variable is written to /etc/initramfs-tools/conf.d/resume.
+The boot variable overrides it.
 
 .TP
 \fB \fI quiet

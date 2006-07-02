@@ -61,7 +61,7 @@ done
 
 . "${CONFDIR}/initramfs.conf"
 EXTRA_CONF=''
-for i in ${CONFDIR}/conf.d/*; do
+for i in ${CONFDIR}/conf.d/* /usr/share/initramfs-tools/conf.d/*; do
        EXTRA_CONF="${EXTRA_CONF} $(basename $i | grep '^[a-z0-9][a-z0-9\._-]*$' | grep -v '\.dpkg-.*$')";
 done
 for i in ${EXTRA_CONF}; do

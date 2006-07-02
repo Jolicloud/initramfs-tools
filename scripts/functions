@@ -220,14 +220,16 @@ load_modules()
 {
 	if [ -e /conf/modules ]; then
 		cat /conf/modules | while read m; do
-			if [ -z "$m" ] \
-			    || expr "$m" : "#" >/dev/null \
-			    || expr "$m" : "[ \t]+#?" > /dev/null
-			then
-				continue;
-			else
-				modprobe -q $m
+			# Skip empty lines
+			if [ -z "$m" ];  then 
+				continue
 			fi
+			# Skip comments - d?ash removes whitespace prefix
+			com=$(printf "%.1s" "${m}")
+			if [ "$com" = "#" ]; then
+				continue
+			fi
+			modprobe -q $m
 		done
 	fi
 }

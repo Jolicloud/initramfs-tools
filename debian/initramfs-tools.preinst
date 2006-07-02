@@ -19,13 +19,4 @@ case "$1" in
 	;;
 esac
 
-[ -f /etc/initramfs-tools/initramfs.conf ] && . /etc/initramfs-tools/initramfs.conf
-if [ -z ${RESUME} ]; then
-       exit 0
-else
-       mkdir -p /etc/initramfs-tools/conf.d
-       echo "RESUME=${RESUME}" > /etc/initramfs-tools/conf.d/resume
-       sed -i -e "s/RESUME=.*/#RESUME=/" /etc/initramfs-tools/initramfs.conf
-fi
-
 #DEBHELPER#

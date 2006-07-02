@@ -1,3 +1,40 @@
+initramfs-tools (0.67) unstable; urgency=high
+
+  Release bella, ciao, ciao, ciao!
+
+  * scripts/local: Fix typo in log_begin_msg. (closes: #375880)
+
+  * update-initramfs: Generate initramfs for current version if there is no
+    sha1sum and no initrd exists yet - regression from 0.65. (closes: #375671)
+    Thanks martin f krafft <madduck@debian.org> for report.
+
+  * conf/initramfs.conf, initramfs.conf(5): Drop RESUME section.
+
+  * debian/initramfs-tools.preinst: Don't modify conffile initramfs.tools -
+    drop the corresponding code. (closes: #376008)
+
+  * initramfs-tools(8): Document that RESUME is tried to be autodected and
+    written to /etc/initramfs-tools/conf.d/resume on install.
+
+  * scripts/functions: Replace expr use with printf for skipping comments on
+    /etc/modules. Works on both busybox ash and klibc dash. Prefix space is
+    ignored by both.
+
+  * scripts/local-top/lvm: Remove harmless warnings if a volumegroup is under
+    /dev/mapper but not an lvm device. (closes: 376311)
+    Thanks David Härdeman <david@2gen.com> for the patch.
+
+  * scripts/local-top/lvm: Change activate_vg() to return 1 if no volumegroup
+    is found.
+
+  * debian/initramfs-tools.dirs: Add usr/share/initramfs-tools/conf.d entry.
+
+  * mkinitramfs: Add stuff to the conf.d directory also from aboves directory.
+
+  * Set urgency to high to get the RC bugfix into testing.
+
+ -- maximilian attems <maks@sternwelten.at>  Sun,  2 Jul 2006 18:35:34 +0200
+
 initramfs-tools (0.66) unstable; urgency=low
 
   * hooks/thermal: Add i2c-powermac.
