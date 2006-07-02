@@ -184,37 +184,6 @@ run_scripts()
 	call_scripts
 }
 
-check_minkver()
-{
-	curversion=${1}
-	initdir=${2}
-	set_initlist
-	if [ -z ${initdir} ]; then
-		DPKG_ARCH=`dpkg --print-installation-architecture`
-		case ${DPKG_ARCH} in
-			ia64|hppa)
-				minversion="2.6.15"
-			;;
-			*)
-				minversion="2.6.12"
-			;;
-		esac
-		if dpkg --compare-versions "${curversion}" lt "${minversion}"; then
-			echo "W: kernerl ${curversion} too old for initramfs on ${DPKG_ARCH}" >&2
-			echo "W: not generating requested initramfs for kernel ${curversion}" >&2
-			exit 2
-		fi
-	fi
-	[ -z ${initdir} ] || for cm_x in ${initlist}; do
-		tmp=$(eval echo $(grep ^MINKVER ${initdir}/${cm_x} | cut -d'=' -f2))
-		if dpkg --compare-versions "${curversion}" lt "${tmp}"; then
-			echo "W: ${cm_x} hook script requires at least kernel version ${tmp}" >&2
-			echo "W: not generating requested initramfs for kernel ${curversion}" >&2
-			exit 2
-		fi
-	done
-}
-
 # Load custom modules first
 load_modules()
 {

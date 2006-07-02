@@ -1,3 +1,10 @@
+initramfs-tools (0.68) unstable; urgency=low
+
+  * script/functions, hook-functions: Move check_minkver() to the second
+    file as it uses dpkg and is run by mkinitramfs and not on boot.
+
+ -- maximilian attems <maks@sternwelten.at>  Sun,  2 Jul 2006 19:44:45 +0200
+
 initramfs-tools (0.67) unstable; urgency=high
 
   Release bella, ciao, ciao, ciao!
