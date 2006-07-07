@@ -112,6 +112,9 @@ if [ ! -e "${MODULESDIR}" ]; then
 	echo "Cannot find ${MODULESDIR}"
 	exit 1
 fi
+if [ ! -e "${MODULESDIR}/modules.depmod" ]; then
+	depmod ${version}
+fi
 
 DESTDIR="$(mktemp -t -d mkinitramfs_XXXXXX)" || exit 1
 __TMPCPIOGZ="$(mktemp -t mkinitramfs-OL_XXXXXX)" || exit 1
@@ -175,9 +178,14 @@ done
 echo "ROOT=${ROOT}" > ${DESTDIR}/conf/conf.d/root
 
 # Busybox
-rm -f ${DESTDIR}/bin/sh
-copy_exec ${BUSYBOXDIR}/busybox /bin/busybox
-ln -s ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/sh
+if [ "x${BUSYBOX}" = "xn" ]; then
+	ln -s ${DESTDIR}/bin/sh.shared ${DESTDIR}/bin/sh
+	echo "Warning: Busybox is required for successful boot!"
+else
+	rm -f ${DESTDIR}/bin/sh
+	copy_exec ${BUSYBOXDIR}/busybox /bin/busybox
+	ln -s ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/sh
+fi
 
 # Modutils
 copy_exec /sbin/modprobe /sbin

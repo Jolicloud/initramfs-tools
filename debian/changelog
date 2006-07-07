@@ -1,9 +1,29 @@
-initramfs-tools (0.68) unstable; urgency=low
+initramfs-tools (0.68) unstable; urgency=high
 
   * script/functions, hook-functions: Move check_minkver() to the second
     file as it uses dpkg and is run by mkinitramfs and not on boot.
 
- -- maximilian attems <maks@sternwelten.at>  Sun,  2 Jul 2006 19:44:45 +0200
+  * mkinitramfs: Check if ${BUSYBOX} is set to n before adding it.
+    Add a big fat warning that this not yet supported. Helps to do the
+    klibc-utils work.
+
+  * mkinitramfs: Run depmod if no /lib/modules/${version}/modules.dep exists.
+    Solves initramfs creation for handbuild upstream Xen targets.
+    Thanks to Klaus Ita <ita@ai.wu-wien.ac.at> for the report.
+
+  * debian/initramfs-tools.preinst, debian/initramfs-tools.postinst: Do the
+    migration of the mkinitrd settings in the preinst. (closes: #376604) Thanks
+    for the checks to Justin Pryzby <justinpryzby@users.sourceforge.net>.
+
+  * debian/initramfs-tools.preinst: Reorder. Generate an modules file similar
+    to the one we ship. This should minimize Sarge upgrade prompting if no
+    relevant modules where added to /etc/mkinitrd/modules.
+
+  * conf/initramfs.conf: Make it more similar to /etc/mkinitrd/modules.
+
+  * Set urgency high for RC fixes upload.
+
+ -- maximilian attems <maks@sternwelten.at>  Fri,  7 Jul 2006 11:45:56 +0200
 
 initramfs-tools (0.67) unstable; urgency=high
 

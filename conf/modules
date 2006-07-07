@@ -2,8 +2,9 @@
 #
 # Syntax:  module_name [args ...]
 #
+# You must run update-initramfs(8) to effect this change.
 #
-# This might be good choices:
+# Examples:
 #
 # raid1
 # sd_mod

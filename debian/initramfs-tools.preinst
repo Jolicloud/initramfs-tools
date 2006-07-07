@@ -3,6 +3,41 @@
 set -e
 
 case "$1" in
+	configure)
+	if [ -n "$2" ]; then
+		# First time install.  Can we autodetect the RESUME partition?
+		RESUME=$(tail -n $(($(wc -l /proc/swaps | awk ' { print $1 } ') - 1)) /proc/swaps | sort -rk3 | head -n 1 | awk ' { print $1 } ')
+
+		# Inhertic initrd-tools settings if possible.
+		if [ -e /etc/mkinitrd/mkinitrd.conf ]; then
+			 . /etc/mkinitrd/mkinitrd.conf
+		fi
+		if [ -e ${RESUME} ]; then
+			echo "RESUME=${RESUME}" > /etc/initramfs-tools/conf.d/resume
+		fi
+
+		# Add initrd-tools modules, while trying to minimize prompting
+		if [ -e /etc/mkinitrd/modules ]; then
+			cp /etc/mkinitrd/modules /etc/initramfs-tools
+			sed -i \
+			  -e 's/\/etc\/mkinitrd\/modules: Kernel modules to load for initrd./List of modules that you want to include in your initramfs./g' \
+			  -e 's/mkinitrd/update-initramfs/g' \
+			  -e '/# This file should/,/one per line\./d' \
+			  -e 's/Comments begin with.*/Syntax:  module_name [args ...]/' \
+			  -e 's/^#  ext2$/# raid1/' \
+			  -e 's/^#  wd io=0x300$/# sd_mod/'
+			  -e '/^ide-generic/d' \
+			  -e '/^ide-disk/d' \
+			  -e '/^ext2/d' \
+			  -e '/^ext3/d' \
+			  /etc/initramfs-tools/modules
+		fi
+
+		if [ -e /etc/mkinitrd/DSDT ]; then
+			cp /etc/mkinitrd/DSDT /etc/initramfs-tools/DSDT.aml
+		fi
+	fi
+	;;
 	upgrade)
 	if [ -n "$2" ] && dpkg --compare-versions "$2" lt "0.61"; then
 		if [ -d /etc/initramfs-tools ]; then
