@@ -19,6 +19,7 @@ Options:
  -u		Update an existing initramfs
  -d		Remove an existing initramfs
  -t		Take over a custom initramfs with this one
+ -b		Set alternate boot directory
  -v		Be verbose
  -h		This message
 
@@ -287,7 +288,7 @@ takeover=0
 
 ##
 
-while getopts "k:cudyvht?" flag; do
+while getopts "k:cudyvtb:h?" flag; do
 	case "${flag}" in
 	k)
 		version="${OPTARG}"	
@@ -309,6 +310,13 @@ while getopts "k:cudyvht?" flag; do
 		;;
 	t)
 		takeover="1"
+		;;
+	b)
+		BOOTDIR="${OPTARG}"	
+		if [ ! -d $BOOTDIR ]; then
+			echo "Error: ${BOOTDIR} is not a directory."
+			exit 1
+		fi
 		;;
 	h|?)
 		usage

@@ -40,7 +40,6 @@ export break=
 export init=/sbin/init
 export quiet=n
 export readonly=y
-export resume=${RESUME}
 export rootmnt=/root
 export debug=
 export cryptopts=${CRYPTOPTS}
@@ -77,7 +76,10 @@ for x in $(cat /proc/cmdline); do
 		BOOT=${x#boot=}
 		;;
 	resume=*)
-		resume=${x#resume=}
+		RESUME=${x#resume=}
+		;;
+	noresume)
+		NORESUME=y
 		;;
 	quiet)
 		quiet=y
@@ -101,6 +103,10 @@ for x in $(cat /proc/cmdline); do
 		;;
 	esac
 done
+
+if [ -n ${NORESUME} ]; then
+        export resume=${RESUME}
+fi
 
 depmod -a
 maybe_break top

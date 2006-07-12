@@ -1,4 +1,22 @@
-initramfs-tools (0.68) unstable; urgency=high
+initramfs-tools (0.69) unstable; urgency=low
+
+  * scripts/local-premount/suspend, scripts/local-premount/resume: Rename
+    to the later as the script resumes from resume arg.
+
+  * init: Parse for noresume and only export resume if it is not set.
+    Allows boot scripts to check for it's eventual existence.
+    Thanks David Härdeman <david@2gen.com> for the suggestion.
+
+  * update-initramfs: Add option "-b directory" to override BOOTDIR.
+    Allows the initramfs to be created in another dir without awkward
+    mkinitramfs invocation. Check that the passed arg is really a dir. 
+    (ubuntu: 37690) Thanks Colin Watson <cjwatson@debian.org>
+
+  * update-initramfs.8: Document -b switch.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 12 Jul 2006 16:51:49 +0200
+
+initramfs-tools (0.68b) unstable; urgency=high
 
   * script/functions, hook-functions: Move check_minkver() to the second
     file as it uses dpkg and is run by mkinitramfs and not on boot.
@@ -19,11 +37,12 @@ initramfs-tools (0.68) unstable; urgency=high
     to the one we ship. This should minimize Sarge upgrade prompting if no
     relevant modules where added to /etc/mkinitrd/modules.
 
-  * conf/initramfs.conf: Make it more similar to /etc/mkinitrd/modules.
+  * conf/modules: Make it more similar to /etc/mkinitrd/modules.
 
   * Set urgency high for RC fixes upload.
+    Thanks Steinar H. Gunderson <sesse@debian.org> for the review.
 
- -- maximilian attems <maks@sternwelten.at>  Fri,  7 Jul 2006 11:45:56 +0200
+ -- maximilian attems <maks@sternwelten.at>  Mon, 10 Jul 2006 00:13:52 +0200
 
 initramfs-tools (0.67) unstable; urgency=high
 
