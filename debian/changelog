@@ -9,9 +9,12 @@ initramfs-tools (0.69b) unstable; urgency=high
     ramdisk=mkinitramfs-kpkg. As kernel-package doesn't yet support
     update-initramfs. Thanks Frans Pop <fjp@debian.org> for report.
 
+  * debian/bug: Rename to script so that it shows up in reportbug.
+    Fix debian/initramfs-tools.install accordingly.
+
   * Thus high urgency upload.
 
- -- maximilian attems <maks@sternwelten.at>  Thu, 13 Jul 2006 23:20:49 +0200
+ -- maximilian attems <maks@sternwelten.at>  Fri, 14 Jul 2006 00:31:30 +0200
 
 initramfs-tools (0.69) unstable; urgency=low
 
