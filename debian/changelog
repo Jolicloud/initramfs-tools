@@ -1,3 +1,18 @@
+initramfs-tools (0.69b) unstable; urgency=high
+
+  * debian/initramfs-tools.preinst: Don't depend upon shipped directories
+    to be existing. Thanks Colin Watson <cjwatson@debian.org> for patch.
+    Add trailing slash to copy command. (closes: 378089)
+
+  * mkinitramfs: Revert the removal of kernel-package supported lonng param
+    of 0.65. Readd that plain ugly interface. Warn users they should use
+    ramdisk=mkinitramfs-kpkg. As kernel-package doesn't yet support
+    update-initramfs. Thanks Frans Pop <fjp@debian.org> for report.
+
+  * Thus high urgency upload.
+
+ -- maximilian attems <maks@sternwelten.at>  Thu, 13 Jul 2006 23:20:49 +0200
+
 initramfs-tools (0.69) unstable; urgency=low
 
   * scripts/local-premount/suspend, scripts/local-premount/resume: Rename

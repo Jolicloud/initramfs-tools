@@ -5,6 +5,8 @@ set -e
 case "$1" in
 	configure)
 	if [ -n "$2" ]; then
+		mkdir -p /etc/initramfs-tools/conf.d
+
 		# First time install.  Can we autodetect the RESUME partition?
 		RESUME=$(tail -n $(($(wc -l /proc/swaps | awk ' { print $1 } ') - 1)) /proc/swaps | sort -rk3 | head -n 1 | awk ' { print $1 } ')
 
@@ -18,7 +20,7 @@ case "$1" in
 
 		# Add initrd-tools modules, while trying to minimize prompting
 		if [ -e /etc/mkinitrd/modules ]; then
-			cp /etc/mkinitrd/modules /etc/initramfs-tools
+			cp /etc/mkinitrd/modules /etc/initramfs-tools/
 			sed -i \
 			  -e 's/\/etc\/mkinitrd\/modules: Kernel modules to load for initrd./List of modules that you want to include in your initramfs./g' \
 			  -e 's/mkinitrd/update-initramfs/g' \

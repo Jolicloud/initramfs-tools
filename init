@@ -104,7 +104,7 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
-if [ -n ${NORESUME} ]; then
+if [ -z ${NORESUME} ]; then
         export resume=${RESUME}
 fi
 
