@@ -12,7 +12,7 @@
 #	added to the initramfs, but the linux-image it relates to has
 #	already been installed previously?  Does this happen often
 #	enough that it needs to be handled?  How can it be handled?
-#	
+#
 #	* Think about the 'usplash'.  The initramfs will need to be
 #	 updated if a theme change or update is desired.  Maybe it
 #	 should not be totally automatic, but offered on upgrade
@@ -96,9 +96,9 @@ fi
 #
 if [ -n "$an_error_occured" ];
 then
-	# 
+	#
 	# TODO: Do we need 'warn()', 'error()', and/or 'fatal()' for this?
-	# 
+	#
 	echo "An error occured in $0: $an_error_occured" >&2
 	exit 1
 	#

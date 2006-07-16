@@ -5,25 +5,25 @@ update-initramfs \- generate an initramfs image
 
 .SH SYNOPSIS
 .B update-initramfs
-.RB [ \-k 
-.IR version ] 
-.RB [ \-c ] 
-.RB [ \-u ] 
-.RB [ \-t ] 
-.RB [ \-v ] 
-.RB [ \-b ] 
-.RB [ \-h ] 
+.RB [ \-k
+.IR version ]
+.RB [ \-c ]
+.RB [ \-u ]
+.RB [ \-t ]
+.RB [ \-v ]
+.RB [ \-b ]
+.RB [ \-h ]
 .SH DESCRIPTION
 The
-.B update-initramfs 
+.B update-initramfs
 script manages your initramfs images on your local box.
 It keeps track of the existing initramfs archives in /boot.
 There are three modes of operation create, update or delete.
 You must at least specify one of those modes.
 
-The initramfs is a gzipped cpio archive. 
-At boot time, the kernel unpacks that archive into RAM disk, mounts and 
-uses it as initial root file system. All finding of the root device 
+The initramfs is a gzipped cpio archive.
+At boot time, the kernel unpacks that archive into RAM disk, mounts and
+uses it as initial root file system. All finding of the root device
 happens in this early userspace.
 
 .SH OPTIONS
@@ -59,7 +59,7 @@ Set an different bootdir for the image creation.
 
 .TP
 \fB \-h
-Print a short help page describing the available options in 
+Print a short help page describing the available options in
 .B update-initramfs.
 
 .SH AUTHOR

@@ -5,13 +5,13 @@ mkinitramfs \- generate an initramfs image
 
 .SH SYNOPSIS
 .B mkinitramfs
-.RB [ \-d 
-.IR confdir ] 
-.RB [ \-k ] 
-.RB [ \-o 
-.IR outfile ] 
-.RB [ \-r 
-.IR root ] 
+.RB [ \-d
+.IR confdir ]
+.RB [ \-k ]
+.RB [ \-o
+.IR outfile ]
+.RB [ \-r
+.IR root ]
 .RI [ version ]
 .B mkinitramfs
 .RB [ \-\-supported-host-version=
@@ -21,17 +21,17 @@ mkinitramfs \- generate an initramfs image
 
 .SH DESCRIPTION
 The
-.B mkinitramfs 
+.B mkinitramfs
 script generates an initramfs image.
 The initramfs is a gzipped cpio archive. The archive can be used on a
 different box of the same arch with the corresponding Linux kernel.
 .B mkinitramfs
-is meant for advanced usage. On your local box 
+is meant for advanced usage. On your local box
 .B update-initramfs
 should do all necessary steps.
 
-At boot time, the kernel unpacks that archive into RAM disk, mounts and 
-uses it as initial root file system. All finding of the root device 
+At boot time, the kernel unpacks that archive into RAM disk, mounts and
+uses it as initial root file system. All finding of the root device
 happens in this early userspace.
 
 .SH OPTIONS
@@ -45,14 +45,14 @@ Keep the temporary directory used to make the image.
 
 .TP
 \fB \-o \fI outfile
-Write the image to 
+Write the image to
 .IR outfile .
 
 .TP
 \fB \-r \fI root
-Override the 
-.B ROOT 
-setting in 
+Override the
+.B ROOT
+setting in
 .IR initramfs.conf .
 
 .TP

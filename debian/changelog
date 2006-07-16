@@ -8,12 +8,20 @@ initramfs-tools (0.70) unstable; urgency=low
       cleanup and add quoting.
     - scripts/local: Whitespace cleanup and add a comment.
     - update-initramfs: Add quoting + whitespace fix.
-    - changelog: for noise reduction add 0.69ubuntu{1,2,3}, all 0.40ubuntu*, 
+    - changelog: for noise reduction add 0.69ubuntu{1,2,3}, all 0.40ubuntu*,
       0.36ubuntu1 and missing 0.29 + 0.28 entries.
     - initramfs-tools.install, initramfs-tools.postinst and
       initramfs-tools.preinst merge 0.69ubuntu3.
 
- -- maximilian attems <maks@sternwelten.at>  Sun, 16 Jul 2006 20:23:41 +0200
+  * break.txt, debian/NEWS, debian/changelog, debian/copyright,
+    docs/example_hook, docs/example_hook_cpiogz, docs/example_script,
+    hooks/lvm, hooks/md, init, initramfs-tools.8, initramfs.conf.5,
+    mkinitramfs, mkinitramfs-kpkg, mkinitramfs-kpkg.8, mkinitramfs.8,
+    scripts/functions, scripts/local-top/udev_helper, update-initramfs,
+    update-initramfs.8: Whitespace policy cleanup trailing whitespace and
+    non tabular indents.
+
+ -- maximilian attems <maks@sternwelten.at>  Sun, 16 Jul 2006 21:50:34 +0200
 
 initramfs-tools (0.69b) unstable; urgency=high
 
@@ -68,7 +76,7 @@ initramfs-tools (0.69) unstable; urgency=low
 
   * update-initramfs: Add option "-b directory" to override BOOTDIR.
     Allows the initramfs to be created in another dir without awkward
-    mkinitramfs invocation. Check that the passed arg is really a dir. 
+    mkinitramfs invocation. Check that the passed arg is really a dir.
     (ubuntu: 37690) Thanks Colin Watson <cjwatson@debian.org>
 
   * update-initramfs.8: Document -b switch.
@@ -312,7 +320,7 @@ initramfs-tools (0.60) unstable; urgency=low
 
 initramfs-tools (0.59b) unstable; urgency=low
 
-  * mkinitramfs-kpkg: Intialialize the variables. 
+  * mkinitramfs-kpkg: Intialialize the variables.
     (closes: #359355, #359620, #359613, #359666, #359681)
 
  -- maximilian attems <maks@sternwelten.at>  Tue, 28 Mar 2006 16:30:59 +0200
@@ -329,7 +337,7 @@ initramfs-tools (0.59) unstable; urgency=low
     - scripts/local-top/udev_helper: Leave the remaining ide-generic part
       there, should be taken over by udev itself.
     - make the md local-top scripts pre-requisite the udev one.
-      thanks Scott James Remnant <scott@ubuntu.com> 
+      thanks Scott James Remnant <scott@ubuntu.com>
 
  -- maximilian attems <maks@sternwelten.at>  Sun, 26 Mar 2006 22:35:15 +0200
 
@@ -768,7 +776,7 @@ initramfs-tools (0.40ubuntu17) dapper; urgency=low
 
   * Make auto_add_modules take an argument, so you can use it to add only
     some of the auto* modules (like "net" or "ide"), and create a "netboot"
-    option that only includes base and net (Closes launchpad.net/26426) 
+    option that only includes base and net (Closes launchpad.net/26426)
   * Change the nfs script to use "mount -o nolock" instead of "nfsmount",
     to fix some timeouts for ltsp NFS roots (Closes launchpad.net/19196)
 
@@ -854,7 +862,7 @@ initramfs-tools (0.40ubuntu8) dapper; urgency=low
 initramfs-tools (0.40ubuntu7) dapper; urgency=low
 
   * remove "sleep 3" from the nfs script before the nfsmount command,
-    its a leftover from debugging in breezy and slows down thin client 
+    its a leftover from debugging in breezy and slows down thin client
     booting unnecessary
 
  -- Oliver Grawert <ogra@ubuntu.com>  Fri,  2 Dec 2005 11:45:05 +0100
@@ -887,7 +895,7 @@ initramfs-tools (0.40ubuntu4) dapper; urgency=low
 initramfs-tools (0.40ubuntu3) dapper; urgency=low
 
   "A true friend stabs you in the front."
-  - Oscar Wilde 
+  - Oscar Wilde
 
   * hooks/acpid: Rename to ...
   * hooks/thermal: ... this.  Add therm_pm72 for ppc64 systems.
@@ -933,7 +941,7 @@ initramfs-tools (0.41) unstable; urgency=high
 
   * High urgency upload to cope with newer udev upstream - bonus:
     condition to test against when udev is ready. (Closes: #341014)
-    Thanks Marco d'Itri <md@linux.it> for guidance and 
+    Thanks Marco d'Itri <md@linux.it> for guidance and
     Heikki Henriksen <heikkih@gmail.com> for double check.
 
   * Pump udev dep on 0.076-3.
@@ -978,7 +986,7 @@ initramfs-tools (0.39) unstable; urgency=medium
   * Pump udev dependency.
 
   * init: Pump timeout as there is currently no way to check which udevd
-    processes are still running and why. 
+    processes are still running and why.
     Cures hopefully breakage of missing devices on boot.
 
   * Sync with latest Ubuntu.
@@ -1048,7 +1056,7 @@ initramfs-tools (0.37) unstable; urgency=low
     Exit if it doesn't exist before including current dir.
     Thanks to Jean Charles Delepine <delepine@nnx.com> (Closes: #335505)
 
-  * hooks/lvm, hooks/md: Remove FIXME's at second thought.  You better want 
+  * hooks/lvm, hooks/md: Remove FIXME's at second thought.  You better want
     to check against the binaries for your not yet created raid/lvm.
 
  -- maximilian attems <maks@sternwelten.at>  Wed, 26 Oct 2005 09:22:58 +0200
@@ -1065,7 +1073,7 @@ initramfs-tools (0.36ubuntu1) dapper; urgency=low
 initramfs-tools (0.36) unstable; urgency=low
 
   "Sunny Autumn Release"
-  
+ 
   * Minor cleanups in mkiniramfs.
 
   * Remove manpage section about return values. Needs to be rephrased.
@@ -1149,7 +1157,7 @@ initramfs-tools (0.30) unstable; urgency=low
   [ maximilian Attems ]
 
   * Resynconise with latest upstream now we are in unstable.
-  
+
   [ Jeff Bailey ]
   * debian/rules: Make sure hooks and scripts are chmod +x
 
@@ -1197,7 +1205,7 @@ initramfs-tools (0.29) breezy; urgency=low
 
 initramfs-tools (0.28) breezy; urgency=low
 
-  * Run udevstart after loading block drivers - should fix resume from 
+  * Run udevstart after loading block drivers - should fix resume from
     hibernate on non-LVM systems.
 
  -- Matthew Garrett <mjg59@srcf.ucam.org>  Tue, 20 Sep 2005 01:13:31 +0100
@@ -1228,7 +1236,7 @@ initramfs-tools (0.27) unstable; urgency=low
 initramfs-tools (0.26) breezy; urgency=low
 
   "Experience is one thing you can't get for nothing."
-  - Oscar Wilde 
+  - Oscar Wilde
 
   * scripts/local-top/lvm: Reduce -- to - in VG strings for feeding
     to vgchange.  (Ubuntu: #13387)
@@ -1264,7 +1272,7 @@ initramfs-tools (0.26) breezy; urgency=low
   * debian/dirs: Add etc/mkinitramfs/hooks, move all scripts subdirs
     into etc/mkinitramfs/scripts.
 
-  * mkinitramfs: Set the umask.  Copy the scripts from  
+  * mkinitramfs: Set the umask.  Copy the scripts from
     /etc/mkinitramfs/scripts into the image.
     Make sure that modules file lists is actually a regular file.
 
@@ -1441,9 +1449,9 @@ initramfs-tools (0.17) breezy; urgency=low
    genius."
   - Oscar Wilde
 
-  * debian/initramfs-tools.postinst: Get the name of the config file 
+  * debian/initramfs-tools.postinst: Get the name of the config file
     right when seeding RESUME=.  Also fix the sed expression.
-    Thanks to Matthew Garrett for noticing this!  
+    Thanks to Matthew Garrett for noticing this!
 
  -- Jeff Bailey <jbailey@ubuntu.com>  Wed, 10 Aug 2005 11:54:07 -0400
 
@@ -1459,7 +1467,7 @@ initramfs-tools (0.16) breezy; urgency=low
   * scripts/functions: Be silent when adding non-detected modules.
 
   * conf/mkinitramfs.conf: MODULES=most by default, BUSYBOX=y
-    (Non-busybox isn't supported now.  It's not clear that it ever 
+    (Non-busybox isn't supported now.  It's not clear that it ever
      will be).  Add RESUME line for resuming from suspend-to-disk.
 
   * scripts/local-premount/suspend: New script for suspend-to-disk.
@@ -1568,7 +1576,7 @@ initramfs-tools (0.13) breezy; urgency=low
     Use DESTDIR instead of TMPDIR
     Add ability to link in extra hunks into the cpio file
     Cosmetic cleanups
-    
+ 
   * scripts/functions: Add lsb stype log_FOO_msg functions
 
   * scripts/local: Add logging

@@ -70,12 +70,12 @@ echo "Got here!"
 
 if [ -n "$an_error_occured" ];
 then
-	# 
+	#
 	# TODO: Do we need 'warn()', 'error()', and/or 'fatal()' for this?
 	# I think we ultimately do, and that they need to be in their own
 	# well-documented location so that an overlay can override them.
 	# Think 'usplash' progress updates.
-	# 
+	#
 	echo "An error occured in $0: $an_error_occured" >&2
 	exit 1
 	#

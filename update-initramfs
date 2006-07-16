@@ -189,7 +189,7 @@ create()
 		if version_exists "${version}"; then
 			panic "Cannot create version ${version}: already exists"
 		fi
-	
+
 		if [ -e "${initramfs}" ]; then
 			panic "${initramfs} already exists, cannot create."
 		fi
@@ -257,7 +257,7 @@ delete()
 	if [ ! -e "${initramfs}" ]; then
 		panic "Cannot delete ${initramfs}, doesn't exist."
 	fi
-	
+
 	if ! version_exists "${version}"; then
 		panic "Cannot delete version ${version}: Not created by this utility."
 	fi
@@ -291,7 +291,7 @@ takeover=0
 while getopts "k:cudyvtb:h?" flag; do
 	case "${flag}" in
 	k)
-		version="${OPTARG}"	
+		version="${OPTARG}"
 		;;
 	c)
 		mode="c"

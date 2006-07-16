@@ -24,5 +24,5 @@ copy_exec /sbin/mdadm /sbin
 copy_exec /sbin/mdrun /sbin
 
 for x in md linear raid0 raid1 raid5 raid6 raid10; do
-        manual_add_modules ${x}
+	manual_add_modules ${x}
 done

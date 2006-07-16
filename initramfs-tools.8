@@ -4,19 +4,19 @@
 initramfs-tools \- an introduction to writing scripts for mkinitramfs
 
 .SH DESCRIPTION
-initramfs-tools has one main script and two different sets of subscripts which 
+initramfs-tools has one main script and two different sets of subscripts which
 will be used during different phases of execution. Each of these will be
 discussed separately below with the help of an imaginary tool which performs a
 frobnication of a lvm partition prior to mounting the root partition.
 
 .SS Hook scripts
-These are used when an initramfs image is created and not included in the 
+These are used when an initramfs image is created and not included in the
 image itself. They can however cause files to be included in the image.
 
 .SS Boot scripts
-These are included in the initramfs image and normally executed during 
+These are included in the initramfs image and normally executed during
 kernel boot in the early user-space before the root partition has been
-mounted. 
+mounted.
 
 initramfs-tools uses shell variable names for handling dependencies.
 Notice that `-' is not a valid shell variable name and thus should
@@ -40,7 +40,7 @@ the device node to mount as the rootfs.
 .TP
 \fB \fI nfsroot
 can be either "auto" to try to get the relevant information from DHCP or a
-string of the form NFSSERVER:NFSPATH 
+string of the form NFSSERVER:NFSPATH
 
 .TP
 \fB \fI boot
@@ -79,7 +79,7 @@ Hooks can be found in two places: /usr/share/initramfs-tools/hooks and
 /etc/initramfs-tools/hooks. They are executed during generation of the
 initramfs-image and are responsible for including all the necessary components
 in the image itself. No guarantees are made as to the order in which the
-different scripts are executed unless the prereqs are setup in the script. 
+different scripts are executed unless the prereqs are setup in the script.
 
 .SS Header
 In order to support prereqs, each script should begin with the following lines:
@@ -113,7 +113,7 @@ the lvm hook script is run before your custom script.
 /usr/share/initramfs-tools/hook-functions contains a number of functions which
 deal with some common tasks in a hook script:
 .TP
-\fB \fI 
+\fB \fI
 manual_add_modules
 adds a module (and any modules which it depends on) to the initramfs image.
 .RS
@@ -389,7 +389,7 @@ if [ ! -e "/dev/mapper/frobb" ]; then
 	panic "Frobnication device not found"
 fi
 
-log_begin_msg "Starting frobnication"		
+log_begin_msg "Starting frobnication"
 /sbin/frobnicate "/dev/mapper/frobb" || panic "Frobnication failed"
 log_end_msg
 
@@ -398,7 +398,7 @@ exit 0
 .RE
 
 .SH DEBUG
-It is easy to check the generated initramfs for its content. One may need 
+It is easy to check the generated initramfs for its content. One may need
 to double-check if it contains the relevant binaries, libs or modules:
 .RS
 .nf

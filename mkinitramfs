@@ -8,7 +8,7 @@ CONFDIR="/etc/initramfs-tools"
 verbose="n"
 errors_to="2>/dev/null"
 # BUSYBOXDIR="/usr/lib/initramfs-tools/bin/"
-BUSYBOXDIR="/bin" 
+BUSYBOXDIR="/bin"
 
 OPTIONS=`getopt -o d:ko:r:v --long supported-host-version:,supported-target-version: -n "$0" -- "$@"`
 
@@ -110,18 +110,18 @@ check_minkver ${version} ${CONFDIR}/hooks
 
 case "${version}" in
 /lib/modules/*/[!/]*)
-        ;;
+	;;
 /lib/modules/[!/]*)
-        version="${version#/lib/modules/}"
-        version="${version%%/*}"
-        ;;
+	version="${version#/lib/modules/}"
+	version="${version%%/*}"
+	;;
 esac
 
 case "${version}" in
 */*)
-        echo "$PROG: ${version} is not a valid kernel version" >&2
-        exit 1
-        ;;
+	echo "$PROG: ${version} is not a valid kernel version" >&2
+	exit 1
+	;;
 esac
 
 if [ -d "${outfile}" ]; then
@@ -157,7 +157,7 @@ export verbose
 export __TMPCPIOGZ
 
 for d in bin conf/conf.d etc lib modules sbin scripts; do
-    mkdir -p "${DESTDIR}/${d}"
+	mkdir -p "${DESTDIR}/${d}"
 done
 
 # MODULES=list case.  Always honour.
@@ -228,7 +228,7 @@ fi
 (cd "${DESTDIR}" && find . | cpio --quiet --dereference -o -H newc | gzip -9 >"${outfile}") || exit 1
 
 if [ -s "${__TMPCPIOGZ}" ]; then
-    cat "${__TMPCPIOGZ}" >>"${outfile}" || exit 1
+	cat "${__TMPCPIOGZ}" >>"${outfile}" || exit 1
 fi
 
 if [ "${keep}" = "y" ]; then

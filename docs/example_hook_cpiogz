@@ -50,7 +50,7 @@ esac
 #	corresponding 'linux-image' package?  Can it declare that, in
 #	the case where it's an add-on that the 'linux-image' is not
 #	aware of?  This might be an apt and dpkg issue.
-#	
+#
 #	* Eg. an optional usplash or suspend2ui_fbsplash package.
 #
 . /etc/default/mypackage-initramfs

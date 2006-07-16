@@ -79,20 +79,20 @@ version="${1}"
 
 case "${version}" in
 /lib/modules/*/[!/]*)
-        ;;
+	;;
 /lib/modules/[!/]*)
-        version="${version#/lib/modules/}"
-        version="${version%%/*}"
-        ;;
+	version="${version#/lib/modules/}"
+	version="${version%%/*}"
+	;;
 esac
 
 case "${version}" in
 */*)
-        echo "$PROG: ${version} is not a valid kernel version" >&2
-        exit 1
-        ;;
+	echo "$PROG: ${version} is not a valid kernel version" >&2
+	exit 1
+	;;
 esac
 
-# linux-image installs latest version 
+# linux-image installs latest version
 mkinitramfs -o ${outfile} ${version}
 sha1sum "${outfile}" | sed -e 's/\.new//' > "${STATEDIR}/${version}"

@@ -2,23 +2,23 @@
 
 _log_msg()
 {
-    if [ "$quiet" = "y" ]; then return; fi
-    echo "$@"
+	if [ "$quiet" = "y" ]; then return; fi
+	echo "$@"
 }
 
 log_success_msg()
 {
-    _log_msg "Success: $@"
+	_log_msg "Success: $@"
 }
 
 log_failure_msg()
 {
-    _log_msg "Failure: $@"
+	_log_msg "Failure: $@"
 }
 
 log_warning_msg()
 {
-    _log_msg "Warning: $@"
+	_log_msg "Warning: $@"
 }
 
 log_begin_msg()
@@ -190,7 +190,7 @@ load_modules()
 	if [ -e /conf/modules ]; then
 		cat /conf/modules | while read m; do
 			# Skip empty lines
-			if [ -z "$m" ];  then 
+			if [ -z "$m" ];  then
 				continue
 			fi
 			# Skip comments - d?ash removes whitespace prefix
