@@ -15,7 +15,7 @@ prereqs)
 	;;
 esac
 
-# Hooks for loading loading extra kernel bits into the initramfs
+# Hooks for loading extra kernel bits into the initramfs
 
 . /usr/share/initramfs-tools/hook-functions
 
@@ -35,6 +35,9 @@ for x in ${MODULESDIR}/initrd/*; do
 
 	force_load ${x}
 done
+
+# And add vga16fb for usplash to use as well
+manual_add_modules vga16fb
 
 if [ ${fbcon} = "y" ]; then
 	force_load fbcon

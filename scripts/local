@@ -25,17 +25,18 @@ mountroot ()
 			log_end_msg 0
 		else
 			log_end_msg 1 || true
-               fi
-               if [ -x /sbin/usplash_write ]; then
-                       /sbin/usplash_write "TIMEOUT 15" || true
-               fi
-       fi
+		fi
+		if [ -x /sbin/usplash_write ]; then
+			/sbin/usplash_write "TIMEOUT 15" || true
+		fi
+	fi
 
-       # We've given up, but we'll let the user fix matters if they can
+	# We've given up, but we'll let the user fix matters if they can
 	while [ ! -e "${ROOT}" ]; do
 		panic "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
 	done
 
+	# Get the root filesystem type
 	eval $(fstype < ${ROOT})
 
 	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/local-premount"

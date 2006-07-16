@@ -31,7 +31,7 @@ export ROOT=
 # Bring in the main config
 . /conf/initramfs.conf
 for i in conf/conf.d/*; do
-       [ -f ${i} ] && . ${i}
+	[ -f ${i} ] && . ${i}
 done
 . /scripts/functions
 
@@ -105,7 +105,7 @@ for x in $(cat /proc/cmdline); do
 done
 
 if [ -z ${NORESUME} ]; then
-        export resume=${RESUME}
+	export resume=${RESUME}
 fi
 
 depmod -a
@@ -120,9 +120,9 @@ load_modules
 log_end_msg
 
 maybe_break premount
-log_begin_msg "Running /scripts/init-premount"
+[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/init-premount"
 run_scripts /scripts/init-premount
-log_end_msg
+[ "$quiet" != "y" ] && log_end_msg
 
 maybe_break mount
 log_begin_msg "Mounting root file system..."

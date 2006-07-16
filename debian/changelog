@@ -1,3 +1,20 @@
+initramfs-tools (0.70) unstable; urgency=low
+
+  * Reduce diff against 0.69ubuntu3:
+    - hook-functions: Fix kernel typo.
+    - hooks/kernelextras: Fix comment and add vga16fb too.
+    - init: Whitespace cleanup, add one more quiet check.
+    - mkinitramfs: Use check_minkver instead of dpkg itself. Whitespace
+      cleanup and add quoting.
+    - scripts/local: Whitespace cleanup and add a comment.
+    - update-initramfs: Add quoting + whitespace fix.
+    - changelog: for noise reduction add 0.69ubuntu{1,2,3}, all 0.40ubuntu*, 
+      0.36ubuntu1 and missing 0.29 + 0.28 entries.
+    - initramfs-tools.install, initramfs-tools.postinst and
+      initramfs-tools.preinst merge 0.69ubuntu3.
+
+ -- maximilian attems <maks@sternwelten.at>  Sun, 16 Jul 2006 20:23:41 +0200
+
 initramfs-tools (0.69b) unstable; urgency=high
 
   * debian/initramfs-tools.preinst: Don't depend upon shipped directories
@@ -15,6 +32,30 @@ initramfs-tools (0.69b) unstable; urgency=high
   * Thus high urgency upload.
 
  -- maximilian attems <maks@sternwelten.at>  Fri, 14 Jul 2006 00:31:30 +0200
+
+initramfs-tools (0.69ubuntu3) edgy; urgency=low
+
+  * debian/initramfs-tools.install, debian/initramfs-tools.preinst,
+    debian/initramfs-tools.postinst: Copy default modules file in the
+    postinst (when it's actually available) rather than in the preinst (when
+    it isn't). Copy it from /usr/share/initramfs-tools/ rather than from
+    /usr/share/doc/initramfs-tools/examples/, per policy.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 13 Jul 2006 10:04:26 +0100
+
+initramfs-tools (0.69ubuntu2) edgy; urgency=low
+
+  * debian/initramfs-tools.preinst: Make sure /etc/initramfs-tools and
+    /etc/initramfs-tools/conf.d exist before trying to write to them.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 13 Jul 2006 09:19:05 +0100
+
+initramfs-tools (0.69ubuntu1) edgy; urgency=low
+
+  [ Jeff Bailey ]
+  * Merge from debian unstable.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Wed, 12 Jul 2006 19:22:22 -0400
 
 initramfs-tools (0.69) unstable; urgency=low
 
@@ -590,6 +631,84 @@ initramfs-tools (0.42) unstable; urgency=low
 
  -- maximilian attems <maks@sternwelten.at>  Mon,  5 Dec 2005 12:59:59 +0100
 
+initramfs-tools (0.40ubuntu32) dapper; urgency=low
+
+  * Revert 0.40ubuntu31.  This isn't as trivial as it should be.
+
+ -- Matt Zimmerman <mdz@ubuntu.com>  Sun, 21 May 2006 10:17:50 -0700
+
+initramfs-tools (0.40ubuntu31) dapper; urgency=low
+
+  * scripts/local-premount/resume: Print a message when a resume is about to
+    begin (LP#41137)
+
+ -- Matt Zimmerman <mdz@ubuntu.com>  Fri, 19 May 2006 15:14:53 -0700
+
+initramfs-tools (0.40ubuntu30) dapper; urgency=low
+
+  * This release brought to you by Fujitsu hard drives, which have forced
+    me to rewrite all my most recent initramfs-tools changes from memory.
+  * Include arcmsr module in the scsi module list (launchpad.net/40075)
+  * Abstract out the kernel minversion checking stuff into the function
+    library, so we can reuse it to check minversion requirements for hook
+    scripts as well (such as udev, which requires >= 2.6.15 in dapper)
+  * Bump the kernel minversion to 2.6.15 on hppa and ia64, since they used
+    initrd-tools with their 2.6.12 kernels in breezy, not initramfs-tools.
+  * If mkinitramfs fails due to minversion not being met, don't bail out
+    of update-initramfs, but just exit 0, so upgrades don't halt on it.
+  * Conditionalise the use of lvm and md in mkinitramfs so it's a no-op if
+    you don't have those packages installed, but allows for smooth upgrades
+    if you have older versions that don't ship their own hooks yet.
+  * Make prereqs conditional on the script/hook actually existing.  From
+    now on, this means that 'PREREQ="udev"' means "run udev first, iff it
+    happens to be installed".  Having the files exist on the filesystem if
+    you have a HARD dependency should be enforced with package dependencies.
+  * Add ohci1394 and sbp2 to the scsi module list (launchpad.net/37479)
+  * Move framebuffer setup from usplash to scripts/local-top/framebuffer
+    so that people booting with vga=1234 but no splash will still get a
+    framebuffer instead of a useless black console (launchpad.net/27669)
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Tue, 16 May 2006 19:51:08 +1000
+
+initramfs-tools (0.40ubuntu29) dapper; urgency=low
+
+  * Make "update-initramfs -u" try to find the running kernel *after* it
+    attempts to search the symbolic link list and its own sha1 list.
+    Using this as a fallback, rather than the default, should solve most
+    upgrade issues, where people found their initramfs was half-baked.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Wed, 19 Apr 2006 13:51:35 +1000
+
+initramfs-tools (0.40ubuntu28) dapper; urgency=low
+
+  * Add raid10 module to the generic module list (launchpad.net/28028)
+  * Add cpqarray to the scsi module list (launchpad.net/{26632,35202})
+  * Unset debug before we run the real init (launchpad.net/24095)
+  * Add the gdth module to the default scsi list (launchpad.net/31542)
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Fri, 24 Mar 2006 04:33:44 +1100
+
+initramfs-tools (0.40ubuntu27) dapper; urgency=low
+
+  * Drop the evms, lvm and md local-top scripts; they're all provided by
+    their own packages now.  This makes the depdencies rather nicer.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Thu, 23 Mar 2006 18:04:48 +0000
+
+initramfs-tools (0.40ubuntu26) dapper; urgency=low
+
+  * Make the md and evms local-top scripts pre-requisite the udev one.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Thu, 23 Mar 2006 17:54:32 +0000
+
+initramfs-tools (0.40ubuntu25) dapper; urgency=low
+
+  * Move the "loop waiting for the root filesystem" code from the udev
+    premount script to the local mountroot() function where it truly
+    belongs.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Wed, 22 Mar 2006 16:28:46 +0000
+
 initramfs-tools (0.40ubuntu24) dapper; urgency=low
 
   * Add support for LSI Logic's Fusion MPT SAS and FC controllers as well.
@@ -879,7 +998,6 @@ initramfs-tools (0.36ubuntu5) dapper; urgency=low
 
  -- Scott James Remnant <scott@ubuntu.com>  Mon, 21 Nov 2005 08:40:20 +0000
 
-
 initramfs-tools (0.36ubuntu4) dapper; urgency=low
 
   * Replace all occurances of /etc/mkinitramfs in mkinitramfs with $CONFDIR,
@@ -934,6 +1052,15 @@ initramfs-tools (0.37) unstable; urgency=low
     to check against the binaries for your not yet created raid/lvm.
 
  -- maximilian attems <maks@sternwelten.at>  Wed, 26 Oct 2005 09:22:58 +0200
+
+initramfs-tools (0.36ubuntu1) dapper; urgency=low
+
+  * Forced version bump to minimise the scary until I have a chance to dig
+    through the ubuntu:debian diffs and do a proper merge of their changes.
+  * Remove the "Loading, please wait..." message from the top of init, as
+    we now have other fairly early visual feedback, and this is just ugly.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Wed, 26 Oct 2005 11:27:36 +1000
 
 initramfs-tools (0.36) unstable; urgency=low
 
@@ -1053,6 +1180,27 @@ initramfs-tools (0.30) unstable; urgency=low
     drivers should fix resume from hibernate on non-LVM systems.
 
  -- maximilian attems <maks@sternwelten.at>  Fri, 30 Sep 2005 19:34:55 +0200
+
+initramfs-tools (0.29) breezy; urgency=low
+
+  "Beauty is a form of genius - is higher, indeed, than genius, as it
+   needs no explanation."
+  - Oscar Wilde
+
+  * hook-functions (auto_add_modules): Add advansys.
+
+  * debian/rules: Make sure hooks and scripts are chmod +x
+
+  * init: Add start of debug command line option.
+
+ -- Jeff Bailey <jbailey@ubuntu.com>  Tue, 20 Sep 2005 15:47:42 -0400
+
+initramfs-tools (0.28) breezy; urgency=low
+
+  * Run udevstart after loading block drivers - should fix resume from 
+    hibernate on non-LVM systems.
+
+ -- Matthew Garrett <mjg59@srcf.ucam.org>  Tue, 20 Sep 2005 01:13:31 +0100
 
 initramfs-tools (0.27) unstable; urgency=low
 

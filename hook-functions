@@ -243,7 +243,7 @@ check_minkver()
 			;;
 		esac
 		if dpkg --compare-versions "${curversion}" lt "${minversion}"; then
-			echo "W: kernerl ${curversion} too old for initramfs on ${DPKG_ARCH}" >&2
+			echo "W: kernel ${curversion} too old for initramfs on ${DPKG_ARCH}" >&2
 			echo "W: not generating requested initramfs for kernel ${curversion}" >&2
 			exit 2
 		fi

@@ -84,7 +84,7 @@ fi
 . "${CONFDIR}/initramfs.conf"
 EXTRA_CONF=''
 for i in ${CONFDIR}/conf.d/* /usr/share/initramfs-tools/conf.d/*; do
-       EXTRA_CONF="${EXTRA_CONF} $(basename $i | grep '^[a-z0-9][a-z0-9\._-]*$' | grep -v '\.dpkg-.*$')";
+	EXTRA_CONF="${EXTRA_CONF} $(basename $i | grep '^[a-z0-9][a-z0-9\._-]*$' | grep -v '\.dpkg-.*$')";
 done
 for i in ${EXTRA_CONF}; do
 . ${CONFDIR}/conf.d/${i}
@@ -102,10 +102,11 @@ else
 	version="${1}"
 fi
 
-if dpkg --compare-versions "${version}" lt 2.6.12; then
-	echo "Kernel version too old.  initramfs-tools requires at least 2.6.12."
-	exit 1
-fi
+# Check that we're using a new enough kernel version, first for ourselves,
+# then for each of the hooks, which can have a MINKVER variable defined
+check_minkver ${version}
+check_minkver ${version} /usr/share/initramfs-tools/hooks
+check_minkver ${version} ${CONFDIR}/hooks
 
 case "${version}" in
 /lib/modules/*/[!/]*)
@@ -195,7 +196,7 @@ done
 echo "DPKG_ARCH=${DPKG_ARCH}" > ${DESTDIR}/conf/arch.conf
 copy_exec "${CONFDIR}/initramfs.conf" /conf
 for i in ${EXTRA_CONF}; do
-       copy_exec ${CONFDIR}/conf.d/${i} /conf/conf.d
+	copy_exec "${CONFDIR}/conf.d/${i}" /conf/conf.d
 done
 echo "ROOT=${ROOT}" > ${DESTDIR}/conf/conf.d/root
 

@@ -3,8 +3,8 @@ mkinitramfs-kpkg	usr/sbin
 init			usr/share/initramfs-tools
 scripts			usr/share/initramfs-tools
 conf/initramfs.conf	etc/initramfs-tools
-conf/modules		etc/initramfs-tools
 hooks			usr/share/initramfs-tools
 hook-functions		usr/share/initramfs-tools
+conf/modules		usr/share/initramfs-tools
 update-initramfs	usr/sbin
 debian/script		usr/share/bug/initramfs-tools
