@@ -183,8 +183,11 @@ fi
 # Have to do each file, because cpio --dereference doesn't recurse down
 # symlinks.
 
+# klibc
 ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
 ln -s /lib/klibc-*.so ${DESTDIR}/lib
+rm -f ${DESTDIR}/bin/kinit ${DESTDIR}/bin/gzip
+
 copy_exec /usr/share/initramfs-tools/init /init
 cp -a /usr/share/initramfs-tools/scripts/* "${DESTDIR}/scripts"
 for f in $(cd ${CONFDIR}/scripts && \

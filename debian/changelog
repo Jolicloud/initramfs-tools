@@ -1,4 +1,15 @@
+initramfs-tools (0.70b) unstable; urgency=low
+
+  * Be more careful about vi dot files, removed.
+    Thanks Frederik Schüler <fs@debian.org> for review.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 19 Jul 2006 16:00:47 +0200
+
 initramfs-tools (0.70) unstable; urgency=low
+
+  * mkinitramfs: Don't include static kinit, nor gzip. They are the biggest
+    klibc-utils binaries and we don't use them. Keep static gunzip, zcat and
+    shared kinit for now.
 
   * Reduce diff against 0.69ubuntu3:
     - hook-functions: Fix kernel typo.
@@ -7,6 +18,8 @@ initramfs-tools (0.70) unstable; urgency=low
     - mkinitramfs: Use check_minkver instead of dpkg itself. Whitespace
       cleanup and add quoting.
     - scripts/local: Whitespace cleanup and add a comment.
+    - scripts/nfs: Use mount with nolock instead of nfsmount.
+      (closes: 359926)
     - update-initramfs: Add quoting + whitespace fix.
     - changelog: for noise reduction add 0.69ubuntu{1,2,3}, all 0.40ubuntu*,
       0.36ubuntu1 and missing 0.29 + 0.28 entries.
@@ -18,10 +31,17 @@ initramfs-tools (0.70) unstable; urgency=low
     hooks/lvm, hooks/md, init, initramfs-tools.8, initramfs.conf.5,
     mkinitramfs, mkinitramfs-kpkg, mkinitramfs-kpkg.8, mkinitramfs.8,
     scripts/functions, scripts/local-top/udev_helper, update-initramfs,
-    update-initramfs.8: Whitespace policy cleanup trailing whitespace and
-    non tabular indents.
+    update-initramfs.8: Cleanup trailing whitespace and non tabular indents.
 
- -- maximilian attems <maks@sternwelten.at>  Sun, 16 Jul 2006 21:50:34 +0200
+  * scripts/local-premount/resume: Use new resume bin from klibc-utils.
+    Removes superflous stat and awk usage.
+
+  * debian/control: Depend against newer klibc-utils 1.4.11-1.
+
+  * hooks/md, scripts/local-top/md: Drop as mdadm > 2.5-1 features them.
+    (closes: #367567)
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 19 Jul 2006 11:09:52 +0200
 
 initramfs-tools (0.69b) unstable; urgency=high
 
