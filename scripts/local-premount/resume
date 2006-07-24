@@ -19,6 +19,15 @@ if [ "x${resume}" = "x" ]; then
 	exit
 fi
 
+case $resume in
+	LABEL=*)
+	resume="/dev/disk/by-label/${resume#LABEL=}"
+	;;
+	UUID=*)
+	resume="/dev/disk/by-uuid/${resume#UUID=}"
+	;;
+esac
+
 if [ ! -e "${resume}" ]; then
 	exit
 fi

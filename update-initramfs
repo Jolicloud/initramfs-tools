@@ -66,9 +66,9 @@ generate_initramfs()
 	echo "update-initramfs: Generating ${initramfs}"
 	OPTS="-o"
 	if [ "${verbose}" = 1 ]; then
-		OPTS="-v $OPTS"
+		OPTS="-v ${OPTS}"
 	fi
-	if mkinitramfs "${OPTS}" "${initramfs}" "${version}"; then
+	if mkinitramfs ${OPTS} "${initramfs}" "${version}"; then
 		set_sha1
 	else
 		mkinitramfs_return="$?"

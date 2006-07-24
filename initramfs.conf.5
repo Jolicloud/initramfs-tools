@@ -32,6 +32,14 @@ The default setting is \fImost\fP.
 
 \fIlist\fP includes only modules from the additional modules list.
 
+.TP
+\fB BUSYBOX
+Include busybox utilities for the boot scripts.
+If set to 'n' 
+.B mkinitramfs
+will build an initramfs whithout busybox.
+Beware that many boot scripts need busybox utilities.
+
 .SH NFS VARIABLES
 .TP
 \fB BOOT
@@ -48,12 +56,14 @@ Specifies the network interface, like eth0.
 Defaults to \fIauto\fP in order to pick up value from DHCP server.
 Otherwise you need to specify \fIHOST:MOUNT\fP.
 
-.SH SEE ALSO
-
-.BR initramfs-tools (8), mkinitramfs (8), update-initramfs (8)
 
 .SH AUTHOR
 The initramfs-tools are written by Jeff Bailey <jbailey@raspberryginger.com>.
 This manual is maintained by Maximilian Attems <maks@sternwelten.at>.
 Loosely based on mkinitrd.conf by Herbert Xu.
 
+.SH SEE ALSO
+.BR
+.IR initramfs-tools (8),
+.IR mkinitramfs (8),
+.IR update-initramfs (8).

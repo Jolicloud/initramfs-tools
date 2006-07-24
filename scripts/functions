@@ -62,7 +62,7 @@ panic()
 	modprobe -q i8042
 	modprobe -q atkbd
 	echo $@
-	PS1='(initramfs) ' /bin/sh </dev/console >/dev/console 2>&1
+	PS1='(initramfs) ' /bin/sh -i </dev/console >/dev/console 2>&1
 }
 
 maybe_break()
@@ -84,7 +84,7 @@ set_initlist()
 		if [ ! -x ${si_x} ]; then
 			continue
 		fi
-		initlist="${initlist} $(basename ${si_x})"
+		initlist="${initlist} ${si_x#${initdir}/}"
 	done
 }
 
@@ -168,6 +168,10 @@ reduce_prereqs()
 call_scripts()
 {
 	for cs_x in ${runlist}; do
+		# mkinitramfs verbose output
+		if [ "${verbose}" = "y" ]; then
+			echo "Calling hook ${cs_x}"
+		fi
 		${initdir}/${cs_x}
 		# allow boot scripts to modify exported boot paramaters
 		if [ -e /conf/param.conf ]; then

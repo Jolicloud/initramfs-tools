@@ -1,3 +1,46 @@
+initramfs-tools (0.71) unstable; urgency=low
+
+  * initramfs.conf.5, initramfs-tools.8, mkinitramfs.8, mkinitramfs-kpkg.8,
+    update-initramfs.8: Fix spacing in the SEE ALSO section and have this
+    section everywhere as last. Fix linebreak in mkinitramfs.8 options.
+    Thanks Martin Michlmayr <tbm@cyrius.com> for the notice.
+
+  * scripts/functions: Use shell parameter expansion to strip known dir
+    prefix instead of gratious basename call.
+
+  * scripts/functions: On panic call open the rescue shell with -i to get
+    dash interactive features. ash from busybox ignores the param.
+    Thanks David Härdeman <david@2gen.com> for the suggestion.
+
+  * conf/initramfs.conf: Readd BUSYBOX=y section. Beware that a lot of boot
+    scripts need busybox and the current default image still does too.
+
+  * initramfs.conf: Document BUSYBOX usage.
+
+  * init: Add variable quoting around resume, NORESUME parsing and checks.
+
+  * hook-functions: Add myri10ge and smc911x to the net section. Add hptiop to
+    the scsi section.
+
+  * update-initramfs: Fix -v usage by not passing quoted ${OPTS} as one
+    option. Thanks Famelis George <famelis@otenet.gr> for the patch.
+    (closes: 379212)
+
+  * mkinitramfs: Really source /usr/share/initramfs-tools/conf.d/ entries.
+
+  * mkinitramfs: Check against modules.dep before invoking depmod.
+
+  * hook-functions: check_minkver() only needs to call init_list(),
+    when a dir gets passed. Clean up check_minkver() logic.
+
+  * scripts/function, mkinitramfs: Add output on verbose mode.
+
+  * merge 0.69ubuntu4.
+
+  * scripts/local-top/lvm: Prereqs s/md/mdadm/ for the new hooks.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 24 Jul 2006 09:10:53 +0200
+
 initramfs-tools (0.70b) unstable; urgency=low
 
   * Be more careful about vi dot files, removed.
@@ -60,6 +103,13 @@ initramfs-tools (0.69b) unstable; urgency=high
   * Thus high urgency upload.
 
  -- maximilian attems <maks@sternwelten.at>  Fri, 14 Jul 2006 00:31:30 +0200
+
+initramfs-tools (0.69ubuntu4) edgy; urgency=low
+
+  * scripts/local-premount/suspend: Check for UUID= or LABEL= on the
+    start of $resume, and use /dev/disk/by-{uuid,label} if found.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Fri, 21 Jul 2006 17:58:34 +0100
 
 initramfs-tools (0.69ubuntu3) edgy; urgency=low
 
