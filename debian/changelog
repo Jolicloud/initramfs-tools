@@ -1,3 +1,41 @@
+initramfs-tools (0.73) unstable; urgency=high
+
+  * debian/initramfs-tools.postrm: Don't forget to remove config file
+    modules on purge. Thanks piuparts verification.
+
+  * mkinitramfs: Add sections that deals with sarge mdadm and lvm2.
+    Does nothing if etch package hooks are installed, will be dropped
+    postetch as then we upgrade from mdadm and lvm2 packages with hooks.
+    Taken from Dapper initramfs-tools-0.40ubuntu32. Adapt to add more
+    modules and no need for mdrun.
+
+  * hooks/lvm: Remove handled by mkinitramfs itself.
+
+  * scripts/local-top/lvm: Add prereqs lvm2 + mdraid. Exit if lvm2 hook is
+    present. Eases transition of lvm hooks to lvm2.
+
+  * scripts/local-top/mdraid: Enable all raid devices. Add mdadm as prereqs.
+    Only run if no mdadm hook is in initramfs. (closes: 380089)
+
+  * urgency high upload to get RC fixes into testing.
+
+ -- maximilian attems <maks@sternwelten.at>  Sat, 29 Jul 2006 13:35:43 +0200
+
+initramfs-tools (0.72) unstable; urgency=low
+
+  * Add scripts/init-top/framebuffer, reduces ubuntu diff even more.
+    fb is only activated with splash or vga boot param.
+  * Upload sponsored by Petter Reinholdtsen.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 25 Jul 2006 09:11:18 +0200
+
+initramfs-tools (0.71b) unstable; urgency=low
+
+  * This time caught on bzr dotfiles, removed.
+    Thanks a lot to Frederik Schüler <fs@debian.org> for review.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 24 Jul 2006 15:06:04 +0200
+
 initramfs-tools (0.71) unstable; urgency=low
 
   * initramfs.conf.5, initramfs-tools.8, mkinitramfs.8, mkinitramfs-kpkg.8,

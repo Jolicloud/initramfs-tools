@@ -1,0 +1,41 @@
+#!/bin/sh
+
+PREREQ=""
+prereqs()
+{
+	echo "$PREREQ"
+}
+case $1 in
+# get pre-requisites
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+SPLASH=false;
+VESA=false;
+
+for x in $(cat /proc/cmdline); do
+	case $x in
+	splash*)
+		SPLASH=true;
+		;;
+	vga=*)
+		VESA=true;
+		;;
+	esac
+done
+
+if [ $SPLASH = "true" -o $VESA = "true" ]; then
+	modprobe -q fbcon
+	if [ $VESA = "true" ]; then
+		modprobe -q vesafb
+	else
+		modprobe -q vga16fb
+	fi
+	mknod /dev/fb0 c 29 0
+	for i in 0 1 2 3 4 5 6 7 8; do
+		mknod /dev/tty$i c 4 $i
+	done
+fi

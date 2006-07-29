@@ -228,6 +228,23 @@ cp -a /etc/modprobe.d/* "${DESTDIR}/etc/modprobe.d"
 run_scripts /usr/share/initramfs-tools/hooks
 run_scripts "${CONFDIR}"/hooks
 
+# FIXME: Remove this Raid block after Etch releases
+if [ -x /sbin/mdadm -a ! -f /usr/share/initramfs-tools/hooks/mdadm ]; then
+	mdadm --examine --scan > $DESTDIR/conf/mdadm.conf
+	copy_exec /sbin/mdadm /sbin
+	for x in md linear multipath raid0 raid1 raid456 raid5 raid6 raid10; do
+		manual_add_modules ${x}
+	done
+fi
+
+# FIXME: Remove this LVM block after Etch releases
+if [ -x /sbin/vgchange -a -d /lib/lvm-200 -a ! -f /usr/share/initramfs-tools/hooks/lvm2 ]; then
+	copy_exec /lib/lvm-200/vgchange /sbin
+	for x in dm_mod dm_snapshot dm_mirror; do
+		manual_add_modules ${x}
+	done
+fi
+
 # Apply DSDT to initramfs
 if [ -e "${CONFDIR}/DSDT.aml" ]; then
 	copy_exec "${CONFDIR}/DSDT.aml" /
