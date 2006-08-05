@@ -1,3 +1,13 @@
+initramfs-tools (0.73b) unstable; urgency=high
+
+  * Revert nfs change in 0.70: Debian busybox is build with CONFIG_NFSMOUNT=n.
+    Reuse nfsmount from klibc. nfsroot parsing needs more care for the next
+    release. Now at least support those users where nfs previously worked.
+    Thanks Vagrant Cascadian <vagrant+bugs@freegeek.org> for report.
+    (closes: 380686). High urgency to get this into testing.
+
+ -- maximilian attems <maks@sternwelten.at>  Fri,  4 Aug 2006 09:53:46 +0200
+
 initramfs-tools (0.73) unstable; urgency=high
 
   * debian/initramfs-tools.postrm: Don't forget to remove config file

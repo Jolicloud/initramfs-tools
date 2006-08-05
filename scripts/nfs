@@ -33,7 +33,7 @@ mountroot ()
 		roflag="-o rw"
 	fi
 
-	mount -o nolock ${roflag} ${NFSOPTS} ${NFSROOT} ${rootmnt}
+	nfsmount -o nolock ${roflag} ${NFSOPTS} ${NFSROOT} ${rootmnt}
 
 	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/nfs-bottom"
 	run_scripts /scripts/nfs-bottom
