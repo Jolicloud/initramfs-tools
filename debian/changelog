@@ -1,3 +1,11 @@
+initramfs-tools (0.73c) unstable; urgency=low
+
+  * scripts/local-premount/resume: Revert klibc-utils resume usage until
+    breakage cause is known. Thus downgrade klibc dep to 1.4.8-0. Thanks
+    Steinar H. Gunderson <sesse@debian.org> for report. (closes: #381475)
+
+ -- maximilian attems <maks@sternwelten.at>  Sat,  5 Aug 2006 09:31:16 +0200
+
 initramfs-tools (0.73b) unstable; urgency=high
 
   * Revert nfs change in 0.70: Debian busybox is build with CONFIG_NFSMOUNT=n.
