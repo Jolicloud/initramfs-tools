@@ -38,4 +38,4 @@ done
 
 # Assemble all raid devices
 mkdir /dev/md
-mdadm --assemble --config=/etc/mdadm.conf --scan --run --auto=yes
+mdadm --assemble --config=/conf/mdadm.conf --scan --run --auto=yes

@@ -1,3 +1,10 @@
+initramfs-tools (0.73d) unstable; urgency=low
+
+  * scripts/local-top/mdraid: Fix path of expected mdadm config file.
+    Thanks Daniel Dickinson <cshore@wightman.ca> for report. (closes: 382602)
+
+ -- maximilian attems <maks@sternwelten.at>  Sat, 12 Aug 2006 09:02:10 +0200
+
 initramfs-tools (0.73c) unstable; urgency=low
 
   * scripts/local-premount/resume: Revert klibc-utils resume usage until
