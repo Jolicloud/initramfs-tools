@@ -83,15 +83,14 @@ fi
 
 . "${CONFDIR}/initramfs.conf"
 EXTRA_CONF=''
-for i in ${CONFDIR}/conf.d/*; do
+for i in /usr/share/initramfs-tools/conf.d/* ${CONFDIR}/conf.d/*; do
 	EXTRA_CONF="${EXTRA_CONF} $(basename $i | grep '^[a-z0-9][a-z0-9\._-]*$' | grep -v '\.dpkg-.*$')";
 done
 for i in ${EXTRA_CONF}; do
-	. ${CONFDIR}/conf.d/${i}
-done
-for i in /usr/share/initramfs-tools/conf.d/*; do
-	if [ -e $i ]; then
-		. ${i}
+	if [ -e  ${CONFDIR}/conf.d/${i} ]; then
+		. ${CONFDIR}/conf.d/${i}
+	elif [ -e  /usr/share/initramfs-tools/conf.d/${i} ]; then
+		. /usr/share/initramfs-tools/conf.d/${i}
 	fi
 done
 
@@ -204,7 +203,11 @@ done
 echo "DPKG_ARCH=${DPKG_ARCH}" > ${DESTDIR}/conf/arch.conf
 copy_exec "${CONFDIR}/initramfs.conf" /conf
 for i in ${EXTRA_CONF}; do
-	copy_exec "${CONFDIR}/conf.d/${i}" /conf/conf.d
+	if [ -e "${CONFDIR}/conf.d/${i}" /conf/conf.d ]; then
+		copy_exec "${CONFDIR}/conf.d/${i}" /conf/conf.d
+	elif [ -e "/usr/share/initramfs-tools/conf.d/${i}" ]; then
+		copy_exec "/usr/share/initramfs-tools/conf.d/${i}" /conf/conf.d
+	fi
 done
 echo "ROOT=${ROOT}" > ${DESTDIR}/conf/conf.d/root
 

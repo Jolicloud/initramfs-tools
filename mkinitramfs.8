@@ -1,4 +1,4 @@
-.TH MKINITRAMFS 8  "$Date: 2006/02/17 $" "" "mkinitramfs manual"
+.TH MKINITRAMFS 8  "$Date: 2006/08/12 $" "" "mkinitramfs manual"
 
 .SH NAME
 mkinitramfs \- generate an initramfs image
@@ -81,6 +81,12 @@ Specified modules will be put in the generated image and loaded when the system 
 .I /etc/modules,
 which is described in
 .BR modules (5).
+
+.TP
+.I /etc/initramfs-tools/conf.d
+The conf.d directory allows to hardcode bootargs at initramfs build time
+via config snippets. This allows to set ROOT or RESUME.
+This is especially useful for bootloaders, which do not pass an root bootarg.
 
 .TP
 .I /etc/initramfs-tools/DSDT.aml

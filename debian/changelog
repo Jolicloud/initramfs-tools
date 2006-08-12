@@ -1,9 +1,20 @@
-initramfs-tools (0.73d) unstable; urgency=low
+initramfs-tools (0.73d) unstable; urgency=high
 
   * scripts/local-top/mdraid: Fix path of expected mdadm config file.
     Thanks Daniel Dickinson <cshore@wightman.ca> for report. (closes: 382602)
 
- -- maximilian attems <maks@sternwelten.at>  Sat, 12 Aug 2006 09:02:10 +0200
+  * mkinitramfs: Treat /usr/share/initramfs-tools/conf.d config snippets as
+    the configuration files in /etc/initramfs-tools/conf.d. A configuration
+    file with the same name will override the first. (closes: 381315)
+    Thanks Vagrant Cascadian <vagrant+bugs@freegeek.org> for the patch.
+
+  * mkinitramfs.8: Document conf.d existence.
+
+  * hooks/lvm: Really remove it, logic is in mkinitramfs.
+
+  * urgency high for the mdraid bug fix, rest is trivial.
+
+ -- maximilian attems <maks@sternwelten.at>  Sat, 12 Aug 2006 09:43:55 +0200
 
 initramfs-tools (0.73c) unstable; urgency=low
 
