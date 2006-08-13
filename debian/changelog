@@ -1,3 +1,9 @@
+initramfs-tools (0.73e) unstable; urgency=high
+
+  * mkinitramfs: Fix if statement for conf.d. (closes: 382740)
+
+ -- maximilian attems <maks@sternwelten.at>  Sun, 13 Aug 2006 10:05:10 +0200
+
 initramfs-tools (0.73d) unstable; urgency=high
 
   * scripts/local-top/mdraid: Fix path of expected mdadm config file.

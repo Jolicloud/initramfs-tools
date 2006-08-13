@@ -203,7 +203,7 @@ done
 echo "DPKG_ARCH=${DPKG_ARCH}" > ${DESTDIR}/conf/arch.conf
 copy_exec "${CONFDIR}/initramfs.conf" /conf
 for i in ${EXTRA_CONF}; do
-	if [ -e "${CONFDIR}/conf.d/${i}" /conf/conf.d ]; then
+	if [ -e "${CONFDIR}/conf.d/${i}" ]; then
 		copy_exec "${CONFDIR}/conf.d/${i}" /conf/conf.d
 	elif [ -e "/usr/share/initramfs-tools/conf.d/${i}" ]; then
 		copy_exec "/usr/share/initramfs-tools/conf.d/${i}" /conf/conf.d
