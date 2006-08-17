@@ -33,6 +33,8 @@ mountroot ()
 
 	# We've given up, but we'll let the user fix matters if they can
 	while [ ! -e "${ROOT}" ]; do
+		echo "	Check root= bootarg cat /proc/cmdline"
+		echo "	or missing modules, devices: cat /proc/modules ls /dev"
 		panic "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
 	done
 

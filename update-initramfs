@@ -81,11 +81,28 @@ generate_initramfs()
 	fi
 }
 
+# lilo call
+run_lilo()
+{
+	lilo -t > /dev/null
+	if [ $? -eq 0 ]; then
+		lilo
+	fi
+}
+
 # only run lilo if no grub is around
+# or if "do_bootloader = yes" is set
 run_bootloader()
 {
 	if [ -x /sbin/grub -o -e /boot/grub/menu.lst ]; then
 		if [ -e /etc/lilo.conf ]; then
+			do_bootloader=$(awk  '/bootloader/{print $2}' \
+				/etc/kernel-img.conf)
+			if [ "${do_bootloader}" = "yes" ]; then
+				run_lilo
+				return 0
+			fi
+
 			echo
 			echo "WARNING: grub and lilo installed."
 			echo "If you use grub as bootloader everything is fine."
@@ -95,10 +112,7 @@ run_bootloader()
 		return 0
 	fi
 	if [ -e /etc/lilo.conf ]; then
-		lilo -t > /dev/null
-		if [ $? -eq 0 ]; then
-			lilo
-		fi
+		run_lilo
 	fi
 }
 

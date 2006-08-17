@@ -117,7 +117,7 @@ get_prereqs()
 
 count_unsatisfied()
 {
-	set - ${@}
+	set -- ${@}
 	return ${#}
 }
 
@@ -126,7 +126,7 @@ pop_list_item()
 {
 	item=${1}
 	shift
-	set - ${@}
+	set -- ${@}
 	unset tmppop
 	# Iterate
 	for pop in ${@}; do
@@ -143,7 +143,7 @@ reduce_prereqs()
 {
 	unset runlist
 	set_initlist
-	set - ${initlist}
+	set -- ${initlist}
 	i=$#
 	# Loop until there's no more in the queue to loop through
 	while [ ${i} -ne 0 ]; do

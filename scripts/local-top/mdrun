@@ -37,5 +37,5 @@ done
 [ "${gotraid}" = y ] || exit
 
 # Assemble all raid devices
-mkdir /dev/md
-mdadm --assemble --config=/conf/mdadm.conf --scan --run --auto=yes
+# FIXME: assemble root raid first due to initrd-tools compatibility
+/sbin/mdrun /dev

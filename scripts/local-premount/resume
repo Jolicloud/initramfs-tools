@@ -33,8 +33,6 @@ if [ ! -e "${resume}" ]; then
 fi
 
 if [ -e /sys/power/resume ]; then
-#	FIXME: klibc-utils resume needs more tests
-#	resume ${resume}
-	major_minor=$(ls -l ${resume} | awk '{printf "%d:%d", $5, $6}')
-	echo $major_minor >/sys/power/resume
+	# hardcode path, uswsusp ships an resume binary too
+	/bin/resume ${resume}
 fi

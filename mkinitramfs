@@ -235,6 +235,7 @@ run_scripts "${CONFDIR}"/hooks
 if [ -x /sbin/mdadm -a ! -f /usr/share/initramfs-tools/hooks/mdadm ]; then
 	mdadm --examine --scan > $DESTDIR/conf/mdadm.conf
 	copy_exec /sbin/mdadm /sbin
+	copy_exec /sbin/mdrun /sbin
 	for x in md linear multipath raid0 raid1 raid456 raid5 raid6 raid10; do
 		manual_add_modules ${x}
 	done

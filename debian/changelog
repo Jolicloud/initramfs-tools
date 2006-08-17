@@ -1,3 +1,28 @@
+initramfs-tools (0.74) unstable; urgency=low
+
+  * scripts/local-premount/resume: Reuse klibc resume, hardcode path as
+    uswsusp shipps too an resume binary in initramfs-tools. Thus tighten
+    again klibc dep to 1.4.11-1. (closes: 381535)
+
+  * mkinitramfs: Readd mdrun when around.
+
+  * scripts/local-top/mdrun: Rename from mdraid. Use mdrun as previously,
+    there is no guarantee that the sarge mdadm works and that the sarge
+    mdadm.conf has any sense.
+
+  * debian/control: Better package description.
+
+  * scripts/local: mountroot add message what to check if root is not found
+    in 2 straight lines to keep as much of scrolling buffer.
+
+  * scripts/functions: Use set ``--'' to change positional paramaters without
+    changing any options. This is useful for the debug bootparam on d?ash.
+
+  * update-initramfs: Respect "do_bootloader = yes" from /etc/kernel-img.conf
+    to call lilo if both lilo and grub are installed. (closes: 382013)
+
+ -- maximilian attems <maks@sternwelten.at>  Thu, 17 Aug 2006 16:50:51 +0200
+
 initramfs-tools (0.73e) unstable; urgency=high
 
   * mkinitramfs: Fix if statement for conf.d. (closes: 382740)
