@@ -1,3 +1,23 @@
+initramfs-tools (0.75) unstable; urgency=high
+
+  * hook-functions: Add megaraid_sas to the scsi list. Thanks Kenshi Muto
+    <kmuto@debian.org>.
+
+  * init: Parse for "panic=<timeout>" bootarg.
+
+  * hook-functions: Immediately call reboot in the panic function if panic=0
+    to disallow any console access for secured boxes. (closes: 378455)
+
+  * debian/TODO: Update to current state
+
+  * update-initramfs: do_bootloader can be set mixed case or upper case.
+    Catch the obvious Yes and YES too.
+
+  * hook-functions: Really include DAC960 driver. Thanks Tim Small
+    <tim@buttersideup.com>. (closes: 383486) 2 module fixes thus urgency high.
+
+ -- maximilian attems <maks@sternwelten.at>  Fri, 18 Aug 2006 15:35:09 +0200
+
 initramfs-tools (0.74) unstable; urgency=low
 
   * scripts/local-premount/resume: Reuse klibc resume, hardcode path as

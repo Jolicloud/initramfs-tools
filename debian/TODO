@@ -5,10 +5,10 @@ TODO
 
  o Eliminate ?udev?, ?klibc?, busybox (-> glibc).
 
- o Support list and dep options
+ o Better heuristics for MODULES=dep option
 
  o Default to dep for PPC - Possibly to detect newworld?
 
- o lilo timeouts handling
+ o udevsettle timeouts handling
 
- o mdadm + lvm2 hooks to their respective packages
+ o lvm2 hooks to their respective packages

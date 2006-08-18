@@ -59,6 +59,10 @@ panic()
 	if [ -x /sbin/usplash_write ]; then
 		/sbin/usplash_write "QUIT"
 	fi
+	# Disallow console access
+	if [ "${panic}" = 0 ]; then
+		reboot
+	fi
 	modprobe -q i8042
 	modprobe -q atkbd
 	echo $@

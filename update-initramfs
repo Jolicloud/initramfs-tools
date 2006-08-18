@@ -96,9 +96,10 @@ run_bootloader()
 {
 	if [ -x /sbin/grub -o -e /boot/grub/menu.lst ]; then
 		if [ -e /etc/lilo.conf ]; then
-			do_bootloader=$(awk  '/bootloader/{print $2}' \
+			do_b=$(awk  '/bootloader/{print $2}' \
 				/etc/kernel-img.conf)
-			if [ "${do_bootloader}" = "yes" ]; then
+			if [ "${do_b}" = "yes" ] || [ "${do_b}" = "Yes" ] \
+				|| [ "${do_b}" = "YES" ]; then
 				run_lilo
 				return 0
 			fi

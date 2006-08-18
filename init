@@ -43,6 +43,7 @@ export readonly=y
 export rootmnt=/root
 export debug=
 export cryptopts=${CRYPTOPTS}
+export panic
 
 for x in $(cat /proc/cmdline); do
 	case $x in
@@ -80,6 +81,9 @@ for x in $(cat /proc/cmdline); do
 		;;
 	noresume)
 		NORESUME=y
+		;;
+	panic=*)
+		panic="${x#panic=}"
 		;;
 	quiet)
 		quiet=y
