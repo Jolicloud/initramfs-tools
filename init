@@ -59,10 +59,19 @@ for x in $(cat /proc/cmdline); do
 		UUID=*)
 			ROOT="/dev/disk/by-uuid/${ROOT#UUID=}"
 			;;
+		/dev/nfs)
+			BOOT=nfs
+			;;
 		esac
 		;;
 	rootflags=*)
 		ROOTFLAGS="-o ${x#rootflags=}"
+		;;
+	rootfstype=*)
+		ROOTFSTYPE="${x#rootfstype=}"
+		;;
+	rootdelay=*)
+		ROOTDELAY="${x#rootdelay=}"
 		;;
 	cryptopts=*)
 		cryptopts="${x#cryptopts=}"
@@ -70,8 +79,8 @@ for x in $(cat /proc/cmdline); do
 	nfsroot=*)
 		NFSROOT="${x#nfsroot=}"
 		;;
-	nfsopts=*)
-		NFSOPTS="-o ${x#nfsopts=}"
+	ip=*)
+		IPOPTS="${x#ip=}"
 		;;
 	boot=*)
 		BOOT=${x#boot=}

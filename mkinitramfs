@@ -209,7 +209,11 @@ for i in ${EXTRA_CONF}; do
 		copy_exec "/usr/share/initramfs-tools/conf.d/${i}" /conf/conf.d
 	fi
 done
-echo "ROOT=${ROOT}" > ${DESTDIR}/conf/conf.d/root
+
+# ROOT hardcoding
+if [ -n "${ROOT}" ]; then
+	echo "ROOT=${ROOT}" > ${DESTDIR}/conf/conf.d/root
+fi
 
 # Busybox
 if [ "x${BUSYBOX}" = "xn" ]; then
@@ -233,7 +237,18 @@ run_scripts "${CONFDIR}"/hooks
 
 # FIXME: Remove this Raid block after Etch releases
 if [ -x /sbin/mdadm -a ! -f /usr/share/initramfs-tools/hooks/mdadm ]; then
-	mdadm --examine --scan > $DESTDIR/conf/mdadm.conf
+	# use mkinitrd magic for Sarge backwards compat
+	rootraiddev="$(df / | sed -rne 's,^(/dev/[^[:space:]]+).*,\1,p')"
+	echo "rootraiddev=${rootraiddev}" > /conf/mdadm.conf
+	mdadm=$(mdadm --detail "${rootraiddev}")
+	echo "${mdadm}" | awk '
+		$1 == "Number" && $2 == "Major" { start = 1; next } 
+		$1 == "UUID" { print "uuid=" $3; next } 
+		!start { next } 
+		$2 == 0 && $3 == 0 { next } 
+		{ devices = devices " " $NF } 
+		END { print "devices='\''" devices "'\''" }' \
+		>> /conf/mdadm.conf
 	copy_exec /sbin/mdadm /sbin
 	copy_exec /sbin/mdrun /sbin
 	for x in md linear multipath raid0 raid1 raid456 raid5 raid6 raid10; do

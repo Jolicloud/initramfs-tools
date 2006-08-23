@@ -36,6 +36,11 @@ done
 
 [ "${gotraid}" = y ] || exit
 
-# Assemble all raid devices
-# FIXME: assemble root raid first due to initrd-tools compatibility
+# source the presumed root md and it's info
+. ./conf/mdadm.conf
+
+# assemble root raid first due to initrd-tools compatibility
+mdadm -A ${rootraiddev} -R -u $uuid $devices
+
+# assemble all raid devices
 /sbin/mdrun /dev

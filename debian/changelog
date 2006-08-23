@@ -1,3 +1,42 @@
+initramfs-tools (0.76) unstable; urgency=medium
+
+  * debian/control: Tighten klibc to 1.4.19-2 for fixed nuke. (closes: 383730)
+
+  * mkinitramfs: Only hard code root when root arg got passed.
+
+  * init: Parse /proc/cmdline for rootfstype, initrd-tools did it too.
+
+  * init: Parse /proc/cmdline for rootdelay.
+
+  * scripts/local: Use eventual rootfstype and rootdelay info.
+
+  * initramfs-tools.8: Add more docs about boot args, s/2.6.15/2.6.17/.
+
+  * scripts/functions: Simplify parse_numeric() by arithmetic calculation,
+    instead of working on it's representation. Thanks to tarski.
+    (launchpad.net/21759) Much more elegant than the 0.58 version fix.
+
+  * mkinitramfs: Parse rootraid for sarge compatibility and pass the info
+    to the initramfs if etch mdadm is not yet installed.
+
+  * scripts/local-top/mdrun: Assemble the root raid first before mdrun.
+    Thanks martin f krafft <madduck@debian.org>. (closes: 383908, 384063)
+
+  * update-initramfs: Check if /etc/kernel-img.conf is readable,
+    before attempting to parse also check for the right field.
+
+  * init: Check for root=/dev/nfs. Parse ip kernel command line for nfsroot.
+    Drop undocumented and not compliant nfsopts.
+
+  * scripts/nfs: Add ip parsing conforming to Documentation/nfsroot.txt.
+    Use the nfsroot bootparam in combination with eventual ip provided
+    device or server-ip. Do minor code cleanups. Both items based on patches
+    by Vagrant Cascadian <vagrant+bugs@freegeek.org>. (closes: 380649)
+
+  * Set urgency medium due to large number of serious bug fixes.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 23 Aug 2006 08:17:51 +0200
+
 initramfs-tools (0.75) unstable; urgency=high
 
   * hook-functions: Add megaraid_sas to the scsi list. Thanks Kenshi Muto

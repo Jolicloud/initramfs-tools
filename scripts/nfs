@@ -13,13 +13,57 @@ mountroot ()
 	# For DHCP
 	modprobe -q af_packet
 
-	ipconfig ${DEVICE}
+	# support ip options see linux sources Documentation/nfsroot.txt
+	case ${IPOPTS} in
+		none|off)
+			# Do nothing
+			;;
+		""|on|any)
+			# Bring up device
+			ipconfig ${DEVICE}
+			;;
+		dhcp|bootb|rarp|both)
+			ipconfig -c ${IPOPTS} -d ${DEVICE}
+			;;
+		*)
+			ipconfig -d $IPOPTS
+
+			# grab device entry from full line
+			NEW_DEVICE=${IPOPTS#*:*:*:*:*:*}
+			NEW_DEVICE=${NEW_DEVICE%:*}
+			if [ -n "${NEW_DEVICE}" ]; then
+				DEVICE="${NEW_DEVICE}"
+			fi
+			# grab server-ip
+			SERVER_IP=${IPOPTS#*:}
+			SERVER_IP=${SERVER_IP%:*:*:*:*:*:*}
+			;;
+	esac
+			
+	# FIXME: who writes that?
 	. /tmp/net-${DEVICE}.conf
+
+	# get nfs root from dhcp
 	if [ "x${NFSROOT}" = "xauto" ]; then
 		NFSROOT=${ROOTSERVER}:${ROOTPATH}
+	# nfsroot=[<server-ip>:]<root-dir>[,<nfs-options>]
+	elif [ -n "${NFSROOT}" ]; then
+		# nfs options are an optional arg
+		if [ "${NFSROOT#*,}" != "${NFSROOT}" ]; then
+			NFSOPTS="-o ${NFSROOT#*,}"
+		fi
+		NFSROOT=${NFSROOT%%,*}
+		# server-ip could be passed by ip
+		if [ "${NFSROOT#*:}" = "$NFSROOT" ]; then
+			if [ -n "${SERVER_IP}" ]; then
+				NFSROOT="${SERVER_IP}:${NFSROOT}"
+			else
+				NFSROOT=${ROOTSERVER}:${ROOTPATH}
+			fi
+		fi
 	fi
 
-	if [ "x${NFSOPTS}" = "x" ]; then
+	if [ -z "${NFSOPTS}" ]; then
 		NFSOPTS="-o retrans=10"
 	fi
 

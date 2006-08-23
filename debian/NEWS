@@ -1,3 +1,16 @@
+initramfs-tools (0.76) unstable; urgency=low
+
+  * This release features nfs auto detection in the initramfs.
+    The boot paramaters are parsed according to the linux source
+    Documentation/kernel-parameters.txt and more specifically
+    Documentation/nfsroot.txt.
+
+    The initramfs-tools(8) manpage documents the parsed boot parameter.
+    Note that the undocumented and non compliant nfsoption bootarg got
+    dropped.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 23 Aug 2006 08:47:26 +0200
+
 initramfs-tools (0.61) unstable; urgency=low
 
   * This release moves the initramfs-tools confdir from /etc/mkinitramfs to
