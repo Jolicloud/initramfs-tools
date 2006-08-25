@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PREREQ="mdadm mdraid lvm2"
+PREREQ="mdadm mdrun lvm2"
 
 prereqs()
 {

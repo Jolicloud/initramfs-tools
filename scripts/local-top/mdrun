@@ -37,7 +37,7 @@ done
 [ "${gotraid}" = y ] || exit
 
 # source the presumed root md and it's info
-. ./conf/mdadm.conf
+. ./conf/mdrun.conf
 
 # assemble root raid first due to initrd-tools compatibility
 mdadm -A ${rootraiddev} -R -u $uuid $devices

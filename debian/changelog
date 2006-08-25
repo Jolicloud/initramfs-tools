@@ -1,3 +1,23 @@
+initramfs-tools (0.77) unstable; urgency=medium
+
+  * mkinitramfs, scripts/local-top/mdrun: Use mdrun.conf as config file.
+    Ship mdrun unconditionally if around, should help in recovery situations.
+
+  * debian/initramfs-tools.postinst, hook-functions, mkinitramfs,
+    scripts/local, update-initramfs: Cleanup the "-a" and "-o" bashism.
+
+  * scripts/nfs: Retry to mount NFS on eventual failure. (closes: 377643)
+    Based on a patch by Vagrant Cascadian <vagrant+bugs@freegeek.org>.
+
+  * init: Make sure there is an /dev and /root. Usually passed by the kernel.
+    Also /dev/null or /dev/console might already be shipped.
+    Based on a patch by David Härdeman <david@2gen.com>. (closes: 340494)
+
+  * scripts/local-top/lvm: Fix prereqs s/mdraid/mdrun, thus urgency medium.
+    Thanks Rainer Gauweiler <debian@moppl.inka.de> for the notice.
+
+ -- maximilian attems <maks@sternwelten.at>  Fri, 25 Aug 2006 16:55:56 +0200
+
 initramfs-tools (0.76) unstable; urgency=medium
 
   * debian/control: Tighten klibc to 1.4.19-2 for fixed nuke. (closes: 383730)

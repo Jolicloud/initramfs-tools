@@ -48,7 +48,7 @@ manual_add_modules()
 
 		mkdir -p "${DESTDIR}/$(dirname "${mam_x}")"
 		ln -s "${mam_x}" "${DESTDIR}/$(dirname "${mam_x}")"
-		if [ -n "${verbose}" -a "${verbose}" = "y" ]; then
+		if [ -n "${verbose}" ] && [ "${verbose}" = "y" ]; then
 			echo "Adding module ${mam_x}"
 		fi
 	done

@@ -2,17 +2,9 @@
 
 # FIXME This needs error checking
 
-# Paramter: Where the root should be mounted
-mountroot ()
+# parse nfs bootargs + launch ipconfig and nfsmount
+do_nfsmount()
 {
-	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/nfs-top"
-	run_scripts /scripts/nfs-top
-	[ "$quiet" != "y" ] && log_end_msg
-
-	modprobe -q nfs
-	# For DHCP
-	modprobe -q af_packet
-
 	# support ip options see linux sources Documentation/nfsroot.txt
 	case ${IPOPTS} in
 		none|off)
@@ -40,7 +32,7 @@ mountroot ()
 			;;
 	esac
 			
-	# FIXME: who writes that?
+	# FIXME: source ipconfig output - might overwrite aboves
 	. /tmp/net-${DEVICE}.conf
 
 	# get nfs root from dhcp
@@ -78,9 +70,38 @@ mountroot ()
 	fi
 
 	nfsmount -o nolock ${roflag} ${NFSOPTS} ${NFSROOT} ${rootmnt}
+}
+
+# NFS root mounting
+mountroot()
+{
+	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/nfs-top"
+	run_scripts /scripts/nfs-top
+	[ "$quiet" != "y" ] && log_end_msg
+
+	modprobe -q nfs
+	# For DHCP
+	modprobe -q af_packet
+
+	# Default delay is around 180s
+	# FIXME: add usplash info
+	if [ -z "${ROOTDELAY}" ]; then
+		delay=180
+	else
+		delay=${ROOTDELAY}
+	fi
+
+	# loop until nfsmount succeds
+	# FIXME: another place of init bin hardcoding
+	while [ ${delay} -gt 0 ] && [ ! -e ${rootmnt}/sbin/init ]; do
+		[ "$quiet" != "y" ] && log_begin_msg "Retrying nfs mount"
+		do_nfsmount 
+		# FIXME: ipconfig loops every min at least - better param??
+		delay=$(( ${delay} - 1 ))
+		[ "$quiet" != "y" ] && log_end_msg
+	done
 
 	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/nfs-bottom"
 	run_scripts /scripts/nfs-bottom
 	[ "$quiet" != "y" ] && log_end_msg
-
 }

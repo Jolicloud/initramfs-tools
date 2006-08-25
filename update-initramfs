@@ -95,7 +95,7 @@ run_lilo()
 # or if "do_bootloader = yes" is set
 run_bootloader()
 {
-	if [ -x /sbin/grub -o -e /boot/grub/menu.lst ]; then
+	if [ -x /sbin/grub ] || [ -e /boot/grub/menu.lst ]; then
 		if [ -e /etc/lilo.conf ]; then
 			[ -r "${KPKGCONF}" ] && \
 			do_b=$(awk  '/bootloader/{print $3}' "${KPKGCONF}")

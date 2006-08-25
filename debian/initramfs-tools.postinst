@@ -7,7 +7,7 @@ if [ ! -e /etc/initramfs-tools/modules ]; then
 fi
 
 # Regenerate initramfs on upgrade
-if [ "$1" = "configure" -a -n "$2" ]; then
+if [ "$1" = "configure" ] && [ -n "$2" ]; then
 	update-initramfs -u
 fi
 

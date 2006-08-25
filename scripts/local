@@ -23,7 +23,7 @@ mountroot ()
 		fi
 
 		slumber=$(( ${slumber} * 10 ))
-		while [ ${slumber} -gt 0 -a ! -e "${ROOT}" ]; do
+		while [ ${slumber} -gt 0 ] && [ ! -e "${ROOT}" ]; do
 			/bin/sleep 0.1
 			slumber=$(( ${slumber} - 1 ))
 		done
