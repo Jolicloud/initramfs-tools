@@ -85,6 +85,9 @@ generate_initramfs()
 # lilo call
 run_lilo()
 {
+	if [ ! -x /sbin/lilo ]; then
+		return 1
+	fi
 	lilo -t > /dev/null
 	if [ $? -eq 0 ]; then
 		lilo

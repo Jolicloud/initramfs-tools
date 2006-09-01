@@ -1,3 +1,23 @@
+initramfs-tools (0.78) unstable; urgency=medium
+
+  * update-initramfs: Check in call_lilo() if /sbin/lilo is executable,
+    when /etc/lilo.conf exists (closes: 384967) - thus urgency medium.
+
+  * init: Guard all dirs against creation. (closes: 385281)
+
+  * debian/scripts: Add /etc/kernel-img.conf section, as update-initramfs
+    needs to act according to it.
+
+ -- maximilian attems <maks@sternwelten.at>  Thu, 31 Aug 2006 14:44:01 +0200
+
+initramfs-tools (0.77b) unstable; urgency=high
+
+  * mkinitramfs: Fix destination of mdrun.conf. Thanks for the report to 
+    Scott Glenn <s103@webmasters.com>. Urgency high as broken in testing
+    too and needed for partial mdadm upgrades. (closes: 385406)
+
+ -- maximilian attems <maks@sternwelten.at>  Thu, 31 Aug 2006 13:20:51 +0200
+
 initramfs-tools (0.77) unstable; urgency=medium
 
   * mkinitramfs, scripts/local-top/mdrun: Use mdrun.conf as config file.

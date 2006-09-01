@@ -6,9 +6,9 @@ echo "Loading, please wait..."
 [ -d /root ] || mkdir --mode=0700 /root
 [ -e /dev/console ] || mknod /dev/console c 5 1 
 [ -e /dev/null ] || mknod /dev/null c 1 3
-mkdir /sys
-mkdir /proc
-mkdir /tmp
+[ -d /sys ] || mkdir /sys
+[ -d /proc ] || mkdir /proc
+[ -d /tmp ] || mkdir /tmp
 mkdir -p /var/lock
 mount -t sysfs none /sys
 mount -t proc none /proc

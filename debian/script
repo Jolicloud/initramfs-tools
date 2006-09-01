@@ -13,3 +13,9 @@ echo
 echo "-- lsmod"
 lsmod
 echo
+
+if [ -r /etc/kernel-img.conf ]; then
+	echo "-- kernel-img.conf"
+	cat /etc/kernel-img.conf
+	echo
+fi
