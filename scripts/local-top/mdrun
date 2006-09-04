@@ -16,7 +16,7 @@ prereqs)
 esac
 
 if [ -e /scripts/local-top/mdadm ]; then
-        exit 0
+	exit 0
 fi
 
 unset raidlvl

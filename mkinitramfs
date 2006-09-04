@@ -242,11 +242,11 @@ if [ -x /sbin/mdadm ] && [ ! -f /usr/share/initramfs-tools/hooks/mdadm ]; then
 	echo "rootraiddev=${rootraiddev}" > ${DESTDIR}/conf/mdrun.conf
 	mdadm=$(mdadm --detail "${rootraiddev}")
 	echo "${mdadm}" | awk '
-		$1 == "Number" && $2 == "Major" { start = 1; next } 
-		$1 == "UUID" { print "uuid=" $3; next } 
-		!start { next } 
-		$2 == 0 && $3 == 0 { next } 
-		{ devices = devices " " $NF } 
+		$1 == "Number" && $2 == "Major" { start = 1; next }
+		$1 == "UUID" { print "uuid=" $3; next }
+		!start { next }
+		$2 == 0 && $3 == 0 { next }
+		{ devices = devices " " $NF }
 		END { print "devices='\''" devices "'\''" }' \
 		>> ${DESTDIR}/conf/mdrun.conf
 	copy_exec /sbin/mdadm /sbin

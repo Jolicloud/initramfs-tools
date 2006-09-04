@@ -8,11 +8,26 @@ initramfs-tools (0.78) unstable; urgency=medium
   * debian/scripts: Add /etc/kernel-img.conf section, as update-initramfs
     needs to act according to it.
 
- -- maximilian attems <maks@sternwelten.at>  Thu, 31 Aug 2006 14:44:01 +0200
+  * scripts/nfs: Fix parsing of etherboot ip options. Based on a patch by
+    to Vagrant Cascadian <vagrant+bugs@freegeek.org>. (closes: 385252)
+
+  * scripts/nfs: No need to duplicate work of ntfsmount. Thanks for the patch
+    to  Vagrant Cascadian <vagrant+bugs@freegeek.org>. (closes: 385226)
+
+  * scripts/nfs: Add an sleep 0.1 in the retry loop to slow down retry
+    attempts. Only log "Retrying .." after first run. Use init variable.
+    (closes: 385624)
+
+  * init: Reorder the early mknod after tmpfs mount. (closes: 385641)
+
+  * initramfs.conf.5, mkinitramfs, scripts/local, scripts/local-top/mdrun,
+    scripts/nfs, update-initramfs.8, debian/changelog: Whitespace policy.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon,  4 Sep 2006 17:38:13 +0200
 
 initramfs-tools (0.77b) unstable; urgency=high
 
-  * mkinitramfs: Fix destination of mdrun.conf. Thanks for the report to 
+  * mkinitramfs: Fix destination of mdrun.conf. Thanks for the report to
     Scott Glenn <s103@webmasters.com>. Urgency high as broken in testing
     too and needed for partial mdadm upgrades. (closes: 385406)
 
@@ -1347,7 +1362,7 @@ initramfs-tools (0.36ubuntu1) dapper; urgency=low
 initramfs-tools (0.36) unstable; urgency=low
 
   "Sunny Autumn Release"
- 
+
   * Minor cleanups in mkiniramfs.
 
   * Remove manpage section about return values. Needs to be rephrased.
@@ -1850,7 +1865,7 @@ initramfs-tools (0.13) breezy; urgency=low
     Use DESTDIR instead of TMPDIR
     Add ability to link in extra hunks into the cpio file
     Cosmetic cleanups
- 
+
   * scripts/functions: Add lsb stype log_FOO_msg functions
 
   * scripts/local: Add logging

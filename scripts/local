@@ -48,7 +48,7 @@ mountroot ()
 	# Get the root filesystem type if not set
 	if [ -z "${ROOTFSTYPE}" ]; then
 		eval $(fstype < ${ROOT})
-	else 
+	else
 		FSTYPE=${ROOTFSTYPE}
 	fi
 
