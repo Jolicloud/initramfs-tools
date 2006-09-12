@@ -1,3 +1,10 @@
+initramfs-tools (0.80) unstable; urgency=low
+
+  * update-initramfs: Test for lilo executable earlier otherwise an warning
+    would be issued with grub installed and left over lilo config.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 12 Sep 2006 15:59:14 +0200
+
 initramfs-tools (0.79) unstable; urgency=high
 
   * update-initramfs: Allow create and delete to work on "all" kernelversions.
