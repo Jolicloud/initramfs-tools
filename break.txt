@@ -1,4 +1,0 @@
-if [ x${break} = xyes ]; then
-	panic "Spawning shell within the initramfs"
-fi
-

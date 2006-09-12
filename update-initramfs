@@ -15,7 +15,7 @@ usage()
 Usage: ${0} [OPTION]...
 
 Options:
- -k [version]	Specify kernel version or all
+ -k [version]	Specify kernel version or 'all'
  -c		Create a new initramfs
  -u		Update an existing initramfs
  -d		Remove an existing initramfs
@@ -86,7 +86,7 @@ generate_initramfs()
 run_lilo()
 {
 	if [ ! -x /sbin/lilo ]; then
-		return 1
+		return 0
 	fi
 	lilo -t > /dev/null
 	if [ $? -eq 0 ]; then
@@ -136,6 +136,17 @@ set_sha1()
 delete_sha1()
 {
 	rm -f "${STATEDIR}/${version}"
+}
+
+# ro /boot is not modified
+ro_boot_check()
+{
+	boot_opts=$(awk '/boot/{if (match($4, /ro/)) print "ro"}' /proc/mounts)
+	if [ -n "${boot_opts}" ]; then
+		echo "WARNING: /boot is ro mounted."
+		echo "update-initramfs: Not updating ${initramfs}"
+		exit 0
+	fi
 }
 
 get_sorted_versions()
@@ -236,26 +247,9 @@ update()
 		exit 0
 	fi
 
-	if [ "${version}" = "all" ]; then
-		: FIXME check for --yes, and if not ask are you sure
-		get_sorted_versions
-		if [ -z "${version_list}" ]; then
-			verbose "Nothing to do, exiting."
-			exit 0
-		fi
-		for u_version in ${version_list}; do
-			if [ "${verbose}" = "1" ]; then
-				vflag="-v"
-			fi
-			# Don't stop if one version doesn't work.
-			set +e
-			"${0}" -u -k "${u_version}" ${vflag}
-			set -e
-		done
-		exit 0
-	fi
-
 	set_initramfs
+
+	ro_boot_check
 
 	altered_check
 
@@ -282,6 +276,8 @@ delete()
 	fi
 
 	altered_check
+
+	echo "update-initramfs: Deleting ${initramfs}"
 
 	delete_sha1
 
@@ -344,9 +340,36 @@ while getopts "k:cudyvtb:h?" flag; do
 done
 
 # Validate arguments
-
 if [ -z "${mode}" ]; then
 	usage "You must specify at least one of -c, -u, or -d."
+fi
+
+if [ "${version}" = "all" ]; then
+	: FIXME check for --yes, and if not ask are you sure
+	get_sorted_versions
+	if [ -z "${version_list}" ]; then
+		verbose "Nothing to do, exiting."
+		exit 0
+	fi
+
+	OPTS="-b ${BOOTDIR}"
+	if [ "${verbose}" = "1" ]; then
+		OPTS="${OPTS} -v"
+	fi
+	if [ "${takeover}" = "1" ]; then
+		OPTS="${OPTS} -t"
+	fi
+	if [ "${yes}" = "1" ]; then
+		OPTS="${OPTS} -y"
+	fi
+	for u_version in ${version_list}; do
+		# Don't stop if one version doesn't work.
+		set +e
+		verbose "Execute: ${0} -${mode} -k \"${u_version}\" ${OPTS}"
+		"${0}" -${mode} -k "${u_version}" ${OPTS}
+		set -e
+	done
+	exit 0
 fi
 
 case "${mode}" in
@@ -360,5 +383,3 @@ case "${mode}" in
 		update
 		;;
 esac
-
-

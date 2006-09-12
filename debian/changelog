@@ -1,3 +1,21 @@
+initramfs-tools (0.79) unstable; urgency=high
+
+  * update-initramfs: Allow create and delete to work on "all" kernelversions.
+    Fixes bug on update to pass all the specified optional args.
+    Thanks to Osamu Aoki <osamu@debian.org> for the patch. (closes: 360281)
+    Improve it to parse args once and also highlight 'all' on usage.
+
+  * update-initramfs.8: Document usage of "all" + add example section.
+
+  * update-initramfs: On update check if /boot is ro, warn and exit.
+    Thanks to Alexander Wirt <formorer@debian.org> to improve the awk snippet.
+
+  * update-initramfs: run_lilo don't return 1 if no lilo executable is there.
+    Thanks "Peter D. St. Onge" <pete.stonge@utoronto.ca> for the report.
+    (closes: 386999)
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 11 Sep 2006 22:11:54 +0200
+
 initramfs-tools (0.78) unstable; urgency=medium
 
   * update-initramfs: Check in call_lilo() if /sbin/lilo is executable,
