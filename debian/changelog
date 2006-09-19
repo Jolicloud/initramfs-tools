@@ -1,9 +1,22 @@
-initramfs-tools (0.80) unstable; urgency=low
+initramfs-tools (0.80) unstable; urgency=high
+
+  Release "O partigiano, portami via, che mi sento di morir."
 
   * update-initramfs: Test for lilo executable earlier otherwise an warning
     would be issued with grub installed and left over lilo config.
 
- -- maximilian attems <maks@sternwelten.at>  Tue, 12 Sep 2006 15:59:14 +0200
+  * hook-functions: Add lasi700 to the scsi modules. (closes: 387909) Thanks
+    Nagilum <nagilum@nagilum.org>. Thus urgency high.
+
+  * scripts/nfs: Fix typo in ipconfig protocol handling, fix dhcp server
+    passing ser-ip as part of root-path, retry every second to not hammer
+    an FAI'ed nfs initramfs network.  Thanks for input and patches
+    Vagrant Cascadian <vagrant+bugs@freegeek.org>. While we are there refactor
+    the loop. (closes: 387841, 387808, 387809)
+
+  * update-initramfs: Check if /proc is mounted for ro_boot_check.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 19 Sep 2006 07:56:47 +0200
 
 initramfs-tools (0.79) unstable; urgency=high
 

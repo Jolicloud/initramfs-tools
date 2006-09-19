@@ -113,7 +113,7 @@ run_bootloader()
 		fi
 		return 0
 	fi
-	if [ -e /etc/lilo.conf ]; then
+	if [ -e /etc/lilo.conf ] && [ -x /sbin/lilo ]; then
 		run_lilo
 	fi
 }
@@ -138,6 +138,7 @@ delete_sha1()
 # ro /boot is not modified
 ro_boot_check()
 {
+	[ -d /proc ] || return 0
 	boot_opts=$(awk '/boot/{if (match($4, /ro/)) print "ro"}' /proc/mounts)
 	if [ -n "${boot_opts}" ]; then
 		echo "WARNING: /boot is ro mounted."

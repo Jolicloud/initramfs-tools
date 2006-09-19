@@ -16,7 +16,7 @@ do_nfsmount()
 			# Bring up device
 			ipconfig ${DEVICE}
 			;;
-		dhcp|bootb|rarp|both)
+		dhcp|bootp|rarp|both)
 			ipconfig -c ${IPOPTS} -d ${DEVICE}
 			;;
 		*)
@@ -49,7 +49,7 @@ do_nfsmount()
 			NFSOPTS="-o ${NFSROOT#*,}"
 		fi
 		NFSROOT=${NFSROOT%%,*}
-		if [ "${NFSROOT#*:}" = "$NFSROOT" ]; then
+		if [ "${NFSROOT#:*}" = "$NFSROOT" ]; then
 			NFSROOT=${ROOTSERVER}:${NFSROOT}
 		fi
 	fi
@@ -83,7 +83,7 @@ mountroot()
 	modprobe -q af_packet
 
 	# Default delay is around 180s
-	# FIXME: add usplash info
+	# FIXME: add usplash_write info
 	if [ -z "${ROOTDELAY}" ]; then
 		delay=180
 	else
@@ -91,15 +91,13 @@ mountroot()
 	fi
 
 	# loop until nfsmount succeds
-	while [ ${delay} -gt 0 ] && [ ! -e ${rootmnt}${init} ]; do
+	while [ ${retry_nr} -lt ${delay} ] && [ ! -e ${rootmnt}${init} ]; do
 		[ ${retry_nr} -gt 0 ] && \
 		[ "$quiet" != "y" ] && log_begin_msg "Retrying nfs mount"
 		do_nfsmount
-		# FIXME: ipconfig loops every min at least - better param??
-		delay=$(( ${delay} - 1 ))
-		[ ${retry_nr} -gt 0 ] && [ "$quiet" != "y" ] && log_end_msg
-		[ ! -e ${rootmnt}/sbin/init ] && /bin/sleep 0.1
 		retry_nr=$(( ${retry_nr} + 1 ))
+		[ ! -e ${rootmnt}${init} ] && /bin/sleep 1
+		[ ${retry_nr} -gt 0 ] && [ "$quiet" != "y" ] && log_end_msg
 	done
 
 	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/nfs-bottom"
