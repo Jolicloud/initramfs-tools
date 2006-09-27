@@ -28,8 +28,7 @@ while true; do
 		fi
 		;;
 	-o)
-		touch $2
-		outfile="$(readlink -f "$2")"
+		outfile="$2"
 		shift 2
 		;;
 	-k)
@@ -93,6 +92,13 @@ for i in ${EXTRA_CONF}; do
 		. /usr/share/initramfs-tools/conf.d/${i}
 	fi
 done
+
+if [ -n "${UMASK}" ]; then
+	umask "${UMASK}"
+fi
+
+touch $outfile
+outfile="$(readlink -f "$outfile")"
 
 if [ -z "${outfile}" ]; then
 	usage

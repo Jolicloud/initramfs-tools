@@ -8,9 +8,11 @@ case "$1" in
 		mkdir -p /etc/initramfs-tools/conf.d
 
 		# First time install.  Can we autodetect the RESUME partition?
-		RESUME=$(tail -n $(($(wc -l /proc/swaps | awk ' { print $1 } ') - 1)) /proc/swaps | sort -rk3 | head -n 1 | awk ' { print $1 } ')
+		if [ -r /proc/swaps ]; then
+			RESUME=$(tail -n $(($(wc -l /proc/swaps | awk ' { print $1 } ') - 1)) /proc/swaps | sort -rk3 | head -n 1 | awk ' { print $1 } ')
+		fi
 
-		# Inhertic initrd-tools settings if possible.
+		# Inherit initrd-tools settings if possible.
 		if [ -e /etc/mkinitrd/mkinitrd.conf ]; then
 			 . /etc/mkinitrd/mkinitrd.conf
 		fi

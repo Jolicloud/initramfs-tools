@@ -49,7 +49,7 @@ do_nfsmount()
 			NFSOPTS="-o ${NFSROOT#*,}"
 		fi
 		NFSROOT=${NFSROOT%%,*}
-		if [ "${NFSROOT#:*}" = "$NFSROOT" ]; then
+		if [ "${NFSROOT#*:}" = "$NFSROOT" ]; then
 			NFSROOT=${ROOTSERVER}:${NFSROOT}
 		fi
 	fi

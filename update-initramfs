@@ -138,7 +138,7 @@ delete_sha1()
 # ro /boot is not modified
 ro_boot_check()
 {
-	[ -d /proc ] || return 0
+	[ -r /proc/mounts ] || return 0
 	boot_opts=$(awk '/boot/{if (match($4, /ro/)) print "ro"}' /proc/mounts)
 	if [ -n "${boot_opts}" ]; then
 		echo "WARNING: /boot is ro mounted."
@@ -201,7 +201,7 @@ set_linked_version()
 set_highest_version()
 {
 	get_sorted_versions
-	set - ${version_list}
+	set -- ${version_list}
 	version=${1}
 }
 

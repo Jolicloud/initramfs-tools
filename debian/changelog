@@ -1,3 +1,30 @@
+initramfs-tools (0.81) unstable; urgency=low
+
+  Release quick and happy spin j = l + s
+
+  * update-initramfs: Really check for mounted /proc on use. (closes: 388241)
+    Thanks Alex Owen <r.alex.owen@gmail.com>. While beeing in this business,
+    check for mounted proc in initramfs-tools.preinst too.
+
+  * hook-functions: Add new scsi drivers aic94xx and stex. Add new net drivers
+    ehea, ep93xx_eth and qla3xxx. Thus urgency high.
+
+  * update-initramfs:  Use set ``--'' to change positional paramaters. Thanks
+    Jörg Sommer <joerg@alea.gnuu.de>. (closes: 389726)
+
+  * scripts/nfs: Revert to previous handling of dhcp server passing server-ip.
+    (closes: 387808)
+
+  * debian/initramfs-tools.preinst: Fix comment typo, thanks
+    shaulka@012.net.il for the patch. (closes: 389486)
+
+  * mkinitramfs: Allow an hook script to set an paranoid umask, considered
+    useful for shipping gpg keys inside of initramfs. Thanks Max Vozeler
+    <max@nusquama.org> and Lionel Elie Mamane <lionel@mamane.lu> for the
+    patch. (closes: 381677)
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 27 Sep 2006 15:56:46 +0200
+
 initramfs-tools (0.80) unstable; urgency=high
 
   Release "O partigiano, portami via, che mi sento di morir."
