@@ -1,3 +1,12 @@
+initramfs-tools (0.82) unstable; urgency=high
+
+  * Merge 0.69ubuntu15, plus 0.69ubuntu14 and 0.69ubuntu11 changelog entries
+    as not affected or already fixed.
+
+  * hook-initramfs: Add qla4xxx support, thus urgency high.
+
+ -- maximilian attems <maks@sternwelten.at>  Thu,  5 Oct 2006 16:12:06 +0200
+
 initramfs-tools (0.81) unstable; urgency=low
 
   Release quick and happy spin j = l + s
@@ -387,6 +396,27 @@ initramfs-tools (0.69b) unstable; urgency=high
   * Thus high urgency upload.
 
  -- maximilian attems <maks@sternwelten.at>  Fri, 14 Jul 2006 00:31:30 +0200
+
+initramfs-tools (0.69ubuntu15) edgy; urgency=low
+
+  * Add jmicron module to ide list.
+    - Malone #63085
+
+ -- Ben Collins <bcollins@ubuntu.com>  Wed,  4 Oct 2006 09:21:08 -0400
+
+initramfs-tools (0.69ubuntu14) edgy; urgency=low
+
+  * Remove stray "set -x" from scripts/local-premount/suspend.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Wed, 20 Sep 2006 08:35:05 +1000
+
+initramfs-tools (0.69ubuntu11) edgy; urgency=low
+
+  * since we ship /usr/share/initramfs-tools/conf.d as well as
+    /etc/initramfs-tools/conf.d, make sure mkinitramfs also reads from both,
+    not only from the /etc location
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sun, 10 Sep 2006 11:50:14 +0200
 
 initramfs-tools (0.69ubuntu4) edgy; urgency=low
 
