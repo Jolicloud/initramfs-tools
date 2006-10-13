@@ -7,7 +7,7 @@ KPKGCONF=/etc/kernel-img.conf
 
 set -e
 
-[ -r ${CONF} ] && . ${CONF} 
+[ -r ${CONF} ] && . ${CONF}
 
 usage()
 {
@@ -89,7 +89,6 @@ backup_booted_initramfs()
 		verbose "Backup ${initramfs}.bak"
 		return 0
 	fi
-	
 
 	# keep booted initramfs
 	uptime_days=$(awk '{printf "%d", $1 / 3600 / 24}' /proc/uptime)
