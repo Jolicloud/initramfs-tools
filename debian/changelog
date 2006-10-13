@@ -1,3 +1,41 @@
+initramfs-tools (0.83) unstable; urgency=high
+
+  Release "Ois was du verzapfst is a koida Kaffee"
+
+  * update-initramfs: Keep an initramfs backup while we are running. Do also
+    keep the booted initramfs as .bak in /boot. First helps on power cut.
+    Second is a good conservative approach and demanded feature.
+    Thanks Thiemo Nagel <thiemonagel@gmx.de> for report. (closes: 387780)
+
+  * init: When debug is invoked with an additional arg, write output to
+    console. Thanks Christian Aichinger <Greek0@gmx.net> for the idea.
+    Should ease remote debugging.
+
+  * initramfs-tools.8: Document new debug=<whatever> feature.
+
+  * initramfs-tools.preinstall: Check for right arg. (closes: 391619)
+
+  * update-initramfs: Try to guess harder if lilo might need to be run
+    if grub is also around. On old installs we get _zero_ information from
+    /etc/kernel.img. Parse mbr for lilo signature. (closes: 385949)
+    Thanks to Michael Prokop <mika@grml.org> for finetuning.
+
+  * scripts/init-top/framebuffer: Parse video bootarg and refactor script.
+    This add support for custom framebuffer modules. (closes: 386441)
+    Thanks for the patch by David Härdeman <david@2gen.com>.
+
+  * update.conf: Allow to make "update-initramfs -u" an noop. Useful for
+    conservative settings of a remote server. (closes: 362064) urgency high.
+    Thanks Manoj Srivastava <srivasta@debian.org> for the tough testing.
+
+  * update-initramfs.conf.5: Document the new update_initramfs variable.
+
+  * update-initramfs: Kope with stupid mv of grub to /usr/sbin.
+
+  * manpages: Get a banana and mark myself as author.
+
+ -- maximilian attems <maks@sternwelten.at>  Fri, 13 Oct 2006 08:12:40 +0200
+
 initramfs-tools (0.82) unstable; urgency=high
 
   * Merge 0.69ubuntu15, plus 0.69ubuntu14 and 0.69ubuntu11 changelog entries

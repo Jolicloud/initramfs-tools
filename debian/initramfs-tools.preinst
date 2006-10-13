@@ -3,7 +3,7 @@
 set -e
 
 case "$1" in
-	configure)
+	install)
 	if [ -n "$2" ]; then
 		mkdir -p /etc/initramfs-tools/conf.d
 

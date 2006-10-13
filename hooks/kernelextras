@@ -42,4 +42,3 @@ manual_add_modules vga16fb
 if [ ${fbcon} = "y" ]; then
 	force_load fbcon
 fi
-

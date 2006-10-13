@@ -13,27 +13,78 @@ prereqs)
 	;;
 esac
 
+
+# The options part of the kernel "video=" argument (i.e. everyting
+# after "video=<fbdriver>:") has very inconsistent rules.
+#
+# Generally the following applies:
+# 1) options are comma-separated
+# 2) options can be in either of these three forms:
+#    <arg>=<value>, <arg>:<value>, <boolean-arg>.
+# 3) the "mode" option has the form <xres>x<yres>[M][R][-<bpp>][@<refresh>][i][m]
+#    and may or may not start with "mode="
+#
+# When the options are used with modules, they need to be space-separated
+# and the following conversions are needed:
+#	<arg>:<value> -> <arg>=<value>
+#	<boolean-arg> -> <boolean-arg>=1
+#	<modevalue>   -> mode=<modevalue>
+parse_video_opts()
+{
+	local OPTS="$1"
+	local IFS=","
+
+	# Must be a line like video=<fbdriver>:<opt1>,[opt2]...
+	if [ "$OPTS" = "${OPTS%%:*}" ]; then
+		return
+	fi
+	OPTS="${OPTS#*:}"
+	for opt in $OPTS; do
+		# Already in the "<arg>=<value>" form
+		if [ "$opt" != "${opt#*=}" ]; then
+			echo -n "$opt "
+		# Presumably a modevalue without the "mode=" prefix
+		elif [ "$opt" != "${opt#[[:digit:]]*x[[:digit:]]}"; then
+			echo -n "mode=$opt "
+		# Presumably a boolean
+		else
+			echo -n "$opt=1 "
+		fi
+	done
+}
+
+FB=""
+OPTS=""
+
 SPLASH=false;
 VESA=false;
 
 for x in $(cat /proc/cmdline); do
 	case $x in
 	splash*)
-		SPLASH=true;
+		FB="vga16fb";
+		OPTS="";
 		;;
 	vga=*)
-		VESA=true;
+		FB="vesafb";
+		OPTS="";
 		;;
+	video=*)
+		FB=${x#*=}
+		FB="${FB%%:*}"
+		OPTS="$(parse_video_opts "$TMP")"
 	esac
 done
 
-if [ $SPLASH = "true" -o $VESA = "true" ]; then
-	modprobe -q fbcon
-	if [ $VESA = "true" ]; then
-		modprobe -q vesafb
-	else
-		modprobe -q vga16fb
-	fi
+if [ -n "$FB" ]; then
+	modprobe -q $FB $OPTS
+fi
+
+if [ -e /proc/fb ]; then
+	while read fbno desc; do
+		mknod /dev/fb$fbno 29 $fbno
+	done < /proc/fb
+
 	mknod /dev/fb0 c 29 0
 	for i in 0 1 2 3 4 5 6 7 8; do
 		mknod /dev/tty$i c 4 $i

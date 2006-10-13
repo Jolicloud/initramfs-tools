@@ -1,4 +1,4 @@
-.TH INITRAMFS-TOOLS 8  "Date: 2006/08/19" "" "mkinitramfs script overview"
+.TH INITRAMFS-TOOLS 8  "Date: 2006/10/11" "" "mkinitramfs script overview"
 
 .SH NAME
 initramfs-tools \- an introduction to writing scripts for mkinitramfs
@@ -96,7 +96,9 @@ sets an timeout on panic. Currently only zero value supported.
 
 .TP
 \fB \fI debug
-generates lots of output to /tmp/initramfs.debug.
+generates lots of output. It writes a log to /tmp/initramfs.debug.
+Instead when invoked with an arbitrary argument output is written to console.
+Use for example "debug=vc".
 
 .TP
 \fB \fI break
@@ -443,7 +445,8 @@ cpio -i -d -H newc --no-absolute-filenames
 
 
 .SH AUTHOR
-The initramfs-tools are written by Jeff Bailey <jbailey@ubuntu.com>.
+The initramfs-tools are written by Maximilian Attems <maks@sternwelten.at>,
+Jeff Bailey <jbailey@raspberryginger.com> and numerous others.
 .PP
 This manual was written by David  H\[:a]rdeman <david@2gen.com>,
 updated by Maximilian Attems <maks@sternwelten.at>.

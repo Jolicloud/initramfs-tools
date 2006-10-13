@@ -110,6 +110,10 @@ for x in $(cat /proc/cmdline); do
 		exec >/tmp/initramfs.debug 2>&1
 		set -x
 		;;
+	debug=*)
+		debug=y
+		set -x
+		;;
 	break=*)
 		break=${x#break=}
 		;;
