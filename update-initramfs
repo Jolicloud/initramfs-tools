@@ -56,7 +56,7 @@ verbose()
 
 version_exists()
 {
-	[ -e "${STATEDIR}/${1}" ]
+	[ -e "${STATEDIR}/${1}" ] && [ -e "${initramfs}" ]
 	return $?
 }
 
@@ -93,7 +93,7 @@ backup_booted_initramfs()
 	# keep booted initramfs
 	uptime_days=$(awk '{printf "%d", $1 / 3600 / 24}' /proc/uptime)
 	if [ -n "$uptime_days" ]; then
-		boot_initramfs=$(find "${initramfs_bak}" -mtime +${uptime_days})
+		boot_initramfs=$(find "${initramfs}.bak" -mtime +${uptime_days})
 	fi
 	if [ -n "${boot_initramfs}" ]; then
 		mv -f "${initramfs_bak}" "${initramfs}.bak"

@@ -34,7 +34,10 @@ initramfs-tools (0.83) unstable; urgency=high
 
   * manpages: Get a banana and mark myself as author.
 
- -- maximilian attems <maks@sternwelten.at>  Fri, 13 Oct 2006 08:12:40 +0200
+  * update-initramfs: version_exists needs not only to check for existing
+    sha1sum, but also initramfs. (closes: 382472)
+
+ -- maximilian attems <maks@sternwelten.at>  Fri, 13 Oct 2006 09:38:27 +0200
 
 initramfs-tools (0.82) unstable; urgency=high
 
