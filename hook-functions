@@ -40,7 +40,8 @@ add_modules_from_file()
 
 manual_add_modules()
 {
-	for mam_x in $(modprobe --set-version="${version}" --show-depends "${1}" 2>/dev/null | awk '/^insmod/ { print $2 }'); do
+	for mam_x in $(modprobe --set-version="${version}" --ignore-install \
+	--show-depends "${1}" 2>/dev/null | awk '/^insmod/ { print $2 }'); do
 		# Prune duplicates
 		if [ -e "${DESTDIR}/${mam_x}" ]; then
 			continue

@@ -1,3 +1,31 @@
+initramfs-tools (0.84) unstable; urgency=high
+
+  Release "A-t-on pris à Saint-Périne, Tous ces dictateurs impotents ?"
+
+  * hook-functions: Use modprobe --ignore-install arg to put all listed
+    modules on initramfs. Thanks Mario Izquierdo <mariodebian@gmail.com>
+    for report. (closes: 384043)
+
+  * update-initramfs: If elilo is around run it on initramfs update, add
+    zipl run.
+
+  * scripts/local: Use vol_id too if around to set FSTYPE. Thanks for the
+    patch to "Alex Owen" <r.alex.owen@gmail.com> (closes: 380004)
+
+  *  hooks/thermal: Add many of the windfarm modules for powerpc boxes.
+
+  * initramfs-tools.preinst: merge bits of 0.69ubuntu16. (closes: 393773)
+    urgency high as fixes upgrade from sarge - thanks Federico Grau
+    <donfede@casagrau.org>.
+
+  * scripts/init-top/framebuffer: Fix mknod call. (closes: 393543)
+    Thanks for the patch Kiro Zimmer <debian@kironet.de>.
+
+  * mkinitramfs: Create modulesdir even on monolithic linux. (closes: 393688)
+    Thanks for the patch Ian Campbell <ijc@hellion.org.uk>.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 18 Oct 2006 11:04:50 +0200
+
 initramfs-tools (0.83) unstable; urgency=high
 
   Release "Ois was du verzapfst is a koida Kaffee"
@@ -437,6 +465,18 @@ initramfs-tools (0.69b) unstable; urgency=high
   * Thus high urgency upload.
 
  -- maximilian attems <maks@sternwelten.at>  Fri, 14 Jul 2006 00:31:30 +0200
+
+initramfs-tools (0.69ubuntu16) edgy; urgency=low
+
+  * Bring in preinst fixes from Debian, including s/configure/install/ in
+    preinst, since preinst is never called with "configure", and checking
+    for /proc/swaps before we blindly try to read it to determine RESUME.
+  * Do away with the bogus '-n "$2"' test in preinst, since "install" can
+    be called without any arguments at all (and often is, on a clean setup)
+  * On upgrades, revert the RESUME mangling that dapper's d-i did to our
+    config file, avoiding spurious conffile prompts (launchpad.net/63693)
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Mon, 16 Oct 2006 17:23:41 +1000
 
 initramfs-tools (0.69ubuntu15) edgy; urgency=low
 

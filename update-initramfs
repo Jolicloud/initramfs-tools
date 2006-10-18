@@ -148,10 +148,11 @@ mbr_check()
 	echo
 }
 
-# only run lilo if no grub is around
-# or if "do_bootloader = yes" is set
+# Invoke bootloader
 run_bootloader()
 {
+	# only run lilo if no grub is around
+	# or if "do_bootloader = yes" is set
 	if [ -x /sbin/grub ] || [ -e /boot/grub/menu.lst ] \
 	|| [ -x /usr/sbin/grub ]; then
 		if [ -e /etc/lilo.conf ] && [ -x /sbin/lilo ]; then
@@ -168,8 +169,16 @@ run_bootloader()
 		fi
 		return 0
 	fi
-	if [ -e /etc/lilo.conf ] && [ -x /sbin/lilo ]; then
+	if [ -r /etc/lilo.conf ] && [ -x /sbin/lilo ]; then
 		run_lilo
+		return 0
+	fi
+	if [ -x /sbin/elilo ]; then
+		elilo
+		return 0
+	fi
+	if [ -r /etc/zipl.conf ]; then
+		zipl
 	fi
 }
 

@@ -51,6 +51,10 @@ mountroot ()
 	else
 		FSTYPE=${ROOTFSTYPE}
 	fi
+	if [ "$FSTYPE" = "unknown" ] && [ -x /lib/udev/vol_id ]; then
+		FSTYPE=$(/lib/udev/vol_id -t ${ROOT})
+		[ -z "$FSTYPE" ] && FSTYPE="unknown"
+	fi
 
 	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/local-premount"
 	run_scripts /scripts/local-premount

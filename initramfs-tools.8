@@ -1,4 +1,4 @@
-.TH INITRAMFS-TOOLS 8  "Date: 2006/10/11" "" "mkinitramfs script overview"
+.TH INITRAMFS-TOOLS 8  "Date: 2006/10/14" "" "mkinitramfs script overview"
 
 .SH NAME
 initramfs-tools \- an introduction to writing scripts for mkinitramfs
@@ -438,7 +438,7 @@ to double-check if it contains the relevant binaries, libs or modules:
 .nf
 mkdir tmp/initramfs
 cd tmp/initramfs
-gunzip -c -9 /boot/initrd.img-2.6.17-2-686 | \\
+gunzip -c -9 /boot/initrd.img-2.6.18-1-686 | \\
 cpio -i -d -H newc --no-absolute-filenames
 .fi
 .RE

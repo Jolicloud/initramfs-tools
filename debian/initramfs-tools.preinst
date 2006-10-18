@@ -4,7 +4,6 @@ set -e
 
 case "$1" in
 	install)
-	if [ -n "$2" ]; then
 		mkdir -p /etc/initramfs-tools/conf.d
 
 		# First time install.  Can we autodetect the RESUME partition?
@@ -29,7 +28,7 @@ case "$1" in
 			  -e '/# This file should/,/one per line\./d' \
 			  -e 's/Comments begin with.*/Syntax:  module_name [args ...]/' \
 			  -e 's/^#  ext2$/# raid1/' \
-			  -e 's/^#  wd io=0x300$/# sd_mod/'
+			  -e 's/^#  wd io=0x300$/# sd_mod/' \
 			  -e '/^ide-generic/d' \
 			  -e '/^ide-disk/d' \
 			  -e '/^ext2/d' \
@@ -40,7 +39,6 @@ case "$1" in
 		if [ -e /etc/mkinitrd/DSDT ]; then
 			cp /etc/mkinitrd/DSDT /etc/initramfs-tools/DSDT.aml
 		fi
-	fi
 	;;
 	upgrade)
 	if [ -n "$2" ] && dpkg --compare-versions "$2" lt "0.61"; then

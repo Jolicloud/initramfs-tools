@@ -166,7 +166,7 @@ export verbose
 # Private, used by 'catenate_cpiogz'.
 export __TMPCPIOGZ
 
-for d in bin conf/conf.d etc lib modules sbin scripts; do
+for d in bin conf/conf.d etc lib modules sbin scripts ${MODULESDIR}; do
 	mkdir -p "${DESTDIR}/${d}"
 done
 
