@@ -1,3 +1,29 @@
+initramfs-tools (0.85) unstable; urgency=high
+
+  Release "Nichts ist getan, wenn noch etwas zu tun übrig ist."
+
+  * update-initramfs: Fix ro /boot check to not trigger on other mounts
+    having a /boot string. (closes: 393906) Thanks for the patch
+    Olli Helenius <olli@starnet.fi>
+
+  * init-top/framebuffer: Fix duplicate fbno0 device creation. Merge the 
+    0.69ubuntu10 solution. Thanks Benjamin Leipold <rabbit171@web.de>
+    for the report. (closes: 393890)
+
+  * update-initramfs: Fix mbr_check() for installed lilo and used grub. Thanks
+    for the patch by Michel Casabona <michel.casabona@free.fr>. Also be
+    stricter about do_bootloader match, use negative info and add check for
+    grub on mbr before throwing error. (closes: 394559) urgency high.
+
+  * hook-functions: Add sata_sil24 to scsi modules. (closes: 395907)
+    Thanks Vadim S. Solomi" <vadic@vadic.nnov.ru> for the patch.
+
+  * update-initramfs: Fix lilo detection in mbr_check() for rootraid.
+    Based on a patch by Michael Prokop <mika@grml.org>. Suppress lilo warning
+    messages on test run.
+
+ -- maximilian attems <maks@sternwelten.at>  Mon, 30 Oct 2006 10:12:58 +0100
+
 initramfs-tools (0.84) unstable; urgency=high
 
   Release "A-t-on pris à Saint-Périne, Tous ces dictateurs impotents ?"
@@ -498,6 +524,12 @@ initramfs-tools (0.69ubuntu11) edgy; urgency=low
     not only from the /etc location
 
  -- Oliver Grawert <ogra@ubuntu.com>  Sun, 10 Sep 2006 11:50:14 +0200
+
+initramfs-tools (0.69ubuntu10) edgy; urgency=low
+
+  * Create framebuffer device nodes unconditionally
+
+ -- Matthew Garrett <mjg59@srcf.ucam.org>  Tue,  5 Sep 2006 17:50:53 +0100
 
 initramfs-tools (0.69ubuntu4) edgy; urgency=low
 
