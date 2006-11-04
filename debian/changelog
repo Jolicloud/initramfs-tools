@@ -1,3 +1,9 @@
+initramfs-tools (0.85a) unstable; urgency=high
+
+  * On first time run backup_booted_initramfs() has nothing to back up.
+
+ -- maximilian attems <maks@sternwelten.at>  Fri,  3 Nov 2006 09:03:46 +0100
+
 initramfs-tools (0.85) unstable; urgency=high
 
   Release "Nichts ist getan, wenn noch etwas zu tun übrig ist."

@@ -82,8 +82,11 @@ backup_booted_initramfs()
 	# chroot
 	[ ! -r /proc/uptime ] && rm -f "${initramfs_bak}" && return 0
 
-	# no backup yet
+	# first time run
 	initramfs_bak="${initramfs}.dpkg-bak"
+	[ ! -r "${initramfs_bak}" ] && return 0
+
+	# no backup yet
 	if [ ! -r "${initramfs}.bak" ]; then
 		mv -f ${initramfs_bak} "${initramfs}.bak"
 		verbose "Backup ${initramfs}.bak"
