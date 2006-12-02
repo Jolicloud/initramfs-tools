@@ -97,12 +97,12 @@ if [ -n "${UMASK}" ]; then
 	umask "${UMASK}"
 fi
 
-touch $outfile
-outfile="$(readlink -f "$outfile")"
-
 if [ -z "${outfile}" ]; then
 	usage
 fi
+
+touch "$outfile"
+outfile="$(readlink -f "$outfile")"
 
 # And by "version" we really mean path to kernel modules
 # This is braindead, and exists to preserve the interface with mkinitrd

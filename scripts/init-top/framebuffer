@@ -76,6 +76,11 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
+if [ -n "$FB" ]; then
+	modprobe -q fbcon
+	modprobe -q $FB $OPTS
+fi
+
 if [ -e /proc/fb ]; then
 	while read fbno desc; do
 		mknod /dev/fb$fbno c 29 $fbno
@@ -86,8 +91,3 @@ fi
 for i in 0 1 2 3 4 5 6 7 8; do
 	mknod /dev/tty$i c 4 $i
 done
-
-if [ -n "$FB" ]; then
-	modprobe -q fbcon
-	modprobe -q $FB $OPTS
-fi

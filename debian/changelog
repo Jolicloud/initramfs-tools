@@ -1,3 +1,38 @@
+initramfs-tools (0.85c) unstable; urgency=medium
+
+  Release "Pour être heureux vraiment Faut plus d'gouvernement"
+
+  * hook-funcions: Show on verbose mode the added binaries and libraries.
+
+  * update-initramfs: Don't silently fail, user won't be able to reboot.
+    Thanks Mario Aeby for his blog entry.
+
+  * debian/copyright: Moved to bzr.d.o repo location.
+
+  * hook-functions: Merge 0.69ubuntu22 copy_module_dir fixes, we'll use it
+    too postetch. Fix the bashism. Thanks to Jurij Smakov <jurij@debian.org>
+
+  * scripts/init-premount/thermal: Load blindly a bunch of thermal modules
+    on powerpc as they are not hotpluggable. Might be ugly, but is a safe bet.
+    Kernel plattform fix is scheduled for 2.6.20. Push with medium urgency.
+    (closes: 401269)
+
+ -- maximilian attems <maks@sternwelten.at>  Sat,  2 Dec 2006 18:06:34 +0100
+
+initramfs-tools (0.85b) unstable; urgency=medium
+
+  * mkinitramfs: Test for ${outfile} before touching anything. (closes: 381677)
+
+  * update-initramfs.conf, update-initramfs: Allow to disable backup strategy.
+    While we are it fix logic of backup_booted_initramfs(). (closes: 397787)
+    urgency medium.
+
+  * scripts/init-top/framebuffer: Fix regression of /dev/fb0 creation,
+    modprobe fb before creating device. Thanks to Otavio Salvador 
+    <otavio@debian.org> for patch.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue, 14 Nov 2006 08:06:40 +0100
+
 initramfs-tools (0.85a) unstable; urgency=high
 
   * On first time run backup_booted_initramfs() has nothing to back up.
@@ -497,6 +532,13 @@ initramfs-tools (0.69b) unstable; urgency=high
   * Thus high urgency upload.
 
  -- maximilian attems <maks@sternwelten.at>  Fri, 14 Jul 2006 00:31:30 +0200
+
+initramfs-tools (0.69ubuntu22) feisty; urgency=low
+
+  * For copy_module_dir, actually call manual_module for each one, so deps are
+    taken care of.
+
+ -- Ben Collins <bcollins@ubuntu.com>  Thu, 23 Nov 2006 02:10:29 -0500
 
 initramfs-tools (0.69ubuntu16) edgy; urgency=low
 

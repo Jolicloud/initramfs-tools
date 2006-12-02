@@ -79,12 +79,16 @@ backup_initramfs()
 # keep booted initramfs
 backup_booted_initramfs()
 {
+	initramfs_bak="${initramfs}.dpkg-bak"
+
+	# first time run thus no backup
+	[ ! -r "${initramfs_bak}" ] && return 0
+
 	# chroot
 	[ ! -r /proc/uptime ] && rm -f "${initramfs_bak}" && return 0
 
-	# first time run
-	initramfs_bak="${initramfs}.dpkg-bak"
-	[ ! -r "${initramfs_bak}" ] && return 0
+	# no kept backup wanted
+	[ "${backup_initramfs}" = "no" ] && rm -f "${initramfs_bak}" && return 0
 
 	# no backup yet
 	if [ ! -r "${initramfs}.bak" ]; then
@@ -122,7 +126,7 @@ generate_initramfs()
 			# minversion wasn't met, exit 0
 			exit 0
 		fi
-		verbose "mkinitramfs failed for ${initramfs}"
+		echo "update-initramfs: failed for ${initramfs}"
 		exit $mkinitramfs_return
 	fi
 }

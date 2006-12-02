@@ -20,6 +20,15 @@ case "$DPKG_ARCH" in
 powerpc|ppc64)
 	modprobe -q i2c-powermac
 	modprobe -q therm_pm72
+	modprobe -q windfarm_cpufreq_clamp
+	modprobe -q windfarm_lm75_sensor
+	modprobe -q windfarm_max6690_sensor
+	modprobe -q windfarm_pm112
+	modprobe -q windfarm_pm81
+	modprobe -q windfarm_pm91
+	modprobe -q windfarm_smu_controls
+	modprobe -q windfarm_smu_sat
+	modprobe -q windfarm_smu_sensors
 	;;
 i386|amd64|ia64)
 	modprobe -q fan

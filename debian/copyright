@@ -10,7 +10,7 @@ The current ubuntu release can be found at:
 http://archive.ubuntu.com/ubuntu/pool/main/i/initramfs-tools/
 
 The Debian tree is maintained with "bzr" at:
-http://debian.stro.at/bzr-test/initramfs-tools/
+http://bzr.debian.org/kernel/initramfs-tools/
 
 Authors: Jeff Bailey <jbailey@ubuntu.com>, Adam Conrad <adconrad@ubuntu.com>,
 	 Scott James Remnant <scott@ubuntu.com>,

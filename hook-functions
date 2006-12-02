@@ -66,6 +66,9 @@ copy_exec() {
 		fi
 	else
 		ln -s ${1} ${DESTDIR}/${2}
+		if [ -n "${verbose}" ] && [ "${verbose}" = "y" ]; then
+			echo "Adding binary ${1}"
+		fi
 	fi
 
 	# Copy the dependant libraries
@@ -89,6 +92,9 @@ copy_exec() {
 		mkdir -p ${DESTDIR}/${dirname}
 		if [ ! -e ${DESTDIR}/${dirname}/${libname} ]; then
 			ln -s ${x} ${DESTDIR}/${dirname}
+			if [ -n "${verbose}" ] && [ "${verbose}" = "y" ]; then
+				echo "Adding library ${x}"
+			fi
 		fi
 	done
 }
@@ -96,9 +102,15 @@ copy_exec() {
 # Copy entire subtrees to the initramfs
 copy_modules_dir()
 {
-	tmpdir_modbase="${DESTDIR}/lib/modules/${version}"
-	mkdir -p "$(dirname "${tmpdir_modbase}/${1}")"
-	cp -a "${MODULESDIR}/${1}" "${tmpdir_modbase}/${1}"
+	if ! [ -d "${MODULESDIR}/${1}" ]; then
+		return;
+	fi
+	if [ -n "${verbose}" ] && [ "${verbose}" = "y" ]; then
+		echo "Copying module directory ${1}"
+	fi
+	for x_mod in $(find "${MODULESDIR}/${1}" -name '*.ko' -print); do
+		manual_add_modules `basename ${x_mod} .ko`
+	done
 }
 
 dep_add_modules()
