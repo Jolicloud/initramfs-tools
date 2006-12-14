@@ -194,7 +194,7 @@ auto_add_modules()
 		sata_promise sata_qstor sata_sil sata_sil24 sata_sis sata_svw \
 		sata_sx4 sata_uli sata_via sata_vsc scsi_mod \
 		scsi_transport_fc scsi_transport_iscsi scsi_transport_spi \
-		sd_mod stex sym53c8xx tmscsim zfcp; do
+		sd_mod stex sym53c8xx tmscsim zalon zfcp; do
 			manual_add_modules "${x}"
 		done
 	;;

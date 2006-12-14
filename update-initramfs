@@ -134,11 +134,13 @@ generate_initramfs()
 # lilo call
 run_lilo()
 {
-	# suppress errors on test run
-	lilo -t > /dev/null 2>&1
-	if [ $? -eq 0 ]; then
-		lilo
+	# show lilo errors on failure
+	if ! lilo -t  > /dev/null 2>&1 ; then
+		echo "update-initramfs: lilo run failed for ${initramfs}:"
+		echo
+		lilo -t
 	fi
+	lilo
 }
 
 # check if lilo is on mbr
@@ -387,14 +389,16 @@ delete()
 	rm -f "${initramfs}"
 }
 
-
+# Check for update mode on existing and modified initramfs
 altered_check()
 {
-	if [ "${takeover}" = 0 ]; then
-		if ! compare_sha1; then
-			delete_sha1
-			mild_panic "${initramfs} has been altered.  Cannot update."
-		fi
+	# No check on takeover
+	[ "${takeover}" = 1 ] && return 0
+	if [ ! -e "${initramfs}" ]; then
+		mild_panic "${initramfs} does not exist. Cannot update."
+	fi
+	if ! compare_sha1; then
+		mild_panic "${initramfs} has been altered. Cannot update."
 	fi
 }
 

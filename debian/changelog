@@ -1,3 +1,25 @@
+initramfs-tools (0.85d) unstable; urgency=high
+
+  Release "Le gros ventre qu'engraisse L'suffrage universel"
+
+  * update-initramfs: run_lilo() needs to show errors of lilo -t on failure
+    and exit with failure message. Thanks David Anselmi <anselmi@anselmi.us>
+    for report. (closes: 401331) Updated according to review by
+    Jurij Smakov <jurij@debian.org>.
+
+  * hook-functions: Add hppa zalon scsi module. (closes: 401229) urgency high
+
+  * update-initramfs: Add warning for missing initramfs on update mode without
+    takeover arg. Restructure altered_check, don't delete sha1sum on failure.
+    Thanks Jurij Smakov <jurij@debian.org> for noticing.
+
+   * mkinitramfs: Reduce size of initramfs by keeping 1 busybox copy.
+     Thanks for the patch input to Russell Coker <russell@coker.com.au>.
+     Thanks for the sed rework to Klaus Ita <deb.ian@worstofall.com>.
+     (closes: 338405)
+
+ -- maximilian attems <maks@sternwelten.at>  Thu, 14 Dec 2006 16:10:06 +0100
+
 initramfs-tools (0.85c) unstable; urgency=medium
 
   Release "Pour être heureux vraiment Faut plus d'gouvernement"
