@@ -198,6 +198,9 @@ auto_add_modules()
 			manual_add_modules "${x}"
 		done
 	;;
+	ata)
+		copy_modules_dir kernel/drivers/ata
+	;;
 	ieee1394)
 		for x in ohci1394 sbp2; do
 			manual_add_modules "${x}"
@@ -218,6 +221,7 @@ auto_add_modules()
 		auto_add_modules net
 		auto_add_modules ide
 		auto_add_modules scsi
+		auto_add_modules ata
 		auto_add_modules i2o
 		auto_add_modules dasd
 		auto_add_modules ieee1394

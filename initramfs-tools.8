@@ -189,7 +189,7 @@ initramfs image.
 .RS
 .PP
 .B Example:
-copy_modules_dir kernel/drivers/pci/foobar
+copy_modules_dir kernel/drivers/ata
 .RE
 
 .SS Including binaries
@@ -197,7 +197,7 @@ If you need to copy binaries to the initramfs module, a command like this
 should be used:
 .PP
 .RS
-copy_exec /sbin/mdadm "${DESTDIR}/sbin"
+copy_exec /sbin/mdadm /sbin
 .RE
 
 mkinitramfs will automatically detect which libraries the executable depends on

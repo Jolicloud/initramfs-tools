@@ -1,3 +1,27 @@
+initramfs-tools (0.85e) unstable; urgency=high
+
+  Release "Qu'ils soient rouges, bleus ou blancs Il faudrait mieux les pendre"
+
+  * initramfs-tools.8: Correct copy_exec() example. (closes: 403122)
+    Add a better dir to copy_modules_dir() example.
+
+  * mkinitramfs: Revert the sed magic busybox hardlinking for size reduction.
+    Go for functionality. The klibc binaries are better tested and superior
+    in some cases like sleep. Fixes several boot troubles. Thanks
+    Benjamí Villoslada <benjami@bitassa.cat> for the report. (closes: 403224)
+    Thanks Jurij Smakov <jurij@debian.org> for pinpointing the trouble.
+
+  * hook-functions: Add all drivers/ata drivers to initramfs that exist for
+    uname >= 2.6.19 (closes: 403309) urgency high.
+
+  * scripts/init-top/framebuffer: Fix syntax by closing the brackets. Handle
+    options of the form key:value, map kernel bootarg to module name for
+    matroxfb. Thanks Rob Walker <rob@tenfoot.org.uk> for the patches
+    (closes: 403667, 403669). Use posix regexes according to review by
+    Jurij Smakov <jurij@debian.org>. Also protect all variables.
+
+ -- maximilian attems <maks@sternwelten.at>  Wed, 20 Dec 2006 22:29:51 +0100
+
 initramfs-tools (0.85d) unstable; urgency=high
 
   Release "Le gros ventre qu'engraisse L'suffrage universel"

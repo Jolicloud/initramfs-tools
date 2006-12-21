@@ -35,20 +35,23 @@ parse_video_opts()
 	local IFS=","
 
 	# Must be a line like video=<fbdriver>:<opt1>,[opt2]...
-	if [ "$OPTS" = "${OPTS%%:*}" ]; then
+	if [ "${OPTS}" = "${OPTS%%:*}" ]; then
 		return
 	fi
 	OPTS="${OPTS#*:}"
-	for opt in $OPTS; do
+	for opt in ${OPTS}; do
 		# Already in the "<arg>=<value>" form
-		if [ "$opt" != "${opt#*=}" ]; then
+		if [ "${opt}" != "${opt#*=}" ]; then
 			echo -n "$opt "
+		# In the "<arg>:<value>" form
+		elif [ "${opt}" != "${opt#*:}" ]; then
+			echo -n "${opt%:*}=${opt#*:} "
 		# Presumably a modevalue without the "mode=" prefix
-		elif [ "$opt" != "${opt#[[:digit:]]*x[[:digit:]]}"; then
+		elif [ "${opt}" != "${opt#[0-9]*x[0-9]}" ]; then
 			echo -n "mode=$opt "
 		# Presumably a boolean
 		else
-			echo -n "$opt=1 "
+			echo -n "${opt}=1 "
 		fi
 	done
 }
@@ -60,7 +63,7 @@ SPLASH=false;
 VESA=false;
 
 for x in $(cat /proc/cmdline); do
-	case $x in
+	case ${x} in
 	splash*)
 		FB="vga16fb";
 		OPTS="";
@@ -72,22 +75,31 @@ for x in $(cat /proc/cmdline); do
 	video=*)
 		FB=${x#*=}
 		FB="${FB%%:*}"
-		OPTS="$(parse_video_opts "$TMP")"
+		OPTS="$(parse_video_opts "${x}")"
 	esac
 done
 
-if [ -n "$FB" ]; then
+# Map command line name to module name
+case ${FB} in
+matroxfb)
+	FB=matroxfb_base
+	;;
+*)
+	;;
+esac
+
+if [ -n "${FB}" ]; then
 	modprobe -q fbcon
-	modprobe -q $FB $OPTS
+	modprobe -q ${FB} ${OPTS}
 fi
 
 if [ -e /proc/fb ]; then
 	while read fbno desc; do
-		mknod /dev/fb$fbno c 29 $fbno
+		mknod /dev/fb${fbno} c 29 ${fbno}
 	done < /proc/fb
 else
 	mknod /dev/fb0 c 29 0
 fi
 for i in 0 1 2 3 4 5 6 7 8; do
-	mknod /dev/tty$i c 4 $i
+	mknod /dev/tty${i} c 4 ${i}
 done

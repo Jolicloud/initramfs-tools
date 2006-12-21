@@ -227,13 +227,9 @@ if [ "x${BUSYBOX}" = "xn" ]; then
 	echo "Warning: Busybox is required for successful boot!"
 else
 	rm -f ${DESTDIR}/bin/sh
-	copy_exec ${BUSYBOXDIR}/busybox /bin/busybox
 	rm -f ${DESTDIR}/bin/busybox
-	cp ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/busybox
-	for cmd in `busybox | sed -n '/functions:$/,$p' \
-		| sed  -e 's/[[:space:]]*//g; s/,$//; s/,/\n/g; /busybox/d'`; do
-		ln -f ${DESTDIR}/bin/busybox ${DESTDIR}/bin/${cmd}
-	done
+	copy_exec ${BUSYBOXDIR}/busybox /bin/busybox
+	ln -s ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/sh
 fi
 
 # Modutils
