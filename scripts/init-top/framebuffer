@@ -72,11 +72,15 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
-# Map command line name to module name and other tweaks
+# Module-specific workarounds
 case ${FB} in
 matroxfb)
+	# Map command line name to module name
 	FB=matroxfb_base
 	;;
+intelfb|i810fb)
+	# Needs AGP driver loaded
+	modprobe intel-agp
 uvesafb)
 	# v86d requires /dev/zero and dev/mem, but udev haven't been started yet
 	[ -e /dev/zero ] || mknod -m 0666 /dev/zero c 1 5
