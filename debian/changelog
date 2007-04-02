@@ -1,3 +1,59 @@
+initramfs-tools (0.86) experimental; urgency=low
+
+  * update-initramfs: Bound the mode and version variable. (closes: 403905)
+    Thanks "Nikita V. Youshchenko" <yoush@debian.org> for report.
+
+  * init: Set once the MODPROBE_OPTIONS environment variable and export it.
+    Don't forget to set -b to have the modprobe.d blacklists respected.
+    Thus remove everywhere the -q modprobe switch.
+    Thanks Ben Collins <bcollins@ubuntu.com> for the suggestion.
+
+  * small trailing whitespace cleanup, display full path of kernel-img.conf
+    in bug script.
+
+  * debian/control: change maintainer entry to new DD mail. :)
+    Add busybox-initramfs as Ubuntu busybox alternative to depends.
+    Dropp the sarge busybox-cvs-static entry.
+
+  * scripts/local-top/mdrun: Drop, existed for partial upgrades from sarge.
+
+  * scripts/local: Improve panic message and printed order. (closes: 414640)
+    Thanks Vincent.McIntyre@csiro.au for patch.
+
+  * scripts/functions: Check if panic is set befor using it. (closes: 406107)
+    Thanks martin f krafft <madduck@debian.org> for report.
+
+  * hook-functions: Copy all kernel/drivers/{block,ide,scsi} subdir modules
+    instead of hardcoding the list of "supported" drivers. As consequence
+    the initramfs might be larger, but none of those should be missed.
+    As bonus syncs with Ubuntu.
+
+  * init: Mount /sys and /proc nodev, noexec, nosuid - Ubuntu sync.
+
+ -- maximilian attems <maks@debian.org>  Sat, 17 Mar 2007 21:39:13 +0100
+
+initramfs-tools (0.85f) unstable; urgency=high
+
+  Release "Au lieu d'aller voter Casse leur la margoulette"
+
+  * update-initramfs: Grub _doesn't_ clear LILO string in mbr, but the inverse
+    is done. Fix mbr_check() to first check for GRUB. Fixes accidental lilo
+    call in the case that Grub is the used bootloader. (closes: 409820)
+    Thanks Michael Prokop <mika@grml.org> for bringing up the case.
+
+  * initramfs.conf.5, mkinitramfs.5: Fix typos. Document version.
+    (closes: 405157, 405190, 405194)
+
+  * update-initramfs: Be more screamy about lilo error, people seem to
+    overlook recent lilo failures.
+
+  * scripts/init-top/framebuffer: Remove unused variables.
+
+  * init: Export ROOTDELAY to let udev boot script handle eventual rootdelay.
+    downgrades 401916
+
+ -- maximilian attems <maks@sternwelten.at>  Wed,  7 Mar 2007 23:34:17 +0100
+
 initramfs-tools (0.85e) unstable; urgency=high
 
   Release "Qu'ils soient rouges, bleus ou blancs Il faudrait mieux les pendre"
@@ -74,7 +130,7 @@ initramfs-tools (0.85b) unstable; urgency=medium
     urgency medium.
 
   * scripts/init-top/framebuffer: Fix regression of /dev/fb0 creation,
-    modprobe fb before creating device. Thanks to Otavio Salvador 
+    modprobe fb before creating device. Thanks to Otavio Salvador
     <otavio@debian.org> for patch.
 
  -- maximilian attems <maks@sternwelten.at>  Tue, 14 Nov 2006 08:06:40 +0100
@@ -93,7 +149,7 @@ initramfs-tools (0.85) unstable; urgency=high
     having a /boot string. (closes: 393906) Thanks for the patch
     Olli Helenius <olli@starnet.fi>
 
-  * init-top/framebuffer: Fix duplicate fbno0 device creation. Merge the 
+  * init-top/framebuffer: Fix duplicate fbno0 device creation. Merge the
     0.69ubuntu10 solution. Thanks Benjamin Leipold <rabbit171@web.de>
     for the report. (closes: 393890)
 

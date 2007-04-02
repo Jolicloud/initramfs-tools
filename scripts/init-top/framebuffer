@@ -59,9 +59,6 @@ parse_video_opts()
 FB=""
 OPTS=""
 
-SPLASH=false;
-VESA=false;
-
 for x in $(cat /proc/cmdline); do
 	case ${x} in
 	splash*)
@@ -89,8 +86,8 @@ matroxfb)
 esac
 
 if [ -n "${FB}" ]; then
-	modprobe -q fbcon
-	modprobe -q ${FB} ${OPTS}
+	modprobe fbcon
+	modprobe ${FB} ${OPTS}
 fi
 
 if [ -e /proc/fb ]; then

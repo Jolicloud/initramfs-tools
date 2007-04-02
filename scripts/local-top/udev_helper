@@ -19,5 +19,5 @@ esac
 # but might be an old fashioned ISA controller; in which case
 # we need to load ide-generic.
 if [ ! -e "${ROOT}" -o "${ROOT}" = "/dev/root" ]; then
-	modprobe -q ide-generic
+	modprobe ide-generic
 fi

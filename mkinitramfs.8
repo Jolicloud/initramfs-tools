@@ -1,4 +1,4 @@
-.TH MKINITRAMFS 8  "$Date: 2006/10/12 $" "" "mkinitramfs manual"
+.TH MKINITRAMFS 8  "$Date: 2007/01/02 $" "" "mkinitramfs manual"
 
 .SH NAME
 mkinitramfs \- generate an initramfs image
@@ -57,6 +57,11 @@ Override the
 .B ROOT
 setting in
 .IR initramfs.conf .
+
+.TP
+\fI version
+Set the kernel version of the initramfs image
+(defaults to the running kernel).
 
 .TP
 \fB\-\-supported-host-version=\fIhversion

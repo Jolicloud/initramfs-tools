@@ -60,11 +60,11 @@ panic()
 		/sbin/usplash_write "QUIT"
 	fi
 	# Disallow console access
-	if [ "${panic}" = 0 ]; then
+	if [ -n "${panic}" ] && [ "${panic}" = 0 ]; then
 		reboot
 	fi
-	modprobe -q i8042
-	modprobe -q atkbd
+	modprobe i8042
+	modprobe atkbd
 	echo $@
 	PS1='(initramfs) ' /bin/sh -i </dev/console >/dev/console 2>&1
 }
@@ -206,7 +206,7 @@ load_modules()
 			if [ "$com" = "#" ]; then
 				continue
 			fi
-			modprobe -q $m
+			modprobe $m
 		done
 	fi
 }

@@ -64,9 +64,9 @@ if [ ! -e /sbin/vgchange ]; then
 	exit 0
 fi
 
-modprobe -q dm-mod
-modprobe -q dm-snapshot
-modprobe -q dm-mirror
+modprobe dm-mod
+modprobe dm-snapshot
+modprobe dm-mirror
 
 activate_vg "$ROOT"
 activate_vg "$resume"
