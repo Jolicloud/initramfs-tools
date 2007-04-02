@@ -34,7 +34,11 @@ initramfs-tools (0.86) experimental; urgency=low
     Useful if a MINKVER set is not fulfilled. (LP: #101844)
     Thanks Soren Hansen <sh@linux2go.dk> for patch.
 
- -- maximilian attems <maks@debian.org>  Mon,  2 Apr 2007 20:20:29 +0200
+  * initramfs-tools.preinst: Test if $RESUME is nonzero, not if it exists,
+    fixes issue of UUID resume dev. (LP: #67932) While there remove the
+    conffile mv handling of 0.61.
+
+ -- maximilian attems <maks@debian.org>  Mon,  2 Apr 2007 22:43:33 +0200
 
 initramfs-tools (0.85f) unstable; urgency=high
 

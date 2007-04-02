@@ -15,7 +15,7 @@ case "$1" in
 		if [ -e /etc/mkinitrd/mkinitrd.conf ]; then
 			 . /etc/mkinitrd/mkinitrd.conf
 		fi
-		if [ -e ${RESUME} ]; then
+		if [ -n "${RESUME}" ]; then
 			echo "RESUME=${RESUME}" > /etc/initramfs-tools/conf.d/resume
 		fi
 
@@ -39,20 +39,6 @@ case "$1" in
 		if [ -e /etc/mkinitrd/DSDT ]; then
 			cp /etc/mkinitrd/DSDT /etc/initramfs-tools/DSDT.aml
 		fi
-	;;
-	upgrade)
-	if [ -n "$2" ] && dpkg --compare-versions "$2" lt "0.61"; then
-		if [ -d /etc/initramfs-tools ]; then
-			echo
-			echo "Warning: /etc/initramfs-tools already exists."
-			echo "         Please remove it for upgrade."
-			echo
-			exit 1
-		fi
-		if [ -d /etc/mkinitramfs ]; then
-			mv /etc/mkinitramfs /etc/initramfs-tools
-		fi
-	fi
 	;;
 esac
 
