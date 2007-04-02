@@ -30,7 +30,11 @@ initramfs-tools (0.86) experimental; urgency=low
 
   * init: Mount /sys and /proc nodev, noexec, nosuid - Ubuntu sync.
 
- -- maximilian attems <maks@debian.org>  Sat, 17 Mar 2007 21:39:13 +0100
+  * update-initramfs: If update-initramfs fails, restore the backup.
+    Useful if a MINKVER set is not fulfilled. (LP: #101844)
+    Thanks Soren Hansen <sh@linux2go.dk> for patch.
+
+ -- maximilian attems <maks@debian.org>  Mon,  2 Apr 2007 15:01:59 +0200
 
 initramfs-tools (0.85f) unstable; urgency=high
 

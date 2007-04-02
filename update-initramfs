@@ -113,6 +113,15 @@ backup_booted_initramfs()
 	rm -f ${initramfs_bak}
 }
 
+# restore initramfs backup
+restore_initramfs()
+{
+	[ -z "${initramfs_bak}" ] && return 0
+	mv -f "${initramfs_bak}" "${initramfs}"
+	verbose "Restoring ${initramfs_bak}"
+}
+
+
 generate_initramfs()
 {
 	echo "update-initramfs: Generating ${initramfs}"
@@ -124,6 +133,7 @@ generate_initramfs()
 		set_sha1
 	else
 		mkinitramfs_return="$?"
+		restore_initramfs
 		if [ "$mkinitramfs_return" = "2" ]; then
 			# minversion wasn't met, exit 0
 			exit 0
