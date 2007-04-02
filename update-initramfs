@@ -117,8 +117,8 @@ backup_booted_initramfs()
 restore_initramfs()
 {
 	[ -z "${initramfs_bak}" ] && return 0
-	mv -f "${initramfs_bak}" "${initramfs}"
 	verbose "Restoring ${initramfs_bak}"
+	mv -f "${initramfs_bak}" "${initramfs}"
 }
 
 

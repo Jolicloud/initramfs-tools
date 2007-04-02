@@ -34,7 +34,7 @@ initramfs-tools (0.86) experimental; urgency=low
     Useful if a MINKVER set is not fulfilled. (LP: #101844)
     Thanks Soren Hansen <sh@linux2go.dk> for patch.
 
- -- maximilian attems <maks@debian.org>  Mon,  2 Apr 2007 15:01:59 +0200
+ -- maximilian attems <maks@debian.org>  Mon,  2 Apr 2007 20:20:29 +0200
 
 initramfs-tools (0.85f) unstable; urgency=high
 
