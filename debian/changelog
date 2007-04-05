@@ -1,7 +1,6 @@
-initramfs-tools (0.86) experimental; urgency=low
+initramfs-tools (0.86) UNRELEASED; urgency=low
 
   * update-initramfs: Bound the mode and version variable. (closes: 403905)
-    Thanks "Nikita V. Youshchenko" <yoush@debian.org> for report.
 
   * init: Set once the MODPROBE_OPTIONS environment variable and export it.
     Don't forget to set -b to have the modprobe.d blacklists respected.
@@ -20,12 +19,12 @@ initramfs-tools (0.86) experimental; urgency=low
   * scripts/local: Improve panic message and printed order. (closes: 414640)
     Thanks Vincent.McIntyre@csiro.au for patch.
 
-  * scripts/functions: Check if panic is set befor using it. (closes: 406107)
+  * scripts/functions: Check if panic is set before using it. (closes: 406107)
     Thanks martin f krafft <madduck@debian.org> for report.
 
   * hook-functions: Copy all kernel/drivers/{block,ide,scsi} subdir modules
     instead of hardcoding the list of "supported" drivers. As consequence
-    the initramfs might be larger, but none of those should be missed.
+    the initramfs might be larger, but none of those should be missed!
     As bonus syncs with Ubuntu.
 
   * init: Mount /sys and /proc nodev, noexec, nosuid - Ubuntu sync.
@@ -38,7 +37,18 @@ initramfs-tools (0.86) experimental; urgency=low
     fixes issue of UUID resume dev. (LP: #67932) While there remove the
     conffile mv handling of 0.61.
 
- -- maximilian attems <maks@debian.org>  Mon,  2 Apr 2007 22:43:33 +0200
+  * scripts/functions: set_initlist() needs to add only script names with
+    alphabetics, numerics and underscores - skip any other. Bad enough
+    backup scripts get added, but they shouldn't lead to a panic. Also skip
+    directories that might lay around.  (closes: 398347) (LP: #76131)
+
+  * mkinitramfs: Don't add backup scripts to initramfs. (closes: 378682)
+    (LP: #78348)
+
+  * scripts/functions: run_scripts() return immediately if passed dir 
+    does not exist. Empty dirs without boot script aren't created anymore.
+
+ -- maximilian attems <maks@debian.org>  Thu,  5 Apr 2007 21:16:45 +0200
 
 initramfs-tools (0.85f) unstable; urgency=high
 

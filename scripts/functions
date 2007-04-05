@@ -85,7 +85,18 @@ set_initlist()
 {
 	unset initlist
 	for si_x in ${initdir}/*; do
+		# only allow variable name chars
+		case ${si_x#${initdir}/} in
+		*[!A-Za-z0-9_]*)
+			continue
+			;;
+		esac
+		# skip non executable scripts
 		if [ ! -x ${si_x} ]; then
+			continue
+		fi
+		# skip directories
+		if [ -d ${si_x} ]; then
 			continue
 		fi
 		initlist="${initlist} ${si_x#${initdir}/}"
@@ -187,6 +198,7 @@ call_scripts()
 run_scripts()
 {
 	initdir=${1}
+	[ ! -d ${initdir} ] && return
 	get_prereqs
 	reduce_prereqs
 	call_scripts

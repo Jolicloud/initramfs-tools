@@ -199,13 +199,21 @@ ln -s /lib/klibc-*.so ${DESTDIR}/lib
 rm -f ${DESTDIR}/bin/kinit ${DESTDIR}/bin/gzip
 
 copy_exec /usr/share/initramfs-tools/init /init
-cp -a /usr/share/initramfs-tools/scripts/* "${DESTDIR}/scripts"
-for f in $(cd ${CONFDIR}/scripts && \
-	find . \( -name '*.dpkg*' -prune -o -name '*~' -prune \) \
-		-o -type f -print); do
-	mkdir --parents "${DESTDIR}/scripts/$(dirname "${f}")"
-cp -p "${CONFDIR}/scripts/${f}" "${DESTDIR}/scripts/$(dirname "${f}")"
+
+# add existant boot scripts
+for b in $(cd /usr/share/initramfs-tools/scripts/ && find . \
+	-regex '.*/[a-z0-9_]+$' -type f); do
+	[ -d "${DESTDIR}/scripts/$(dirname "${b}")" ] \
+		|| mkdir -p "${DESTDIR}/scripts/$(dirname "${b}")"
+	cp -p "/usr/share/initramfs-tools/scripts/${b}" \
+		"${DESTDIR}/scripts/$(dirname "${b}")"
 done
+for b in $(cd "${CONFDIR}/scripts" && find . -regex '.*/[a-z0-9_]+$' -type f); do
+	[ -d "${DESTDIR}/scripts/$(dirname "${b}")" ] \
+		|| mkdir -p "${DESTDIR}/scripts/$(dirname "${b}")"
+	cp -p "${CONFDIR}/scripts/${b}" "${DESTDIR}/scripts/$(dirname "${b}")"
+done
+
 echo "DPKG_ARCH=${DPKG_ARCH}" > ${DESTDIR}/conf/arch.conf
 copy_exec "${CONFDIR}/initramfs.conf" /conf
 for i in ${EXTRA_CONF}; do

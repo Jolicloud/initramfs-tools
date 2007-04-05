@@ -148,7 +148,7 @@ run_lilo()
 {
 	# show lilo errors on failure
 	if ! lilo -t  > /dev/null 2>&1 ; then
-		echo "Error lilo fails for new ${initramfs}:"
+		echo "ERROR lilo fails for new ${initramfs}:"
 		echo
 		lilo -t
 	fi
