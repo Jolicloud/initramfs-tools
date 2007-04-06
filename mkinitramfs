@@ -1,6 +1,7 @@
 #!/bin/sh
 
 umask 0022
+export PATH='/usr/bin:/sbin:/bin'
 
 # Defaults
 keep="n"

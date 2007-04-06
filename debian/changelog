@@ -44,10 +44,14 @@ initramfs-tools (0.86) UNRELEASED; urgency=low
   * mkinitramfs: Don't add backup scripts to initramfs. (closes: 378682)
     (LP: #78348)
 
-  * scripts/functions: run_scripts() return immediately if passed dir 
+  * scripts/functions: run_scripts() return immediately if passed dir
     does not exist. Empty dirs without boot script aren't created anymore.
 
- -- maximilian attems <maks@debian.org>  Thu,  5 Apr 2007 21:16:45 +0200
+  * mkinitramfs: Set PATH with /sbin to allow non-root user usage.
+    Thanks Bob Montgomery <bob.montgomery@hp.com> for the suggestion.
+    (closes: 409995)
+
+ -- maximilian attems <maks@debian.org>  Fri,  6 Apr 2007 22:40:56 +0200
 
 initramfs-tools (0.85g) unstable; urgency=high
 
