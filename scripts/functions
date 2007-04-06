@@ -244,5 +244,6 @@ parse_numeric() {
 	esac
 
 	mknod /dev/root b ${major} ${minor}
+	chmod 600 /dev/root
 	ROOT=/dev/root
 }

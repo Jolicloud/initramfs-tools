@@ -10,9 +10,8 @@ initramfs-tools (0.86) UNRELEASED; urgency=low
   * small trailing whitespace cleanup, display full path of kernel-img.conf
     in bug script.
 
-  * debian/control: change maintainer entry to new DD mail. :)
-    Add busybox-initramfs as Ubuntu busybox alternative to depends.
-    Dropp the sarge busybox-cvs-static entry.
+  * debian/control: Add busybox-initramfs as Ubuntu busybox alternative
+    to depends. Drop the sarge busybox-cvs-static entry.
 
   * scripts/local-top/mdrun: Drop, existed for partial upgrades from sarge.
 
@@ -49,6 +48,17 @@ initramfs-tools (0.86) UNRELEASED; urgency=low
     does not exist. Empty dirs without boot script aren't created anymore.
 
  -- maximilian attems <maks@debian.org>  Thu,  5 Apr 2007 21:16:45 +0200
+
+initramfs-tools (0.85g) unstable; urgency=high
+
+  * SECURITY scripts/functions: Set permission of created root dev in
+    parse_numeric() to 600. This bug only affects lilo boots. Thanks
+    Fabian Pietsch <fabian@canvon.dyndns.org> and Goswin von Brederlow
+    <brederlo@informatik.uni-tuebingen.de> for patch input. (closes: 417995)
+
+  * debian/control: Change Uploaders email.
+
+ -- maximilian attems <maks@debian.org>  Fri,  6 Apr 2007 09:19:13 +0200
 
 initramfs-tools (0.85f) unstable; urgency=high
 
