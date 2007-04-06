@@ -136,7 +136,7 @@ run_lilo()
 {
 	# show lilo errors on failure
 	if ! lilo -t  > /dev/null 2>&1 ; then
-		echo "update-initramfs: lilo run failed for ${initramfs}:"
+		echo "ERROR lilo fails for new ${initramfs}:"
 		echo
 		lilo -t
 	fi
@@ -146,6 +146,16 @@ run_lilo()
 # check if lilo is on mbr
 mbr_check()
 {
+	# try to discover grub and be happy
+	[ -r /boot/grub/menu.lst ] \
+		&& groot=$(awk '/^root/{print substr($2, 2, 3); exit}' \
+			/boot/grub/menu.lst)
+	[ -e /boot/grub/device.map ] && [ -n "${groot}" ] \
+		&& dev=$(awk "/${groot}/{ print \$NF}" /boot/grub/device.map)
+	[ -n "${dev}" ] && [ -r ${dev} ] \
+		&& dd if="${dev}" bs=512 skip=0 count=1 2> /dev/null \
+		| grep -q GRUB && return 0
+
 	# check out lilo.conf for validity
 	boot=$(awk -F = '/^boot=/{ print $2}' /etc/lilo.conf)
 	[ -z "${boot}" ] && return 0
@@ -162,16 +172,6 @@ mbr_check()
 	dd if="${boot}" bs=512 skip=0 count=1 2> /dev/null | grep -q LILO \
 		&& run_lilo && return 0
 
-	# try to discover grub and be happy
-	[ -r /boot/grub/menu.lst ] \
-		&& groot=$(awk '/^root/{print substr($2, 2, 3); exit}' \
-			/boot/grub/menu.lst)
-	[ -e /boot/grub/device.map ] && [ -n "${groot}" ] \
-		&& dev=$(awk "/${groot}/{ print \$NF}" /boot/grub/device.map)
-	[ -n "${dev}" ] && [ -r ${dev} ] \
-		&& dd if="${dev}" bs=512 skip=0 count=1 2> /dev/null \
-		| grep -q GRUB && return 0
-	
 	# no idea which bootloader is used
 	echo
 	echo "WARNING: grub and lilo installed."

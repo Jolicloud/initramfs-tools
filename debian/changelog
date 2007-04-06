@@ -1,3 +1,25 @@
+initramfs-tools (0.85f) unstable; urgency=high
+
+  Release "Au lieu d'aller voter Casse leur la margoulette"
+
+  * update-initramfs: Grub _doesn't_ clear LILO string in mbr, but the inverse
+    is done. Fix mbr_check() to first check for GRUB. Fixes accidental lilo
+    call in the case that Grub is the used bootloader. (closes: 409820)
+    Thanks Michael Prokop <mika@grml.org> for bringing up the case.
+
+  * initramfs.conf.5, mkinitramfs.5: Fix typos. Document version.
+    (closes: 405157, 405190, 405194)
+
+  * update-initramfs: Be more screamy about lilo error, people seem to
+    overlook recent lilo failures.
+
+  * scripts/init-top/framebuffer: Remove unused variables.
+
+  * init: Export ROOTDELAY to let udev boot script handle eventual rootdelay.
+    downgrades 401916
+
+ -- maximilian attems <maks@sternwelten.at>  Wed,  7 Mar 2007 23:34:17 +0100
+
 initramfs-tools (0.85e) unstable; urgency=high
 
   Release "Qu'ils soient rouges, bleus ou blancs Il faudrait mieux les pendre"

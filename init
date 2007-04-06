@@ -37,7 +37,7 @@ for i in conf/conf.d/*; do
 done
 . /scripts/functions
 
-# Parse command line options
+# Export relevant variables
 export break=
 export init=/sbin/init
 export quiet=n
@@ -45,8 +45,10 @@ export readonly=y
 export rootmnt=/root
 export debug=
 export cryptopts=${CRYPTOPTS}
-export panic
+export ROOTDELAY=
+export panic=
 
+# Parse command line options
 for x in $(cat /proc/cmdline); do
 	case $x in
 	init=*)

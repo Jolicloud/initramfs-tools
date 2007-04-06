@@ -1,4 +1,4 @@
-.TH INITRAMFS.CONF 5  "$Date: 2006/10/12 $" "" "initramfs.conf manual"
+.TH INITRAMFS.CONF 5  "$Date: 2007/01/01 $" "" "initramfs.conf manual"
 
 .SH NAME
 initramfs.conf \- configuration file for mkinitramfs
@@ -37,14 +37,14 @@ The default setting is \fImost\fP.
 Include busybox utilities for the boot scripts.
 If set to 'n'
 .B mkinitramfs
-will build an initramfs whithout busybox.
+will build an initramfs without busybox.
 Beware that many boot scripts need busybox utilities.
 
 .SH NFS VARIABLES
 .TP
 \fB BOOT
 Allows to use an nfs drive as the root of the drive.
-The default is to boot of an \fIlocal\fP media (harddrive, USB stick).
+The default is to boot from \fIlocal\fP media (harddrive, USB stick).
 Set to \fInfs\fP for an NFS root share.
 
 .TP
