@@ -47,11 +47,14 @@ initramfs-tools (0.86) UNRELEASED; urgency=low
   * scripts/functions: run_scripts() return immediately if passed dir
     does not exist. Empty dirs without boot script aren't created anymore.
 
+  * debian/copyright: Update my email, add Ben Collins, update years,
+    alphabetic authors sort + add new git tree location.
+
   * mkinitramfs: Set PATH with /sbin to allow non-root user usage.
     Thanks Bob Montgomery <bob.montgomery@hp.com> for the suggestion.
     (closes: 409995)
 
- -- maximilian attems <maks@debian.org>  Fri,  6 Apr 2007 22:40:56 +0200
+ -- maximilian attems <maks@debian.org>  Sun,  8 Apr 2007 00:20:20 +0200
 
 initramfs-tools (0.85g) unstable; urgency=high
 
