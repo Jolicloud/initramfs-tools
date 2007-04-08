@@ -41,6 +41,8 @@ initramfs-tools (0.86) UNRELEASED; urgency=low
     backup scripts get added, but they shouldn't lead to a panic. Also skip
     directories that might lay around.  (closes: 398347) (LP: #76131)
 
+  * initramfs-tools.8: Document valid script names.
+
   * mkinitramfs: Don't add backup scripts to initramfs. (closes: 378682)
     (LP: #78348)
 
@@ -54,7 +56,7 @@ initramfs-tools (0.86) UNRELEASED; urgency=low
     Thanks Bob Montgomery <bob.montgomery@hp.com> for the suggestion.
     (closes: 409995)
 
- -- maximilian attems <maks@debian.org>  Sun,  8 Apr 2007 00:20:20 +0200
+ -- maximilian attems <maks@debian.org>  Mon,  9 Apr 2007 00:08:11 +0200
 
 initramfs-tools (0.85g) unstable; urgency=high
 

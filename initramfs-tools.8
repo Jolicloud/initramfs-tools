@@ -1,4 +1,4 @@
-.TH INITRAMFS-TOOLS 8  "Date: 2006/10/14" "" "mkinitramfs script overview"
+.TH INITRAMFS-TOOLS 8  "Date: 2007/04/09" "" "mkinitramfs script overview"
 
 .SH NAME
 initramfs-tools \- an introduction to writing scripts for mkinitramfs
@@ -9,6 +9,9 @@ will be used during different phases of execution. Each of these will be
 discussed separately below with the help of an imaginary tool which performs a
 frobnication of a lvm partition prior to mounting the root partition.
 
+Valid boot and hook scripts names consist solely of alphabetics, numerics
+and underscores. Other scripts are discarded.
+
 .SS Hook scripts
 These are used when an initramfs image is created and not included in the
 image itself. They can however cause files to be included in the image.
@@ -17,10 +20,6 @@ image itself. They can however cause files to be included in the image.
 These are included in the initramfs image and normally executed during
 kernel boot in the early user-space before the root partition has been
 mounted.
-
-initramfs-tools uses shell variable names for handling dependencies.
-Notice that `-' is not a valid shell variable name and thus should
-not be used as script filename.
 
 .SH INIT SCRIPT
 The script which is executed first and is in charge of running all other
