@@ -108,7 +108,18 @@ reduce_satisfied()
 	deplist="$(render array_${1})"
 	unset tmpdeplist
 	for rs_y in ${deplist}; do
-		if [ ! -f ${initdir}/${rs_y} ]; then
+		# only allow variable name chars
+		case ${rs_y} in
+		*[!A-Za-z0-9_]*)
+			continue
+			;;
+		esac
+		# skip non executable scripts
+		if [ ! -x ${initdir}/${rs_y} ]; then
+			continue
+		fi
+		# skip directories
+		if [ -d ${initdir}/${rs_y} ]; then
 			continue
 		fi
 		tmpdeplist="${tmpdeplist} ${rs_y}"
