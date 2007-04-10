@@ -1,4 +1,4 @@
-initramfs-tools (0.86) UNRELEASED; urgency=low
+initramfs-tools (0.86) unstable; urgency=low
 
   * update-initramfs: Bound the mode and version variable. (closes: 403905)
 
@@ -56,7 +56,7 @@ initramfs-tools (0.86) UNRELEASED; urgency=low
     Thanks Bob Montgomery <bob.montgomery@hp.com> for the suggestion.
     (closes: 409995)
 
- -- maximilian attems <maks@debian.org>  Mon,  9 Apr 2007 00:08:11 +0200
+ -- maximilian attems <maks@debian.org>  Tue, 10 Apr 2007 21:45:36 +0200
 
 initramfs-tools (0.85g) unstable; urgency=high
 
