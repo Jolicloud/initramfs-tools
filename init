@@ -50,6 +50,7 @@ export debug=
 export cryptopts=${CRYPTOPTS}
 export ROOTDELAY=
 export panic=
+export blacklist=
 
 # Parse command line options
 for x in $(cat /proc/cmdline); do
@@ -124,6 +125,9 @@ for x in $(cat /proc/cmdline); do
 		;;
 	break)
 		break=premount
+		;;
+	blacklist=*)
+		blacklist=${x#blacklist=}
 		;;
 	esac
 done

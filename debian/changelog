@@ -4,11 +4,14 @@ initramfs-tools (0.87) UNRELEASED; urgency=low
   * scripts/functions: reduce_satisfied() needs to ignore the same set as
     set_initlist() otherwise an script having a prereqs on a non-executable
     boot script may cause circular panic. (closes: 418509)
+  * Add blacklist boot param, disabling the load of specific modules inside
+    the initramfs. Still needs to be passed via tmpfs to the rootfs.
 
   [ David Härdeman ]
   * Add support for loading keymaps. (closes: 337663)
 
- -- David Härdeman <david@hardeman.nu>  Thu, 12 Apr 2007 21:28:45 +0200
+
+ -- maximilian attems <maks@debian.org>  Fri, 13 Apr 2007 01:22:56 +0200
 
 initramfs-tools (0.86) unstable; urgency=low
 
