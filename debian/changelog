@@ -1,10 +1,14 @@
 initramfs-tools (0.87) UNRELEASED; urgency=low
 
+  [ maximilian attems ]
   * scripts/functions: reduce_satisfied() needs to ignore the same set as
     set_initlist() otherwise an script having a prereqs on a non-executable
     boot script may cause circular panic. (closes: 418509)
 
- -- maximilian attems <maks@debian.org>  Wed, 11 Apr 2007 00:07:18 +0200
+  [ David Härdeman ]
+  * Add support for loading keymaps. (closes: 337663)
+
+ -- David Härdeman <david@hardeman.nu>  Thu, 12 Apr 2007 21:28:45 +0200
 
 initramfs-tools (0.86) unstable; urgency=low
 

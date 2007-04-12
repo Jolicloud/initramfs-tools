@@ -163,6 +163,7 @@ export CONFDIR
 export DESTDIR
 export DPKG_ARCH
 export verbose
+export KEYMAP
 
 # Private, used by 'catenate_cpiogz'.
 export __TMPCPIOGZ
