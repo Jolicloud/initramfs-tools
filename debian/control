@@ -1,7 +1,7 @@
 Source: initramfs-tools
 Section: utils
 Priority: optional
-Uploaders: Jeff Bailey <jbailey@ubuntu.com>, maximilian attems <maks@debian.org>
+Uploaders: Jeff Bailey <jbailey@ubuntu.com>, maximilian attems <maks@debian.org>, David Härdeman <david@hardeman.nu>
 Maintainer: Debian kernel team <debian-kernel@lists.debian.org>
 Build-Depends: debhelper (>= 4.1.0), cdbs
 Standards-Version: 3.7.2.0
