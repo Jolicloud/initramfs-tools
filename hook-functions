@@ -185,7 +185,7 @@ auto_add_modules()
 		for x in 3w-9xxx 3w-xxxx a100u2x aacraid advansys ahci \
 		aic79xx aic7xxx aic94xx arcmsr ata_piix atari_scsi \
 		atp870u BusLogic cciss ch cpqarray DAC960 dc395x \
-		dmx3191d dpt_i2o eata fdomain gdth hptiop ibmvscsic \
+		dmx3191d dpt_i2o eata esp fdomain gdth hptiop ibmvscsic \
 		initio ipr ips isp1020 lasi700 lpfc max_scsi mac53c94 \
 		megaraid megaraid_mbox megaraid_mm megaraid_sas \
 		mesh mptfc mptscsih mptsas mptspi nsp32 \
