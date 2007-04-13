@@ -1,0 +1,38 @@
+#!/bin/sh
+
+PREREQ=""
+
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+# FIXME: Remove this hook after Etch releases
+if [ -x /sbin/mdadm ] && [ ! -f /usr/share/initramfs-tools/hooks/mdadm ]; then
+	# use mkinitrd magic for Sarge backwards compat
+	rootraiddev="$(df / | sed -rne 's,^(/dev/[^[:space:]]+).*,\1,p')"
+	echo "rootraiddev=${rootraiddev}" > ${DESTDIR}/conf/mdrun.conf
+	mdadm=$(mdadm --detail "${rootraiddev}")
+	echo "${mdadm}" | awk '
+		$1 == "Number" && $2 == "Major" { start = 1; next }
+		$1 == "UUID" { print "uuid=" $3; next }
+		!start { next }
+		$2 == 0 && $3 == 0 { next }
+		{ devices = devices " " $NF }
+		END { print "devices='\''" devices "'\''" }' \
+		>> ${DESTDIR}/conf/mdrun.conf
+	copy_exec /sbin/mdadm /sbin
+	for x in md linear multipath raid0 raid1 raid456 raid5 raid6 raid10; do
+		manual_add_modules ${x}
+	done
+fi
+[ -x /sbin/mdrun ] && copy_exec /sbin/mdrun /sbin
+exit 0

@@ -252,36 +252,6 @@ cp -a /etc/modprobe.d/* "${DESTDIR}/etc/modprobe.d"
 run_scripts /usr/share/initramfs-tools/hooks
 run_scripts "${CONFDIR}"/hooks
 
-# FIXME: Remove this Raid block after Etch releases
-if [ -x /sbin/mdadm ] && [ ! -f /usr/share/initramfs-tools/hooks/mdadm ]; then
-	# use mkinitrd magic for Sarge backwards compat
-	rootraiddev="$(df / | sed -rne 's,^(/dev/[^[:space:]]+).*,\1,p')"
-	echo "rootraiddev=${rootraiddev}" > ${DESTDIR}/conf/mdrun.conf
-	mdadm=$(mdadm --detail "${rootraiddev}")
-	echo "${mdadm}" | awk '
-		$1 == "Number" && $2 == "Major" { start = 1; next }
-		$1 == "UUID" { print "uuid=" $3; next }
-		!start { next }
-		$2 == 0 && $3 == 0 { next }
-		{ devices = devices " " $NF }
-		END { print "devices='\''" devices "'\''" }' \
-		>> ${DESTDIR}/conf/mdrun.conf
-	copy_exec /sbin/mdadm /sbin
-	for x in md linear multipath raid0 raid1 raid456 raid5 raid6 raid10; do
-		manual_add_modules ${x}
-	done
-fi
-[ -x /sbin/mdrun ] && copy_exec /sbin/mdrun /sbin
-
-# FIXME: Remove this LVM block after Lenny releases
-if [ -x /sbin/vgchange ] && [ -d /lib/lvm-200 ] \
-	&& [ ! -f /usr/share/initramfs-tools/hooks/lvm2 ]; then
-	copy_exec /lib/lvm-200/vgchange /sbin
-	for x in dm_mod dm_snapshot dm_mirror; do
-		manual_add_modules ${x}
-	done
-fi
-
 # Apply DSDT to initramfs
 if [ -e "${CONFDIR}/DSDT.aml" ]; then
 	copy_exec "${CONFDIR}/DSDT.aml" /
