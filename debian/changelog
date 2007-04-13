@@ -1,9 +1,9 @@
-initramfs-tools (0.85h) UNRELEASED; urgency=low
+initramfs-tools (0.85h) stable; urgency=low
 
   * hook-functions: Add missing esp module to scsi modules list.
     Thanks Vincent Bernat <bernat@luffy.cx> for patch. (closes: 418977)
 
- -- maximilian attems <maks@debian.org>  Fri, 13 Apr 2007 13:18:00 +0200
+ -- maximilian attems <maks@debian.org>  Fri, 13 Apr 2007 17:22:50 +0200
 
 initramfs-tools (0.85g) unstable; urgency=high
 
