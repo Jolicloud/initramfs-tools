@@ -146,6 +146,12 @@ dep_add_modules()
 	if [ -e /sys/bus/i2o/devices/ ]; then
 		manual_add_modules i2o_block
 	fi
+
+	if [ -e /sys/bus/ps3_system_bus/ ]; then
+		for x in ps3_storage gelic_net ohci-hcd ehci-hcd; do
+			manual_add_modules "${x}"
+		done
+	fi
 }
 
 
@@ -167,7 +173,7 @@ auto_add_modules()
 		r8169 s2io sis900 skge slhc smc911x starfire \
 		sundance sungem sungem_phy sunhme tg3 tlan de2104x \
 		de4x5 dmfe tulip winbond-840 xircom_cb xircom_tulip_cb \
-		typhon via-rhine via-velocity yellowfin; do
+		typhon via-rhine via-velocity yellowfin gelic_net; do
 			manual_add_modules "${x}"
 		done
 	;;

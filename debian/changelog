@@ -11,6 +11,7 @@ initramfs-tools (0.87) UNRELEASED; urgency=low
   * Add support for loading keymaps. (closes: 337663)
   * Ubuntu merge
     - Use -Qb for for module loading to honor blacklists.
+    - Add PS3 module loading functionality.
 
  -- David Härdeman <david@hardeman.nu>  Fri, 13 Apr 2007 20:08:26 +0200
 
