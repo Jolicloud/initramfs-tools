@@ -273,7 +273,7 @@ if [ -x /sbin/mdadm ] && [ ! -f /usr/share/initramfs-tools/hooks/mdadm ]; then
 fi
 [ -x /sbin/mdrun ] && copy_exec /sbin/mdrun /sbin
 
-# FIXME: Remove this LVM block after Etch releases
+# FIXME: Remove this LVM block after Lenny releases
 if [ -x /sbin/vgchange ] && [ -d /lib/lvm-200 ] \
 	&& [ ! -f /usr/share/initramfs-tools/hooks/lvm2 ]; then
 	copy_exec /lib/lvm-200/vgchange /sbin
