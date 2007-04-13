@@ -31,7 +31,7 @@ powerpc|ppc64)
 	modprobe windfarm_smu_sensors
 	;;
 i386|amd64|ia64)
-	modprobe fan
-	modprobe thermal
+	modprobe -Qb fan
+	modprobe -Qb thermal
 	;;
 esac
