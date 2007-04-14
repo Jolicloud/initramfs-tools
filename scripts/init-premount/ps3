@@ -17,12 +17,15 @@ esac
 
 case "$DPKG_ARCH" in
 powerpc|ppc64)
-	# For PS3's we know these devices will exist, and we'll need them
-	if grep -q PS3 /proc/cpuinfo; then
-		modprobe ps3_storage
-		modprobe gelic_net
-		modprobe ohci-hcd
-		modprobe ehci-hcd
-	fi
+	while read line; do
+		if [ "${line}" =! "${line#machine*PS3PF}" ]; then 
+			# For PS3's we know these devices will exist,
+			# and that we'll need them
+			modprobe ps3_storage
+			modprobe gelic_net
+			modprobe ohci-hcd
+			modprobe ehci-hcd
+		fi
+	done < /proc/cpuinfo
 	;;
 esac
