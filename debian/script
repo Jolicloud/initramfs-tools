@@ -1,6 +1,6 @@
 #!/bin/sh
 
-exec >&3
+#exec >&3
 
 echo "-- /proc/cmdline"
 cat /proc/cmdline
@@ -17,5 +17,11 @@ echo
 if [ -r /etc/kernel-img.conf ]; then
 	echo "-- /etc/kernel-img.conf"
 	cat /etc/kernel-img.conf
+	echo
+fi
+
+if [ -r /etc/initramfs-tools/initramfs.conf ]; then
+	echo "-- /etc/initramfs-tools/initramfs.conf"
+	sed 's/#.*$//;/^[[:space:]]*$/d' /etc/initramfs-tools/initramfs.conf
 	echo
 fi
