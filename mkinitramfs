@@ -84,7 +84,8 @@ fi
 . "${CONFDIR}/initramfs.conf"
 EXTRA_CONF=''
 for i in /usr/share/initramfs-tools/conf.d/* ${CONFDIR}/conf.d/*; do
-	EXTRA_CONF="${EXTRA_CONF} $(basename $i | grep '^[a-z0-9][a-z0-9\._-]*$' | grep -v '\.dpkg-.*$')";
+	EXTRA_CONF="${EXTRA_CONF} $(basename $i \
+		| grep '^[[:alnum:]][[:alnum:]\._-]*$' | grep -v '\.dpkg-.*$')";
 done
 for i in ${EXTRA_CONF}; do
 	if [ -e  ${CONFDIR}/conf.d/${i} ]; then
@@ -204,13 +205,14 @@ copy_exec /usr/share/initramfs-tools/init /init
 
 # add existant boot scripts
 for b in $(cd /usr/share/initramfs-tools/scripts/ && find . \
-	-regex '.*/[a-z0-9_]+$' -type f); do
+	-regextype posix-extended -regex '.*/[[:alnum:]_]+$' -type f); do
 	[ -d "${DESTDIR}/scripts/$(dirname "${b}")" ] \
 		|| mkdir -p "${DESTDIR}/scripts/$(dirname "${b}")"
 	cp -p "/usr/share/initramfs-tools/scripts/${b}" \
 		"${DESTDIR}/scripts/$(dirname "${b}")"
 done
-for b in $(cd "${CONFDIR}/scripts" && find . -regex '.*/[a-z0-9_]+$' -type f); do
+for b in $(cd "${CONFDIR}/scripts" && find . \
+	-regextype posix-extended -regex '.*/[[:alnum:]_]+$' -type f); do
 	[ -d "${DESTDIR}/scripts/$(dirname "${b}")" ] \
 		|| mkdir -p "${DESTDIR}/scripts/$(dirname "${b}")"
 	cp -p "${CONFDIR}/scripts/${b}" "${DESTDIR}/scripts/$(dirname "${b}")"

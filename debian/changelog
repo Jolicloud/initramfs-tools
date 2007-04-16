@@ -1,4 +1,4 @@
-initramfs-tools (0.87) UNRELEASED; urgency=low
+initramfs-tools (0.87) unstable; urgency=low
 
   [ maximilian attems ]
   * scripts/functions: reduce_satisfied() needs to ignore the same set as
@@ -6,6 +6,9 @@ initramfs-tools (0.87) UNRELEASED; urgency=low
     boot script may cause circular panic. (closes: 418509)
   * Add blacklist boot param, disabling the load of specific modules inside
     the initramfs. Still needs to be passed via tmpfs to the rootfs.
+  * mkinitramfs, scripts/functions: Fix regexes to always use posix character
+    classes. Based on a patch by Meelis Roos <mroos@linux.ee>.
+    (closes: 419062)
 
   [ David Härdeman ]
   * Add support for loading keymaps. (closes: 337663)
@@ -16,7 +19,7 @@ initramfs-tools (0.87) UNRELEASED; urgency=low
   * Bump standards version, no changes necessary.
   * debian/scripts: Print settings from initramfs.conf in reportbug script.
 
- -- maximilian attems <maks@debian.org>  Mon, 16 Apr 2007 19:54:04 +0200
+ -- maximilian attems <maks@debian.org>  Mon, 16 Apr 2007 20:21:30 +0200
 
 initramfs-tools (0.86) unstable; urgency=low
 
