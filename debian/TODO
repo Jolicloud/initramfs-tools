@@ -10,5 +10,3 @@ TODO
  o Default to dep for PPC - Possibly to detect newworld?
 
  o udevsettle timeouts handling
-
- o lvm2 hooks to their respective packages
