@@ -1,3 +1,10 @@
+initramfs-tools (0.88) UNRELEASED; urgency=low
+
+  * scripts/init-top/framebuffer: Remove vga16fb loading on splash bootarg.
+    Newer usplash > 0.4 no longer needs that.
+
+ -- maximilian attems <maks@debian.org>  Mon, 16 Apr 2007 22:05:18 +0200
+
 initramfs-tools (0.87) unstable; urgency=low
 
   [ maximilian attems ]

@@ -61,10 +61,6 @@ OPTS=""
 
 for x in $(cat /proc/cmdline); do
 	case ${x} in
-	splash*)
-		FB="vga16fb";
-		OPTS="";
-		;;
 	vga=*)
 		FB="vesafb";
 		OPTS="";
