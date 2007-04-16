@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#exec >&3
+exec >&3
 
 echo "-- /proc/cmdline"
 cat /proc/cmdline
