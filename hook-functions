@@ -168,12 +168,12 @@ auto_add_modules()
 	net)
 		for x in 3c59x 8139cp 8139too 8390 b44 bmac bnx2 defxx \
 		dl2k e1000 e100 ehea epic100 ep93xx_eth eql fealnx \
-		famachi forcedeth  hp100 mace mv643xx_eth myri10ge \
+		famachi forcedeth gelic_net hp100 mace mv643xx_eth myri10ge \
 		natsemi ne2k-pci netconsole ns83820 pcnet32 qla3xxx \
 		r8169 s2io sis900 skge slhc smc911x starfire \
 		sundance sungem sungem_phy sunhme tg3 tlan de2104x \
 		de4x5 dmfe tulip winbond-840 xircom_cb xircom_tulip_cb \
-		typhon via-rhine via-velocity yellowfin gelic_net; do
+		typhon via-rhine via-velocity yellowfin; do
 			manual_add_modules "${x}"
 		done
 	;;

@@ -11,9 +11,12 @@ initramfs-tools (0.87) UNRELEASED; urgency=low
   * Add support for loading keymaps. (closes: 337663)
   * Move legacy code from mkinitramfs to separate hooks.
   * Ubuntu merge
-    - Add PS3 module loading functionality.
+    - Add PS3 module loading functionality without grep usage.
+  * debian/copyright: Update authors info.
+  * Bump standards version, no changes necessary.
+  * debian/scripts: Print settings from initramfs.conf in reportbug script.
 
- -- David Härdeman <david@hardeman.nu>  Sat, 14 Apr 2007 10:53:56 +0200
+ -- maximilian attems <maks@debian.org>  Mon, 16 Apr 2007 19:54:04 +0200
 
 initramfs-tools (0.86) unstable; urgency=low
 
