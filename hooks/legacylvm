@@ -16,6 +16,8 @@ prereqs)
 esac
 
 # FIXME: Remove this hook after Lenny releases
+. /usr/share/initramfs-tools/hook-functions
+
 if [ -x /sbin/vgchange ] && [ -d /lib/lvm-200 ] \
 	&& [ ! -f /usr/share/initramfs-tools/hooks/lvm2 ]; then
 	copy_exec /lib/lvm-200/vgchange /sbin

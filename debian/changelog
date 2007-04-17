@@ -1,9 +1,13 @@
-initramfs-tools (0.88) UNRELEASED; urgency=low
+initramfs-tools (0.87b) unstable; urgency=low
 
   * scripts/init-top/framebuffer: Remove vga16fb loading on splash bootarg.
     Newer usplash > 0.4 no longer needs that.
 
- -- maximilian attems <maks@debian.org>  Mon, 16 Apr 2007 22:05:18 +0200
+  * hooks/legacymdadm: remove only needed for partial upgrades from sarge.
+
+  *  hooks/legacylvm: Source relevant functions. (closes: 419667)
+
+ -- maximilian attems <maks@debian.org>  Tue, 17 Apr 2007 11:56:58 +0200
 
 initramfs-tools (0.87) unstable; urgency=low
 
