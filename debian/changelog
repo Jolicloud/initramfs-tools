@@ -1,3 +1,9 @@
+initramfs-tools (0.88) UNRELEASED; urgency=low
+
+  * Fix missing colons in closes.
+
+ -- maximilian attems <maks@debian.org>  Sun, 22 Apr 2007 19:08:40 +0200
+
 initramfs-tools (0.87b) unstable; urgency=low
 
   * scripts/init-top/framebuffer: Remove vga16fb loading on splash bootarg.
@@ -1160,7 +1166,7 @@ initramfs-tools (0.54) unstable; urgency=low
   * hook-functions: Add dasd class to auto_add_modules and dd zfcp module.
     Thanks to s390 support Bastian Blank <waldi@debian.org>. (closes: #355595)
 
-  * hook-functions: Add it821x. (closes #352460)
+  * hook-functions: Add it821x. (closes: #352460)
 
  -- maximilian attems <maks@sternwelten.at>  Wed,  8 Mar 2006 17:34:25 +0100
 
