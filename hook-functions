@@ -113,24 +113,34 @@ copy_modules_dir()
 	done
 }
 
+# only copy relevant modules
 dep_add_modules()
 {
+	# findout root block device + fstype
+	eval "$(mount | awk '/ \/ / {print "root=" $1 "\nrootfs=" $5; exit}')"
+	block=${root#/dev/}
+	block=${block%[0-9]*}
 
-	# Things that are too hard to autodetect.
-	for x in ext2 ext3 isofs jfs nfs reiserfs xfs af_packet; do
-		manual_add_modules "${x}"
-	done
+	# Error out if /sys lack block dev
+	if [ -z "${block}" ] || [ ! -e /sys/block/${block} ]; then
+		echo "Error: missing ${block} root ${root} /sys entry"
+		exit 1
+	fi
 
-	for x in /sys/bus/pci/devices/*; do
-		if [ -e "${x}/modalias" ]; then
-			manual_add_modules $(cat "${x}/modalias")
+	# Add rootfs
+	force_load "${rootfs}"
+
+	# walk /sys for relevant modules
+	device_path=$(readlink -f /sys/block/${block}/device)
+	while [ "${device_path}" != "/sys" ]; do
+		driver_path="$(readlink -f ${device_path}/driver)"
+		if [ -e "$driver_path" ]; then
+			module="$(basename $(readlink -f $driver_path))"
+			if [ -n "${module}" ]; then
+				force_load "${module}"
+			fi
 		fi
-	done
-
-	for x in /sys/bus/usb/devices/*; do
-		if [ -e "${x}/modalias" ]; then
-			manual_add_modules $(cat "${x}/modalias")
-		fi
+		device_path="$(dirname ${device_path})"
 	done
 
 	if [ -e /proc/ide ]; then

@@ -5,8 +5,6 @@ TODO
 
  o Eliminate ?udev?, ?klibc?, busybox (-> glibc).
 
- o Better heuristics for MODULES=dep option
-
  o Default to dep for PPC - Possibly to detect newworld?
 
  o udevsettle timeouts handling
