@@ -6,6 +6,7 @@ initramfs-tools (0.88) UNRELEASED; urgency=low
     initramfs on MODULES=dep. (closes: #395526)
   * mkinitramfs.8: Add examples section, plus improve description of the
     low-level tool and how it fits with update-initramfs.
+  * init: Ignore non-numerical panic and rootdelay bootarg.
 
   [ David Härdeman ]
   * init: Remove cryptopts parsing, not official bootparam. cryptsetup scripts
@@ -14,7 +15,7 @@ initramfs-tools (0.88) UNRELEASED; urgency=low
     destination path if only one argument is given.
   * hook-funcions: document how copy_exec determines the target path.
 
- -- maximilian attems <maks@debian.org>  Tue, 01 May 2007 19:23:10 +0200
+ -- maximilian attems <maks@debian.org>  Tue, 01 May 2007 19:31:41 +0200
 
 initramfs-tools (0.87b) unstable; urgency=low
 

@@ -79,6 +79,11 @@ for x in $(cat /proc/cmdline); do
 		;;
 	rootdelay=*)
 		ROOTDELAY="${x#rootdelay=}"
+		case ${ROOTDELAY} in
+		*[![:digit:].]*)
+			ROOTDELAY=
+			;;
+		esac
 		;;
 	nfsroot=*)
 		NFSROOT="${x#nfsroot=}"
@@ -97,6 +102,11 @@ for x in $(cat /proc/cmdline); do
 		;;
 	panic=*)
 		panic="${x#panic=}"
+		case ${panic} in
+		*[![:digit:].]*)
+			panic=
+			;;
+		esac
 		;;
 	quiet)
 		quiet=y
