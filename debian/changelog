@@ -2,18 +2,19 @@ initramfs-tools (0.88) UNRELEASED; urgency=low
 
   [ maximilian attems ]
   * debian/changelog: Fix missing colons in closes.
-
   * hook-functions: Add a proper /sys walking dep_add_modules() for a minimal
     initramfs on MODULES=dep. (closes: #395526)
-
   * mkinitramfs.8: Add examples section, plus improve description of the
     low-level tool and how it fits with update-initramfs.
 
   [ David Härdeman ]
   * init: Remove cryptopts parsing, not official bootparam. cryptsetup scripts
     parse /proc/cmdline themselves (even in the Etch version).
+  * hook-functions: Change copy_exec to use the same source and
+    destination path if only one argument is given.
+  * hook-funcions: document how copy_exec determines the target path.
 
- -- maximilian attems <maks@debian.org>  Tue, 01 May 2007 18:56:40 +0200
+ -- maximilian attems <maks@debian.org>  Tue, 01 May 2007 19:23:10 +0200
 
 initramfs-tools (0.87b) unstable; urgency=low
 
