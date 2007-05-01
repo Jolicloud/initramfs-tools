@@ -47,7 +47,6 @@ export quiet=n
 export readonly=y
 export rootmnt=/root
 export debug=
-export cryptopts=${CRYPTOPTS}
 export ROOTDELAY=
 export panic=
 export blacklist=
@@ -80,9 +79,6 @@ for x in $(cat /proc/cmdline); do
 		;;
 	rootdelay=*)
 		ROOTDELAY="${x#rootdelay=}"
-		;;
-	cryptopts=*)
-		cryptopts="${x#cryptopts=}"
 		;;
 	nfsroot=*)
 		NFSROOT="${x#nfsroot=}"

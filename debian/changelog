@@ -1,5 +1,6 @@
 initramfs-tools (0.88) UNRELEASED; urgency=low
 
+  [ maximilian attems ]
   * debian/changelog: Fix missing colons in closes.
 
   * hook-functions: Add a proper /sys walking dep_add_modules() for a minimal
@@ -8,7 +9,11 @@ initramfs-tools (0.88) UNRELEASED; urgency=low
   * mkinitramfs.8: Add examples section, plus improve description of the
     low-level tool and how it fits with update-initramfs.
 
- -- maximilian attems <maks@debian.org>  Tue, 01 May 2007 18:48:03 +0200
+  [ David Härdeman ]
+  * init: Remove cryptopts parsing, not official bootparam. cryptsetup scripts
+    parse /proc/cmdline themselves (even in the Etch version).
+
+ -- maximilian attems <maks@debian.org>  Tue, 01 May 2007 18:56:40 +0200
 
 initramfs-tools (0.87b) unstable; urgency=low
 
