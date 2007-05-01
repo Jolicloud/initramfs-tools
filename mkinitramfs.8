@@ -1,7 +1,7 @@
-.TH MKINITRAMFS 8  "$Date: 2007/01/02 $" "" "mkinitramfs manual"
+.TH MKINITRAMFS 8  "$Date: 2007/05/01 $" "" "mkinitramfs manual"
 
 .SH NAME
-mkinitramfs \- generate an initramfs image
+mkinitramfs \- low-level tool for generating an initramfs image
 
 .SH SYNOPSIS
 .B mkinitramfs
@@ -31,7 +31,12 @@ different box of the same arch with the corresponding Linux kernel.
 .B mkinitramfs
 is meant for advanced usage. On your local box
 .B update-initramfs
-should do all necessary steps.
+calls
+.B mkinitramfs
+with the relevant parameters.
+.B update-initramfs
+keeps sha1sum of generated initramfs. It takes care to generate backups
+and eventually runs the bootloader.
 
 At boot time, the kernel unpacks that archive into RAM disk, mounts and
 uses it as initial root file system. All finding of the root device
@@ -98,6 +103,21 @@ This is especially useful for bootloaders, which do not pass an root bootarg.
 If this file exists, it will be appended to the initramfs in a way that causes
 it to be loaded by ACPI.
 
+.SH EXAMPLES
+
+Create an initramfs for current running kernel:
+
+.PP
+.B mkinitramfs -o ~/tmp/initramfs-$(uname -r)
+
+Create an initramfs for specific kernel and keep builddirs:
+
+.PP
+.B mkinitramfs -k -o ~/tmp/initramfs-2.6.21-686 2.6.21-686
+
+Debug initramfs creation (check out written logfile)
+.PP
+.B sh -x mkinitramfs -o ~/tmp/initramfs-$(uname -r) 2> ~/tmp/log
 
 .SH AUTHOR
 The initramfs-tools are written by Maximilian Attems <maks@debian.org>,
