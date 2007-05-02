@@ -6,6 +6,8 @@ supported_host_version=""
 supported_target_version=""
 outfile=""
 
+# FIXME: drop script after Lenny (needed for Etch linux-images)
+
 usage()
 {
 	cat >&2 << EOF

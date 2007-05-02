@@ -63,6 +63,7 @@ while true; do
 	esac
 done
 
+# FIXME: remove after Lenny (needed for Etch linux-images)
 if [ -n "$supported_host_version" ] || [ -n "$supported_target_version" ]; then
 	if [ -n "$supported_host_version" ]; then
 		host_upstream_version="${supported_host_version%%-*}"
