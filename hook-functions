@@ -38,8 +38,11 @@ add_modules_from_file()
 	done
 }
 
+# Add dependent modules + eventual firmware
 manual_add_modules()
 {
+	local man_x firmwares firmware
+
 	for mam_x in $(modprobe --set-version="${version}" --ignore-install \
 	--show-depends "${1}" 2>/dev/null | awk '/^insmod/ { print $2 }'); do
 		# Prune duplicates
@@ -49,9 +52,42 @@ manual_add_modules()
 
 		mkdir -p "${DESTDIR}/$(dirname "${mam_x}")"
 		ln -s "${mam_x}" "${DESTDIR}/$(dirname "${mam_x}")"
-		if [ -n "${verbose}" ] && [ "${verbose}" = "y" ]; then
+		if [ "${verbose}" = "y" ]; then
 			echo "Adding module ${mam_x}"
 		fi
+
+		# Add firmware files if necessary
+		firmwares=$(modinfo -F firmware "${mam_x}")
+		if [ -z "${firmwares}" ]; then
+			continue
+		fi
+		for firmware in $firmwares; do
+			if [ -e "${DESTDIR}/lib/firmware/${firmware}" ]; then
+				continue
+			fi
+
+			# Only print warning for missing fw of loaded module
+			# or forced loaded module
+			if [ ! -e "/lib/firmware/${firmware}" ]; then
+				if grep -q "^$(basename "${mam_x}" .ko)" \
+				/proc/modules \
+				|| grep -q "^$(basename "${mam_x}" .ko)" \
+				"${CONFDIR}/modules"; then
+					echo "W: Possible missing firmware /lib/firmware/${firmware} for module $(basename ${mam_x} .ko)" >&2
+				fi
+				continue
+			fi
+
+			if [ ! -e "${DESTDIR}/lib/udev/firmware.agent" ] \
+			&& [ -e "/lib/udev/firmware.agent" ]; then
+				copy_exec /lib/udev/firmware.agent
+			fi
+
+			copy_exec "/lib/firmware/${firmware}"
+			if [ "${verbose}" = "y" ]; then
+				echo "Adding firmware ${firmware}"
+			fi
+		done
 	done
 }
 
