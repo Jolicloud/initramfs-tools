@@ -16,8 +16,14 @@ initramfs-tools (0.88) UNRELEASED; urgency=low
   * hook-functions: Document how copy_exec determines the target path.
   * hook-functions: Add firmware loading support to manual_add_modules().
     (closes: #355881)
+  * scripts/local: Ubuntu merge
+    - As well as waiting for the existance of the root device node, also check
+      to see whether we have a filesystem of some kind on it.  Some devices
+      nodes (devmapper/LVM/EVMS, mdadm) will exist before they can be safely
+      used. Patch by Scott James Remnant <scott@ubuntu.com>. Changed to
+      support both fstype and vol_id.
 
- -- maximilian attems <maks@debian.org>  Thu, 03 May 2007 18:43:14 +0200
+ -- maximilian attems <maks@debian.org>  Sun, 27 May 2007 00:26:17 +0200
 
 initramfs-tools (0.87b) unstable; urgency=low
 
