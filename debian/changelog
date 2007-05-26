@@ -7,6 +7,7 @@ initramfs-tools (0.88) UNRELEASED; urgency=low
   * mkinitramfs.8: Add examples section, plus improve description of the
     low-level tool and how it fits with update-initramfs.
   * init: Ignore non-numerical panic and rootdelay bootarg.
+  * scripts/init-premount/ps3: Fix typo. (closes: #423469)
 
   [ David Härdeman ]
   * init: Remove cryptopts parsing, not official bootparam. cryptsetup scripts
@@ -23,7 +24,7 @@ initramfs-tools (0.88) UNRELEASED; urgency=low
       used. Patch by Scott James Remnant <scott@ubuntu.com>. Changed to
       support both fstype and vol_id.
 
- -- maximilian attems <maks@debian.org>  Sun, 27 May 2007 00:26:17 +0200
+ -- maximilian attems <maks@debian.org>  Sun, 27 May 2007 00:31:13 +0200
 
 initramfs-tools (0.87b) unstable; urgency=low
 

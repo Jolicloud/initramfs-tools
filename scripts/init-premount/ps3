@@ -18,7 +18,7 @@ esac
 case "$DPKG_ARCH" in
 powerpc|ppc64)
 	while read line; do
-		if [ "${line}" =! "${line#machine*PS3PF}" ]; then 
+		if [ "${line}" != "${line#machine*PS3PF}" ]; then 
 			# For PS3's we know these devices will exist,
 			# and that we'll need them
 			modprobe ps3_storage
