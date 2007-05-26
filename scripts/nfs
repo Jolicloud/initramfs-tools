@@ -41,7 +41,13 @@ do_nfsmount()
 
 	# get nfs root from dhcp
 	if [ "x${NFSROOT}" = "xauto" ]; then
-		NFSROOT=${ROOTSERVER}:${ROOTPATH}
+		# check if server ip is part of dhcp root-path
+		if [ "${ROOTPATH#*:}" = "${ROOTPATH}" ]; then
+			NFSROOT=${ROOTSERVER}:${ROOTPATH}
+		else
+			NFSROOT=${ROOTPATH}
+		fi
+
 	# nfsroot=[<server-ip>:]<root-dir>[,<nfs-options>]
 	elif [ -n "${NFSROOT}" ]; then
 		# nfs options are an optional arg
