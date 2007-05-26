@@ -340,9 +340,13 @@ check_minkver()
 	fi
 	set_initlist
 	for cm_x in ${initlist}; do
-		tmp=$(eval echo $(grep ^MINKVER ${initdir}/${cm_x} | cut -d'=' -f2))
-		if dpkg --compare-versions "${curversion}" lt "${tmp}"; then
-			echo "W: ${cm_x} hook script requires at least kernel version ${tmp}" >&2
+		# sed: keep last line starting with MINKVER=,
+		#      remove MINKVER= and trailing space
+		minver=$(sed '/^MINKVER=/!d;$!d;s/^MINKVER=//;s/[[:space:]]*$//' "${initdir}/${cm_x}")
+		if [ -z "${tmp}" ]; then
+			continue
+		elif dpkg --compare-versions "${curversion}" lt "${minver}"; then
+			echo "W: ${cm_x} hook script requires at least kernel version ${minver}" >&2
 			echo "W: not generating requested initramfs for kernel ${curversion}" >&2
 			exit 2
 		fi
