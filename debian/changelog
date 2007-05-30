@@ -1,3 +1,9 @@
+initramfs-tools (0.89) unstable; urgency=low
+
+  * initramfs.conf.5: Document ROOT hardcoding.
+
+ -- maximilian attems <maks@debian.org>  Wed, 30 May 2007 13:25:36 +0200
+
 initramfs-tools (0.88) unstable; urgency=low
 
   [ maximilian attems ]
