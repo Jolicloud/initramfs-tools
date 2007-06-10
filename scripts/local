@@ -12,7 +12,7 @@ get_fstype ()
 	if [ -x /lib/udev/vol_id ]; then
 		FSTYPE=$(/lib/udev/vol_id -t "${FS}" 2> /dev/null)
 	else
-		eval $(fstype < "${FS}" 2> /dev/null)
+		eval $(fstype "${FS}" 2> /dev/null)
 	fi
 	RET=$?
 
