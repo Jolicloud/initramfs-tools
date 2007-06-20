@@ -181,18 +181,27 @@ for x in "${CONFDIR}/modules" /usr/share/initramfs-tools/modules.d/*; do
 	fi
 done
 
-if [ "${MODULES}" = "dep" ]; then
+# MODULES=most is default
+case "${MODULES}" in
+dep)
 	dep_add_modules
-fi
-
-if [ "${MODULES}" = "most" ]; then
+	;;
+most)
 	auto_add_modules
-fi
-
-if [ "${MODULES}" = "netboot" ]; then
+	;;
+netboot)
 	auto_add_modules base
 	auto_add_modules net
-fi
+	;;
+list)
+	# nothing to add
+	;;
+*)
+	echo "mkinitramfs: Warning unsupported MODULES setting: ${MODULES}."
+	echo "mkinitramfs: Falling back to MODULES=most."
+	auto_add_modules
+	;;
+esac
 
 # Have to do each file, because cpio --dereference doesn't recurse down
 # symlinks.

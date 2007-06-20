@@ -8,9 +8,12 @@ initramfs-tools (0.89) unstable; urgency=low
     Thanks "A. Costa" <agcosta@gis.net> for the patch.
 
   * scripts/local: Try to warn for renamed root dev. (closes: #374611)
-    
 
- -- maximilian attems <maks@debian.org>  Wed, 20 Jun 2007 20:56:14 +0200
+  * minitramfs: Fall back to bootable default MODULES=most if unsupported
+    MODULES setting is passed. Thanks Henning Sprang <henning_sprang@gmx.de>
+    for report. (closes: #429144)
+
+ -- maximilian attems <maks@debian.org>  Wed, 20 Jun 2007 21:06:43 +0200
 
 initramfs-tools (0.88) unstable; urgency=low
 
