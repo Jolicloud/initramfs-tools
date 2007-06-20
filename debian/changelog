@@ -4,7 +4,10 @@ initramfs-tools (0.89) unstable; urgency=low
 
   * scripts/local: Use simpler fstype invocation.
 
- -- maximilian attems <maks@debian.org>  Mon, 11 Jun 2007 00:40:29 +0200
+  * initramfs-tools.8, initramfs.conf.5: Fix typos. (closes: #427837, #427838)
+    Thanks "A. Costa" <agcosta@gis.net> for the patch.
+
+ -- maximilian attems <maks@debian.org>  Wed, 20 Jun 2007 20:01:20 +0200
 
 initramfs-tools (0.88) unstable; urgency=low
 
