@@ -66,6 +66,25 @@ mountroot ()
 
 	# We've given up, but we'll let the user fix matters if they can
 	while [ ! -e "${ROOT}" ]; do
+		# give hint about renamed root
+		case "${ROOT}" in 
+		/dev/hd*)
+			suffix="${ROOT#/dev/hd}"
+			major="${suffix%[[:digit:]]}"
+			major="${major%[[:digit:]]}"
+			if [ -d "/sys/block/sd${major}" ]; then
+				echo "WARNING bootdevice may be renamed. Try root=/dev/sd${suffix}"
+			fi
+			;;
+		/dev/sd*)
+			suffix="${ROOT#/dev/sd}"
+			major="${suffix%[[:digit:]]}"
+			major="${major%[[:digit:]]}"
+			if [ -d "/sys/block/hd${major}" ]; then
+				echo "WARNING bootdevice may be renamed. Try root=/dev/hd${suffix}"
+			fi
+			;;
+		esac
 		echo "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
 		echo "	Check your root= boot argument (cat /proc/cmdline)"
 		panic "	Check for missing modules (cat /proc/modules), or device files (ls /dev)"

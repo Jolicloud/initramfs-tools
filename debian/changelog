@@ -7,7 +7,10 @@ initramfs-tools (0.89) unstable; urgency=low
   * initramfs-tools.8, initramfs.conf.5: Fix typos. (closes: #427837, #427838)
     Thanks "A. Costa" <agcosta@gis.net> for the patch.
 
- -- maximilian attems <maks@debian.org>  Wed, 20 Jun 2007 20:01:20 +0200
+  * scripts/local: Try to warn for renamed root dev. (closes: #374611)
+    
+
+ -- maximilian attems <maks@debian.org>  Wed, 20 Jun 2007 20:56:14 +0200
 
 initramfs-tools (0.88) unstable; urgency=low
 
