@@ -9,13 +9,14 @@ initramfs-tools (0.89) unstable; urgency=low
   * minitramfs: Fall back to bootable default MODULES=most if unsupported
     MODULES setting is passed. Thanks Henning Sprang <henning_sprang@gmx.de>
     for report. (closes: #429144)
+  * hook-functions: Fix variable typo. Thanks Emanuele Rocca <ema@debian.org>.
 
   [ Joey Hess ]
   * mkinitramfs: Include libgcc_s.so.1 on arm since glibc always tries to load
     it for the SJLJ exception handling on that architecture. (closes: #426395)
     Thanks to Aurelien Jarno for ack and review.
 
- -- maximilian attems <maks@debian.org>  Thu, 21 Jun 2007 11:49:23 +0200
+ -- maximilian attems <maks@debian.org>  Thu, 21 Jun 2007 11:57:20 +0200
 
 initramfs-tools (0.88) unstable; urgency=low
 

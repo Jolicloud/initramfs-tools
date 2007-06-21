@@ -41,7 +41,7 @@ add_modules_from_file()
 # Add dependent modules + eventual firmware
 manual_add_modules()
 {
-	local man_x firmwares firmware
+	local mam_x firmwares firmware
 
 	for mam_x in $(modprobe --set-version="${version}" --ignore-install \
 	--show-depends "${1}" 2>/dev/null | awk '/^insmod/ { print $2 }'); do
