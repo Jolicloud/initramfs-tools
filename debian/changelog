@@ -1,19 +1,21 @@
 initramfs-tools (0.89) unstable; urgency=low
 
+  [ maximilian attems ]
   * initramfs.conf.5: Document ROOT hardcoding.
-
   * scripts/local: Use simpler fstype invocation.
-
   * initramfs-tools.8, initramfs.conf.5: Fix typos. (closes: #427837, #427838)
     Thanks "A. Costa" <agcosta@gis.net> for the patch.
-
   * scripts/local: Try to warn for renamed root dev. (closes: #374611)
-
   * minitramfs: Fall back to bootable default MODULES=most if unsupported
     MODULES setting is passed. Thanks Henning Sprang <henning_sprang@gmx.de>
     for report. (closes: #429144)
 
- -- maximilian attems <maks@debian.org>  Wed, 20 Jun 2007 21:06:43 +0200
+  [ Joey Hess ]
+  * mkinitramfs: Include libgcc_s.so.1 on arm since glibc always tries to load
+    it for the SJLJ exception handling on that architecture. (closes: #426395)
+    Thanks to Aurelien Jarno for ack and review.
+
+ -- maximilian attems <maks@debian.org>  Thu, 21 Jun 2007 11:49:23 +0200
 
 initramfs-tools (0.88) unstable; urgency=low
 
