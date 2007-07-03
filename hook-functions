@@ -147,7 +147,7 @@ copy_exec() {
 
 		# Try to use non-optimised libraries where possible.
 		# We assume that all HWCAP libraries will be in tls.
-		nonoptlib=$(echo "${x}" | sed -e 's#/lib/tls.*/\(lib.*\)#/lib/\1#')
+		nonoptlib=$(echo "${x}" | sed -e 's#/lib/\(tls\|i686\).*/\(lib.*\)#/lib/\2#')
 
 		if [ -e "${nonoptlib}" ]; then
 			x="${nonoptlib}"

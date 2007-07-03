@@ -1,3 +1,10 @@
+initramfs-tools (0.90) UNRELEASED; urgency=low
+
+  * hook-functions: Fix xen i386 boots with optimized 2.5. (closes: 420754)
+    Thanks Marco Nenciarini <mnencia@debian.org> for patch.
+
+ -- maximilian attems <maks@debian.org>  Wed, 04 Jul 2007 00:45:20 +0200
+
 initramfs-tools (0.89) unstable; urgency=low
   
   Release "L'électeur c'est notoire N'a pas tout' sa raison"
