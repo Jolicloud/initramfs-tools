@@ -10,9 +10,9 @@ get_fstype ()
 
 	# vol_id has a more complete list of file systems
 	if [ -x /lib/udev/vol_id ]; then
-		FSTYPE=$(/lib/udev/vol_id -t "${FS}" 2> /dev/null)
-	else
 		eval $(fstype "${FS}" 2> /dev/null)
+	else
+		FSTYPE=$(/lib/udev/vol_id -t "${FS}" 2> /dev/null)
 	fi
 	RET=$?
 

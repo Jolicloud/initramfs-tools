@@ -1,4 +1,11 @@
 initramfs-tools (0.89) unstable; urgency=low
+  
+  Release "L'électeur c'est notoire N'a pas tout' sa raison"
+
+  [ Joey Hess ]
+  * mkinitramfs: Include libgcc_s.so.1 on arm since glibc always tries to load
+    it for the SJLJ exception handling on that architecture. (closes: #426395)
+    Thanks to Aurelien Jarno for ack and review.
 
   [ maximilian attems ]
   * initramfs.conf.5: Document ROOT hardcoding.
@@ -10,13 +17,11 @@ initramfs-tools (0.89) unstable; urgency=low
     MODULES setting is passed. Thanks Henning Sprang <henning_sprang@gmx.de>
     for report. (closes: #429144)
   * hook-functions: Fix variable typo. Thanks Emanuele Rocca <ema@debian.org>.
+  * scripts/local: Revert change to use udev vol_id before fstype,
+    there are too many "wrongly" formated fs out there. fstype supports less,
+    but is more robust.
 
-  [ Joey Hess ]
-  * mkinitramfs: Include libgcc_s.so.1 on arm since glibc always tries to load
-    it for the SJLJ exception handling on that architecture. (closes: #426395)
-    Thanks to Aurelien Jarno for ack and review.
-
- -- maximilian attems <maks@debian.org>  Thu, 21 Jun 2007 11:57:20 +0200
+ -- maximilian attems <maks@debian.org>  Wed, 04 Jul 2007 00:28:34 +0200
 
 initramfs-tools (0.88) unstable; urgency=low
 
