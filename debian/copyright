@@ -3,9 +3,6 @@ Thu, 27 Jan 2005 15:23:52 -0500.
 
 The current Debian maintainer is maximilian attems <maks@debian.org>
 
-The source code up to 0.31 can be found by using "bzr" at:
-http://people.ubuntu.com/~jbailey/bzrtree/initramfs-tools
-
 The current ubuntu release can be found at:
 http://archive.ubuntu.com/ubuntu/pool/main/i/initramfs-tools/
 
