@@ -3,11 +3,13 @@ initramfs-tools (0.90) UNRELEASED; urgency=low
   * hook-functions: Fix xen i386 boots with optimized 2.5. (closes: 420754)
     Thanks Marco Nenciarini <mnencia@debian.org> for patch.
 
- -- maximilian attems <maks@debian.org>  Wed, 04 Jul 2007 00:45:20 +0200
+  * debian/control: Bump dep on klibc-utils from etch. (closes: 435031)
+
+ -- maximilian attems <maks@debian.org>  Sat, 28 Jul 2007 18:56:36 +0200
 
 initramfs-tools (0.89) unstable; urgency=low
   
-  Release "L'électeur c'est notoire N'a pas tout' sa raison"
+  Release "L'\xE9lecteur c'est notoire N'a pas tout' sa raison"
 
   [ Joey Hess ]
   * mkinitramfs: Include libgcc_s.so.1 on arm since glibc always tries to load

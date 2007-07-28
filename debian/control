@@ -8,7 +8,7 @@ Standards-Version: 3.7.2.2
 
 Package: initramfs-tools
 Architecture: all
-Depends: klibc-utils (>= 1.4.19-2), busybox (>= 1:1.01-3) | busybox-initramfs, cpio, module-init-tools, udev (>= 0.086-1)
+Depends: klibc-utils (>= 1.4.34-1), busybox (>= 1:1.01-3) | busybox-initramfs, cpio, module-init-tools, udev (>= 0.086-1)
 Provides: linux-initramfs-tool
 Description: tools for generating an initramfs
  This package contains tools to create and boot an initramfs for packaged 2.6
