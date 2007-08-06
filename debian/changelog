@@ -4,11 +4,12 @@ initramfs-tools (0.90) UNRELEASED; urgency=low
   * hook-functions: Fix xen i386 boots with optimized 2.5. (closes: 420754)
     Thanks Marco Nenciarini <mnencia@debian.org> for patch.
   * debian/control: Bump dep on klibc-utils from etch. (closes: 435031)
+  * scripts/functions: Implement non-zero panic bootarg.
 
   [ David Härdeman ]
   * hook-functions: Protect all variable with local, plus coding style fixes.
 
- -- maximilian attems <maks@debian.org>  Sat, 28 Jul 2007 19:03:35 +0200
+ -- maximilian attems <maks@debian.org>  Tue, 07 Aug 2007 01:18:25 +0200
 
 initramfs-tools (0.89) unstable; urgency=low
   

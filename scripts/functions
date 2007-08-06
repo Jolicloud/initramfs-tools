@@ -62,6 +62,9 @@ panic()
 	# Disallow console access
 	if [ -n "${panic}" ] && [ "${panic}" = 0 ]; then
 		reboot
+	elif [ -n "${panic}" ]; then
+		sleep ${panic}
+		reboot
 	fi
 	modprobe i8042
 	modprobe atkbd
@@ -71,7 +74,7 @@ panic()
 
 maybe_break()
 {
-	if [ x$1 = x${break} ]; then
+	if [ -n "${break}" ]; then
 		panic "Spawning shell within the initramfs"
 	fi
 }
