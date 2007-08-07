@@ -185,16 +185,34 @@ copy_modules_dir()
 # only copy relevant modules
 dep_add_modules()
 {
-	local x
+	local root rootfs block minor device_path module x
 
 	# findout root block device + fstype
 	eval "$(mount | awk '/ \/ / {print "root=" $1 "\nrootfs=" $5; exit}')"
-	block=${root#/dev/}
-	block=${block%[0-9]*}
+
+	# lvm luks root
+	if [ "${root#/dev/mapper/}" != "${root}" ]; then
+		minor=$((0x$(stat --format "%T" ${root}) % 256))
+		block=$(ls -1 /sys/block/dm-${minor}/slaves | head -n 1)
+		if [ "${block#dm-}" != "${block}" ]; then
+			block=$(ls -1 /sys/block/${block}/slaves | head -n 1)
+		fi
+		block=${block%[0-9]*}
+	# md root
+	elif [ "${root#/dev/md}" != "${root}" ]; then
+		root=${root#/dev/}
+		block=$(awk "/^${root}/{print substr(\$5, 1, 3); exit}" \
+			/proc/mdstat)
+	# classical root device
+	else
+		block=${root#/dev/}
+		block=${block%[0-9]*}
+	fi
 
 	# Error out if /sys lack block dev
 	if [ -z "${block}" ] || [ ! -e /sys/block/${block} ]; then
-		echo "Error: missing ${block} root ${root} /sys entry"
+		echo "mkinitramfs: missing ${block} root ${root} /sys entry"
+		echo "mkinitramfs: Error use MODULES=most" 
 		exit 1
 	fi
 
