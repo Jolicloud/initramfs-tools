@@ -25,3 +25,9 @@ if [ -r /etc/initramfs-tools/initramfs.conf ]; then
 	sed 's/#.*$//;/^[[:space:]]*$/d' /etc/initramfs-tools/initramfs.conf
 	echo
 fi
+
+if [ -r /etc/crypttab ]; then
+	echo "-- /etc/crypttab"
+	cat /etc/crypttab
+	echo
+fi

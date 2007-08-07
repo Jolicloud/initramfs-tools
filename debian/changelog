@@ -8,11 +8,12 @@ initramfs-tools (0.90~beta1) UNRELEASED; urgency=low
     maybe_break().
   * hook-functions: dep_add_modules() fix for md, lv, luks root.
     (closes: #426917, #429237, #426446)
+  * debian/scripts: Add /etc/crypttab to reportbug script.
 
   [ David Härdeman ]
   * hook-functions: Protect all variable with local, plus coding style fixes.
 
- -- maximilian attems <maks@debian.org>  Wed, 08 Aug 2007 00:50:22 +0200
+ -- maximilian attems <maks@debian.org>  Wed, 08 Aug 2007 01:17:29 +0200
 
 initramfs-tools (0.89) unstable; urgency=low
   
