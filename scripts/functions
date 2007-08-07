@@ -74,7 +74,7 @@ panic()
 
 maybe_break()
 {
-	if [ -n "${break}" ]; then
+	if [ "${break}" = "$1" ]; then
 		panic "Spawning shell within the initramfs"
 	fi
 }
