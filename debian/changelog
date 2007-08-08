@@ -14,11 +14,12 @@ initramfs-tools (0.90~beta1) UNRELEASED; urgency=low
     in boot/hooks dir.  Thanks Kornilios Kourtis <kkourt@cslab.ece.ntua.gr>
     for the initial patch. Fixes a double set_initlist call too. Ignore empty
     dirs earlier too. (closes: #433459)
+  * mkinitramfs.8: Document verbose mode.
 
   [ David Härdeman ]
   * hook-functions: Protect all variable with local, plus coding style fixes.
 
- -- maximilian attems <maks@debian.org>  Wed, 08 Aug 2007 18:57:20 +0200
+ -- maximilian attems <maks@debian.org>  Wed, 08 Aug 2007 19:08:15 +0200
 
 initramfs-tools (0.89) unstable; urgency=low
   

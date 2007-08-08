@@ -1,4 +1,4 @@
-.TH MKINITRAMFS 8  "$Date: 2007/05/01 $" "" "mkinitramfs manual"
+.TH MKINITRAMFS 8  "$Date: 2007/08/08 $" "" "mkinitramfs manual"
 
 .SH NAME
 mkinitramfs \- low-level tool for generating an initramfs image
@@ -12,6 +12,7 @@ mkinitramfs \- low-level tool for generating an initramfs image
 .IR outfile ]
 .RB [ \-r
 .IR root ]
+.RB [ \-v ]
 .RI [ version ]
 
 .B mkinitramfs
@@ -62,6 +63,10 @@ Override the
 .B ROOT
 setting in
 .IR initramfs.conf .
+
+.TP
+\fB \-v
+Set the verbose mode output.
 
 .TP
 \fI version
