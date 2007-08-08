@@ -2,6 +2,17 @@
 
 set -e
 
+chrooted() {
+	# borrowed from udev's postinst
+	if [ "$(stat -c %d/%i /)" = "$(stat -Lc %d/%i /proc/1/root 2>/dev/null)" ]; then
+		# the devicenumber/inode pair of / is the same as that of
+		# /sbin/init's root, so we're *not* in a chroot and hence
+		# return false.
+		return 1
+	fi
+	return 0
+}
+
 case "$1" in
 	install)
 		mkdir -p /etc/initramfs-tools/conf.d
@@ -15,7 +26,8 @@ case "$1" in
 		if [ -e /etc/mkinitrd/mkinitrd.conf ]; then
 			 . /etc/mkinitrd/mkinitrd.conf
 		fi
-		if [ -n "${RESUME}" ]; then
+		# write conf.d/resume if not in a chroot
+		if [ -n "${RESUME}" ] && ! chrooted; then
 			echo "RESUME=${RESUME}" > /etc/initramfs-tools/conf.d/resume
 		fi
 

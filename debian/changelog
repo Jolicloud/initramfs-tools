@@ -13,13 +13,16 @@ initramfs-tools (0.90~beta1) UNRELEASED; urgency=low
   * scripts/functions: Add error message on verbose mode about ignored files
     in boot/hooks dir.  Thanks Kornilios Kourtis <kkourt@cslab.ece.ntua.gr>
     for the initial patch. Fixes a double set_initlist call too. Ignore empty
-    dirs earlier too. (closes: #433459)
+    dirs earlier too. (closes: #428729, #433459)
   * mkinitramfs.8: Document verbose mode.
+  * debian/initramfs-tools.preinst: Inhibit /etc/initramfs-tools/conf.d/resume
+    creation in chroot for debian-live and other. (closes: #433190)
+    Thanks Kel Modderman <kel@otaku42.de> for the patch.
 
   [ David Härdeman ]
   * hook-functions: Protect all variable with local, plus coding style fixes.
 
- -- maximilian attems <maks@debian.org>  Wed, 08 Aug 2007 19:08:15 +0200
+ -- maximilian attems <maks@debian.org>  Wed, 08 Aug 2007 19:29:23 +0200
 
 initramfs-tools (0.89) unstable; urgency=low
   
