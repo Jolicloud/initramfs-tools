@@ -10,11 +10,15 @@ initramfs-tools (0.90~beta1) UNRELEASED; urgency=low
     (closes: #426917, #429237, #426446)
   * debian/scripts: Add /etc/crypttab to reportbug script.  Add /sys/block
     list for MODULES=dep to reportbug script.
+  * scripts/functions: Add error message on verbose mode about ignored files
+    in boot/hooks dir.  Thanks Kornilios Kourtis <kkourt@cslab.ece.ntua.gr>
+    for the initial patch. Fixes a double set_initlist call too. Ignore empty
+    dirs earlier too. (closes: #433459)
 
   [ David Härdeman ]
   * hook-functions: Protect all variable with local, plus coding style fixes.
 
- -- maximilian attems <maks@debian.org>  Wed, 08 Aug 2007 01:22:00 +0200
+ -- maximilian attems <maks@debian.org>  Wed, 08 Aug 2007 18:57:20 +0200
 
 initramfs-tools (0.89) unstable; urgency=low
   

@@ -88,20 +88,32 @@ set_initlist()
 {
 	unset initlist
 	for si_x in ${initdir}/*; do
+		# skip empty dirs without warning
+		[ "${si_x}" = "${initdir}/*" ] && return
+
 		# only allow variable name chars
 		case ${si_x#${initdir}/} in
 		*[![:alnum:]_]*)
+			[ "${verbose}" = "y" ] \
+			&& echo "$si_x ignored: not alphanumeric or '_' file"
 			continue
 			;;
 		esac
+
 		# skip non executable scripts
 		if [ ! -x ${si_x} ]; then
+			[ "${verbose}" = "y" ] \
+			&& echo "$si_x ignored: not executable"
 			continue
 		fi
+
 		# skip directories
 		if [ -d ${si_x} ]; then
+			[ "${verbose}" = "y" ] \
+			&& echo "$si_x ignored: a directory"
 			continue
 		fi
+
 		initlist="${initlist} ${si_x#${initdir}/}"
 	done
 }
@@ -171,7 +183,6 @@ pop_list_item()
 reduce_prereqs()
 {
 	unset runlist
-	set_initlist
 	set -- ${initlist}
 	i=$#
 	# Loop until there's no more in the queue to loop through
