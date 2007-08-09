@@ -1,4 +1,6 @@
-initramfs-tools (0.90~beta1) UNRELEASED; urgency=low
+initramfs-tools (0.90) unstable; urgency=low
+
+  Release "J'aim' pas le fataliste Je n'ai ni foi ni loi"
 
   [ maximilian attems ]
   * hook-functions: Fix xen i386 boots with optimized 2.5. (closes: 420754)
@@ -26,7 +28,7 @@ initramfs-tools (0.90~beta1) UNRELEASED; urgency=low
   [ David Härdeman ]
   * hook-functions: Protect all variable with local, plus coding style fixes.
 
- -- maximilian attems <maks@debian.org>  Thu, 09 Aug 2007 21:20:34 +0200
+ -- maximilian attems <maks@debian.org>  Thu, 09 Aug 2007 21:30:29 +0200
 
 initramfs-tools (0.89) unstable; urgency=low
   
