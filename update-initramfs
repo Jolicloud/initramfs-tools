@@ -410,7 +410,8 @@ altered_check()
 		mild_panic "${initramfs} does not exist. Cannot update."
 	fi
 	if ! compare_sha1; then
-		mild_panic "${initramfs} has been altered. Cannot update."
+		echo "update-initramfs: ${initramfs} has been altered." >&2
+		mild_panic "update-initramfs: Cannot update. Override with -t option."
 	fi
 }
 
