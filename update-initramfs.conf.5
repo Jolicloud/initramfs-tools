@@ -1,4 +1,4 @@
-.TH UPDATE-INITRAMFS.CONF 5  "$Date: 2006/12/22 $" "" "update-initramfs.conf manual"
+.TH UPDATE-INITRAMFS.CONF 5  "$Date: 2007/08/09 $" "" "update-initramfs.conf manual"
 
 .SH NAME
 update-initramfs.conf \- configuration file for update-initramfs
@@ -12,6 +12,7 @@ The configuration file allows to disable the update action from
 \fB update_initramfs
 Default is \fIyes\fP for running the latest initramfs-tools hooks in the
 newest Linux image.
+Setting it to \fIall\fP updates any known initramfs.
 It is possible to set it to \fIno\fP for remote servers or boxes where
 conservative manners needs to be applied. This disables
 the \fBupdate_initramfs -u\fP call.

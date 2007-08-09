@@ -19,11 +19,14 @@ initramfs-tools (0.90~beta1) UNRELEASED; urgency=low
     creation in chroot for debian-live and other. (closes: #433190)
     Thanks Kel Modderman <kel@otaku42.de> for the patch.
   * update-initramfs: Improve "altered" error message. (closes: #436752)
+  * update-initramfs, update-initramfs.conf: update_initramfs config variable
+    is tristate. Set to 'all' to update any initramfs: $(update-initramfs -u).
+    Allows specific admin setting. (closes: #425050)
 
   [ David Härdeman ]
   * hook-functions: Protect all variable with local, plus coding style fixes.
 
- -- maximilian attems <maks@debian.org>  Thu, 09 Aug 2007 20:44:27 +0200
+ -- maximilian attems <maks@debian.org>  Thu, 09 Aug 2007 21:20:34 +0200
 
 initramfs-tools (0.89) unstable; urgency=low
   

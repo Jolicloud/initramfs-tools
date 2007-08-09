@@ -464,7 +464,8 @@ if [ -z "${mode}" ]; then
 	usage "You must specify at least one of -c, -u, or -d."
 fi
 
-if [ "${version}" = "all" ]; then
+if [ "${version}" = "all" ] \
+	|| ( [ "${update_initramfs}" = "all" ] && [ -z "${version}" ] ); then
 	: FIXME check for --yes, and if not ask are you sure
 	get_sorted_versions
 	if [ -z "${version_list}" ]; then
@@ -491,6 +492,7 @@ if [ "${version}" = "all" ]; then
 	done
 	exit 0
 fi
+
 
 case "${mode}" in
 	c)
