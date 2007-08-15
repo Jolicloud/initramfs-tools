@@ -60,9 +60,7 @@ panic()
 		/sbin/usplash_write "QUIT"
 	fi
 	# Disallow console access
-	if [ -n "${panic}" ] && [ "${panic}" = 0 ]; then
-		reboot
-	elif [ -n "${panic}" ]; then
+	if [ -n "${panic}" ]; then
 		sleep ${panic}
 		reboot
 	fi
