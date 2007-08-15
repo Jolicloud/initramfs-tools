@@ -1,3 +1,10 @@
+initramfs-tools (0.91) unstable; urgency=low
+
+  * scripts/functions: simplify panic()
+  * mkinitramfs: Kick empty dir modules.
+
+ -- maximilian attems <maks@debian.org>  Thu, 16 Aug 2007 00:25:22 +0200
+
 initramfs-tools (0.90) unstable; urgency=low
 
   Release "J'aim' pas le fataliste Je n'ai ni foi ni loi"
