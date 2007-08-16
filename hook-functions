@@ -182,10 +182,28 @@ copy_modules_dir()
 	done
 }
 
-# only copy relevant modules
+# walk /sys for relevant modules
+sys_walk_mod_add()
+{
+	local driver_path module
+	device_path="$1"
+	
+	while [ "${device_path}" != "/sys" ]; do
+		driver_path="$(readlink -f ${device_path}/driver)"
+		if [ -e "$driver_path" ]; then
+			module="$(basename $(readlink -f $driver_path))"
+			if [ -n "${module}" ]; then
+				force_load "${module}"
+			fi
+		fi
+		device_path="$(dirname ${device_path})"
+	done
+}
+
+# find and only copy root relevant modules
 dep_add_modules()
 {
-	local root rootfs block minor device_path module x
+	local block minor root rootfs root_dev_path x
 
 	# findout root block device + fstype
 	eval "$(mount | awk '/ \/ / {print "root=" $1 "\nrootfs=" $5; exit}')"
@@ -220,18 +238,8 @@ dep_add_modules()
 	# Add rootfs
 	force_load "${rootfs}"
 
-	# walk /sys for relevant modules
-	device_path=$(readlink -f /sys/block/${block}/device)
-	while [ "${device_path}" != "/sys" ]; do
-		driver_path="$(readlink -f ${device_path}/driver)"
-		if [ -e "$driver_path" ]; then
-			module="$(basename $(readlink -f $driver_path))"
-			if [ -n "${module}" ]; then
-				force_load "${module}"
-			fi
-		fi
-		device_path="$(dirname ${device_path})"
-	done
+	root_dev_path=$(readlink -f /sys/block/${block}/device)
+	sys_walk_mod_add ${root_dev_path}
 
 	if [ -e /proc/ide ]; then
 		for x in ide-generic ide-disk ide-cd; do

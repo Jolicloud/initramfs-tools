@@ -2,8 +2,9 @@ initramfs-tools (0.91) unstable; urgency=low
 
   * scripts/functions: simplify panic()
   * mkinitramfs: Kick empty dir modules.
+  * hook-functions: Factor sys_walk_mod_add() out of dep_add_modules().
 
- -- maximilian attems <maks@debian.org>  Thu, 16 Aug 2007 00:25:22 +0200
+ -- maximilian attems <maks@debian.org>  Thu, 16 Aug 2007 10:06:09 +0200
 
 initramfs-tools (0.90) unstable; urgency=low
 
