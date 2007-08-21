@@ -3,8 +3,9 @@ initramfs-tools (0.91) unstable; urgency=low
   * scripts/functions: simplify panic()
   * mkinitramfs: Kick empty dir modules.
   * hook-functions: Factor sys_walk_mod_add() out of dep_add_modules().
+  * init: Fix mount options invocation for klibc mount.
 
- -- maximilian attems <maks@debian.org>  Thu, 16 Aug 2007 10:06:09 +0200
+ -- maximilian attems <maks@debian.org>  Tue, 21 Aug 2007 17:08:48 +0200
 
 initramfs-tools (0.90) unstable; urgency=low
 

@@ -8,8 +8,8 @@ echo "Loading, please wait..."
 [ -d /proc ] || mkdir /proc
 [ -d /tmp ] || mkdir /tmp
 mkdir -p /var/lock
-mount -t sysfs none /sys -o nodev,noexec,nosuid
-mount -t proc none /proc -o nodev,noexec,nosuid
+mount -t sysfs -o nodev,noexec,nosuid none /sys 
+mount -t proc -o nodev,noexec,nosuid none /proc 
 
 # Note that this only becomes /dev on the real filesystem if udev's scripts
 # are used; which they will be, but it's worth pointing out
