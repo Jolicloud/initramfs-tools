@@ -1,4 +1,4 @@
-initramfs-tools (0.91) unstable; urgency=low
+initramfs-tools (0.90a) unstable; urgency=high
 
   * scripts/functions: simplify panic()
   * mkinitramfs: Kick empty dir modules.
@@ -6,7 +6,7 @@ initramfs-tools (0.91) unstable; urgency=low
   * init: Fix mount options invocation for klibc mount.
   * hook-functions: Add the new firewire modules.
 
- -- maximilian attems <maks@debian.org>  Thu, 23 Aug 2007 14:31:59 +0200
+ -- maximilian attems <maks@debian.org>  Thu, 23 Aug 2007 14:37:51 +0200
 
 initramfs-tools (0.90) unstable; urgency=low
 
