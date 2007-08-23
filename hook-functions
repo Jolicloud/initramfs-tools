@@ -300,8 +300,14 @@ auto_add_modules()
 	block)
 		copy_modules_dir kernel/drivers/block
 	;;
+	# FIXME: can be removed after Lenny release
 	ieee1394)
 		for x in ohci1394 sbp2; do
+			manual_add_modules "${x}"
+		done
+	;;
+	firewire)
+		for x in firewire-ohci  firewire-sbp2; do
 			manual_add_modules "${x}"
 		done
 	;;
@@ -325,6 +331,7 @@ auto_add_modules()
 		auto_add_modules i2o
 		auto_add_modules dasd
 		auto_add_modules ieee1394
+		auto_add_modules firewire
 	;;
 	esac
 }
