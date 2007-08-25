@@ -5,10 +5,13 @@ Uploaders: Jeff Bailey <jbailey@ubuntu.com>, maximilian attems <maks@debian.org>
 Maintainer: Debian kernel team <debian-kernel@lists.debian.org>
 Build-Depends: debhelper (>= 4.1.0), cdbs
 Standards-Version: 3.7.2.2
+XS-Vcs-Git: git://git.debian.org/git/kernel/initramfs-tools.git
+XS-Vcs-Browser: http://git.debian.org/?p=kernel/initramfs-tools.git
 
 Package: initramfs-tools
 Architecture: all
-Depends: klibc-utils (>= 1.4.34-1), busybox (>= 1:1.01-3) | busybox-initramfs, cpio, module-init-tools, udev (>= 0.086-1)
+Recommends: busybox (>= 1:1.01-3) | busybox-initramfs
+Depends: klibc-utils (>= 1.5.6-1), cpio, module-init-tools, udev (>= 0.086-1)
 Provides: linux-initramfs-tool
 Description: tools for generating an initramfs
  This package contains tools to create and boot an initramfs for packaged 2.6
