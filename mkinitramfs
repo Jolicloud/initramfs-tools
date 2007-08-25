@@ -209,7 +209,7 @@ esac
 # klibc
 ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
 ln -s /lib/klibc-*.so ${DESTDIR}/lib
-rm -f ${DESTDIR}/bin/kinit ${DESTDIR}/bin/gzip
+rm -f ${DESTDIR}/bin/kinit* ${DESTDIR}/bin/gzip
 
 copy_exec /usr/share/initramfs-tools/init /init
 

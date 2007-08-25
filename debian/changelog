@@ -5,8 +5,9 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
   * debian/control: Tighten dep on latest klibc for BUSYBOX=n usage.
     Add XS-Vcs-* fields. Mv busybox from Depends to Recommends.
   * mkinitramfs: Cope when no busybox is around warn on md/lvm root.
+  * mkinitramfs: Kill kinit.shared too.
 
- -- maximilian attems <maks@debian.org>  Sat, 25 Aug 2007 14:29:42 +0200
+ -- maximilian attems <maks@debian.org>  Sat, 25 Aug 2007 14:35:38 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 
