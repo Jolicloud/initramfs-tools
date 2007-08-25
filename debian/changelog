@@ -1,3 +1,10 @@
+initramfs-tools (0.91) UNRELEASED; urgency=low
+
+  * udev_helper: Axe the modprobe ide-generic should no longer be needed
+    for kernel since Etch.
+
+ -- maximilian attems <maks@debian.org>  Sat, 25 Aug 2007 13:37:15 +0200
+
 initramfs-tools (0.90a) unstable; urgency=high
 
   * scripts/functions: simplify panic()
