@@ -244,9 +244,14 @@ if [ -n "${ROOT}" ]; then
 fi
 
 # Busybox
-if [ "x${BUSYBOX}" = "xn" ]; then
-	ln -s ${DESTDIR}/bin/sh.shared ${DESTDIR}/bin/sh
-	echo "Warning: Busybox is required for successful boot!"
+if [ "${BUSYBOX}" = "n" ] || [ ! -e ${BUSYBOXDIR}/busybox ]; then
+	mv ${DESTDIR}/bin/sh.shared ${DESTDIR}/bin/sh
+	# those root need busybox
+	eval "$(mount | awk '/ \/ / {print "r_dev=" $1; exit}')"
+	if [ "${r_dev#/dev/mapper/}" != "${r_dev}" ] \
+		|| [ "${r_dev#/dev/md}" != "${r_dev}" ]; then
+		echo "Warning: Busybox is required for successful boot!"
+	fi
 else
 	rm -f ${DESTDIR}/bin/sh
 	rm -f ${DESTDIR}/bin/busybox
