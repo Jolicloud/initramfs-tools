@@ -27,7 +27,7 @@ fi
 
 . /usr/share/initramfs-tools/hook-functions
 copy_exec /bin/loadkeys /bin
-cp /etc/console/boottime.kmap.gz ${DESTDIR}/etc
+cp /etc/console/boottime.kmap.gz ${DESTDIR}/etc/
 
 # Step 2 - Check for UTF8 console
 if [ ! -x /usr/bin/kbd_mode ]; then

@@ -7,8 +7,9 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
   * mkinitramfs: Cope when no busybox is around warn on md/lvm root.
   * mkinitramfs: Kill kinit.shared too.
   * scripts/local: Quote readonly variable. (LP: #115807)
+  * mkinitramfs, scripts/keymap: Add trailing slash on cp destination for dir.
 
- -- maximilian attems <maks@debian.org>  Sat, 25 Aug 2007 19:10:20 +0200
+ -- maximilian attems <maks@debian.org>  Mon, 27 Aug 2007 10:09:25 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 

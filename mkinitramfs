@@ -219,13 +219,13 @@ for b in $(cd /usr/share/initramfs-tools/scripts/ && find . \
 	[ -d "${DESTDIR}/scripts/$(dirname "${b}")" ] \
 		|| mkdir -p "${DESTDIR}/scripts/$(dirname "${b}")"
 	cp -p "/usr/share/initramfs-tools/scripts/${b}" \
-		"${DESTDIR}/scripts/$(dirname "${b}")"
+		"${DESTDIR}/scripts/$(dirname "${b}")/"
 done
 for b in $(cd "${CONFDIR}/scripts" && find . \
 	-regextype posix-extended -regex '.*/[[:alnum:]_]+$' -type f); do
 	[ -d "${DESTDIR}/scripts/$(dirname "${b}")" ] \
 		|| mkdir -p "${DESTDIR}/scripts/$(dirname "${b}")"
-	cp -p "${CONFDIR}/scripts/${b}" "${DESTDIR}/scripts/$(dirname "${b}")"
+	cp -p "${CONFDIR}/scripts/${b}" "${DESTDIR}/scripts/$(dirname "${b}")/"
 done
 
 echo "DPKG_ARCH=${DPKG_ARCH}" > ${DESTDIR}/conf/arch.conf
@@ -264,11 +264,11 @@ copy_exec /sbin/modprobe /sbin
 copy_exec /sbin/depmod /sbin
 copy_exec /sbin/rmmod /sbin
 mkdir -p "${DESTDIR}/etc/modprobe.d"
-cp -a /etc/modprobe.d/* "${DESTDIR}/etc/modprobe.d"
+cp -a /etc/modprobe.d/* "${DESTDIR}/etc/modprobe.d/"
 
 # workaround: libgcc always needed on old-abi arm
 if [ "$DPKG_ARCH" = arm ] || [ "$DPKG_ARCH" = armeb ]; then
-	cp -a /lib/libgcc_s.so.1 "${DESTDIR}/lib"
+	cp -a /lib/libgcc_s.so.1 "${DESTDIR}/lib/"
 fi
 
 run_scripts /usr/share/initramfs-tools/hooks
