@@ -186,3 +186,4 @@ fi
 # Chain to real filesystem
 maybe_break init
 exec run-init ${rootmnt} ${init} "$@" <${rootmnt}/dev/console >${rootmnt}/dev/console
+panic "Could not execute run-init."
