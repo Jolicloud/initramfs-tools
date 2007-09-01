@@ -9,8 +9,9 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
   * scripts/local: Quote readonly variable. (LP: #115807)
   * mkinitramfs, scripts/keymap: Add trailing slash on cp destination for dir.
   * init: Call panic for debug sh if run-init fails.
+  * init-top/framebuffer: Check that fb minor is below 32.
 
- -- maximilian attems <maks@debian.org>  Sat, 01 Sep 2007 10:45:04 +0200
+ -- maximilian attems <maks@debian.org>  Sat, 01 Sep 2007 10:55:33 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 
