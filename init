@@ -95,10 +95,10 @@ for x in $(cat /proc/cmdline); do
 		BOOT=${x#boot=}
 		;;
 	resume=*)
-		RESUME="${x#resume=}"
+		resume="${x#resume=}"
 		;;
 	noresume)
-		NORESUME=y
+		noresume=y
 		;;
 	panic=*)
 		panic="${x#panic=}"
@@ -138,8 +138,10 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
-if [ -z "${NORESUME}" ]; then
-	export resume=${RESUME}
+if [ -z "${noresume}" ]; then
+	export resume=${resume}
+else
+	export noresume
 fi
 
 depmod -a

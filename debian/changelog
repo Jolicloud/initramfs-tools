@@ -10,8 +10,9 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
   * mkinitramfs, scripts/keymap: Add trailing slash on cp destination for dir.
   * init: Call panic for debug sh if run-init fails.
   * init-top/framebuffer: Check that fb minor is below 32.
+  * init: Export noresume if set. uswsusp and kdump need it.
 
- -- maximilian attems <maks@debian.org>  Sat, 01 Sep 2007 10:55:33 +0200
+ -- maximilian attems <maks@debian.org>  Sat, 01 Sep 2007 13:40:24 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 
