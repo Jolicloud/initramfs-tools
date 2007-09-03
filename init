@@ -185,7 +185,7 @@ fi
 # Search for valid init
 if [ -z "${init}" ] ; then
 	for init in /sbin/init /etc/init /bin/init /bin/sh; do
-		if [ ! -x "${rootmnt}${i}" ]; then
+		if [ ! -x "${rootmnt}${init}" ]; then
 			continue
 		fi
 		break
