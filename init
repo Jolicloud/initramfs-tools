@@ -32,8 +32,8 @@ export ROOT=
 
 # Bring in the main config
 . /conf/initramfs.conf
-for i in conf/conf.d/*; do
-	[ -f ${i} ] && . ${i}
+for conf in conf/conf.d/*; do
+	[ -f ${conf} ] && . ${conf}
 done
 . /scripts/functions
 
