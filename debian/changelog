@@ -11,8 +11,10 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
   * init: Call panic for debug sh if run-init fails.
   * init-top/framebuffer: Check that fb minor is below 32.
   * init: Export noresume if set. uswsusp and kdump need it.
+  * init: Try harder to find a valid init on rootmnt. Fixes bootfailure on
+    bogus init bootarg too.
 
- -- maximilian attems <maks@debian.org>  Sat, 01 Sep 2007 13:40:24 +0200
+ -- maximilian attems <maks@debian.org>  Mon, 03 Sep 2007 11:44:04 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 

@@ -176,9 +176,26 @@ run_scripts /scripts/init-bottom
 mount -n -o move /sys ${rootmnt}/sys
 mount -n -o move /proc ${rootmnt}/proc
 
-while [ ! -x ${rootmnt}${init} ]; do
-	panic "Target filesystem doesn't have ${init}"
-done
+# Check init bootarg
+if [ -n "${init}" ] && [ ! -x "${rootmnt}${init}" ]; then
+	init=
+	echo "Target filesystem doesn't have ${init}."
+fi
+
+# Search for valid init
+if [ -z "${init}" ] ; then
+	for init in /sbin/init /etc/init /bin/init /bin/sh; do
+		if [ ! -x "${rootmnt}${i}" ]; then
+			continue
+		fi
+		break
+	done
+fi
+
+# No init on rootmount
+if [ ! -x "${rootmnt}${init}" ]; then
+	panic "No init found. Try passing init= bootarg."
+fi
 
 # Confuses /etc/init.d/rc
 if [ -n ${debug} ]; then
