@@ -15,8 +15,9 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
     bogus init bootarg too.
   * scripts/{functions,nfs}: Split networking code in separate function.
     Thanks Vagrant Cascadian <vagrant+debianbugs@freegeek.org> for the patch.
+  * update-initramfs: Don't check for ro /boot inside of a chroot.
 
- -- maximilian attems <maks@debian.org>  Tue, 04 Sep 2007 10:39:07 +0200
+ -- maximilian attems <maks@debian.org>  Tue, 04 Sep 2007 11:34:15 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 

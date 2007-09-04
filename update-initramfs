@@ -33,6 +33,19 @@ EOF
 	exit 1
 }
 
+# chroot check
+chrooted()
+{
+        # borrowed from udev's postinst
+        if [ "$(stat -c %d/%i /)" = "$(stat -Lc %d/%i /proc/1/root 2>/dev/null)" ]; then
+                # the devicenumber/inode pair of / is the same as that of
+                # /sbin/init's root, so we're *not* in a chroot and hence
+                # return false.
+                return 1
+        fi
+        return 0
+}
+
 mild_panic()
 {
 	if [ -n "${1}" ]; then
@@ -86,7 +99,7 @@ backup_booted_initramfs()
 	# first time run thus no backup
 	[ ! -r "${initramfs_bak}" ] && return 0
 
-	# chroot
+	# chroot with no /proc
 	[ ! -r /proc/uptime ] && rm -f "${initramfs_bak}" && return 0
 
 	# no kept backup wanted
@@ -248,7 +261,11 @@ delete_sha1()
 # ro /boot is not modified
 ro_boot_check()
 {
-	[ -r /proc/mounts ] || return 0
+	# check irrelevant inside of a chroot
+	if [ ! -r /proc/mounts ] || chrooted; then
+		return 0
+	fi
+
 	boot_opts=$(awk '/boot/{if (match($4, /ro/) && $2 == "/boot")
 		print "ro"}' /proc/mounts)
 	if [ -n "${boot_opts}" ]; then
