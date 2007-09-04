@@ -4,40 +4,11 @@
 
 retry_nr=0
 
-# parse nfs bootargs + launch ipconfig and nfsmount
+# parse nfs bootargs and mount nfs 
 do_nfsmount()
 {
-	# support ip options see linux sources Documentation/nfsroot.txt
-	case ${IPOPTS} in
-		none|off)
-			# Do nothing
-			;;
-		""|on|any)
-			# Bring up device
-			ipconfig ${DEVICE}
-			;;
-		dhcp|bootp|rarp|both)
-			ipconfig -c ${IPOPTS} -d ${DEVICE}
-			;;
-		*)
-			ipconfig -d $IPOPTS
 
-			# grab device entry from ip option
-			NEW_DEVICE=${IPOPTS#*:*:*:*:*:*}
-			if [ "${NEW_DEVICE}" != "${IPOPTS}" ]; then
-				NEW_DEVICE=${NEW_DEVICE%:*}
-			else
-				# wrong parse, possibly only a partial string
-				NEW_DEVICE=
-			fi
-			if [ -n "${NEW_DEVICE}" ]; then
-				DEVICE="${NEW_DEVICE}"
-			fi
-			;;
-	esac
-
-	# source relevant ipconfig output
-	. /tmp/net-${DEVICE}.conf
+	configure_networking
 
 	# get nfs root from dhcp
 	if [ "x${NFSROOT}" = "xauto" ]; then
