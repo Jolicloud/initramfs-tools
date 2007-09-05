@@ -88,7 +88,7 @@ fi
 
 if [ -e /proc/fb ]; then
 	while read fbno desc; do
-		if [ $(($fbnum < 32)) ]; then
+		if [ $(($fbno < 32)) ]; then
 			mknod /dev/fb${fbno} c 29 ${fbno}
 		fi
 	done < /proc/fb
