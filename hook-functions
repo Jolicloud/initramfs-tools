@@ -203,10 +203,23 @@ sys_walk_mod_add()
 # find and only copy root relevant modules
 dep_add_modules()
 {
-	local block minor root rootfs root_dev_path x
+	local block minor root FSTYPE root_dev_path x
 
 	# findout root block device + fstype
-	eval "$(mount | awk '/ \/ / {print "root=" $1 "\nrootfs=" $5; exit}')"
+	eval "$(mount | awk '/ \/ / {print "root=" $1 "\nFSTYPE=" $5; exit}')"
+
+	# find out real rootfs on auto type
+	if [ "${FSTYPE}" = "auto" ]; then
+		eval "$(/usr/lib/klibc/bin/fstype ${root})"
+	fi
+
+	# check that fstype rootfs recognition
+	if [ "${FSTYPE}" = "unknown" ]; then
+		echo "mkinitramfs: unkown fstype on root ${root}"
+		echo "mkinitramfs: workaround is MODULES=most" 
+		echo "mkinitramfs: Error please report bug against klibc" 
+		exit 1
+	fi
 
 	# lvm luks root
 	if [ "${root#/dev/mapper/}" != "${root}" ]; then
@@ -236,7 +249,7 @@ dep_add_modules()
 	fi
 
 	# Add rootfs
-	force_load "${rootfs}"
+	force_load "${FSTYPE}"
 
 	root_dev_path=$(readlink -f /sys/block/${block}/device)
 	sys_walk_mod_add ${root_dev_path}

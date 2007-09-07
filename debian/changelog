@@ -17,8 +17,10 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
     Thanks Vagrant Cascadian <vagrant+debianbugs@freegeek.org> for the patch.
   * update-initramfs: Don't check for ro /boot inside of a chroot.
   * debian/script: Fix syntax of MODULES=dep block.
+  * hook-functions: Add rootfs detection for the "auto" mount output.
+    Thanks martin f krafft <madduck@debian.org> for report. (closes: #441211)
 
- -- maximilian attems <maks@debian.org>  Fri, 07 Sep 2007 15:10:11 +0200
+ -- maximilian attems <maks@debian.org>  Fri, 07 Sep 2007 18:24:40 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 
