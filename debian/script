@@ -32,7 +32,7 @@ if [ -r /etc/crypttab ]; then
 	echo
 fi
 
-if [ grep -q "MODULES=dep" /etc/initramfs-tools/initramfs.conf ]; then
+if grep -q "MODULES=dep" /etc/initramfs-tools/initramfs.conf ; then
 	echo "-- /sys/block"
 	ls /sys/block
 	echo

@@ -16,8 +16,9 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
   * scripts/{functions,nfs}: Split networking code in separate function.
     Thanks Vagrant Cascadian <vagrant+debianbugs@freegeek.org> for the patch.
   * update-initramfs: Don't check for ro /boot inside of a chroot.
+  * debian/script: Fix syntax of MODULES=dep block.
 
- -- maximilian attems <maks@debian.org>  Tue, 04 Sep 2007 11:34:15 +0200
+ -- maximilian attems <maks@debian.org>  Fri, 07 Sep 2007 15:10:11 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 
