@@ -15,6 +15,7 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
     bogus init bootarg too.
   * scripts/{functions,nfs}: Split networking code in separate function.
     Thanks Vagrant Cascadian <vagrant+debianbugs@freegeek.org> for the patch.
+    (closes: #439397)
   * update-initramfs: Don't check for ro /boot inside of a chroot.
   * debian/script: Fix syntax of MODULES=dep block.
   * hook-functions: Add rootfs detection for the "auto" mount output.
@@ -23,8 +24,10 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
     Thanks Michael Prokop <mika@grml.org> for the patches.
   * hook-functions: MODULES=dep fix I2O detection. Add sys_walk_modalias()
     to catch old style IDE.
+  * mkinitramfs: Export MODULES, allows hook script to act accordingly.
+    (closes: #421658)
 
- -- maximilian attems <maks@debian.org>  Sat, 08 Sep 2007 22:29:42 +0200
+ -- maximilian attems <maks@debian.org>  Sat, 08 Sep 2007 23:28:37 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 

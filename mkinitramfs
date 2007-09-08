@@ -166,6 +166,7 @@ export DESTDIR
 export DPKG_ARCH
 export verbose
 export KEYMAP
+export MODULES
 
 # Private, used by 'catenate_cpiogz'.
 export __TMPCPIOGZ
