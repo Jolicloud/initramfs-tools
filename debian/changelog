@@ -21,8 +21,9 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
     Thanks martin f krafft <madduck@debian.org> for report. (closes: #441211)
   * init: Disable quiet on debug bootarg. Fix new init error message.
     Thanks Michael Prokop <mika@grml.org> for the patches.
+  * hook-functions: MODULES=dep fix I2O detection.
 
- -- maximilian attems <maks@debian.org>  Sat, 08 Sep 2007 19:56:22 +0200
+ -- maximilian attems <maks@debian.org>  Sat, 08 Sep 2007 22:01:15 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 

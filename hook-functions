@@ -265,7 +265,8 @@ dep_add_modules()
 	fi
 
 	if [ -e /sys/bus/i2o/devices/ ]; then
-		manual_add_modules i2o_block
+		force_load i2o_block
+		force_load i2o_config
 	fi
 
 	if [ -e /sys/bus/ps3_system_bus/ ]; then
