@@ -221,6 +221,9 @@ dep_add_modules()
 		exit 1
 	fi
 
+	# Add rootfs
+	force_load "${FSTYPE}"
+
 	# lvm luks root
 	if [ "${root#/dev/mapper/}" != "${root}" ]; then
 		minor=$((0x$(stat --format "%T" ${root}) % 256))
@@ -247,9 +250,6 @@ dep_add_modules()
 		echo "mkinitramfs: Error please report the bug" 
 		exit 1
 	fi
-
-	# Add rootfs
-	force_load "${FSTYPE}"
 
 	root_dev_path=$(readlink -f /sys/block/${block}/device)
 	sys_walk_mod_add ${root_dev_path}
