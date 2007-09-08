@@ -200,6 +200,20 @@ sys_walk_mod_add()
 	done
 }
 
+# walk /sys for relevant modalias
+sys_walk_modalias()
+{
+	local device_path modalias
+
+	device_path="$(dirname "${1}")"
+	device_path="$(dirname "${device_path}")"
+	modalias=$(cat "${device_path}/modalias")
+
+	if [ -n "${modalias}" ]; then
+		force_load "${modalias}"
+	fi
+}
+
 # find and only copy root relevant modules
 dep_add_modules()
 {
@@ -251,13 +265,15 @@ dep_add_modules()
 		exit 1
 	fi
 
+	# sys walk ATA
 	root_dev_path=$(readlink -f /sys/block/${block}/device)
 	sys_walk_mod_add ${root_dev_path}
 
-	if [ -e /proc/ide ]; then
-		for x in ide-generic ide-disk ide-cd; do
-			manual_add_modules "${x}"
-		done
+	# catch old-style IDE
+	if [ -e /sys/bus/ide/devices/ ]; then
+		sys_walk_modalias ${root_dev_path}
+		manual_add_modules ide-disk
+		manual_add_modules ide-cd
 	fi
 
 	if [ -e /sys/bus/scsi/devices/ ]; then
