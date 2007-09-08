@@ -222,7 +222,7 @@ dep_add_modules()
 	fi
 
 	# Add rootfs
-	force_load "${FSTYPE}"
+	manual_add_modules "${FSTYPE}"
 
 	# lvm luks root
 	if [ "${root#/dev/mapper/}" != "${root}" ]; then
