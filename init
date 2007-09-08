@@ -178,8 +178,8 @@ mount -n -o move /proc ${rootmnt}/proc
 
 # Check init bootarg
 if [ -n "${init}" ] && [ ! -x "${rootmnt}${init}" ]; then
-	init=
 	echo "Target filesystem doesn't have ${init}."
+	init=
 fi
 
 # Search for valid init
