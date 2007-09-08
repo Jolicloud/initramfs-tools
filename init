@@ -119,11 +119,13 @@ for x in $(cat /proc/cmdline); do
 		;;
 	debug)
 		debug=y
+		quiet=n
 		exec >/tmp/initramfs.debug 2>&1
 		set -x
 		;;
 	debug=*)
 		debug=y
+		quiet=n
 		set -x
 		;;
 	break=*)
