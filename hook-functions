@@ -207,7 +207,9 @@ sys_walk_modalias()
 
 	device_path="$(dirname "${1}")"
 	device_path="$(dirname "${device_path}")"
-	modalias=$(cat "${device_path}/modalias")
+	if [ -e "${device_path}/modalias" ]; then
+		modalias=$(cat "${device_path}/modalias")
+	fi
 
 	if [ -n "${modalias}" ]; then
 		force_load "${modalias}"
