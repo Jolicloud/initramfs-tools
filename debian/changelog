@@ -1,4 +1,4 @@
-initramfs-tools (0.91) UNRELEASED; urgency=low
+initramfs-tools (0.91) unstable; urgency=low
 
   * udev_helper: Axe the modprobe ide-generic should no longer be needed
     for kernel since Etch.
@@ -24,10 +24,11 @@ initramfs-tools (0.91) UNRELEASED; urgency=low
     Thanks Michael Prokop <mika@grml.org> for the patches.
   * hook-functions: MODULES=dep fix I2O detection. Add sys_walk_modalias()
     to catch old style IDE.
-  * mkinitramfs: Export MODULES, allows hook script to act accordingly.
-    (closes: #421658)
+  * mkinitramfs: Export MODULES, allows hook scripts to act accordingly.
+    (closes: #421658) Add /usr/share/initramfs-tools/conf-hooks.d for hooks
+    options on mkinitramfs run. Do not land in initramfs.
 
- -- maximilian attems <maks@debian.org>  Sat, 08 Sep 2007 23:28:37 +0200
+ -- maximilian attems <maks@debian.org>  Sun, 09 Sep 2007 12:26:16 +0200
 
 initramfs-tools (0.90a) unstable; urgency=high
 

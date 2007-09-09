@@ -88,11 +88,20 @@ for i in /usr/share/initramfs-tools/conf.d/* ${CONFDIR}/conf.d/*; do
 	EXTRA_CONF="${EXTRA_CONF} $(basename $i \
 		| grep '^[[:alnum:]][[:alnum:]\._-]*$' | grep -v '\.dpkg-.*$')";
 done
+# FIXME: deprecated those settings on mkinitramfs run
+#        these conf dirs are for boot scripts and land on initramfs
 for i in ${EXTRA_CONF}; do
 	if [ -e  ${CONFDIR}/conf.d/${i} ]; then
 		. ${CONFDIR}/conf.d/${i}
 	elif [ -e  /usr/share/initramfs-tools/conf.d/${i} ]; then
 		. /usr/share/initramfs-tools/conf.d/${i}
+	fi
+done
+
+# source package confs
+for i in /usr/share/initramfs-tools/conf-hooks.d/*; do
+	if [ -e "${i}" ]; then
+		. "${i}"
 	fi
 done
 
