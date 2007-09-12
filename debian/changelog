@@ -1,3 +1,10 @@
+initramfs-tools (0.91a) unstable; urgency=low
+
+  * init: Fix resuming with hardcoded uppercase RESUME variable.
+    Thanks Raphael Hertzog <hertzog@debian.org> for the report.
+
+ -- maximilian attems <maks@debian.org>  Wed, 12 Sep 2007 19:06:19 +0200
+
 initramfs-tools (0.91) unstable; urgency=low
 
   * udev_helper: Axe the modprobe ide-generic should no longer be needed

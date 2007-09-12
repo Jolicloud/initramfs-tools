@@ -95,7 +95,7 @@ for x in $(cat /proc/cmdline); do
 		BOOT=${x#boot=}
 		;;
 	resume=*)
-		resume="${x#resume=}"
+		RESUME="${x#resume=}"
 		;;
 	noresume)
 		noresume=y
@@ -141,7 +141,7 @@ for x in $(cat /proc/cmdline); do
 done
 
 if [ -z "${noresume}" ]; then
-	export resume=${resume}
+	export resume=${RESUME}
 else
 	export noresume
 fi
