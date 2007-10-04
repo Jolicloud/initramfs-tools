@@ -1,3 +1,12 @@
+initramfs-tools (0.91b) unstable; urgency=low
+
+  * hooks/udevhelper: Adding all /lib/udev on initramfs if missing. Due to
+    overly strict errexit usage by udev hook functionality might be missing.
+    This is an potential Etch Lenny upgrade issue on UUID and LABEL roots.
+    Thanks Michael Prokop <mika@grml.org> for report. (closes: 431291)
+
+ -- maximilian attems <maks@debian.org>  Thu, 04 Oct 2007 12:00:33 +0200
+
 initramfs-tools (0.91a) unstable; urgency=low
 
   * init: Fix resuming with hardcoded uppercase RESUME variable.
