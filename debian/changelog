@@ -1,3 +1,10 @@
+initramfs-tools (0.91c) unstable; urgency=low
+
+  * update-initramfs: Fix ro /boot partition check (closes: #451151)
+  * init: Don't overwrite boot cmdline arg (closes: #453294)
+
+ -- maximilian attems <maks@debian.org>  Wed, 28 Nov 2007 19:49:41 +0100
+
 initramfs-tools (0.91b) unstable; urgency=low
 
   * hooks/udevhelper: Adding all /lib/udev on initramfs if missing. Due to
