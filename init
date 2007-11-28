@@ -67,7 +67,7 @@ for x in $(cat /proc/cmdline); do
 			ROOT="/dev/disk/by-uuid/${ROOT#UUID=}"
 			;;
 		/dev/nfs)
-			BOOT=nfs
+			[ -z "${BOOT}" ] && BOOT=nfs
 			;;
 		esac
 		;;
