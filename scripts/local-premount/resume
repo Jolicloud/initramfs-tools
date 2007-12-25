@@ -15,8 +15,8 @@ prereqs)
 	;;
 esac
 
-if [ "x${resume}" = "x" ]; then
-	exit
+if [ -z "${resume}" ]; then
+	exit 0
 fi
 
 case $resume in
@@ -29,7 +29,7 @@ case $resume in
 esac
 
 if [ ! -e "${resume}" ]; then
-	exit
+	exit 0
 fi
 
 if [ -e /sys/power/resume ]; then
