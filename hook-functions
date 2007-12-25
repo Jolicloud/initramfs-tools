@@ -248,7 +248,12 @@ dep_add_modules()
 			block=$(ls -1 /sys/block/${block}/slaves | head -n 1)
 		fi
 		block=${block%[0-9]*}
-	# md root
+	# md root new naming scheme /dev/md/X
+	elif [ "${root#/dev/md/}" != "${root}" ]; then
+		root=${root#/dev/md/}
+		block=$(awk "/^md${root}/{print substr(\$5, 1, 3); exit}" \
+			/proc/mdstat)
+	# md root /dev/mdX
 	elif [ "${root#/dev/md}" != "${root}" ]; then
 		root=${root#/dev/}
 		block=$(awk "/^${root}/{print substr(\$5, 1, 3); exit}" \
