@@ -1,3 +1,12 @@
+initramfs-tools (0.91d) unstable; urgency=low
+
+  * MODULES=dep fix for new /dev/md/X naming scheme (closes: #440694).
+  * debian/control: Add versioned depends on findutils (closes: #450888).
+  * Update to newer standards version without changes.
+  * local-premount/resume: coding style fixes.
+
+ -- maximilian attems <maks@debian.org>  Wed, 26 Dec 2007 00:53:48 +0100
+
 initramfs-tools (0.91c) unstable; urgency=low
 
   * update-initramfs: Fix ro /boot partition check (closes: #451151)
