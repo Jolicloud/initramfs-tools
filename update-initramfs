@@ -266,7 +266,7 @@ ro_boot_check()
 		return 0
 	fi
 
-	boot_opts=$(awk '/boot/{if (match($4, /^ro/) || match($4, /,ro/) \
+	boot_opts=$(awk '/boot/{if ((match($4, /^ro/) || match($4, /,ro/)) \
 		&& $2 == "/boot") print "ro"}' /proc/mounts)
 	if [ -n "${boot_opts}" ]; then
 		echo "WARNING: /boot is ro mounted."
