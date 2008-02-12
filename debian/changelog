@@ -1,3 +1,10 @@
+initramfs-tools (0.91e) unstable; urgency=medium
+
+  [ Daniel Reichelt ]
+  * update-initramfs: fix ro-mounted /boot check (closes: #458772)
+
+ -- maximilian attems <maks@debian.org>  Tue, 12 Feb 2008 18:23:34 +0100
+
 initramfs-tools (0.91d) unstable; urgency=low
 
   * MODULES=dep fix for new /dev/md/X naming scheme (closes: #440694).
