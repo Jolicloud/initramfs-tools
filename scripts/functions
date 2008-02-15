@@ -273,6 +273,9 @@ parse_numeric() {
 
 configure_networking()
 {
+	# networking already configured thus bail out
+	[ -e /tmp/net-${DEVICE}.conf ] && return 0
+
 	# support ip options see linux sources Documentation/nfsroot.txt
 	case ${IPOPTS} in
 	none|off)
