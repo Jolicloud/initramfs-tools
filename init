@@ -27,9 +27,6 @@ mkdir /dev/.initramfs
 export DPKG_ARCH=
 . /conf/arch.conf
 
-# Export it for root hardcoding
-export ROOT=
-
 # Bring in the main config
 . /conf/initramfs.conf
 for conf in conf/conf.d/*; do
@@ -41,13 +38,16 @@ done
 export MODPROBE_OPTIONS="-qb"
 
 # Export relevant variables
+export ROOT=
+export ROOTDELAY=
+export ROOTFLAGS=
+export ROOTFSTYPE=
 export break=
 export init=/sbin/init
 export quiet=n
 export readonly=y
 export rootmnt=/root
 export debug=
-export ROOTDELAY=
 export panic=
 export blacklist=
 
