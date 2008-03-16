@@ -290,7 +290,7 @@ if [ -e "${CONFDIR}/DSDT.aml" ]; then
 fi
 
 [ "${verbose}" = y ] && echo "Building cpio ${outfile} initramfs"
-(cd "${DESTDIR}" && find . | cpio --quiet --dereference -o -H newc | gzip -9 >"${outfile}") || exit 1
+(cd "${DESTDIR}" && find . | cpio --quiet --dereference -o -H newc | gzip >"${outfile}") || exit 1
 
 if [ -s "${__TMPCPIOGZ}" ]; then
 	cat "${__TMPCPIOGZ}" >>"${outfile}" || exit 1
