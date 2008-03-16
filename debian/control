@@ -5,8 +5,8 @@ Uploaders: Jeff Bailey <jbailey@ubuntu.com>, maximilian attems <maks@debian.org>
 Maintainer: Debian kernel team <debian-kernel@lists.debian.org>
 Build-Depends: debhelper (>= 4.1.0), cdbs
 Standards-Version: 3.7.3
-XS-Vcs-Git: git://git.debian.org/git/kernel/initramfs-tools.git
-XS-Vcs-Browser: http://git.debian.org/?p=kernel/initramfs-tools.git
+Vcs-Browser: http://git.debian.org/?p=kernel/initramfs-tools.git
+Vcs-Git: git://git.debian.org/git/kernel/initramfs-tools.git
 
 Package: initramfs-tools
 Architecture: all
