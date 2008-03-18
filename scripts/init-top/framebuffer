@@ -87,8 +87,9 @@ uvesafb)
 esac
 
 if [ -n "${FB}" ]; then
-	modprobe fbcon
-	modprobe ${FB} ${OPTS}
+	unset MODPROBE_OPTIONS
+	modprobe -q fbcon
+	modprobe -q ${FB} ${OPTS}
 fi
 
 if [ -e /proc/fb ]; then
