@@ -387,7 +387,7 @@ esac
 . /usr/share/initramfs-tools/hook-functions
 # Begin real processing below this line
 
-if [ ! -x "/sbin/frobnicate" ]; then
+if [ ! \-x "/sbin/frobnicate" ]; then
 	exit 0
 fi
 
@@ -419,11 +419,11 @@ prereqs)
 esac
 
 # Begin real processing below this line
-if [ ! -x "/sbin/frobnicate" ]; then
+if [ ! \-x "/sbin/frobnicate" ]; then
 	panic "Frobnication executable not found"
 fi
 
-if [ ! -e "/dev/mapper/frobb" ]; then
+if [ ! \-e "/dev/mapper/frobb" ]; then
 	panic "Frobnication device not found"
 fi
 
@@ -442,8 +442,8 @@ to double-check if it contains the relevant binaries, libs or modules:
 .nf
 mkdir tmp/initramfs
 cd tmp/initramfs
-gunzip -c -9 /boot/initrd.img-2.6.18-1-686 | \\
-cpio -i -d -H newc --no-absolute-filenames
+gunzip \-c \-9 /boot/initrd.img\-2.6.18\-1\-686 | \\
+cpio \-i \-d \-H newc \-\-no\-absolute\-filenames
 .fi
 .RE
 
