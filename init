@@ -3,7 +3,7 @@
 echo "Loading, please wait..."
 
 [ -d /dev ] || mkdir -m 0755 /dev
-[ -d /root ] || mkdir --mode=0700 /root
+[ -d /root ] || mkdir -m 0700 /root
 [ -d /sys ] || mkdir /sys
 [ -d /proc ] || mkdir /proc
 [ -d /tmp ] || mkdir /tmp
