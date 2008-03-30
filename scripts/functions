@@ -266,8 +266,7 @@ parse_numeric() {
 		;;
 	esac
 
-	mknod /dev/root b ${major} ${minor}
-	chmod 600 /dev/root
+	mknod -m 600 /dev/root b ${major} ${minor}
 	ROOT=/dev/root
 }
 
