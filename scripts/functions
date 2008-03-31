@@ -304,6 +304,12 @@ configure_networking()
 		;;
 	esac
 
-	# source relevant ipconfig output
-	. /tmp/net-${DEVICE}.conf
+	# source ipconfig output
+	if [ -n "${DEVICE}" ]; then
+		# source specific bootdevice
+		. /tmp/net-${DEVICE}.conf
+	else
+		# source any interface as not exaclty specified
+		. /tmp/net-*.conf
+	fi
 }
