@@ -50,6 +50,7 @@ export rootmnt=/root
 export debug=
 export panic=
 export blacklist=
+export resume_offset=
 
 # Parse command line options
 for x in $(cat /proc/cmdline); do
@@ -96,6 +97,9 @@ for x in $(cat /proc/cmdline); do
 		;;
 	resume=*)
 		RESUME="${x#resume=}"
+		;;
+	resume_offset=*)
+		resume_offset="${x#resume_offset=}"
 		;;
 	noresume)
 		noresume=y

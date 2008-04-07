@@ -28,11 +28,13 @@ case $resume in
 	;;
 esac
 
-if [ ! -e "${resume}" ]; then
-	exit 0
-fi
+[ ! -e "${resume}" ] && exit 0
 
-if [ -e /sys/power/resume ]; then
-	# hardcode path, uswsusp ships an resume binary too
+[ ! -e /sys/power/resume ] && exit 0
+
+# hardcode path, uswsusp ships an resume binary too
+if [ -n "${resume_offset}" ]; then
+	/bin/resume ${resume} ${resume_offset}
+else
 	/bin/resume ${resume}
 fi
