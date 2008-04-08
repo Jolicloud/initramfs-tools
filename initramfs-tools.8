@@ -97,6 +97,7 @@ Use blacklist=module1,module2,module3 bootparameter.
 .TP
 \fB \fI panic
 sets an timeout on panic.
+panic=0 is a documented security feature: it disables the debug shell.
 
 .TP
 \fB \fI debug
@@ -442,7 +443,7 @@ to double-check if it contains the relevant binaries, libs or modules:
 .nf
 mkdir tmp/initramfs
 cd tmp/initramfs
-gunzip \-c \-9 /boot/initrd.img\-2.6.18\-1\-686 | \\
+gunzip \-c /boot/initrd.img\-2.6.18\-1\-686 | \\
 cpio \-i \-d \-H newc \-\-no\-absolute\-filenames
 .fi
 .RE
