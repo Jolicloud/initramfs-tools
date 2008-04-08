@@ -140,12 +140,12 @@ backup_booted_initramfs()
 	rm -f ${initramfs_bak}
 }
 
-# restore initramfs backup
-restore_initramfs()
+# nuke generated copy
+remove_initramfs()
 {
 	[ -z "${initramfs_bak}" ] && return 0
 	rm -f "${initramfs_bak}"
-	verbose "Restoring ${initramfs_bak}"
+	verbose "Removing ${initramfs_bak}"
 }
 
 
@@ -161,7 +161,7 @@ generate_initramfs()
 		set_sha1
 	else
 		mkinitramfs_return="$?"
-		restore_initramfs
+		remove_initramfs
 		rm -f "${initramfs}.new"
 		if [ "$mkinitramfs_return" = "2" ]; then
 			# minversion wasn't met, exit 0
