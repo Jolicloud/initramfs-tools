@@ -100,7 +100,8 @@ backup_initramfs()
 	[ ! -r "${initramfs}" ] && return 0
 	initramfs_bak="${initramfs}.dpkg-bak"
 	[ -r "${initramfs_bak}" ] && rm -f "${initramfs_bak}"
-	mv -f "${initramfs}" "${initramfs_bak}"
+	ln -f "${initramfs}" "${initramfs_bak}" \
+		|| cp -a "${initramfs}" "${initramfs_bak}"
 	verbose "Keeping ${initramfs_bak}"
 }
 
@@ -143,8 +144,8 @@ backup_booted_initramfs()
 restore_initramfs()
 {
 	[ -z "${initramfs_bak}" ] && return 0
+	rm -f "${initramfs_bak}"
 	verbose "Restoring ${initramfs_bak}"
-	mv -f "${initramfs_bak}" "${initramfs}"
 }
 
 
@@ -155,11 +156,13 @@ generate_initramfs()
 	if [ "${verbose}" = 1 ]; then
 		OPTS="-v ${OPTS}"
 	fi
-	if mkinitramfs ${OPTS} "${initramfs}" "${version}"; then
+	if mkinitramfs ${OPTS} "${initramfs}.new" "${version}"; then
+		mv -f "${initramfs}.new" "${initramfs}"
 		set_sha1
 	else
 		mkinitramfs_return="$?"
 		restore_initramfs
+		rm -f "${initramfs}.new"
 		if [ "$mkinitramfs_return" = "2" ]; then
 			# minversion wasn't met, exit 0
 			exit 0
