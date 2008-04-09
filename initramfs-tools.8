@@ -78,6 +78,11 @@ the RESUME variable is written to /etc/initramfs-tools/conf.d/resume.
 The boot variable noresume overrides it.
 
 .TP
+\fB \fI resume_offset
+Specify the offset from the partition given by "resume=" at which the swap
+header of the swap file is located.
+
+.TP
 \fB \fI quiet
 reduces the amount of text output to the console during boot.
 
