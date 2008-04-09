@@ -1,3 +1,47 @@
+initramfs-tools (0.92) unstable; urgency=low
+
+  Release "Ogni contrada è patria del ribelle"
+
+  [ maximilian attems ]
+  * init: export ROOTFLAGS + ROOTFSTYPE.
+  * debian/control: s/XS-Vcs/Vcs/
+  * mkinitramfs: Drop gzip -9 option. (closes: #470869)
+    Thanks Tollef Fog Heen <tfheen@err.no>.
+  * Ignore lintian warnings about empty directories.
+  * framebuffer: Let udev create fb devices.
+  * framebuffer: Leave tty devices for udev too.
+  * manpages: fix  hyphen-used-as-minus-sign
+  * init: fix mkdir usage.
+  * init: Set proper permissions of /dev/console mknod fallback.
+  * scripts/function: Use mknod directly.
+  * debian/control: Depend on latest klibc for mknod usage.
+  * scripts/functions: fix configure_networking() for multiple interfaces.
+    (closes: #467078) Thanks Michal Sojka <sojkam1@fel.cvut.cz>.
+  * ps3 nuke useless hardcoded initramfs script. (closes: #468113)
+  * resume: Add support for resume_offset swap file suspend to disk.
+    (closes: #474691) Thanks Alan Jenkins <alan-jenkins@tuffmail.co.uk>.
+  * update-initramfs: Rename function according to reliability fix.
+  * hook-functions: Add atl1, cxgb3, e1000e, igb, ipg, niu, sky2 to
+    net section of initramfs modules. (closes: #463607)
+  * hook-functions: MODULES=dep fix ps3 support.
+  * initramfs-tools.8: Small documentation fixes. (closes: #467627)
+
+  [ debian@x.ray.net ]
+  * configure_network(): do nothing if device already configured.
+    (closes: #465901)
+
+  [ Joey Hess ]
+  * update-initramfs: use dpkg-trigger. (closes: #447611)
+
+  [ Luke Yelavich ]
+  * update-initramfs: Initramfs generation reliability fixes.
+    (closes: #468112)
+
+  [ Fabio M. Di Nitto ]
+  *  hook-functions: Add support for sunvnet and sunvdc.
+
+ -- maximilian attems <maks@debian.org>  Wed, 09 Apr 2008 10:42:49 +0200
+
 initramfs-tools (0.91e) unstable; urgency=medium
 
   [ Daniel Reichelt ]
