@@ -293,7 +293,7 @@ dep_add_modules()
 	fi
 
 	if [ -e /sys/bus/ps3_system_bus/ ]; then
-		for x in ps3disk ps3rom ps3-gelic; do
+		for x in ps3disk ps3rom ps3-gelic ps3_sys_manager; do
 			manual_add_modules "${x}"
 		done
 	fi
