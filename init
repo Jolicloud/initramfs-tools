@@ -27,13 +27,6 @@ mkdir /dev/.initramfs
 export DPKG_ARCH=
 . /conf/arch.conf
 
-# Bring in the main config
-. /conf/initramfs.conf
-for conf in conf/conf.d/*; do
-	[ -f ${conf} ] && . ${conf}
-done
-. /scripts/functions
-
 # Set modprobe env
 export MODPROBE_OPTIONS="-qb"
 
@@ -51,6 +44,13 @@ export debug=
 export panic=
 export blacklist=
 export resume_offset=
+
+# Bring in the main config
+. /conf/initramfs.conf
+for conf in conf/conf.d/*; do
+	[ -f ${conf} ] && . ${conf}
+done
+. /scripts/functions
 
 # Parse command line options
 for x in $(cat /proc/cmdline); do
