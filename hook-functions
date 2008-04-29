@@ -231,7 +231,7 @@ dep_add_modules()
 
 	# check that fstype rootfs recognition
 	if [ "${FSTYPE}" = "unknown" ]; then
-		echo "mkinitramfs: unkown fstype on root ${root}"
+		echo "mkinitramfs: unknown fstype on root ${root}"
 		echo "mkinitramfs: workaround is MODULES=most" 
 		echo "mkinitramfs: Error please report bug against klibc" 
 		exit 1
