@@ -1,3 +1,14 @@
+initramfs-tools (0.92a) unstable; urgency=high
+
+  * ps3: Add ps3_sys_manager to MODULES=dep ps3 modules.
+  * initramfs-tools.8: Document resume_offset bootparam.
+  * Documentation typo fixes and additions.
+  * init: Fix hardcoded ROOT bootcase. (closes: #478236)
+    Thanks Kevin Price <kp@kevin-price.de> for report and
+    Martin Michlmayr <tbm@cyrius.com> for debugging.
+
+ -- maximilian attems <maks@debian.org>  Tue, 29 Apr 2008 21:18:55 +0200
+
 initramfs-tools (0.92) unstable; urgency=low
 
   Release "Ogni contrada è patria del ribelle"
