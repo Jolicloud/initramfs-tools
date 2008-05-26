@@ -222,7 +222,11 @@ dep_add_modules()
 	local block minor root FSTYPE root_dev_path x
 
 	# findout root block device + fstype
-	eval "$(mount | awk '/ \/ / {print "root=" $1 "\nFSTYPE=" $5; exit}')"
+	eval "$(mount | awk '/\/dev\// {if ($3 == "/") {print "root=" $1 "\nFSTYPE=" $5; exit}}')"
+	if [ "${root}" = "/dev/root" ] ; then
+		root="/dev/disk/by-uuid/"$(/lib/udev/vol_id --uuid ${root}) 2>/dev/null
+	fi
+	root="$(readlink -f ${root})"
 
 	# find out real rootfs on auto type
 	if [ "${FSTYPE}" = "auto" ]; then
