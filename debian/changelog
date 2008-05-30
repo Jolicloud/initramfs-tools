@@ -1,3 +1,16 @@
+initramfs-tools (0.92b) unstable; urgency=low
+
+  [ maximilian attems ]
+  * update-initramfs: mbr_check() fix for /dev/md/X naming. (closes: #469312)
+    Thanks to Axel Beckert <beckert@phys.ethz.ch> for report.
+  * hook-functions: MODULES=dep fix error message.
+
+  [ Glennie Vignarajah ]
+  * initramfs-tools: Fix UUID rootfs detection with 'MODULES=dep'.
+    (closes: #483082)
+
+ -- maximilian attems <maks@debian.org>  Fri, 30 May 2008 16:31:42 +0200
+
 initramfs-tools (0.92a) unstable; urgency=high
 
   * ps3: Add ps3_sys_manager to MODULES=dep ps3 modules.
