@@ -201,6 +201,13 @@ mbr_check()
 	boot=$(awk -F = '/^boot=/{ print $2}' /etc/lilo.conf)
 	[ -z "${boot}" ] && return 0
 	case ${boot} in
+	/dev/md/*)
+		if [ -r /proc/mdstat ]; then
+			MD=${boot#/dev/md/}
+			boot="/dev/$(awk "/^md${MD}/{print substr(\$5, 1, 3)}" \
+			/proc/mdstat)"
+		fi
+		;;
 	/dev/md*)
 		if [ -r /proc/mdstat ]; then
 			MD=${boot#/dev/}
