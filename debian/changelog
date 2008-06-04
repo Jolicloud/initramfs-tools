@@ -1,3 +1,10 @@
+initramfs-tools (0.85i) stable; urgency=low
+
+  * update-initramfs: mbr_check() fix for /dev/md/X naming.
+  * hook-functions: Fix Xen boot with Lenny glibc.
+
+ -- maximilian attems <maks@debian.org>  Wed, 04 Jun 2008 17:18:31 +0200
+
 initramfs-tools (0.85h) stable; urgency=low
 
   * hook-functions: Add missing esp module to scsi modules list.
