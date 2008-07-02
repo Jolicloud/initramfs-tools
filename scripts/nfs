@@ -59,6 +59,8 @@ mountroot()
 	# For DHCP
 	modprobe af_packet
 
+	wait_for_udev 10
+
 	# Default delay is around 180s
 	# FIXME: add usplash_write info
 	if [ -z "${ROOTDELAY}" ]; then

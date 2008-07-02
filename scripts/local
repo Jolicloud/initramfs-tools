@@ -31,6 +31,8 @@ mountroot ()
 	run_scripts /scripts/local-top
 	[ "$quiet" != "y" ] && log_end_msg
 
+	wait_for_udev 10
+
 	# If the root device hasn't shown up yet, give it a little while
 	# to deal with removable devices
 	if [ ! -e "${ROOT}" ] || ! $(get_fstype "${ROOT}" >/dev/null); then
