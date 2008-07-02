@@ -157,7 +157,7 @@ maybe_break top
 run_scripts /scripts/init-top
 
 maybe_break modules
-log_begin_msg "Loading essential drivers..."
+log_begin_msg "Loading essential drivers"
 load_modules
 log_end_msg
 
@@ -167,7 +167,7 @@ run_scripts /scripts/init-premount
 [ "$quiet" != "y" ] && log_end_msg
 
 maybe_break mount
-log_begin_msg "Mounting root file system..."
+log_begin_msg "Mounting root file system"
 . /scripts/${BOOT}
 parse_numeric ${ROOT}
 mountroot

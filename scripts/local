@@ -34,7 +34,7 @@ mountroot ()
 	# If the root device hasn't shown up yet, give it a little while
 	# to deal with removable devices
 	if [ ! -e "${ROOT}" ] || ! $(get_fstype "${ROOT}" >/dev/null); then
-		log_begin_msg "Waiting for root file system..."
+		log_begin_msg "Waiting for root file system"
 
 		# Default delay is 180s
 		if [ -z "${ROOTDELAY}" ]; then
