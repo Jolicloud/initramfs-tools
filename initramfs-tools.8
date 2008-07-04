@@ -1,4 +1,4 @@
-.TH INITRAMFS-TOOLS 8  "2007/07/07" "" "mkinitramfs script overview"
+.TH INITRAMFS-TOOLS 8  "2008/07/05" "" "mkinitramfs script overview"
 
 .SH NAME
 initramfs-tools \- an introduction to writing scripts for mkinitramfs
@@ -102,7 +102,7 @@ Use blacklist=module1,module2,module3 bootparameter.
 .TP
 \fB \fI panic
 sets an timeout on panic.
-panic=0 is a documented security feature: it disables the debug shell.
+panic=<sec> is a documented security feature: it disables the debug shell.
 
 .TP
 \fB \fI debug
@@ -115,6 +115,8 @@ Use for example "debug=vc".
 spawns a shell in the initramfs image at chosen run-time
 (top, modules, premount, mount, bottom, init).
 The default is premount without any arg.
+Beware that if both "panic" and "break" are present,
+initramfs will not spawn any shells but reboot instead.
 
 
 .SH HOOK SCRIPTS
