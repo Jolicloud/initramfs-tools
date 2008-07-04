@@ -336,6 +336,9 @@ auto_add_modules()
 	ide)
 		copy_modules_dir kernel/drivers/ide
 	;;
+	mmc)
+		copy_modules_dir kernel/drivers/mmc
+	;;
 	scsi)
 		copy_modules_dir kernel/drivers/scsi
 		for x in mptfc mptsas mptscsih mptspi; do
@@ -380,6 +383,7 @@ auto_add_modules()
 		auto_add_modules dasd
 		auto_add_modules ieee1394
 		auto_add_modules firewire
+		auto_add_modules mmc
 	;;
 	esac
 }
