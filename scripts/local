@@ -87,9 +87,12 @@ mountroot ()
 			fi
 			;;
 		esac
-		echo "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
-		echo "	Check your root= boot argument (cat /proc/cmdline)"
-		panic "	Check for missing modules (cat /proc/modules), or device files (ls /dev)"
+		echo "Gave up waiting for root device.  Common problems:"
+		echo " - Boot args (cat /proc/cmdline)"
+		echo "   - Check rootdelay= (did the system wait long enough?)"
+		echo "   - Check root= (did the system wait for the right device?)"
+		echo " - Missing modules (cat /proc/modules; ls /dev)"
+		panic "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
 	done
 
 	# Get the root filesystem type if not set
