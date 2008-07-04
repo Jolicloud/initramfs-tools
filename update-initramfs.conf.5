@@ -1,4 +1,4 @@
-.TH UPDATE-INITRAMFS.CONF 5  "2007/08/09" "" "update-initramfs.conf manual"
+.TH UPDATE-INITRAMFS.CONF 5  "2008/07/03" "" "update-initramfs.conf manual"
 
 .SH NAME
 update-initramfs.conf \- configuration file for update-initramfs
@@ -16,6 +16,9 @@ Setting it to \fIall\fP updates any known initramfs.
 It is possible to set it to \fIno\fP for remote servers or boxes where
 conservative manners needs to be applied. This disables
 the \fBupdate_initramfs \-u\fP call.
+.TP
+\fB backup_initramfs
+By default \fBupdate_initramfs\fP keeps an .bak file of the previous initramfs. If set to \fIno\fP the backup initramfs will not be kept.
 
 .SH AUTHOR
 The initramfs-tools are written by Maximilian Attems <maks@debian.org>,
