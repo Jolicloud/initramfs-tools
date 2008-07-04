@@ -314,11 +314,9 @@ configure_networking()
 	fi
 }
 
+# Wait for queued kernel/udev events
 wait_for_udev()
 {
-	if [ -x "$(command -v udevsettle)" ]; then
-		[ "$quiet" != "y" ] && log_begin_msg "Waiting for udev to process events"
-		udevsettle ${1:+--timeout=$1}
-		[ "$quiet" != "y" ] && log_end_msg
-	fi
+	[ -x "$(command -v udevsettle)" ] && return 0
+	udevsettle ${1:+--timeout=$1}
 }
