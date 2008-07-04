@@ -1,3 +1,20 @@
+initramfs-tools (0.92c) unstable; urgency=low
+
+  [ maximilian attems ]
+  * doc: fix date string of manual pages.
+  * MODULES=most add mmc host and card drivers for OLPC. (closes: #483431)
+  * update-initramfs.conf.5: document backup_initramfs variable.
+    (closes: #475430)
+  * initramfs-tools.8: Document "break" and "panic" behaviour.
+    (closes: #481196)
+  * wait_for_udev(): simplify, no need for logging.
+
+  [ martin f. krafft ]
+  * Wait for udevsettle after -top scripts ran
+  * init: Remove extra ellipses
+
+ -- maximilian attems <maks@debian.org>  Sat, 05 Jul 2008 00:31:06 +0200
+
 initramfs-tools (0.92b) unstable; urgency=low
 
   [ maximilian attems ]
