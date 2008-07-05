@@ -170,6 +170,7 @@ maybe_break mount
 log_begin_msg "Mounting root file system"
 . /scripts/${BOOT}
 parse_numeric ${ROOT}
+maybe_break mountroot
 mountroot
 log_end_msg
 
