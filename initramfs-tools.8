@@ -38,6 +38,9 @@ the binary to hand over execution to on the root fs after the initramfs scripts 
 .TP
 \fB \fI root
 the device node to mount as the root file system.
+The recommended usage is to specify the UUID as followed "root=UUID=xxx".
+As normal device names are not stable and may change depending on the
+boot order.
 
 .TP
 \fB \fI rootdelay
@@ -117,6 +120,10 @@ spawns a shell in the initramfs image at chosen run-time
 The default is premount without any arg.
 Beware that if both "panic" and "break" are present,
 initramfs will not spawn any shells but reboot instead.
+
+.TP
+\fB \fI all_generic_ide
+loads generic IDE/ATA chipset support on boot.
 
 
 .SH HOOK SCRIPTS
