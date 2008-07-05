@@ -1,3 +1,20 @@
+initramfs-tools (0.92d) unstable; urgency=low
+
+  * Ubuntu merge
+    - More meaningful text for no root device panic from Ubuntu.
+    - Add virtio_pci, udf for MODULES=most root device support.
+    - usplash pulsates: drop code to increment a progress bar after
+      each message.
+    - initramfs-tools.preinst: Try to use UUID for resume device.
+    - add boot script loading ide-generic on all_generic_ide cmdline.
+      Thanks Frans Pop <elendil@planet.nl> for report. (closes: #485786) 
+  * init: add possible mountroot break (closes: #488963)
+  * initramfs-tools.8: document UUID usage for root and all_generic_ide.
+    (closes: #489186)
+  * debian/initramfs-tools.preinst: try with different vol_id pathes.
+
+ -- maximilian attems <maks@debian.org>  Sat, 05 Jul 2008 02:36:10 +0200
+
 initramfs-tools (0.92c) unstable; urgency=low
 
   [ maximilian attems ]
