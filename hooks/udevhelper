@@ -30,7 +30,6 @@ if [ -e $DESTDIR/lib/udev/ ] && [ -e $DESTDIR/lib/udev/hotplug.functions ]; then
 fi
 
 cp /lib/udev/hotplug.functions $DESTDIR/lib/udev/
-copy_exec /lib/udev/ide.agent /lib/udev/
 for program in /lib/udev/*_id; do
 	copy_exec $program /lib/udev/
 done
