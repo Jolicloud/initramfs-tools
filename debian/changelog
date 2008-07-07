@@ -1,3 +1,9 @@
+initramfs-tools (0.92e) unstable; urgency=medium
+
+  * udevhelper hook: drop ide.agent.
+
+ -- maximilian attems <maks@debian.org>  Mon, 07 Jul 2008 13:52:54 +0200
+
 initramfs-tools (0.92d) unstable; urgency=low
 
   * Ubuntu merge
