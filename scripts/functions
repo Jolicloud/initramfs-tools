@@ -3,22 +3,22 @@
 _log_msg()
 {
 	if [ "$quiet" = "y" ]; then return; fi
-	echo "$@"
+	printf "$@"
 }
 
 log_success_msg()
 {
-	_log_msg "Success: $@"
+	_log_msg "Success: $@\n"
 }
 
 log_failure_msg()
 {
-	_log_msg "Failure: $@"
+	_log_msg "Failure: $@\n"
 }
 
 log_warning_msg()
 {
-	_log_msg "Warning: $@"
+	_log_msg "Warning: $@\n"
 }
 
 log_begin_msg()
@@ -26,7 +26,7 @@ log_begin_msg()
 	if [ -x /sbin/usplash_write ]; then
 		/sbin/usplash_write "TEXT $@"
 	fi
-	_log_msg "Begin: $@ ..."
+	_log_msg "Begin: $@ ... "
 }
 
 log_end_msg()
@@ -34,7 +34,7 @@ log_end_msg()
 	if [ -x /sbin/usplash_write ]; then
 		/sbin/usplash_write "SUCCESS ok"
 	fi
-	_log_msg "Done."
+	_log_msg "done.\n"
 }
 
 panic()
