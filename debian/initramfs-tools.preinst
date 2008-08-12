@@ -23,7 +23,7 @@ case "$1" in
 			if [ -x /sbin/vol_id ]; then
 				UUID=$(/sbin/vol_id -u "$RESUME" || true)
 			elif [ -x /lib/udev/vol_id ]; then
-				UUID=$(/sbin/vol_id -u "$RESUME" || true)
+				UUID=$(/lib/udev/vol_id -u "$RESUME" || true)
 			fi
 			if [ -n "$UUID" ]; then
 				RESUME="UUID=$UUID"
