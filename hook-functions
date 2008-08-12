@@ -393,7 +393,7 @@ usage()
 {
 	cat >&2 << EOF
 
-Usage: ${0} [OPTION]... <-o outfile> [version]
+Usage: ${0} [OPTION]... -o outfile [version]
 
 Options:
   -d confdir  Specify an alternative configuration directory.
