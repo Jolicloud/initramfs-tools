@@ -1,3 +1,23 @@
+initramfs-tools (0.92f) unstable; urgency=medium
+
+  [ maximilian attems ]
+  * mkinitramfs: only lvm2 initramfs has busybox dep. (closes: #490875)
+  * mkinitramfs: Fix usage and man outfile arg is not optional.
+    (closes: #493238)
+  * preinst fix vol_id path. (closes: #494433)
+  * update-initramfs: run_bootloader() invoke flash-kernel and glantank-
+    update-kernel in order to have latest initramfs flashed on triggered
+    update. Thanks to Joey Hess <joeyh@debian.org>.
+  * debian/control: Newer standards version without changes.
+
+  [ Chris Lamb ]
+  * make log_begin_msg not emit trailing newline (closes: #494257)
+
+  [ Martin Michlmayr ]
+  * MODULES=dep boot fix for Orion. (closes: #494027)
+
+ -- maximilian attems <maks@debian.org>  Tue, 12 Aug 2008 11:09:11 +0200
+
 initramfs-tools (0.92e) unstable; urgency=medium
 
   * udevhelper hook: drop ide.agent.
