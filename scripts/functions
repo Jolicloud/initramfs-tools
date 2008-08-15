@@ -300,6 +300,6 @@ configure_networking()
 # Wait for queued kernel/udev events
 wait_for_udev()
 {
-	[ -x "$(command -v udevsettle)" ] && return 0
-	udevsettle ${1:+--timeout=$1}
+	[ -x "$(command -v udevadm)" ] && return 0
+	udevadm settle ${1:+--timeout=$1}
 }
