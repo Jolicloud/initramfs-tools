@@ -242,10 +242,13 @@ parse_numeric() {
 		minor=${1#*:}
 		major=${1%:*}
 		;;
-	*)
+	[A-Fa-f0-9]*)
 		value=$(( 0x${1} ))
 		minor=$(( ${value} % 256 ))
 		major=$(( ${value} / 256 ))
+		;;
+	*)
+		return
 		;;
 	esac
 
