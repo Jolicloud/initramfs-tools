@@ -1,3 +1,15 @@
+initramfs-tools (0.92g) unstable; urgency=high
+
+  [ maximilian attems ]
+  * wait_for_udev: s/udevsettle/udevadm/ for upgrades after Lenny.
+  * auto_add_modules: Add ext4 and ext4dev. (closes: #494922)
+
+  [ Andres Salomon ]
+  * Fix parse_numeric() to ignore non hex root string prefixes aka
+    root=mtd0 on OLPC. see #497133
+
+ -- maximilian attems <maks@debian.org>  Tue, 02 Sep 2008 17:50:32 +0200
+
 initramfs-tools (0.92f) unstable; urgency=medium
 
   [ maximilian attems ]
