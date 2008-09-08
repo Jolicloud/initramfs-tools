@@ -1,3 +1,10 @@
+initramfs-tools (0.92i) unstable; urgency=high
+
+  * MODULES=dep fix for root lvm on md. (closes: #498237)
+    Thanks Rod Whitby <rod@whitby.id.au> for report and test.
+
+ -- maximilian attems <maks@debian.org>  Mon, 08 Sep 2008 16:13:24 +0200
+
 initramfs-tools (0.92g) unstable; urgency=high
 
   [ maximilian attems ]
