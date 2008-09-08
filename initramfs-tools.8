@@ -32,89 +32,89 @@ The init and root are usually passed by the boot loader for local boot.
 The other parameters are optional.
 
 .TP
-\fB \fI init
+\fB\fI init
 the binary to hand over execution to on the root fs after the initramfs scripts are done.
 
 .TP
-\fB \fI root
+\fB\fI root
 the device node to mount as the root file system.
 The recommended usage is to specify the UUID as followed "root=UUID=xxx".
 As normal device names are not stable and may change depending on the
 boot order.
 
 .TP
-\fB \fI rootdelay
+\fB\fI rootdelay
 set delay in seconds. Determines how long mountroot waits for root to appear.
 
 .TP
-\fB \fI rootflags
+\fB\fI rootflags
 set the file system mount option string.
 
 .TP
-\fB \fI rootfstype
+\fB\fI rootfstype
 set the root file system type.
 
 .TP
-\fB \fI nfsroot
+\fB\fI nfsroot
 can be either "auto" to try to get the relevant information from DHCP or a
 string of the form NFSSERVER:NFSPATH or NFSSERVER:NFSPATH:NFSOPTS.
 Use root=/dev/nfs for NFS to kick to in.
 
 .TP
-\fB \fI ip
+\fB\fI ip
 tells how to configure the ip address. Allows to specify an different
 NFS server than the DHCP server. See Documentation/nfsroot.txt in
 any recent Linux source for details. Optional paramater for NFS root.
 
 .TP
-\fB \fI cryptopts
+\fB\fI cryptopts
 passes the args for cryptoroot. Set by the cryptsetup boot hooks.
 
 .TP
-\fB \fI boot
+\fB\fI boot
 either local or NFS (affects which initramfs scripts are run, see the "Subdirectories" section under boot scripts).
 
 .TP
-\fB \fI resume
+\fB\fI resume
 On install initramfs-tools tries to autodetect the resume partition. On success
 the RESUME variable is written to /etc/initramfs-tools/conf.d/resume.
 The boot variable noresume overrides it.
 
 .TP
-\fB \fI resume_offset
+\fB\fI resume_offset
 Specify the offset from the partition given by "resume=" at which the swap
 header of the swap file is located.
 
 .TP
-\fB \fI quiet
+\fB\fI quiet
 reduces the amount of text output to the console during boot.
 
 .TP
-\fB \fI ro
+\fB\fI ro
 mounts the rootfs read-only.
 
 .TP
-\fB \fI rw
+\fB\fI rw
 mounts the rootfs read-write.
 
 .TP
-\fB \fI blacklist
+\fB\fI blacklist
 disables load of specific modules.
 Use blacklist=module1,module2,module3 bootparameter.
 
 .TP
-\fB \fI panic
+\fB\fI panic
 sets an timeout on panic.
 panic=<sec> is a documented security feature: it disables the debug shell.
 
 .TP
-\fB \fI debug
+\fB\fI debug
 generates lots of output. It writes a log to /tmp/initramfs.debug.
 Instead when invoked with an arbitrary argument output is written to console.
 Use for example "debug=vc".
 
 .TP
-\fB \fI break
+\fB\fI break
 spawns a shell in the initramfs image at chosen run-time
 (top, modules, premount, mount, mountroot, bottom, init).
 The default is premount without any arg.
@@ -122,7 +122,7 @@ Beware that if both "panic" and "break" are present,
 initramfs will not spawn any shells but reboot instead.
 
 .TP
-\fB \fI all_generic_ide
+\fB\fI all_generic_ide
 loads generic IDE/ATA chipset support on boot.
 
 
@@ -166,7 +166,7 @@ the lvm hook script is run before your custom script.
 /usr/share/initramfs-tools/hook-functions contains a number of functions which
 deal with some common tasks in a hook script:
 .TP
-\fB \fI
+\fB\fI
 manual_add_modules
 adds a module (and any modules which it depends on) to the initramfs image.
 .RS
@@ -176,7 +176,7 @@ manual_add_modules isofs
 .RE
 
 .TP
-\fB \fI
+\fB\fI
 add_modules_from_file
 reads a file containing a list of modules (one per line) to be added to the
 initramfs image. The file can contain comments (lines starting with #) and
@@ -189,7 +189,7 @@ add_modules_from_file /tmp/modlist
 .RE
 
 .TP
-\fB \fI
+\fB\fI
 force_load
 adds a module (and its dependencies) to the initramfs image and also
 unconditionally loads the module during boot. Also supports passing arguments
@@ -201,7 +201,7 @@ force_load cdrom debug=1
 .RE
 
 .TP
-\fB \fI
+\fB\fI
 copy_modules_dir
 copies an entire module directory from /lib/modules/KERNELVERSION/ into the
 initramfs image.
@@ -262,7 +262,7 @@ Where PREREQ is modified to list other scripts in the same subdirectory if neces
 A number of functions (mostly dealing with output) are provided to boot scripts:
 
 .TP
-\fB \fI
+\fB\fI
 log_success_msg
 Logs a success message
 .RS
@@ -272,7 +272,7 @@ log_success_msg "Frobnication successful"
 .RE
 
 .TP
-\fB \fI
+\fB\fI
 log_failure_msg
 Logs a failure message
 .RS
@@ -282,7 +282,7 @@ log_failure_msg "Frobnication component froobz missing"
 .RE
 
 .TP
-\fB \fI
+\fB\fI
 log_warning_msg
 Logs a warning message
 .RS
@@ -292,12 +292,12 @@ log_warning_msg "Only partial frobnication possible"
 .RE
 
 .TP
-\fB \fI
+\fB\fI
 log_begin_msg
 Logs a message that some processing step has begun
 
 .TP
-\fB \fI
+\fB\fI
 log_end_msg
 Logs a message that some processing step is finished
 .RS
@@ -314,7 +314,7 @@ log_end_msg
 .RE
 
 .TP
-\fB \fI
+\fB\fI
 panic
 Logs an error message and executes a shell in the initramfs image to allow the
 user to investigate the situation.
@@ -329,40 +329,40 @@ Both /usr/share/initramfs-tools/scripts and /etc/initramfs-tools/scripts
 contains the following subdirectories.
 
 .TP
-\fB \fI
+\fB\fI
 init-top
 the scripts in this directory are the first scripts to be executed after sysfs
 and procfs have been mounted and /dev/console and /dev/null have been created.
 No other device files are present yet.
 
 .TP
-\fB \fI
+\fB\fI
 init-premount
 runs the udev hooks for populating the /dev tree (udev will keep running until
 init-bottom) after modules specified by hooks and /etc/initramfs-tools/modules
 have been loaded.
 
 .TP
-\fB \fI
+\fB\fI
 local-top OR nfs-top
 After these scripts have been executed, the root device node is expected to be
 present (local) or the network interface is expected to be usable (NFS).
 
 .TP
-\fB \fI
+\fB\fI
 local-premount OR nfs-premount
 are run after the sanity of the root device has been verified (local) or the
 network interface has been brought up (NFS), but before the actual root fs has
 been mounted.
 
 .TP
-\fB \fI
+\fB\fI
 local-bottom OR nfs-bottom
 are run after the rootfs has been mounted (local) or the NFS root share has
 been mounted. udev is stopped.
 
 .TP
-\fB \fI
+\fB\fI
 init-bottom
 are the last scripts to be executed before procfs and sysfs are moved to the
 real rootfs and execution is turned over to the init binary which should now be
@@ -370,7 +370,7 @@ found in the mounted rootfs.
 
 .SS Boot parameters
 .TP
-\fB \fI
+\fB\fI
 /conf/param.conf
 allows boot scripts to change exported variables that are listed on top of init. Write the new values to it. It will be sourced after an boot script run if it exists.
 
