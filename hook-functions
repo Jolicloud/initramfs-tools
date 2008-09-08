@@ -245,12 +245,18 @@ dep_add_modules()
 	# Add rootfs
 	manual_add_modules "${FSTYPE}"
 
-	# lvm luks root
+	# lvm or luks root
 	if [ "${root#/dev/mapper/}" != "${root}" ]; then
 		minor=$((0x$(stat --format "%T" ${root}) % 256))
 		block=$(ls -1 /sys/block/dm-${minor}/slaves | head -n 1)
+		# lvm on luks or luks on lvm
 		if [ "${block#dm-}" != "${block}" ]; then
 			block=$(ls -1 /sys/block/${block}/slaves | head -n 1)
+		fi
+		# lvm on md or luks on md
+		if [ "${block#md}" != "${block}" ]; then
+			block=$(awk "/^${block}/{print substr(\$5, 1, 4); exit}" \
+				/proc/mdstat)
 		fi
 		block=${block%[0-9]*}
 	# md root new naming scheme /dev/md/X
