@@ -1,3 +1,20 @@
+initramfs-tools (0.92j) unstable; urgency=high
+
+  [ Gerfried Fuchs ]
+  * initramfs-tools.8: Nuke useless bold spaces.
+  * initramfs-tools.8: Fix manpage-has-errors-from-man.
+
+  [ maximilian attems ]
+  * Readd zfcp to auto_add_modules. (closes: #498698)
+  * Add dasd_diag_mod to auto_add_modules block section
+    Thanks Bastian Blank <waldi@debian.org>.
+
+  [ Martin Michlmayr ]
+  * initramfs.conf: Mention possible value overriding by d-i for
+    example. (closes: #498712)
+
+ -- maximilian attems <maks@debian.org>  Sat, 13 Sep 2008 12:12:02 +0200
+
 initramfs-tools (0.92i) unstable; urgency=high
 
   * MODULES=dep fix for root lvm on md. (closes: #498237)
