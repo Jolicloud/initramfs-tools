@@ -358,9 +358,6 @@ auto_add_modules()
 	;;
 	block)
 		copy_modules_dir kernel/drivers/block
-		for x in dasd_diag_mod; do
-			manual_add_modules "${x}"
-		done
 	;;
 	# FIXME: can be removed after Lenny release
 	ieee1394)
@@ -379,7 +376,7 @@ auto_add_modules()
 		done
 	;;
 	dasd)
-		for x in dasd_eckd_mod dasd_fba_mod; do
+		for x in dasd_diag_mod dasd_eckd_mod dasd_fba_mod; do
 			manual_add_modules "${x}"
 		done
 	;;
