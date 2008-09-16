@@ -1,3 +1,15 @@
+initramfs-tools (0.92k) unstable; urgency=high
+
+  [ Martin Michlmayr ]
+  * update initramfs.conf according to latest Debian Installer.
+  * update-initramfs: don't run glantank-update-kernel.
+
+  [ maximilian attems ]
+  * auto_add_modules: add dasd_diag_mod to dasd section.
+  * initramfs-tools: Add support for linux-2.6 make deb-pkg target.
+
+ -- maximilian attems <maks@debian.org>  Tue, 16 Sep 2008 14:55:04 +0200
+
 initramfs-tools (0.92j) unstable; urgency=high
 
   [ Gerfried Fuchs ]
