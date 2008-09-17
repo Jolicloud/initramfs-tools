@@ -5,6 +5,6 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 pre-build::
 	chmod +x init mkinitramfs
 	chmod +x hooks/*
-	for x in `find scripts/ kernel/ -maxdepth 1 -type d | tail -n+2`; do \
+	for x in `find scripts/ -maxdepth 1 -type d | tail -n+2`; do \
 	  chmod -R +x $$x; \
 	done
