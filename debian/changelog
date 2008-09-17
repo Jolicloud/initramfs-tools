@@ -1,3 +1,10 @@
+initramfs-tools (0.92l) unstable; urgency=high
+
+  * Revert "initramfs-tools: Add support for linux-2.6 make deb-pkg
+    target" (closes: #499270) thanks Vincent Danjean <vdanjean@debian.org>.
+
+ -- maximilian attems <maks@debian.org>  Wed, 17 Sep 2008 15:38:05 +0200
+
 initramfs-tools (0.92k) unstable; urgency=high
 
   [ Martin Michlmayr ]

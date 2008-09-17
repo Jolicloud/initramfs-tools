@@ -60,6 +60,12 @@ case "$1" in
 			cp /etc/mkinitrd/DSDT /etc/initramfs-tools/DSDT.aml
 		fi
 	;;
+	upgrade)
+		if dpkg --compare-versions "$2" eq "0.92k"; then
+			rm -f /etc/kernel/postinst.d/update-initramfs
+			rm -f /etc/kernel/postrm.d/update-initramfs
+		fi
+	;;
 esac
 
 #DEBHELPER#
