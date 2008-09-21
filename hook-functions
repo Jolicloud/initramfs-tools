@@ -278,6 +278,11 @@ dep_add_modules()
 	elif [ "${root#/dev/ida/}" != "${root}" ]; then
 		block=${root#/dev/ida/*}
 		block="ida!${block%p*}"
+	# loop root /dev/loopX
+	elif [ "${root#/dev/loop}" != "${root}" ]; then
+		root=${root#/dev/}
+		block=$(losetup -a \
+			| awk "/${root}/{print substr(\$3, 7, 3); exit}")
 	# classical root device
 	else
 		block=${root#/dev/}
