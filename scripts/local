@@ -24,14 +24,19 @@ get_fstype ()
 	return ${RET}
 }
 
-# Parameter: Where to mount the filesystem
-mountroot ()
+pre_mountroot()
 {
 	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/local-top"
 	run_scripts /scripts/local-top
 	[ "$quiet" != "y" ] && log_end_msg
 
 	wait_for_udev 10
+
+	# Don't wait for a root device that doesn't have a corresponding
+	# device in /dev (ie, mtd0)
+	if [ "${ROOT#/dev}" = "${ROOT}" ]; then
+		return
+	fi
 
 	# If the root device hasn't shown up yet, give it a little while
 	# to deal with removable devices
@@ -94,6 +99,11 @@ mountroot ()
 		echo " - Missing modules (cat /proc/modules; ls /dev)"
 		panic "ALERT!  ${ROOT} does not exist.  Dropping to a shell!"
 	done
+}
+
+mountroot()
+{
+	pre_mountroot
 
 	# Get the root filesystem type if not set
 	if [ -z "${ROOTFSTYPE}" ]; then
