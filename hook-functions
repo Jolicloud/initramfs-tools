@@ -273,6 +273,10 @@ dep_add_modules()
 	elif [ "${root#/dev/cciss/}" != "${root}" ]; then
 		block=${root#/dev/cciss/*}
 		block="cciss!${block%p*}"
+	# ida device
+	elif [ "${root#/dev/ida/}" != "${root}" ]; then
+		block=${root#/dev/ida/*}
+		block="ida!${block%p*}"
 	# classical root device
 	else
 		block=${root#/dev/}
