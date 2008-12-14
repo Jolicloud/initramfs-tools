@@ -269,6 +269,10 @@ dep_add_modules()
 		root=${root#/dev/}
 		block=$(awk "/^${root}/{print substr(\$5, 1, 3); exit}" \
 			/proc/mdstat)
+	# cciss device
+	elif [ "${root#/dev/cciss/}" != "${root}" ]; then
+		block=${root#/dev/cciss/*}
+		block="cciss!${block%p*}"
 	# classical root device
 	else
 		block=${root#/dev/}
