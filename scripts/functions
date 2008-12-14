@@ -268,13 +268,13 @@ configure_networking()
 		;;
 	""|on|any)
 		# Bring up device
-		ipconfig ${DEVICE}
+		ipconfig -t 60 ${DEVICE}
 		;;
 	dhcp|bootp|rarp|both)
-		ipconfig -c ${IPOPTS} -d ${DEVICE}
+		ipconfig -t 60 -c ${IPOPTS} -d ${DEVICE}
 		;;
 	*)
-		ipconfig -d $IPOPTS
+		ipconfig -t 60 -d $IPOPTS
 
 		# grab device entry from ip option
 		NEW_DEVICE=${IPOPTS#*:*:*:*:*:*}
