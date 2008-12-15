@@ -261,7 +261,8 @@ configure_networking()
 	# networking already configured thus bail out
 	[ -n "${DEVICE}" ] && [ -e /tmp/net-"${DEVICE}".conf ] && return 0
 
-	# support ip options see linux sources Documentation/nfsroot.txt
+	# support ip options see linux sources
+	# Documentation/filesystems/nfsroot.txt
 	case ${IPOPTS} in
 	none|off)
 		# Do nothing
