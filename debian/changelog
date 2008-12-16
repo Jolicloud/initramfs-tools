@@ -1,3 +1,38 @@
+initramfs-tools (0.92m) unstable; urgency=medium
+
+  [ Colin Watson ]
+  * scripts/functions: Call ipconfig with a one-minute timeout.
+  * Make debug option write to /dev/.initramfs/initramfs.debug,
+    so that it can be retrieved after boot.
+
+  [ Julien Danjou ]
+  * scripts/functions: Wrong check for udevadm in functions. (closes: #507059)
+
+  [ maximilian attems ]
+  * scripts/functions: fix not set break variable. (closes: #502058)
+  * MODULES=dep fix for ida devices.
+  * hook-functions: alphebetize net drivers, fix typhoon typo.
+  * Add atl1e, cxgb, ixgb, ixgbe, mlx4_core, netxen_nic, sfc, tehuti to
+    net module list. (closes: #503216)
+  * nuke 0.92k goof clean up.
+  * postrm: set -e flag.
+  * Revert "framebuffer: Let udev create fb devices."
+  * scripts/functions: comment fix path to moved linux-2.6
+    Documentation.
+  * init: Don't leak initramfs-tools exported variables.
+    (closes: #426465, #505440)
+
+  [ dann frazier ]
+  * Fix MODULES=dep for cciss devices. (closes: #507619)
+
+  [ Michal Pokrywka ]
+  * framebuffer: Add support for uvesafb. (closes: #502056)
+
+  [ Andres Salomon ]
+  * fix redboot partition support. (closes: #504555)
+
+ -- maximilian attems <maks@debian.org>  Tue, 16 Dec 2008 16:01:44 +0100
+
 initramfs-tools (0.92l) unstable; urgency=high
 
   * Revert "initramfs-tools: Add support for linux-2.6 make deb-pkg
