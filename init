@@ -204,10 +204,23 @@ if [ ! -x "${rootmnt}${init}" ]; then
 	panic "No init found. Try passing init= bootarg."
 fi
 
-# Confuses /etc/init.d/rc
-if [ -n ${debug} ]; then
-	unset debug
-fi
+# don't leak too much of env - some init(8) don't clear it
+# (keep init, rootmnt)
+unset debug
+unset MODPROBE_OPTIONS
+unset DPKG_ARCH
+unset ROOTFLAGS
+unset ROOTFSTYPE
+unset ROOTDELAY
+unset ROOT
+unset blacklist
+unset break
+unset noresume
+unset panic
+unset quiet
+unset readonly
+unset resume
+unset resume_offset
 
 # Chain to real filesystem
 maybe_break init
