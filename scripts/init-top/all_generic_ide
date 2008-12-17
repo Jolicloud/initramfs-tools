@@ -18,5 +18,10 @@ for x in $(cat /proc/cmdline); do
 	all_generic_ide)
 		modprobe ide-generic
 		;;
+	all_generic_ide=*)
+		if [ ${x#all_generic_ide=} ]; then
+			modprobe ide-generic
+		fi
+		;;
 	esac
 done
