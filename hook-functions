@@ -246,7 +246,8 @@ dep_add_modules()
 	manual_add_modules "${FSTYPE}"
 
 	# lvm or luks root
-	if [ "${root#/dev/mapper/}" != "${root}" ]; then
+	if [ "${root#/dev/mapper/}" != "${root}" ] \
+		|| [ "${root#/dev/dm-}" != "${root}" ]; then
 		minor=$((0x$(stat --format "%T" ${root}) % 256))
 		block=$(ls -1 /sys/block/dm-${minor}/slaves | head -n 1)
 		# lvm on luks or luks on lvm
