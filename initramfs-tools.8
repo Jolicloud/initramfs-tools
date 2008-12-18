@@ -1,4 +1,4 @@
-.TH INITRAMFS-TOOLS 8  "2008/07/05" "" "mkinitramfs script overview"
+.TH INITRAMFS-TOOLS 8  "2008/12/18" "" "mkinitramfs script overview"
 
 .SH NAME
 initramfs-tools \- an introduction to writing scripts for mkinitramfs
@@ -58,7 +58,8 @@ set the root file system type.
 \fB\fI nfsroot
 can be either "auto" to try to get the relevant information from DHCP or a
 string of the form NFSSERVER:NFSPATH or NFSSERVER:NFSPATH:NFSOPTS.
-Use root=/dev/nfs for NFS to kick to in.
+Use root=/dev/nfs for NFS to kick to in. NFSOPTS can be looked up in
+\fInfs(5)\fP.
 
 .TP
 \fB\fI ip
