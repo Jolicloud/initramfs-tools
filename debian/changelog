@@ -1,3 +1,20 @@
+initramfs-tools (0.92n) unstable; urgency=high
+
+  [ Eugene Paskevich ]
+  * hook-functions: Fix MODULES=dep for lvm LABEL fstab notation.
+    (closes: #508906)
+
+  [ maximilian attems ]
+  * all_generic_ide: Also parse boolean bootoption. (closes: #507805)
+  * initramfs-tools.8: Document where to look up NFSOPTS. (closes: #502927)
+  * update-initramfs.8: List -d and mark the non-optional as such.
+
+  [ S. Sakar ]
+  * hook-functions: MODULES=dep fix encrypted loop device.
+    (closes: #499666)
+
+ -- maximilian attems <maks@debian.org>  Fri, 19 Dec 2008 14:03:13 +0100
+
 initramfs-tools (0.92m) unstable; urgency=medium
 
   [ Colin Watson ]
