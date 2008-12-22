@@ -283,6 +283,15 @@ dep_add_modules()
 		root=${root#/dev/}
 		block=$(losetup -a \
 			| awk "/${root}/{print substr(\$3, 7, 3); exit}")
+	# Xen virtual device /dev/xvdX
+	elif [ "${root#/dev/xvd}" != "${root}" ]; then
+		block=${root#/dev/}
+		# Xen has a mode where only the individual partitions are
+		# registered with the kernel as well as the usual full disk
+		# with partition table scheme.
+		if [ ! -e /sys/block/${block} ] ; then
+			block=${block%%[0-9]*}
+		fi
 	# classical root device
 	else
 		block=${root#/dev/}
