@@ -208,6 +208,8 @@ if [ ! -x "${rootmnt}${init}" ]; then
 	panic "No init found. Try passing init= bootarg."
 fi
 
+maybe_break init
+
 # don't leak too much of env - some init(8) don't clear it
 # (keep init, rootmnt)
 unset debug
@@ -227,6 +229,5 @@ unset resume
 unset resume_offset
 
 # Chain to real filesystem
-maybe_break init
 exec run-init ${rootmnt} ${init} "$@" <${rootmnt}/dev/console >${rootmnt}/dev/console
 panic "Could not execute run-init."
