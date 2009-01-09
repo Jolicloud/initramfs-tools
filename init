@@ -70,10 +70,6 @@ for x in $(cat /proc/cmdline); do
 		/dev/nfs)
 			[ -z "${BOOT}" ] && BOOT=nfs
 			;;
-		"")
-			ROOT="/dev/sda1"
-			log_warning_msg "No root specified - trying /dev/sda1."
-			;;
 		esac
 		;;
 	rootflags=*)
