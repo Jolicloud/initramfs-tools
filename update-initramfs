@@ -188,6 +188,7 @@ run_lilo()
 mbr_check()
 {
 	# try to discover grub and be happy
+	# FIXME: check grub2 /boot/grub/grub.cfg
 	[ -r /boot/grub/menu.lst ] \
 		&& groot=$(awk '/^root/{print substr($2, 2, 3); exit}' \
 			/boot/grub/menu.lst)
@@ -232,8 +233,8 @@ mbr_check()
 run_bootloader()
 {
 	# if both lilo and grub around, figure out if lilo needs to be run
-	if [ -x /sbin/grub ] || [ -e /boot/grub/menu.lst ] \
-	|| [ -x /usr/sbin/grub ]; then
+	if [ -x "$(command -v update-grub)" ] || [ -e /boot/grub/menu.lst ] \
+	|| [ -e /boot/grub/grub.cfg ]; then
 		if [ -e /etc/lilo.conf ] && [ -x /sbin/lilo ]; then
 			[ -r "${KPKGCONF}" ] && \
 			do_b=$(awk  '/^do_bootloader/{print $3}' "${KPKGCONF}")
