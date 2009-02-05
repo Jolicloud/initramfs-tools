@@ -95,6 +95,8 @@ case "${version}" in
 	;;
 esac
 
+echo "Depreciation WARNING: use update-initramfs(8)" >&2
+
 # linux-image installs latest version
 mkinitramfs -o ${outfile} ${version}
 sha1sum "${outfile}" | sed -e 's/\.new//' > "${STATEDIR}/${version}"
