@@ -198,7 +198,7 @@ ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
 ln -s /lib/klibc-*.so ${DESTDIR}/lib
 rm -f ${DESTDIR}/bin/kinit* ${DESTDIR}/bin/gzip
 
-cp -p /usr/share/initramfs-tools/init /init
+cp -p /usr/share/initramfs-tools/init ${DESTDIR}/init
 
 # add existant boot scripts
 for b in $(cd /usr/share/initramfs-tools/scripts/ && find . \
@@ -216,7 +216,7 @@ for b in $(cd "${CONFDIR}/scripts" && find . \
 done
 
 echo "DPKG_ARCH=${DPKG_ARCH}" > ${DESTDIR}/conf/arch.conf
-cp -p "${CONFDIR}/initramfs.conf" /conf
+cp -p "${CONFDIR}/initramfs.conf" ${DESTDIR}/conf
 for i in ${EXTRA_CONF}; do
 	if [ -e "${CONFDIR}/conf.d/${i}" ]; then
 		copy_exec "${CONFDIR}/conf.d/${i}" /conf/conf.d
