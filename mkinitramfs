@@ -273,8 +273,9 @@ exec 3>&1
 eval `
     # http://cfaj.freeshell.org/shell/cus-faq-2.html
     exec 4>&1 >&3 3>&-
+    cd  "${DESTDIR}" 
     {
-        cd "${DESTDIR}" && find . 4>&-; echo "ec1=$?;" >&4
+        find . 4>&-; echo "ec1=$?;" >&4
     } | {
         cpio --quiet --dereference -o -H newc 4>&-; echo "ec2=$?;" >&4
     } | gzip >"${outfile}"
