@@ -259,7 +259,7 @@ dep_add_modules()
 			block=$(awk "/^${block}/{print substr(\$5, 1, 4); exit}" \
 				/proc/mdstat)
 		fi
-		block=${block%[0-9]*}
+		block=${block%%[0-9]*}
 	# md root new naming scheme /dev/md/X
 	elif [ "${root#/dev/md/}" != "${root}" ]; then
 		root=${root#/dev/md/}
@@ -286,7 +286,7 @@ dep_add_modules()
 	# classical root device
 	else
 		block=${root#/dev/}
-		block=${block%[0-9]*}
+		block=${block%%[0-9]*}
 	fi
 
 	# Error out if /sys lack block dev
