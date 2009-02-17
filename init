@@ -62,7 +62,34 @@ for x in $(cat /proc/cmdline); do
 		ROOT=${x#root=}
 		case $ROOT in
 		LABEL=*)
-			ROOT="/dev/disk/by-label/${ROOT#LABEL=}"
+			ROOT="${ROOT#LABEL=}"
+
+			# support / in LABEL= paths (escape to \x2f)
+			case "${ROOT}" in
+			*[/]*)
+			if [ -x "$(command -v sed)" ]; then
+				ROOT="$(echo ${ROOT} | sed 's,/,\\x2f,g')"
+			else
+				if [ "${ROOT}" != "${ROOT#/}" ]; then
+					ROOT="\x2f${ROOT#/}"
+				fi
+				if [ "${ROOT}" != "${ROOT%/}" ]; then
+					ROOT="${ROOT%/}\x2f"
+				fi
+				IFS='/'
+				newroot=
+				for s in $ROOT; do
+					if [ -z "${newroot}" ]; then
+						newroot="${s}"
+					else
+						newroot="${newroot}\\x2f${s}"
+					fi
+				done
+				unset IFS
+				ROOT="${newroot}"
+			fi
+			esac
+			ROOT="/dev/disk/by-label/${ROOT}"
 			;;
 		UUID=*)
 			ROOT="/dev/disk/by-uuid/${ROOT#UUID=}"
