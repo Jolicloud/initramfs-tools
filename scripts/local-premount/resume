@@ -20,10 +20,37 @@ if [ -z "${resume}" ]; then
 fi
 
 case $resume in
-	LABEL=*)
-	resume="/dev/disk/by-label/${resume#LABEL=}"
+LABEL=*)
+	resume="${resume#LABEL=}"
+
+	# support any / in LABEL= path (escape to \x2f)
+	case "${resume}" in
+	*[/]*)
+		if [ -x "$(command -v sed)" ]; then
+			resume="$(echo ${resume} | sed 's,/,\\x2f,g')"
+		else
+			if [ "${resume}" != "${resume#/}" ]; then
+				resume="\x2f${resume#/}"
+			fi
+			if [ "${resume}" != "${resume%/}" ]; then
+				resume="${resume%/}\x2f"
+			fi
+			IFS='/'
+			newresume=
+			for s in $resume; do
+				if [ -z "${newresume}" ]; then
+					newresume="${s}"
+				else
+					newresume="${newresume}\\x2f${s}"
+				fi
+			done
+			unset IFS
+			resume="${newresume}"
+		fi
+	esac
+	resume="/dev/disk/by-label/${resume}"
 	;;
-	UUID=*)
+UUID=*)
 	resume="/dev/disk/by-uuid/${resume#UUID=}"
 	;;
 esac
