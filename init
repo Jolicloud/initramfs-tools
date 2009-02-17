@@ -64,7 +64,7 @@ for x in $(cat /proc/cmdline); do
 		LABEL=*)
 			ROOT="${ROOT#LABEL=}"
 
-			# support / in LABEL= paths (escape to \x2f)
+			# support any / in LABEL= path (escape to \x2f)
 			case "${ROOT}" in
 			*[/]*)
 			if [ -x "$(command -v sed)" ]; then
