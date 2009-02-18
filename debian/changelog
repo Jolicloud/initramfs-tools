@@ -1,3 +1,59 @@
+initramfs-tools (0.93) unstable; urgency=low
+
+  Release "Fischia il vento e infuria la bufera"
+
+  [ maximilian attems ]
+  * manpages: Set Linux as necessary OS.
+  * initramfs-tools.8: Fix path of debug log - now kept after boot.
+    (closes: #488804)
+  * mkinitramfs: Use cp with correct DESTDIR instead of copy_exec for configs.
+    Fixes relative pathes for -d option. (closes: #472409)
+  * initramfs-tools.8: Document default 180s rootdelay.
+  * update-initramfs: Fix run_bootloader() to check for grub2.
+    (closes: #511514)
+  * control: Add ${misc:Depends} depends.
+  * nuke old lvm hook scripts.
+  * mkinitramfs-kpkg: deprecate it's usage.
+  * hook-functions: just ship old iee1394 if around.
+  * mkinitramfs: Post-Lenny cleanup.
+  * udevhelper: nuke as need for partial upgrades between etch/lenny.
+  * mkinitramfs: Fix new pipe construct to really work inside
+    "${DESTDIR}".
+  * thermal boot script: Don't load thermal+fan on acpi=off. (closes: #514997)
+  * MODULES=dep fix for minor partitions > 9. (closes: #513958)
+  * initramfs-tools.8: Document mkinitramfs and init env variables.
+    (closes: #512453)
+  * init: Fix boot with LABEL containting one or several '/'. Thanks to
+    Andres Salomon <dilinger@debian.org> for testing. (closes: #489008)
+  * scripts/local-premount/resume: Fix resume with LABEL containing '/'.
+
+  [ e2xbegqsdyt21hfc ]
+  * update-initramfs.8: mentions the specific conf file.
+
+  [ Kel Modderman ]
+  * init: variable `break' unset before `maybe_break init' is evaluated.
+    (closes: #509637)
+
+  [ Kees Cook ]
+  * minitramfs: find/cpio exit codes ignored while building initramfs.
+    (closes: #514938)
+  * mkinitramfs: Do not pass exit code through on pipe failure.
+
+  [ Luke Yelavich ]
+  * hook-functions: Add hid_* modules, since some keyboards will not be
+    usable at the initramfs/busybox prompt without them. (closes: #515866)
+
+  [ Andres Salomon ]
+  * allow root=mtd0 to be used; skip root checks if ROOT doesn't start
+    with /dev. (closes: #497133)
+  * initramfs-tools: Readd support for linux-2.6 make deb-pkg target.
+    (closes: #504551)
+
+  [ Ian Campbell ]
+  * MODULES=dep fix for Xen virtual block devices.
+
+ -- maximilian attems <maks@debian.org>  Wed, 18 Feb 2009 19:10:23 +0100
+
 initramfs-tools (0.92o) unstable; urgency=high
 
   * configure_networking: Raise ipconfig timeout to 180 seconds.
