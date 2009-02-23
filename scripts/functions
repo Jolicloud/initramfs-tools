@@ -263,7 +263,7 @@ configure_networking()
 
 	# support ip options see linux sources
 	# Documentation/filesystems/nfsroot.txt
-	case ${IPOPTS} in
+	case ${IP} in
 	none|off)
 		# Do nothing
 		;;
@@ -272,14 +272,14 @@ configure_networking()
 		ipconfig -t 180 ${DEVICE}
 		;;
 	dhcp|bootp|rarp|both)
-		ipconfig -t 180 -c ${IPOPTS} -d ${DEVICE}
+		ipconfig -t 180 -c ${IP} -d ${DEVICE}
 		;;
 	*)
-		ipconfig -t 180 -d $IPOPTS
+		ipconfig -t 180 -d $IP
 
 		# grab device entry from ip option
-		NEW_DEVICE=${IPOPTS#*:*:*:*:*:*}
-		if [ "${NEW_DEVICE}" != "${IPOPTS}" ]; then
+		NEW_DEVICE=${IP#*:*:*:*:*:*}
+		if [ "${NEW_DEVICE}" != "${IP}" ]; then
 			NEW_DEVICE=${NEW_DEVICE%:*}
 		else
 			# wrong parse, possibly only a partial string

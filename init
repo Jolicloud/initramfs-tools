@@ -35,6 +35,7 @@ export ROOT=
 export ROOTDELAY=
 export ROOTFLAGS=
 export ROOTFSTYPE=
+export IP=
 export break=
 export init=/sbin/init
 export quiet=n
@@ -117,7 +118,7 @@ for x in $(cat /proc/cmdline); do
 		NFSROOT="${x#nfsroot=}"
 		;;
 	ip=*)
-		IPOPTS="${x#ip=}"
+		IP="${x#ip=}"
 		;;
 	boot=*)
 		BOOT=${x#boot=}
@@ -242,6 +243,7 @@ unset ROOTFLAGS
 unset ROOTFSTYPE
 unset ROOTDELAY
 unset ROOT
+unset IP
 unset blacklist
 unset break
 unset noresume
