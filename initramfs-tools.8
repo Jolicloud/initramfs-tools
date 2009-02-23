@@ -1,4 +1,4 @@
-.TH INITRAMFS-TOOLS 8  "2009/02/17" "Linux" "mkinitramfs script overview"
+.TH INITRAMFS-TOOLS 8  "2009/02/23" "Linux" "mkinitramfs script overview"
 
 .SH NAME
 initramfs-tools \- an introduction to writing scripts for mkinitramfs
@@ -491,8 +491,8 @@ correponds to the root boot option.
 Advanced boot scripts like cryptsetup or live-initramfs need to play tricks.
 Otherwise keep it alone.
 .TP
-\fB\fI ROOTDELAY, ROOTFLAGS, ROOTFSTYPE
-correponds to the rootdelay, rootflags or rootfstype boot option.
+\fB\fI ROOTDELAY, ROOTFLAGS, ROOTFSTYPE, IP
+correponds to the rootdelay, rootflags, rootfstype or ip boot option.
 .TP
 \fB\fI DPKG_ARCH
 allows arch specific boot actions.
