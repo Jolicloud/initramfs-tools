@@ -259,7 +259,13 @@ dep_add_modules()
 			block=$(awk "/^${block}/{print substr(\$5, 1, 4); exit}" \
 				/proc/mdstat)
 		fi
-		block=${block%%[0-9]*}
+		# luks or lvm on cciss or ida
+		if [ "${block#cciss}" != "${block}" ] \
+		|| [ "${block#ida}" != "${block}" ]; then
+			block="${block%p*}"
+		else
+			block=${block%%[0-9]*}
+		fi
 	# md root new naming scheme /dev/md/X
 	elif [ "${root#/dev/md/}" != "${root}" ]; then
 		root=${root#/dev/md/}
