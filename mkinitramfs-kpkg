@@ -95,7 +95,7 @@ case "${version}" in
 	;;
 esac
 
-echo "Depreciation WARNING: use update-initramfs(8)" >&2
+echo "Deprecation WARNING: use update-initramfs(8)" >&2
 
 # linux-image installs latest version
 mkinitramfs -o ${outfile} ${version}
