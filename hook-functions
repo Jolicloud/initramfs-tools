@@ -436,7 +436,7 @@ Options:
   -d confdir  Specify an alternative configuration directory.
   -k          Keep temporary directory used to make the image.
   -o outfile  Write to outfile.
-  -r root     Override ROOT setting in mkinitrd.conf.
+  -r root     Override ROOT setting in initramfs.conf.
 
 See mkinitramfs(8) for further details.
 EOF
