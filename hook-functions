@@ -313,6 +313,8 @@ dep_add_modules()
 	# catch old-style IDE
 	if [ -e /sys/bus/ide/devices/ ]; then
 		sys_walk_modalias ${root_dev_path}
+		manual_add_modules ide-gd_mod
+		# FIXME: remove post Squeeze
 		manual_add_modules ide-disk
 		manual_add_modules ide-cd
 	fi
