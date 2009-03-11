@@ -338,11 +338,11 @@ set_current_version()
 
 set_linked_version()
 {
-	if [ -L /initrd.img ]; then
+	if [ -e /initrd.img ] && [ -L /initrd.img ]; then
 		linktarget="$(basename "$(readlink /initrd.img)")"
 	fi
 
-	if [ -L /boot/initrd.img ]; then
+	if [ -e /boot/initrd.img ] && [ -L /boot/initrd.img ]; then
 		linktarget="$(basename "$(readlink /boot/initrd.img)")"
 	fi
 
