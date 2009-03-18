@@ -300,7 +300,7 @@ dep_add_modules()
 
 	# Error out if /sys lack block dev
 	if [ -z "${block}" ] || [ ! -e /sys/block/${block} ]; then
-		echo "mkinitramfs: missing ${block} root ${root} /sys entry"
+		echo "mkinitramfs: for root ${root} missing ${block} /sys/block/ entry"
 		echo "mkinitramfs: workaround is MODULES=most" 
 		echo "mkinitramfs: Error please report the bug" 
 		exit 1
