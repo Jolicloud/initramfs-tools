@@ -292,6 +292,10 @@ dep_add_modules()
 		if [ ! -e /sys/block/${block} ] ; then
 			block=${block%%[0-9]*}
 		fi
+	# mmc root /dev/mmcblkXpX
+	elif [ "${root#/dev/mmcblk}" != "${root}" ]; then
+		block=${root#/dev/}
+		block=${block%%p[0-9]*}
 	# classical root device
 	else
 		block=${root#/dev/}
