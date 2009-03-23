@@ -1,3 +1,33 @@
+initramfs-tools (0.93.1) unstable; urgency=low
+
+  [ maximilian attems ]
+  * init: export ip root param for configure_networking(). (closes: #516746)
+  * initramfs-tools.8: Document exported IP kernel parameter.
+  * initramfs-tools.preinst: Nuke initrd-tools related migration path.
+  * MODULES=dep: ide-disk got renamed to ide-gd_mod since 2.6.28.
+  * mkinitramfs: usage() fix conffile name.
+  * update copyright year of my contributions.
+  * control: conform to latest policy without changes.
+  * hook-functions: reword MODULES=dep error message.
+  * hook-functions: MODULES=dep fix for mmc root. (closes: #520198)
+  * debian/compat: Set debhelper compatibility version 5.
+
+  [ Matt Kraai ]
+  * mkinitramfs-kpkg misspells "deprecation" as "depreciation".
+    (closes: #517344)
+
+  [ Michael Vogt ]
+  * update-initramfs: set_linked_version() check if the links point to
+    an existing initrd.img.
+
+  [ Scott James Remnant ]
+  * mkinitramfs: include the modules.order file.
+
+  [ Ben Collins ]
+  * init-top/framebuffer: ignore blacklist for forced vga= usage.
+
+ -- maximilian attems <maks@debian.org>  Mon, 23 Mar 2009 07:55:16 +0100
+
 initramfs-tools (0.93) unstable; urgency=low
 
   Release "Fischia il vento e infuria la bufera"
