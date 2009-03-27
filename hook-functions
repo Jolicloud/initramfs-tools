@@ -62,13 +62,15 @@ manual_add_modules()
 			continue
 		fi
 		for firmware in $firmwares; do
-			if [ -e "${DESTDIR}/lib/firmware/${firmware}" ]; then
+			if [ -e "${DESTDIR}/lib/firmware/${firmware}" ] \
+			|| [ -e "${DESTDIR}/lib/firmware/${version}/${firmware}" ]; then
 				continue
 			fi
 
 			# Only print warning for missing fw of loaded module
 			# or forced loaded module
-			if [ ! -e "/lib/firmware/${firmware}" ]; then
+			if [ ! -e "/lib/firmware/${firmware}" ] \
+			&& [ ! -e "/lib/firmware/${version}/${firmware}" ]; then
 				if grep -q "^$(basename "${mam_x}" .ko)[[:space:]]" \
 				/proc/modules \
 				|| grep -q "^$(basename "${mam_x}" .ko)" \
@@ -83,7 +85,11 @@ manual_add_modules()
 				copy_exec /lib/udev/firmware.agent
 			fi
 
-			copy_exec "/lib/firmware/${firmware}"
+			if [ -e "/lib/firmware/${version}/${firmware}" ]; then
+				copy_exec "/lib/firmware/${version}/${firmware}"
+			else
+				copy_exec "/lib/firmware/${firmware}"
+			fi
 			if [ "${verbose}" = "y" ]; then
 				echo "Adding firmware ${firmware}"
 			fi
