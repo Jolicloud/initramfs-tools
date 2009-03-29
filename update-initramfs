@@ -187,8 +187,10 @@ run_lilo()
 # check if lilo is on mbr
 mbr_check()
 {
-	# try to discover grub and be happy
-	# FIXME: check grub2 /boot/grub/grub.cfg
+	# try to discover grub|grub2 and be happy
+	[ -r /boot/grub/grub.cfg ] \
+		&& groot=$(awk '/^set root=/{print substr($2, 7, 3); exit}' \
+			/boot/grub/grub.cfg)
 	[ -r /boot/grub/menu.lst ] \
 		&& groot=$(awk '/^root/{print substr($2, 2, 3); exit}' \
 			/boot/grub/menu.lst)
