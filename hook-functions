@@ -388,6 +388,9 @@ auto_add_modules()
 			manual_add_modules "${x}"
 		done
 	;;
+	fb)
+		copy_modules_dir kernel/drivers/video
+	;;
 	ide)
 		copy_modules_dir kernel/drivers/ide
 	;;
@@ -429,6 +432,7 @@ auto_add_modules()
 	*)
 		auto_add_modules base
 		auto_add_modules net
+		auto_add_modules fb
 		auto_add_modules ide
 		auto_add_modules scsi
 		auto_add_modules block
