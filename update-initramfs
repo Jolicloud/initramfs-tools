@@ -233,23 +233,22 @@ mbr_check()
 run_bootloader()
 {
 	# if both lilo and grub around, figure out if lilo needs to be run
-	if [ -x "$(command -v update-grub)" ] || [ -e /boot/grub/menu.lst ] \
-	|| [ -e /boot/grub/grub.cfg ]; then
-		if [ -e /etc/lilo.conf ] && [ -x /sbin/lilo ]; then
-			[ -r "${KPKGCONF}" ] && \
-			do_b=$(awk  '/^do_bootloader/{print $3}' "${KPKGCONF}")
-			if [ "${do_b}" = "yes" ] || [ "${do_b}" = "Yes" ] \
-				|| [ "${do_b}" = "YES" ]; then
-				run_lilo
-				return 0
-			elif [ "${do_b}" = "no" ] || [ "${do_b}" = "No" ] \
-				|| [ "${do_b}" = "NO" ]; then
-				return 0
-			else
-				mbr_check
-				return 0
-			fi
+	if ( [ -x "$(command -v update-grub)" ] || [ -e /boot/grub/menu.lst ] \
+	     || [ -e /boot/grub/grub.cfg ] ) \
+	&& ( [ -e /etc/lilo.conf ] && [ -x /sbin/lilo ] ); then
+		[ -r "${KPKGCONF}" ] && \
+		do_b=$(awk  '/^do_bootloader/{print $3}' "${KPKGCONF}")
+		if [ "${do_b}" = "yes" ] || [ "${do_b}" = "Yes" ] \
+		|| [ "${do_b}" = "YES" ]; then
+			run_lilo
+			return 0
+		elif [ "${do_b}" = "no" ] || [ "${do_b}" = "No" ] \
+		|| [ "${do_b}" = "NO" ]; then
+			return 0
 		fi
+
+		# do_bootloader unconfigured
+		mbr_check
 		return 0
 	fi
 	if [ -r /etc/lilo.conf ] && [ -x /sbin/lilo ]; then
