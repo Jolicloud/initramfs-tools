@@ -390,11 +390,11 @@ update()
 	fi
 
 	if [ -z "${version}" ]; then
-		set_linked_version
+		set_highest_version
 	fi
 
 	if [ -z "${version}" ]; then
-		set_highest_version
+		set_linked_version
 	fi
 
 	if [ -z "${version}" ]; then
