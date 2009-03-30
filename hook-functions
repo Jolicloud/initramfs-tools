@@ -390,6 +390,7 @@ auto_add_modules()
 	;;
 	fb)
 		copy_modules_dir kernel/drivers/video
+		copy_modules_dir kernel/drivers/char/agp
 	;;
 	ide)
 		copy_modules_dir kernel/drivers/ide
