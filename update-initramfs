@@ -504,6 +504,13 @@ while getopts "k:cudyvtb:h?" flag; do
 	esac
 done
 
+shift $((${OPTIND} - 1))
+
+if [ $# -ne 0 ]; then
+	echo "Invalid argument for option -k."	
+	usage
+fi
+
 # Validate arguments
 if [ -z "${mode}" ]; then
 	usage "You must specify at least one of -c, -u, or -d."
