@@ -22,6 +22,9 @@ esac
 case "$DPKG_ARCH" in
 # copy the right modules
 powerpc|ppc64)
+	if [ -e /sys/bus/ps3_system_bus/ ]; then
+		exit 0
+	fi
 	manual_add_modules therm_pm72
 	manual_add_modules windfarm_core
 	manual_add_modules windfarm_cpufreq_clamp
