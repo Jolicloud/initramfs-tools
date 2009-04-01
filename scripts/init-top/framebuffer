@@ -81,6 +81,7 @@ matroxfb)
 intelfb|i810fb)
 	# Needs AGP driver loaded
 	modprobe intel-agp
+	;;
 uvesafb)
 	# v86d requires /dev/zero and dev/mem, but udev haven't been started yet
 	[ -e /dev/zero ] || mknod -m 0666 /dev/zero c 1 5
