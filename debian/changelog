@@ -1,3 +1,31 @@
+initramfs-tools (0.93.2) unstable; urgency=low
+
+  [ François Delawarde ]
+  * hook-functions: MODULES=dep fix for luks over cciss devices.
+    (closes: #517072, #522030)
+
+  [ maximilian attems ]
+  * hook-functions: stricter match on loaded module for firmware
+    warning.
+  * hook-functions: Add first firmware from $(uname -r) versioned
+    directories. (closes: #521370)
+  * hook-functions: MODULES=most add all fb modules per default.
+  * update-initramfs: Cleanup run_bootloader()
+  * update-initramfs: mbr_check() use /boot/grub/grub.cfg for grub2
+    search. (closes: #427509)
+  * update-initramfs: Run update on highest version instead of
+    /initrd.img link. (closes: #493863)
+  * hook-functions: MODULES=most fb add all available agp modules.
+  * update-initramfs: Fix error message on wrong -k version argument.
+  * hooks/thermal: Prevent inclusion of windfarm modules on PS3.
+  * mkinitramfs: Allow dots in boot and script filenames.
+
+  [ Maik Zumstrull ]
+  * init-top/framebuffer: Load intel-agp for intelfb.
+    (closes: #416063, #455876)
+
+ -- maximilian attems <maks@debian.org>  Thu, 02 Apr 2009 12:44:33 +0200
+
 initramfs-tools (0.93.1) unstable; urgency=low
 
   [ maximilian attems ]
