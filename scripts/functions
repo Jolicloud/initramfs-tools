@@ -74,7 +74,7 @@ set_initlist()
 
 		# only allow variable name chars
 		case ${si_x#${initdir}/} in
-		*[![:alnum:]_]*)
+		*[![:alnum:]_.]*)
 			[ "${verbose}" = "y" ] \
 			&& echo "$si_x ignored: not alphanumeric or '_' file"
 			continue
@@ -106,7 +106,7 @@ reduce_satisfied()
 	for rs_y in ${deplist}; do
 		# only allow variable name chars
 		case ${rs_y} in
-		*[![:alnum:]_]*)
+		*[![:alnum:]_.]*)
 			continue
 			;;
 		esac
