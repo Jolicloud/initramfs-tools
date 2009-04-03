@@ -67,8 +67,8 @@ for x in $(cat /proc/cmdline); do
 
 			# support any / in LABEL= path (escape to \x2f)
 			case "${ROOT}" in
-			*[/]*)
-			if [ -x "$(command -v sed)" ]; then
+			*/*)
+			if command -v sed >/dev/null 2>&1; then
 				ROOT="$(echo ${ROOT} | sed 's,/,\\x2f,g')"
 			else
 				if [ "${ROOT}" != "${ROOT#/}" ]; then
@@ -80,11 +80,7 @@ for x in $(cat /proc/cmdline); do
 				IFS='/'
 				newroot=
 				for s in $ROOT; do
-					if [ -z "${newroot}" ]; then
-						newroot="${s}"
-					else
-						newroot="${newroot}\\x2f${s}"
-					fi
+					newroot="${newroot:+${newroot}\\x2f}${s}"
 				done
 				unset IFS
 				ROOT="${newroot}"
