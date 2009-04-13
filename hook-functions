@@ -389,6 +389,9 @@ auto_add_modules()
 		done
 	;;
 	fb)
+		for x in i915; do
+			manual_add_modules "${x}"
+		done
 		copy_modules_dir kernel/drivers/video
 		copy_modules_dir kernel/drivers/char/agp
 	;;
