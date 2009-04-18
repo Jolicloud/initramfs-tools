@@ -265,7 +265,7 @@ run_bootloader()
 		zipl
 	fi
 	if flash-kernel --supported >/dev/null 2>&1; then
-		flash-kernel
+		flash-kernel ${version}
 	fi
 }
 
