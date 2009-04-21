@@ -237,7 +237,7 @@ run_bootloader()
 	# if both lilo and grub around, figure out if lilo needs to be run
 	if ( command -v update-grub >/dev/null 2>&1 \
 		|| [ -e /boot/grub/menu.lst ] || [ -e /boot/grub/grub.cfg ] ) \
-	&& ( [ -e /etc/lilo.conf ] && [ -x /sbin/lilo ] ); then
+	&& ( [ -e /etc/lilo.conf ] && command -v lilo >/dev/null 2>&1 ); then
 		[ -r "${KPKGCONF}" ] && \
 		do_b=$(awk  '/^do_bootloader/{print $3}' "${KPKGCONF}")
 		if [ "${do_b}" = "yes" ] || [ "${do_b}" = "Yes" ] \
@@ -253,11 +253,11 @@ run_bootloader()
 		mbr_check
 		return 0
 	fi
-	if [ -r /etc/lilo.conf ] && [ -x /sbin/lilo ]; then
+	if [ -r /etc/lilo.conf ] && command -v lilo >/dev/null 2>&1; then
 		run_lilo
 		return 0
 	fi
-	if [ -x /sbin/elilo ]; then
+	if command -v elilo >/dev/null 2>&1; then
 		elilo
 		return 0
 	fi
