@@ -18,6 +18,6 @@ Description: tools for generating an initramfs
  Linux kernel. The initramfs is a gzipped cpio archive. At boot time, the
  kernel unpacks that archive into RAM, mounts and uses it as initial root file
  system. The mounting of the real root file system occurs in early user space.
- klibc provides utilities to setup root. Having the root on EVMS, MD, LVM2,
- LUKS or NFS is also supported.
+ klibc provides utilities to setup root. Having the root on MD, LVM2, LUKS or
+ NFS is also supported.
  Any boot loader with initrd support is able to load an initramfs archive.
