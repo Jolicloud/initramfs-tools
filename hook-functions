@@ -388,7 +388,7 @@ auto_add_modules()
 		hp100 igb ipg ixgb ixgbe mace mlx4_core mv643xx_eth myri10ge \
 		natsemi ne2k-pci netconsole netxen_nic niu ns83820 \
 		pcnet32 qla3xxx \
-		r8169 s2io sfc sis900 skge sky2 slhc smc911x starfire \
+		r8169 s2io sfc sis900 skge sky2 slhc smc91x starfire \
 		sundance sungem sungem_phy sunhme sunvnet tehuti tg3 tlan \
 		tulip typhoon via-rhine via-velocity winbond-840 \
 		xircom_cb xircom_tulip_cb yellowfin; do
