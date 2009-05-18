@@ -141,7 +141,7 @@ fi
 DESTDIR="$(mktemp -t -d mkinitramfs_XXXXXX)" || exit 1
 __TMPCPIOGZ="$(mktemp -t mkinitramfs-OL_XXXXXX)" || exit 1
 
-DPKG_ARCH=`dpkg --print-installation-architecture`
+DPKG_ARCH=`dpkg --print-architecture`
 
 # Export environment for hook scripts.
 #

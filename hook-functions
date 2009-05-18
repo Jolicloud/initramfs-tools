@@ -483,7 +483,6 @@ check_minkver()
 	curversion="${1}"
 	initdir="${2}"
 	if [ -z "${initdir}" ]; then
-		DPKG_ARCH=$(dpkg --print-installation-architecture)
 		case ${DPKG_ARCH} in
 			ia64|hppa)
 				minversion="2.6.15"
