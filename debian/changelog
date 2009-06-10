@@ -1,3 +1,23 @@
+initramfs-tools (0.93.3) unstable; urgency=low
+
+  [ maximilian attems ]
+  * cleanup LABEL handling code.
+  * update-initramfs: Use exit code of command -v too.
+  * hook-functions: Add i915 module for kms.
+  * update-initramfs: Pass version to flash-kernel. (closes: #523711)
+  * update-initramfs: Don't hardcode path for lilo or elilo. (closes: #524928)
+  * hook-functions: MODULES=dep error out if sysfs not mounted on /sys.
+    (closes: #524179)
+  * debian/control: No longer mention EVMS in long description.
+  * hook-functions: MODULES=most fix old typo s/smc911x/smc91x/.
+    (closes: #528094)
+  * mkinitramfs: Invoke dpkg --print-architecture. (closes: #529222)
+
+  [ Loic Minier ]
+  * copy_exec: also avoid picking sse2, neon, and vfp hwcaps libs.
+
+ -- maximilian attems <maks@debian.org>  Tue, 21 Apr 2009 15:05:40 +0200
+
 initramfs-tools (0.93.2) unstable; urgency=low
 
   [ François Delawarde ]
