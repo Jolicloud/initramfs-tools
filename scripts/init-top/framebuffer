@@ -78,7 +78,7 @@ matroxfb)
 	# Map command line name to module name
 	FB=matroxfb_base
 	;;
-intelfb|i810fb)
+intelfb|i810fb|i915)
 	# Needs AGP driver loaded
 	modprobe intel-agp
 	;;
