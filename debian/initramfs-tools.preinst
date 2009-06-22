@@ -20,8 +20,8 @@ case "$1" in
 		# First time install.  Can we autodetect the RESUME partition?
 		if [ -r /proc/swaps ]; then
 			RESUME=$(tail -n $(($(wc -l /proc/swaps | awk ' { print $1 } ') - 1)) /proc/swaps | sort -rk3 | head -n 1 | awk ' { print $1 } ')
-			if [ -x /sbin/vol_id ]; then
-				UUID=$(/sbin/vol_id -u "$RESUME" || true)
+			if command -v vol_id >/dev/null 2>&1; then
+				UUID=$(vol_id -u "$RESUME" || true)
 			elif [ -x /lib/udev/vol_id ]; then
 				UUID=$(/lib/udev/vol_id -u "$RESUME" || true)
 			fi
