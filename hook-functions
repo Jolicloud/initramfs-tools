@@ -33,8 +33,9 @@ add_modules_from_file()
 		return
 	fi
 
-	sed -e '/^#/d' ${1} | while read module rest; do
-		force_load "${module}" "${rest}"
+	grep '^[^#]' ${1} | while read module args; do
+		[ -n "$module" ] || continue
+		force_load "${module}" "${args}"
 	done
 }
 
