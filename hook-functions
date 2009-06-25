@@ -391,7 +391,7 @@ auto_add_modules()
 		pcnet32 qla3xxx \
 		r8169 s2io sfc sis900 skge sky2 slhc smc91x starfire \
 		sundance sungem sungem_phy sunhme sunvnet tehuti tg3 tlan \
-		tulip typhoon via-rhine via-velocity winbond-840 \
+		tulip typhoon via-rhine via-velocity virtio_net winbond-840 \
 		xircom_cb xircom_tulip_cb yellowfin; do
 			manual_add_modules "${x}"
 		done
