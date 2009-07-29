@@ -396,13 +396,6 @@ auto_add_modules()
 			manual_add_modules "${x}"
 		done
 	;;
-	fb)
-		for x in i915; do
-			manual_add_modules "${x}"
-		done
-		copy_modules_dir kernel/drivers/video
-		copy_modules_dir kernel/drivers/char/agp
-	;;
 	ide)
 		copy_modules_dir kernel/drivers/ide
 	;;
@@ -444,7 +437,6 @@ auto_add_modules()
 	*)
 		auto_add_modules base
 		auto_add_modules net
-		auto_add_modules fb
 		auto_add_modules ide
 		auto_add_modules scsi
 		auto_add_modules block
