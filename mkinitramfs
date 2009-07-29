@@ -232,7 +232,7 @@ if [ -n "${ROOT}" ]; then
 	echo "ROOT=${ROOT}" > ${DESTDIR}/conf/conf.d/root
 fi
 
-# Modutils
+# module-init-tools
 copy_exec /sbin/modprobe /sbin
 copy_exec /sbin/depmod /sbin
 copy_exec /sbin/rmmod /sbin
