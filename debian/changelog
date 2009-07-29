@@ -1,3 +1,19 @@
+initramfs-tools (0.93.4) unstable; urgency=medium
+
+  [ Aaron M. Ucko ]
+  * scripts/init-top/framebuffer: i915 needs intel-agp too. (closes: #533258)
+
+  [ maximilian attems ]
+  * preinst: Don't hardcode vol_id cmd.
+  * initramfs-tools.8: Convert hyphen to minus sign.
+  * control: bump versioned dep on debhelper.
+  * control: bump standards version without changes.
+  * hook-functions: Fix loading of entries without newline in 
+    /etc/initramfs-tools/modules. (closes: #532745)
+  * MODULES=most: Add virtio_net to initramfs. (closes: #533894)
+
+ -- maximilian attems <maks@debian.org>  Wed, 29 Jul 2009 14:55:04 +0200
+
 initramfs-tools (0.93.3) unstable; urgency=low
 
   [ maximilian attems ]
