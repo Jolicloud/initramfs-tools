@@ -231,7 +231,7 @@ dep_add_modules()
 	local block minor root FSTYPE root_dev_path x
 
 	# require mounted sysfs
-	if [ ! -d /sys/kernel/ ]; then
+	if [ ! -d /sys/devices/ ]; then
 		echo "mkinitramfs: MODULES dep requires mounted sysfs on /sys"
 		exit 1
 	fi
