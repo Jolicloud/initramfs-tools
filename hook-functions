@@ -381,7 +381,7 @@ auto_add_modules()
 {
 	case "$1" in
 	base)
-		for x in ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 \
+		for x in ehci-hcd ohci-hcd uhci-hcd usbhid ext2 \
 		ext3 ext4 ext4dev isofs jfs nfs reiserfs udf xfs af_packet \
 		atkbd i8042 virtio_pci; do
 			manual_add_modules "${x}"
@@ -440,6 +440,9 @@ auto_add_modules()
 			manual_add_modules "${x}"
 		done
 	;;
+	usb_storage)
+		copy_modules_dir kernel/drivers/usb/storage
+	;;
 	*)
 		auto_add_modules base
 		auto_add_modules net
@@ -452,6 +455,7 @@ auto_add_modules()
 		auto_add_modules ieee1394
 		auto_add_modules firewire
 		auto_add_modules mmc
+		auto_add_modules usb_storage
 	;;
 	esac
 }
