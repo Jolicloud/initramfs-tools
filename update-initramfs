@@ -429,12 +429,14 @@ delete()
 
 	set_initramfs
 
-	if [ ! -e "${initramfs}" ]; then
-		panic "Cannot delete ${initramfs}, doesn't exist."
-	fi
+	if [ "${takeover}" = 0 ]; then
+		if [ ! -e "${initramfs}" ]; then
+			panic "Cannot delete ${initramfs}, doesn't exist."
+		fi
 
-	if ! version_exists "${version}"; then
-		panic "Cannot delete version ${version}: Not created by this utility."
+		if ! version_exists "${version}"; then
+			panic "Cannot delete version ${version}: Not created by this utility."
+		fi
 	fi
 
 	altered_check
