@@ -1,10 +1,27 @@
 #!/bin/sh
 
-# passing the kernel version is required
-[ -z "$1" ] && exit 0
+version="$1"
+bootopt=""
 
-# kernel-package passes an extra arg; hack to not run under kernel-package
-[ -z "$2" ] || exit 0
+# passing the kernel version is required
+[ -z "${version}" ] && exit 0
+
+# kernel-package passes an extra arg
+if [ -n "$2" ]; then
+	if [ -n "${KERNEL_PACKAGE_VERSION}" ]; then
+		${bootdir}= $(dirname "$2")
+		bootopt="-b ${bootdir}"
+	else
+		exit 0
+	fi
+fi
+
+if [ -n "$DEB_MAINT_PARAMS" ]; then
+	eval set -- "$DEB_MAINT_PARAMS"
+	if [ -z "$1" ] || [ "$1" != "configure" ]; then
+		exit 0
+	fi
+fi
 
 # we're good - create initramfs.  update runs do_bootloader
-update-initramfs -c -t -k "$1"
+update-initramfs -c -t -k "${version}" ${bootopt}
