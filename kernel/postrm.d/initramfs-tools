@@ -24,4 +24,4 @@ if [ -n "$DEB_MAINT_PARAMS" ]; then
 fi
 
 # delete initramfs
-update-initramfs -d -k "${version}" ${bootopt}
+update-initramfs -d -t -k "${version}" ${bootopt}
