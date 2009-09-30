@@ -9,7 +9,7 @@ bootopt=""
 # kernel-package passes an extra arg
 if [ -n "$2" ]; then
 	if [ -n "${KERNEL_PACKAGE_VERSION}" ]; then
-		${bootdir}= $(dirname "$2")
+		bootdir=$(dirname "$2")
 		bootopt="-b ${bootdir}"
 	else
 		exit 0
