@@ -12,10 +12,12 @@ if [ -n "$2" ]; then
 		bootdir=$(dirname "$2")
 		bootopt="-b ${bootdir}"
 	else
+		# official linux-images take care themself
 		exit 0
 	fi
 fi
 
+# avoid running multiple times
 if [ -n "$DEB_MAINT_PARAMS" ]; then
 	eval set -- "$DEB_MAINT_PARAMS"
 	if [ -z "$1" ] || [ "$1" != "remove" ]; then
