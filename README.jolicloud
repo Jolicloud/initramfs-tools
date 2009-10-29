@@ -1,0 +1,11 @@
+This git repo was made with:
+git clone -o upstream git://git.debian.org/git/kernel/initramfs-tools.git
+
+In order to be able to fetch/merge upstream with git-fetch and git-merge (repectively), you need your .git/config as such:
+
+[remote "upstream"]
+	url = git://git.debian.org/git/kernel/initramfs-tools.git
+	fetch = +refs/heads/*:refs/remotes/upstream/*
+[branch "debian"]
+	remote = upstream
+	merge = refs/heads/master
