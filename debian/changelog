@@ -1,3 +1,296 @@
+initramfs-tools (0.92bubuntu29) jaunty; urgency=low
+
+  * copy_exec: also avoid picking sse2, neon, and vfp hwcaps versions of libs.
+  * Move debhelper and cdbs from -Indep to Build-Depends for clean:.
+
+ -- Loic Minier <lool@dooz.org>  Tue, 14 Apr 2009 11:11:52 +0200
+
+initramfs-tools (0.92bubuntu28) jaunty; urgency=low
+
+  * update-initramfs: copy the logic added in Debian to run flash-kernel after
+    the initrd has been generated (if the system is supported by
+    flash-kernel); flash-kernel is run twice, but at least the system really
+    runs the latest initrd; LP: #358762.
+
+ -- Loic Minier <lool@dooz.org>  Sat, 11 Apr 2009 00:07:04 +0200
+
+initramfs-tools (0.92bubuntu27) jaunty; urgency=low
+
+  * Backport from Debian (LP: #347685):
+    - init: Fix boot with LABEL containing one or several '/'. Thanks to
+      Andres Salomon <dilinger@debian.org> for testing. (closes: #489008)
+    - scripts/local-premount/resume: Fix resume with LABEL containing '/'.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 03 Apr 2009 02:04:34 +0100
+
+initramfs-tools (0.92bubuntu26) jaunty; urgency=low
+
+  * hooks/thermal: Do not load thermal control for macintosh if the device is a PS3. (LP: #346899)
+
+ -- Arnaud Jeansen <arnaud.jeansen@gmail.com>  Thu, 26 Mar 2009 00:41:46 +0100
+
+initramfs-tools (0.92bubuntu25) jaunty; urgency=low
+
+  * mkinitramfs: include the modules.order file.  LP: #296710.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Fri, 13 Mar 2009 16:11:49 +0000
+
+initramfs-tools (0.92bubuntu24) jaunty; urgency=low
+
+  * update-initramfs:
+    - when doing set_linked_version, check if the links point
+      to a existing initrd.img
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 11 Mar 2009 10:25:42 +0100
+
+initramfs-tools (0.92bubuntu23) jaunty; urgency=low
+
+  * Forgot the top-level MODPROBE_OPTIONS set.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Mon, 09 Mar 2009 22:06:46 +0000
+
+initramfs-tools (0.92bubuntu22) jaunty; urgency=low
+
+  * Replace calls to modprobe -Q with -q.  LP: #340128.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Mon, 09 Mar 2009 21:38:45 +0000
+
+initramfs-tools (0.92bubuntu21) jaunty; urgency=low
+
+  * mkinitramfs: catch errors in find/cpio/gzip pipe (debian bug 514938):
+    - git 63cc7b9216d69f413cd5414c96cf2c9a403e03ae
+    - git 93654c9230d3817fa57069012a0b06ccb1df09e4
+
+ -- Kees Cook <kees@ubuntu.com>  Sun, 15 Feb 2009 09:48:50 -0800
+
+initramfs-tools (0.92bubuntu20) jaunty; urgency=low
+
+  * scripts/local-premount/resume: wait for usplash drawing routines
+    to finish by flushing usplash command buffer before starting resume.
+
+ -- Kees Cook <kees@ubuntu.com>  Sun, 08 Feb 2009 07:34:40 -0800
+
+initramfs-tools (0.92bubuntu19) jaunty; urgency=low
+
+  * hook-functions: Add hid_* modules, since some keyboards will not be
+    usable at the initramfs/busybox prompt without them.
+
+ -- Luke Yelavich <themuso@ubuntu.com>  Thu, 29 Jan 2009 07:00:07 +1100
+
+initramfs-tools (0.92bubuntu18) jaunty; urgency=low
+
+  * Add ext4 to the initramfs, in case it stops being built into the kernel.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 08 Jan 2009 13:29:51 +0000
+
+initramfs-tools (0.92bubuntu17) jaunty; urgency=low
+
+  [ Mikael Gerdin ]
+  * Create /dev/mem and /dev/zero if video=uvesafb (LP: #285970).
+
+  [ Colin Watson ]
+  * Make debug option write debug output to /dev/.initramfs/initramfs.debug
+    rather than /tmp/initramfs.debug, so that it can be retrieved after
+    boot.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 26 Nov 2008 17:22:18 +0000
+
+initramfs-tools (0.92bubuntu16) intrepid-proposed; urgency=low
+
+  * Added atl1e to the list of NICs built into the initramfs.
+    -LP: #292411
+
+ -- Tim Gardner <tim.gardner@canonical.com>  Fri, 14 Nov 2008 11:40:29 -0700
+
+initramfs-tools (0.92bubuntu15) intrepid; urgency=low
+
+  [ Dan Munckton ]
+  * Revert "framebuffer: Let udev create fb devices." udev isn't started at
+    this point and therefore can't create framebuffer devices. This causes
+    usplash not to run on PS3 (LP: #274860).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 01 Oct 2008 16:02:37 +0100
+
+initramfs-tools (0.92bubuntu14) intrepid; urgency=low
+
+  * scripts/functions: Call ipconfig with a one-minute timeout rather than
+    waiting forever (LP: #182940).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 01 Oct 2008 14:51:59 +0100
+
+initramfs-tools (0.92bubuntu13) intrepid; urgency=low
+
+  * scripts/local-premount/resume: Fix incorrect resume message by checking
+    for swsusp signature before assuming there's a resume about to happen
+
+ -- Matt Zimmerman <mdz@ubuntu.com>  Tue, 16 Sep 2008 11:49:55 +0100
+
+initramfs-tools (0.92bubuntu12) intrepid; urgency=low
+
+  * scripts/functions: must chvt(1) during failure hooks, as console input
+    might be required (eg, boot degraded raid) (LP: #268873).
+
+ -- Dustin Kirkland <kirkland@ubuntu.com>  Thu, 11 Sep 2008 16:49:17 -0400
+
+initramfs-tools (0.92bubuntu11) intrepid; urgency=low
+
+  * scripts/local-premount/resume: Display a message indicating that a resume
+    has begun.  This is non-localized text, but is better than nothing until
+    we can display a graphical indicator.  (LP: #41137)
+
+ -- Matt Zimmerman <mdz@ubuntu.com>  Thu, 11 Sep 2008 09:26:31 +0100
+
+initramfs-tools (0.92bubuntu10) intrepid; urgency=low
+
+  * drop silly COMPCACHE_PREREQ and SKIP_COMPCACHE hacks, instead we
+    export BOOT from init and deacivate compcache on the fly if booting
+    in casper if we have more than 512M actual ram available.
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 14 Aug 2008 00:10:13 +0200
+
+initramfs-tools (0.92bubuntu9) intrepid; urgency=low
+
+  * Default update-initramfs.conf to not keep backups. With latest
+    last-good-boot, we don't need to any more.
+    TODO: LILO probably wants .bak's since it doesn't do last-good-boot stuff.
+    Should we worry about this?
+
+ -- Ben Collins <ben.collins@canonical.com>  Sun, 03 Aug 2008 17:34:22 -0400
+
+initramfs-tools (0.92bubuntu8) intrepid; urgency=low
+
+  * scripts/functions: Change to tty1 in the panic function to make sure the
+    user can read any error messages displayed. (LP: #243226)
+
+ -- Luke Yelavich <themuso@ubuntu.com>  Tue, 29 Jul 2008 16:29:16 +1000
+
+initramfs-tools (0.92bubuntu7) intrepid; urgency=low
+
+  * scripts/functions:
+    - add_mountroot_fail_hook(): set up symlinks to hooks in tmp directory
+    - try_failure_hooks(): new function that executes each fail hook in
+      lexographic order, exiting successfully if a hook succeeds
+    - panic(): remove the fail hook calling logic, now provided by
+      try_failure_hooks()
+  * scripts/local:
+    - get_fstype(): FSTYPE must be initialized to "unknown" in case the fstype
+      call does not set it
+    - root_missing(): new function to provide the oft-called set of checks on
+      the ROOT device
+    - mountroot(): use root_missing(), and try the failure hooks before giving
+      up
+  * Fixes required for (LP: #120375), lots of help from Kees Cook, thanks!
+
+ -- Dustin Kirkland <kirkland@ubuntu.com>  Fri, 25 Jul 2008 17:34:21 -0500
+
+initramfs-tools (0.92bubuntu6) intrepid; urgency=low
+
+  * Replace /bin/mount by a symlink to busybox if busybox is available;
+    klibc mount doesn't support displaying mount points.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 16 Jul 2008 11:10:05 +0100
+
+initramfs-tools (0.92bubuntu5) intrepid; urgency=low
+
+  * Remove klibc chroot when using busybox, as the former is just wrong
+    (chroot(); execve() rather than chroot(); chdir(); execvp()).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 11 Jul 2008 12:21:21 +0100
+
+initramfs-tools (0.92bubuntu4) intrepid; urgency=low
+
+  * Add COMPCACHE_PREREQ varable (needs to be exported before running 
+    update-initramfs) to the compcache hook script, so that PREREQ can be 
+    filled by apps like casper. with that we are for example able to 
+    disable compcache dynamically if a certain amount of physical ram is 
+    present.
+  * Add SKIP_COMPCACHE variable to init-top script (to be read from 
+    /tmp/compcache.opts which should be filled by a PREREQ script defined in 
+    COMPCACHE_PREREQ) to make it possible to let the script silently die 
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 09 Jul 2008 16:17:39 +0000
+
+initramfs-tools (0.92bubuntu3) intrepid; urgency=low
+
+  * Support loading compcache from the initramfs.
+    - conf/initramfs.conf: Add and document the COMPCACHE_SIZE setting.
+    - initramfs.conf.5: Document the COMPCACHE_SIZE setting.
+    - hooks/compcache: Install the compcache module and a script to initialize
+      the cache if COMPCACHE_SIZE contains a value.
+    - mkinitramfs: export COMPCACHE_SIZE for the hook.
+
+ -- Johan Kiviniemi <debian@johan.kiviniemi.name>  Wed, 09 Jul 2008 03:10:21 +0300
+
+initramfs-tools (0.92bubuntu2) intrepid; urgency=low
+
+  * Whilst looping for the root filesystem, don't just rely on the existance
+    of the block device and whether vol_id succeeds on it, but also make
+    sure that udev is not currently active by calling "settle" on it.  This
+    solves a race where mdadm or devmapper still has a lock on the device,
+    but the contents are ready which will cause the mount call later to fail.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Wed, 02 Jul 2008 16:44:53 +0100
+
+initramfs-tools (0.92bubuntu1) intrepid; urgency=low
+
+  * Merge from debian unstable, remaining changes:
+    - Change Build-Depends to Build-Depends-Indep.
+    - Use busybox-initramfs for Depends.
+    - Do not source udev.conf.
+    - Set BUSBOXDIR properly.
+    - Keep kinit and gzip in initrd.
+    - Use -Qb for for module loading to honor blacklists via the use of
+      MODPROBE_OPTIONS.
+    - all_generic_ide script.
+    - Remove lvm local-top script (conflicts with lvm-common).
+    - takeover=1 in update-initramfs.
+    - Allow the mounting of a root filesystem as a loop device on top
+      of a host filesystem, used for wubi installs.
+    - Add vfat support to the initramfs.
+    - Reduce timeout to 30 seconds -- corner cases (giant
+      disk arrays, clusters) will need to provide their own rootdelay=
+      boot arg.
+    - Keep more meaningful text for no root device panic.
+    - Provide a clearer error on mount failure of the Windows host
+      filesystem.
+    - Add 2>&1 to the run-init line.
+    - Source /scripts/functions in resume script.
+    - resume UUID upgrade.
+    - Add mountroot failure support, to allow meaningful messages when
+      no root device can be found.
+    - Panic if either the root device doesn't exist, or vol_id cannot
+      identify it. Allows for mountroot failure hooks for md devices
+      to be displayed.
+    - Ignore blacklist for forced vga= usage.
+    - Loop for 5 seconds waiting for $suspend to show up, adjustable
+      with the resumedelay= command-line arg.
+    - Load virtio_pci for MODULES=most.
+    - Usplash pulsates until the real init takes over.
+    - Drop scripts/init-premount/thermal as force_load can do this
+      for us during initramfs creation.
+    - Load thermal modules on lpia.
+    - Allow for alternative PREREQS to be specified using | as the
+      separator.
+    - Add udf to auto_add_modules. It was originally added to
+      dep_add_modules, however dep_add_modules now auto-detects the
+      modules needed for the root filesystem.
+  * hook-functions:
+    - Refer to /lib/firmware/${version} where version is the kernel
+      version we are building an initramfs for.
+    - Do not copy /lib/udev/firmware.agent to the initramfs. Ubuntu's
+      udev has /lib/udev/firmware_helper instead, and the udev hook
+      copies this to the initramfs for us.
+    - Dropped the manual_add_firmware function, as initramfs-tools now
+      checks the firmware field in the module it is copying, and copies
+      the firmware required by that module if its available.
+  * Drop hooks/keymap and the KEYMAP variable setting in
+    conf/initramfs.conf as console-setup takes care of keymap loading.
+  * hooks/udevhelper: Drop, udev already copies what it needs.
+  * hooks/legacylvm: Drop, as it refers to binaries and directories our
+    lvm package doesn't have.
+
+ -- Luke Yelavich <themuso@ubuntu.com>  Mon, 30 Jun 2008 15:54:36 +1000
+
 initramfs-tools (0.92b) unstable; urgency=low
 
   [ maximilian attems ]
@@ -361,6 +654,348 @@ initramfs-tools (0.85f) unstable; urgency=high
     downgrades 401916
 
  -- maximilian attems <maks@sternwelten.at>  Wed,  7 Mar 2007 23:34:17 +0100
+
+initramfs-tools (0.85eubuntu41) intrepid; urgency=low
+
+  * Backport from Debian (required for new busybox):
+    - init: Fix mount options invocation for klibc mount.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 11 Jun 2008 18:20:44 +0100
+
+initramfs-tools (0.85eubuntu40) intrepid; urgency=low
+
+  * Add vfat support to the initramfs (LP: #236021).
+
+ -- Evan Dandrea <evand@ubuntu.com>  Fri, 30 May 2008 12:50:50 -0400
+
+initramfs-tools (0.85eubuntu38) intrepid; urgency=low
+
+  * scripts/local: reduce timeout to 30 seconds -- corner cases (giant
+    disk arrays, clusters) will need to provide their own rootdelay=
+    boot arg.  Expanded the failure text to include a hint about the
+    "rootdelay" boot argument.
+
+ -- Kees Cook <kees@ubuntu.com>  Wed, 28 May 2008 13:17:16 -0700
+
+initramfs-tools (0.85eubuntu37) intrepid; urgency=low
+
+  * Provide a clearer error on mount failure of the Windows host
+    filesystem (LP: #226622)
+
+ -- Agostino Russo <agostino.russo@gmail.com>  Tue, 06 May 2008 23:55:47 +0100
+
+initramfs-tools (0.85eubuntu36) hardy; urgency=low
+
+  * Drop dependency on volumeid, it's shipped by udev again.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Thu, 10 Apr 2008 14:00:46 +0100
+
+initramfs-tools (0.85eubuntu35) hardy; urgency=low
+
+  * hook-functions: Do not display find error messages if firmware directories
+    cannot be found. (LP: #153743)
+  * scripts/functions: Remove unneeded quotes. These were causing multiple
+    mountroot fail hook entries to be run as one command.
+  * scripts/local: Panic if the root device node cannot be found, or vol_id
+    can't identify the volume on the device. This allows mdadm's mountroot fail
+    hook to be reliably triggered, as the md device node exists even if the
+    array cannot be brought up.
+  * init: Add 2>&1 to the run-init line at the end of the file, to fix a long
+    outstanding bug where init has no stderr.
+  * scripts/local-premount/resume: Source /scripts/functions, thanks to
+    Nikolaus Filus for the patch. (LP: #203429)
+
+ -- Luke Yelavich <luke.yelavich@canonical.com>  Thu, 10 Apr 2008 00:48:51 +1000
+
+initramfs-tools (0.85eubuntu34) hardy; urgency=low
+
+  * Wow, somehow my fix for 129910 got removed. Re-implement. DO NOT USE -Qb
+    for framebuffer. We need to ignore blacklist for forced vga= usage.
+
+ -- Ben Collins <bcollins@ubuntu.com>  Tue, 18 Mar 2008 11:46:44 -0400
+
+initramfs-tools (0.85eubuntu33) hardy; urgency=low
+
+  * Edit scripts/local with patch from
+    https://bugs.edge.launchpad.net/wubi/+bug/201750 comment 1
+    "Cannot remount loopfiles inside of vfat"
+    "The workaround involves mounting all loopinstallations rw to begin with"
+    Closes LP: #201750
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 17 Mar 2008 14:35:20 +0000
+
+initramfs-tools (0.85eubuntu32) hardy; urgency=low
+
+  * Drop -9 to gzip call in order to save time at a very small size
+    penalty (< 1%)
+
+ -- Tollef Fog Heen <tfheen@ubuntu.com>  Fri, 14 Mar 2008 10:41:38 +0100
+
+initramfs-tools (0.85eubuntu31) hardy; urgency=low
+
+  * debian/initramfs-tools.preinst: If /etc/mkinitramfs/initramfs.conf was not
+    modified, do not copy it over to /etc/initramfs-tools on a dapper->hardy
+    upgrade, since this causes an unnecessary dpkg conffile prompt.
+    (LP: #172853)
+
+ -- Martin Pitt <martin.pitt@ubuntu.com>  Thu, 13 Mar 2008 19:19:59 +0100
+
+initramfs-tools (0.85eubuntu30) hardy; urgency=low
+
+  * Fix check for "ro" on /boot
+    - LP: #197470
+
+ -- Ben Collins <bcollins@ubuntu.com>  Tue, 11 Mar 2008 14:41:15 -0400
+
+initramfs-tools (0.85eubuntu29) hardy; urgency=low
+
+  * Do not honor blacklists for vga=/video= parsing. We should always load the
+    fb drivers in this case (since this is a manual operation on the part of
+    the user)
+    LP: #129910
+
+ -- Ben Collins <bcollins@ubuntu.com>  Tue, 11 Mar 2008 11:46:08 -0400
+
+initramfs-tools (0.85eubuntu28) hardy; urgency=low
+
+  * update-initramfs: remove failed ".new" initrd when creation is aborted.
+
+ -- Kees Cook <kees@ubuntu.com>  Mon, 10 Mar 2008 15:25:03 -0700
+
+initramfs-tools (0.85eubuntu27) hardy; urgency=low
+
+  * Copy the initramfs image to a backup file, in the event that the /boot
+    filesystem doesn't support hard links.
+
+ -- Luke Yelavich <luke.yelavich@canonical.com>  Fri, 07 Mar 2008 09:17:53 +1100
+
+initramfs-tools (0.85eubuntu26) hardy; urgency=low
+
+  * Loop for 5 seconds waiting for $suspend to show up.
+
+ -- Soren Hansen <soren@ubuntu.com>  Fri, 29 Feb 2008 15:34:35 -0500
+
+initramfs-tools (0.85eubuntu25) hardy; urgency=low
+
+  * scripts/functions:
+    - Call all registered mountroot failure hooks, rather than
+      stopping at one that has reported a failure.
+    - Change the loop code that runs mountroot failure hooks, so we don't end up
+      in an infinite loop.
+
+ -- Luke Yelavich <luke.yelavich@canonical.com>  Mon, 18 Feb 2008 11:59:07 +1100
+
+initramfs-tools (0.85eubuntu24) hardy; urgency=low
+
+  * Implement the initramfs-tools part of the initramfs error handling spec
+  * update-initramfs:
+    - Make a hard link to the original initramfs image, rather than moving
+      it out of the way.
+    - Create a new initramfs image to ${initramfs}.new, to ensure we still
+      have a functional initramfs in case of failure. The original initramfs
+      only gets replaced when a new image is successfully created.
+  * scripts/functions:
+    - Added add_mountroot_fail_hook function to allow scripts in
+      init-premount to register a hook to allow extra information
+      to be given to the user, in the event of a non-existant root
+      device.
+    - The panic function now runs any registered mountroot fail hooks that
+      were previously registered, and only does so when passed the -r
+      argument from the calling function.
+  * scripts/local: Call the panic function with -r to run any registered
+    mountroot fail hooks when a root device cannot be found.
+
+ -- Luke Yelavich <themuso@ubuntu.com>  Tue, 05 Feb 2008 13:38:51 +1100
+
+initramfs-tools (0.85eubuntu23) hardy; urgency=low
+
+  * Fix broken test in ro_boot_check (LP: #187282).  It was matching ro
+    as a subword.
+
+ -- Evan Dandrea <evand@ubuntu.com>  Wed, 30 Jan 2008 10:35:28 -0500
+
+initramfs-tools (0.85eubuntu22) hardy; urgency=low
+
+  * Load virtio_pci for MODULES=most.
+
+ -- Soren Hansen <soren@ubuntu.com>  Wed, 23 Jan 2008 19:27:18 +0100
+
+initramfs-tools (0.85eubuntu21) hardy; urgency=low
+
+  * Drop code to increment the usplash progress bar after each message,
+    instead this will be pulsating until the real system.  LP: #162397.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Tue, 13 Nov 2007 20:41:33 +0000
+
+initramfs-tools (0.85eubuntu20) gutsy; urgency=low
+
+  * Updates for ps3 modules
+
+ -- Ben Collins <bcollins@ubuntu.com>  Thu, 04 Oct 2007 10:31:53 -0400
+
+initramfs-tools (0.85eubuntu19) gutsy; urgency=low
+
+  * Always mount loop-mount NTFS host filesystems read-write; ntfs-3g can't
+    remount yet.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 06 Sep 2007 23:36:24 +0100
+
+initramfs-tools (0.85eubuntu18) gutsy; urgency=low
+
+  * Use dpkg-trigger even in our own postinst, unless we're doing
+    trigger processing or the running dpkg version doesn't support
+    reflexive triggers.  This reduces update-initramfs runs from two per
+    upgrade batch to one per batch.
+
+ -- Ian Jackson <iwj@ubuntu.com>  Fri, 24 Aug 2007 15:45:38 +0100
+
+initramfs-tools (0.85eubuntu17) gutsy; urgency=low
+
+  * Use dpkg-trigger (if available and operational) to save on
+    calls to update-initramfs.
+
+ -- Ian Jackson <iwj@ubuntu.com>  Thu, 16 Aug 2007 16:03:52 +0100
+
+initramfs-tools (0.85eubuntu16) gutsy; urgency=low
+
+  * Load thermal modules on lpia as well.  This may need to change in
+    the future to support hardware-specific features, but it's a start.
+
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Tue, 31 Jul 2007 15:30:42 +1000
+
+initramfs-tools (0.85eubuntu15) gutsy; urgency=low
+
+  * Add support for loop=, loopflags=, and loopfstype= arguments, to allow
+    the real root filesystem to be loop-mounted from a given file on the
+    filesystem specified by root=.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 30 Jul 2007 16:46:19 +0100
+
+initramfs-tools (0.85eubuntu14) gutsy; urgency=low
+  
+  * Add support for sunvnet and sunvdc in hook-functions.
+
+ -- Fabio M. Di Nitto <fabbione@ubuntu.com>  Wed, 04 Jul 2007 18:59:22 +0200
+
+initramfs-tools (0.85eubuntu13) gutsy; urgency=low
+
+  * fix nfsroot handling if rootserver is specified with IP and colon in
+    root-path (debian bug #387808)
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 04 Jul 2007 10:19:49 +0200
+
+initramfs-tools (0.85eubuntu12) gutsy; urgency=low
+
+  * Add support for alternative prerequisites, specified as e.g.
+    "kbd|console-tools" (note the lack of spaces around the "|").
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 01 Jun 2007 16:14:22 +0100
+
+initramfs-tools (0.85eubuntu11) gutsy; urgency=low
+
+  * Allow modules specified by force_load to be blacklisted.
+  * Drop scripts/init-premount/thermal since this can be handled by using
+    force_load now.
+
+  * Make sure framebuffer modules can be blacklisted.
+
+  * Drop mdrun script, since this can be handled entirely within the udev
+    and initramfs scripts supplied by the mdadm package.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Tue, 22 May 2007 10:42:34 +0100
+
+initramfs-tools (0.85eubuntu10) feisty; urgency=low
+
+  * As well as waiting for the existance of the root device node, also check
+    to see whether we have a filesystem of some kind on it.  Some devices
+    nodes (devmapper/LVM/EVMS, mdadm) will exist before they can be safely
+    used.  LP: #103177.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Fri, 13 Apr 2007 10:51:27 +0100
+
+initramfs-tools (0.85eubuntu9) feisty; urgency=low
+
+  * Add patch to restore initramfs on failures. Taken from Debian's
+    initramfs-tools git repo (5dfd85f416a10b1c41ca7005de38b58715c04472).
+  * While we're here, remove snd_ps3 from autoload list on PS3. Isn't in
+    initramfs. Installer will add it to /etc/modules.
+
+ -- Ben Collins <bcollins@ubuntu.com>  Tue, 10 Apr 2007 11:05:45 -0400
+
+initramfs-tools (0.85eubuntu8) feisty; urgency=low
+
+  * Add support for the netboot variable, used by casper.  LP: #96072.
+
+ -- Tollef Fog Heen <tfheen@ubuntu.com>  Fri, 30 Mar 2007 23:25:45 +0200
+
+initramfs-tools (0.85eubuntu7) feisty; urgency=low
+
+  * Use -Qb for ppc thermal modprobe's
+  * Add snd_ps3 to ps3 module loads. Use -Qb here too.
+
+ -- Ben Collins <bcollins@ubuntu.com>  Thu, 29 Mar 2007 19:54:40 -0400
+
+initramfs-tools (0.85eubuntu6) feisty; urgency=low
+
+  * hook-functions: Add udf to dep_add_modules and auto_add_modules.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 23 Mar 2007 19:47:51 +0000
+
+initramfs-tools (0.85eubuntu5) feisty; urgency=low
+
+  * Copy all of drivers/block/ to initramfs. Can't believe we didn't do this
+    before.
+  * Add init-premount hook to manually load modules for ps3. These modules do
+    not have aliases or auto-load features, so have to do it by hand
+    (ps3-system-bus).
+  * For auto module inclusions, detect when we need to pack ps3 modules.
+
+ -- Ben Collins <bcollins@ubuntu.com>  Thu,  1 Mar 2007 16:45:48 -0500
+
+initramfs-tools (0.85eubuntu4) feisty; urgency=low
+
+  * Remove the 10MB size restriction from /dev; this doesn't make sense for
+    Ubuntu since we use /dev for initramfs/realfs handover and for things like
+    bootchart. 
+
+ -- Scott James Remnant <scott@ubuntu.com>  Tue, 27 Feb 2007 15:00:54 +0000
+
+initramfs-tools (0.85eubuntu3) feisty; urgency=low
+
+  * Add aic94xx firmware hooks.
+
+ -- Ben Collins <bcollins@ubuntu.com>  Wed, 21 Feb 2007 15:34:56 -0500
+
+initramfs-tools (0.85eubuntu2) feisty; urgency=low
+
+  * Don't load vga16fb on amd64 either. usplash 0.4-36 fixes things so that
+    we don't need it (LP: #67545).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed,  7 Feb 2007 09:55:05 +0000
+
+initramfs-tools (0.85eubuntu1) feisty; urgency=low
+
+  * Merge from debian unstable, remaining changes:
+    - Change Build-Depends to Build-Depends-Indep.
+    - Use busybox-initramfs for Depends.
+    - RESUME UUID upgrade.
+    - add_firmware addition to hook-functions.
+    - Use copy_modules_dir for auto module copying.
+    - noexec,nodev,nosuid options for /sys and /proc.
+    - Do not source udev.conf.
+    - Set BUSBOXDIR properly.
+    - Keep kinit and gzip in initrd.
+    - Use -Qb for for module loading to honor blacklists.
+    - all_generic_ide script.
+    - Only load vga16fb on amd64 (not i386).
+    - Remove lvm local-top script (conflicts with lvm-common).
+    - takeover=1 in update-initramfs.
+    - Remove udev_helper local-top script. It loads ide-generic, and we don't
+      want that.
+      - Closes: #76872
+
+ -- Ben Collins <bcollins@ubuntu.com>  Tue,  2 Jan 2007 20:28:59 -0500
 
 initramfs-tools (0.85e) unstable; urgency=high
 
@@ -949,6 +1584,41 @@ initramfs-tools (0.69ubuntu22) feisty; urgency=low
     taken care of.
 
  -- Ben Collins <bcollins@ubuntu.com>  Thu, 23 Nov 2006 02:10:29 -0500
+
+initramfs-tools (0.69ubuntu20) edgy; urgency=low
+
+  * Add the LSI Logic MegaRAID SAS Driver (megaraid_sas) to the SCSI
+    module list, common on newer Dell PowerEdge servers, among others.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Wed, 25 Oct 2006 18:16:15 +1000
+
+initramfs-tools (0.69ubuntu19) edgy; urgency=low
+
+  * Check for "modules.dep" before running depmod, not "modules.depmod"
+    which won't ever exist.  This caused depmod to be run after live
+    filesystem generation without the restricted modules available, it
+    could also randomly cause the same to happen on upgrades depending
+    on the order packages are configured.  Ubuntu: #60938.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Tue, 24 Oct 2006 18:51:09 +0100
+
+initramfs-tools (0.69ubuntu18) edgy; urgency=low
+
+  * Anchor regex in sed command to revert conffile edits, to avoid
+    double-commenting RESUME= and causing a conffile prompt on upgrades
+    (Closes: LP#66599)
+
+ -- Matt Zimmerman <mdz@ubuntu.com>  Wed, 18 Oct 2006 04:54:45 -0700
+
+initramfs-tools (0.69ubuntu17) edgy; urgency=low
+
+  [ Tollef Fog Heen ]
+  * Load vga16fb on amd64.
+
+  [ Adam Conrad ]
+  * ... but only when booting with a splash.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Tue, 17 Oct 2006 12:29:35 +1000
 
 initramfs-tools (0.69ubuntu16) edgy; urgency=low
 

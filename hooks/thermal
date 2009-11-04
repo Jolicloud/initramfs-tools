@@ -22,22 +22,25 @@ esac
 case "$DPKG_ARCH" in
 # copy the right modules
 powerpc|ppc64)
-	manual_add_modules therm_pm72
-	manual_add_modules windfarm_core
-	manual_add_modules windfarm_cpufreq_clamp
-	manual_add_modules windfarm_lm75_sensor
-	manual_add_modules windfarm_max6690_sensor
-	manual_add_modules windfarm_pid
-	manual_add_modules windfarm_pm112
-	manual_add_modules windfarm_pm81
-	manual_add_modules windfarm_pm91
-	manual_add_modules windfarm_smu_controls
-	manual_add_modules windfarm_smu_sat
-	manual_add_modules windfarm_smu_sensors
-	manual_add_modules i2c-powermac
+	# Add thermal control of Macintosh if the system is not a PS3
+	if [ ! -e /sys/bus/ps3_system_bus/ ]; then
+		force_load therm_pm72
+		force_load windfarm_core
+		force_load windfarm_cpufreq_clamp
+		force_load windfarm_lm75_sensor
+		force_load windfarm_max6690_sensor
+		force_load windfarm_pid
+		force_load windfarm_pm112
+		force_load windfarm_pm81
+		force_load windfarm_pm91
+		force_load windfarm_smu_controls
+		force_load windfarm_smu_sat
+		force_load windfarm_smu_sensors
+		force_load i2c-powermac
+	fi
 	;;
-i386|amd64|ia64)
-	manual_add_modules fan
-	manual_add_modules thermal
+i386|amd64|ia64|lpia)
+	force_load fan
+	force_load thermal
 	;;
 esac

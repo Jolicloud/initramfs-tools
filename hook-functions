@@ -62,28 +62,23 @@ manual_add_modules()
 			continue
 		fi
 		for firmware in $firmwares; do
-			if [ -e "${DESTDIR}/lib/firmware/${firmware}" ]; then
+			if [ -e "${DESTDIR}/lib/firmware/${version}/${firmware}" ]; then
 				continue
 			fi
 
 			# Only print warning for missing fw of loaded module
 			# or forced loaded module
-			if [ ! -e "/lib/firmware/${firmware}" ]; then
+			if [ ! -e "/lib/firmware/${version}/${firmware}" ]; then
 				if grep -q "^$(basename "${mam_x}" .ko)" \
 				/proc/modules \
 				|| grep -q "^$(basename "${mam_x}" .ko)" \
 				"${CONFDIR}/modules"; then
-					echo "W: Possible missing firmware /lib/firmware/${firmware} for module $(basename ${mam_x} .ko)" >&2
+					echo "W: Possible missing firmware /lib/firmware/${version}/${firmware} for module $(basename ${mam_x} .ko)" >&2
 				fi
 				continue
 			fi
 
-			if [ ! -e "${DESTDIR}/lib/udev/firmware.agent" ] \
-			&& [ -e "/lib/udev/firmware.agent" ]; then
-				copy_exec /lib/udev/firmware.agent
-			fi
-
-			copy_exec "/lib/firmware/${firmware}"
+			copy_exec "/lib/firmware/${version}/${firmware}"
 			if [ "${verbose}" = "y" ]; then
 				echo "Adding firmware ${firmware}"
 			fi
@@ -146,8 +141,9 @@ copy_exec() {
 	    s/[[:blank:]]*\([^[:blank:]]*\) (.*)/\1/' 2>/dev/null); do
 
 		# Try to use non-optimised libraries where possible.
-		# We assume that all HWCAP libraries will be in tls.
-		nonoptlib=$(echo "${x}" | sed -e 's#/lib/\(tls\|i686\).*/\(lib.*\)#/lib/\2#')
+		# We assume that all HWCAP libraries will be in tls,
+		# sse2, vfp or neon
+		nonoptlib=$(echo "${x}" | sed -e 's#/lib/\(tls\|i686\|sse2\|neon\|vfp\).*/\(lib.*\)#/lib/\2#')
 
 		if [ -e "${nonoptlib}" ]; then
 			x="${nonoptlib}"
@@ -315,13 +311,18 @@ auto_add_modules()
 {
 	case "$1" in
 	base)
-		for x in ehci-hcd ohci-hcd uhci-hcd usbhid usb-storage ext2 \
-		ext3 isofs jfs nfs reiserfs xfs af_packet atkbd i8042; do
+		for x in ehci-hcd ohci-hcd uhci-hcd usbhid hid_a4tech \
+		hid_apple hid_belkin hid_bright hid_cherry hid_chicony \
+		hid_cypress hid_dell hid_ezkey hid_gyration hid_logitech \
+		hid_microsoft hid_monterey hid_petalynx hid_pl 	hid_samsung \
+		hid_sony hid_sunplus hid_tmff hid_zpff usb-storage ext2 \
+		ext3 ext4 isofs jfs nfs reiserfs udf xfs af_packet atkbd i8042 \
+		virtio_pci vfat nls_cp437 nls_iso8859-1; do
 			manual_add_modules "${x}"
 		done
 	;;
 	net)
-		for x in 3c59x 8139cp 8139too 8390 atl1 b44 bmac \
+		for x in 3c59x 8139cp 8139too 8390 atl1 atl1e b44 bmac \
 		bnx2 cxgb3 defxx dl2k e100 e1000 e1000e ehea epic100 \
 		ep93xx_eth eql fealnx famachi forcedeth gelic_net \
 		hp100 igb ipg mace mv643xx_eth myri10ge \

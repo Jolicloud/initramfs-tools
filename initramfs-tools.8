@@ -52,6 +52,19 @@ set the file system mount option string.
 set the root file system type.
 
 .TP
+\fB \fI loop
+path within the original root file system to loop-mount and use as the real
+root file system.
+
+.TP
+\fB \fI loopflags
+set the loop file system mount option string, if applicable.
+
+.TP
+\fB \fI loopfstype
+set the loop file system type, if applicable.
+
+.TP
 \fB \fI nfsroot
 can be either "auto" to try to get the relevant information from DHCP or a
 string of the form NFSSERVER:NFSPATH or NFSSERVER:NFSPATH:NFSOPTS.
@@ -106,7 +119,7 @@ panic=0 is a documented security feature: it disables the debug shell.
 
 .TP
 \fB \fI debug
-generates lots of output. It writes a log to /tmp/initramfs.debug.
+generates lots of output. It writes a log to /dev/.initramfs/initramfs.debug.
 Instead when invoked with an arbitrary argument output is written to console.
 Use for example "debug=vc".
 
@@ -313,6 +326,20 @@ user to investigate the situation.
 .PP
 .B Example:
 panic "Frobnication failed"
+.fi
+.RE
+.RE
+
+.TP
+\fB \fI
+add_mountroot_fail_hook
+Registers the script as able to provide possible further information, in the
+event that the root device cannot be found. See the example script in the
+initramfs-tools examples directory for more information.
+.RS
+.PP
+.B Example:
+add_mountroot_fail_hook
 .RE
 
 .SS Subdirectories

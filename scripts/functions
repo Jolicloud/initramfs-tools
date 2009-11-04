@@ -35,23 +35,39 @@ log_end_msg()
 		/sbin/usplash_write "SUCCESS ok"
 	fi
 	_log_msg "Done."
-	update_progress
 }
 
-update_progress()
+# Add failure hook
+add_mountroot_fail_hook()
 {
-	[ -d /dev/.initramfs ] || return
+	mkdir -p /tmp/mountroot-fail-hooks.d
+	ln -s "$0" /tmp/mountroot-fail-hooks.d/"$1"
+}
 
-	if [ -z "$PROGRESS_STATE" ]; then
-		export PROGRESS_STATE=0
-	fi
+# Run failure hooks.
+# When a failure hook exits "1", it has not done anything to correct the
+# system.  Exiting "0" means that something has been attempted to resolve
+# the lack of a root filesystem.
+# Hooks are run in lexigraphical order, and are responsible for removing
+# themselves if they should not re-run in a later cycle.  When one exits
+# "0", the stack is stopped, so the caller can return to the main rootfs
+# wait loop.
+try_failure_hooks()
+{
+	local hook
 
-	PROGRESS_STATE=$(($PROGRESS_STATE + 1))
-	echo "PROGRESS_STATE=${PROGRESS_STATE}" > /dev/.initramfs/progress_state
-
+	# Disable usplash so text from hooks can be seen
 	if [ -x /sbin/usplash_write ]; then
-		/sbin/usplash_write "PROGRESS $PROGRESS_STATE"
+		/sbin/usplash_write "QUIT"
 	fi
+	chvt 1
+
+	for hook in /tmp/mountroot-fail-hooks.d/*; do
+		if [ -x ${hook} ] && ${hook} mountfail; then
+			return 0
+		fi
+	done
+	return 1
 }
 
 panic()
@@ -59,11 +75,14 @@ panic()
 	if [ -x /sbin/usplash_write ]; then
 		/sbin/usplash_write "QUIT"
 	fi
+	chvt 1
+
 	# Disallow console access
 	if [ -n "${panic}" ]; then
 		sleep ${panic}
 		reboot
 	fi
+
 	modprobe i8042
 	modprobe atkbd
 	echo $@
@@ -121,21 +140,50 @@ reduce_satisfied()
 	deplist="$(render array_${1})"
 	unset tmpdeplist
 	for rs_y in ${deplist}; do
-		# only allow variable name chars
+		# check if there are alternatives
 		case ${rs_y} in
-		*[![:alnum:]_]*)
-			continue
+		*\|*)
+			OLD_IFS="$IFS"
+			IFS="|"
+			for rs_z in ${rs_y}; do
+				IFS="$OLD_IFS"
+				# only allow variable name chars
+				case ${rs_z} in
+				*[![:alnum:]_]*)
+						IFS="|"
+						continue
+						;;
+				esac
+				# skip non executable scripts
+				if [ ! -x ${initdir}/${rs_z} ]; then
+					IFS="|"
+					continue
+				fi
+				# skip directories
+				if [ -d ${initdir}/${rs_z} ]; then
+					IFS="|"
+					continue
+				fi
+				tmpdeplist="${tmpdeplist} ${rs_z}"
+				break
+			done
+			IFS="$OLD_IFS"
+			;;
+		*)
+			case ${rs_y} in
+			*[![:alnum:]_]*)
+				continue
+				;;
+			esac
+			if [ ! -x ${initdir}/${rs_y} ]; then
+				continue
+			fi
+			if [ -d ${initdir}/${rs_y} ]; then
+				continue
+			fi
+			tmpdeplist="${tmpdeplist} ${rs_y}"
 			;;
 		esac
-		# skip non executable scripts
-		if [ ! -x ${initdir}/${rs_y} ]; then
-			continue
-		fi
-		# skip directories
-		if [ -d ${initdir}/${rs_y} ]; then
-			continue
-		fi
-		tmpdeplist="${tmpdeplist} ${rs_y}"
 	done
 	deplist=${tmpdeplist}
 	for rs_x in ${runlist}; do
@@ -282,13 +330,13 @@ configure_networking()
 		;;
 	""|on|any)
 		# Bring up device
-		ipconfig ${DEVICE}
+		ipconfig -t 60 ${DEVICE}
 		;;
 	dhcp|bootp|rarp|both)
-		ipconfig -c ${IPOPTS} -d ${DEVICE}
+		ipconfig -t 60 -c ${IPOPTS} -d ${DEVICE}
 		;;
 	*)
-		ipconfig -d $IPOPTS
+		ipconfig -t 60 -d $IPOPTS
 
 		# grab device entry from ip option
 		NEW_DEVICE=${IPOPTS#*:*:*:*:*:*}

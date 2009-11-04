@@ -262,6 +262,9 @@ run_bootloader()
 	if [ -r /etc/zipl.conf ]; then
 		zipl
 	fi
+	if flash-kernel --supported >/dev/null 2>&1; then
+		flash-kernel
+	fi
 }
 
 compare_sha1()
@@ -334,11 +337,11 @@ set_current_version()
 
 set_linked_version()
 {
-	if [ -L /initrd.img ]; then
+	if [ -L /initrd.img -a -e /initrd.img ]; then
 		linktarget="$(basename "$(readlink /initrd.img)")"
 	fi
 
-	if [ -L /boot/initrd.img ]; then
+	if [ -L /boot/initrd.img -a -e /boot/initrd.img ]; then
 		linktarget="$(basename "$(readlink /boot/initrd.img)")"
 	fi
 
@@ -459,7 +462,7 @@ altered_check()
 verbose=0
 yes=0
 # We default to takeover=1 in Ubuntu, but not Debian
-takeover=0
+takeover=1
 
 ##
 

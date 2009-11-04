@@ -13,11 +13,7 @@ mount -t proc -o nodev,noexec,nosuid none /proc
 
 # Note that this only becomes /dev on the real filesystem if udev's scripts
 # are used; which they will be, but it's worth pointing out
-tmpfs_size="10M"
-if [ -e /etc/udev/udev.conf ]; then
-	. /etc/udev/udev.conf
-fi
-mount -t tmpfs -o size=$tmpfs_size,mode=0755 udev /dev
+mount -t tmpfs -o mode=0755 udev /dev
 [ -e /dev/console ] || mknod -m 0600 /dev/console c 5 1
 [ -e /dev/null ] || mknod /dev/null c 1 3
 > /dev/.initramfs-tools
@@ -62,7 +58,34 @@ for x in $(cat /proc/cmdline); do
 		ROOT=${x#root=}
 		case $ROOT in
 		LABEL=*)
-			ROOT="/dev/disk/by-label/${ROOT#LABEL=}"
+			ROOT="${ROOT#LABEL=}"
+
+			# support / in LABEL= paths (escape to \x2f)
+			case "${ROOT}" in
+			*[/]*)
+			if [ -x "$(command -v sed)" ]; then
+				ROOT="$(echo ${ROOT} | sed 's,/,\\x2f,g')"
+			else
+				if [ "${ROOT}" != "${ROOT#/}" ]; then
+					ROOT="\x2f${ROOT#/}"
+				fi
+				if [ "${ROOT}" != "${ROOT%/}" ]; then
+					ROOT="${ROOT%/}\x2f"
+				fi
+				IFS='/'
+				newroot=
+				for s in $ROOT; do
+					if [ -z "${newroot}" ]; then
+						newroot="${s}"
+					else
+						newroot="${newroot}\\x2f${s}"
+					fi
+				done
+				unset IFS
+				ROOT="${newroot}"
+			fi
+			esac
+			ROOT="/dev/disk/by-label/${ROOT}"
 			;;
 		UUID=*)
 			ROOT="/dev/disk/by-uuid/${ROOT#UUID=}"
@@ -86,8 +109,26 @@ for x in $(cat /proc/cmdline); do
 			;;
 		esac
 		;;
+	resumedelay=*)
+		RESUMEDELAY="${x#resumedelay=}"
+		;;
+	loop=*)
+		LOOP="${x#loop=}"
+		;;
+	loopflags=*)
+		LOOPFLAGS="-o ${x#loopflags=}"
+		;;
+	loopfstype=*)
+		LOOPFSTYPE="${x#loopfstype=}"
+		;;
+	cryptopts=*)
+		cryptopts="${x#cryptopts=}"
+		;;
 	nfsroot=*)
 		NFSROOT="${x#nfsroot=}"
+		;;
+	netboot=*)
+		NETBOOT="${x#netboot=}"
 		;;
 	ip=*)
 		IPOPTS="${x#ip=}"
@@ -124,7 +165,7 @@ for x in $(cat /proc/cmdline); do
 	debug)
 		debug=y
 		quiet=n
-		exec >/tmp/initramfs.debug 2>&1
+		exec >/dev/.initramfs/initramfs.debug 2>&1
 		set -x
 		;;
 	debug=*)
@@ -152,6 +193,10 @@ fi
 
 depmod -a
 maybe_break top
+
+# export BOOT variable value for compcache,
+# so we know if we run from casper
+export BOOT
 
 # Don't do log messages here to avoid confusing usplash
 run_scripts /scripts/init-top
@@ -210,5 +255,5 @@ fi
 
 # Chain to real filesystem
 maybe_break init
-exec run-init ${rootmnt} ${init} "$@" <${rootmnt}/dev/console >${rootmnt}/dev/console
+exec run-init ${rootmnt} ${init} "$@" <${rootmnt}/dev/console >${rootmnt}/dev/console 2>&1
 panic "Could not execute run-init."

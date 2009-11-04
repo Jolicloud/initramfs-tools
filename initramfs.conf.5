@@ -48,6 +48,25 @@ The keymap will anyway be loaded by the initscripts later, and the packages
 that might need input will normally set this variable automatically, so there
 should normally be no need to set this.
 
+.TP
+\fB COMPCACHE_SIZE
+
+Amount of RAM to use for RAM-based compressed swap space.
+The default is not to use compcache.
+
+An empty value \- compcache isn't used, or added to the initramfs at all.
+
+An integer and K (e.g. \fI65536 K\fP) \- use a number of kilobytes.
+
+An integer and M (e.g. \fI256 M\fP) \- use a number of megabytes.
+
+An integer and G (e.g. \fI1 G\fP) \- use a number of gigabytes.
+
+An integer and % (e.g. \fI50 %\fP) \- use a percentage of the amount of RAM.
+
+You can optionally install the \fIcompcache\fP package to configure this
+setting via debconf and have userspace scripts to load and unload compcache.
+
 .SH NFS VARIABLES
 .TP
 \fB BOOT

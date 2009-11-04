@@ -8,8 +8,8 @@ keep="n"
 CONFDIR="/etc/initramfs-tools"
 verbose="n"
 errors_to="2>/dev/null"
-# BUSYBOXDIR="/usr/lib/initramfs-tools/bin/"
-BUSYBOXDIR="/bin"
+BUSYBOXDIR="/usr/lib/initramfs-tools/bin/"
+# BUSYBOXDIR="/bin"
 
 OPTIONS=`getopt -o d:ko:r:v --long supported-host-version:,supported-target-version: -n "$0" -- "$@"`
 
@@ -176,6 +176,7 @@ export DPKG_ARCH
 export verbose
 export KEYMAP
 export MODULES
+export COMPCACHE_SIZE
 
 # Private, used by 'catenate_cpiogz'.
 export __TMPCPIOGZ
@@ -183,6 +184,12 @@ export __TMPCPIOGZ
 for d in bin conf/conf.d etc lib/modules sbin scripts ${MODULESDIR}; do
 	mkdir -p "${DESTDIR}/${d}"
 done
+
+# Copy the modules.order file in
+if [ -f "${MODULESDIR}/modules.order" ]; then
+	cp -p "${MODULESDIR}/modules.order" \
+	      "${DESTDIR}${MODULESDIR}/modules.order"
+fi
 
 # MODULES=list case.  Always honour.
 for x in "${CONFDIR}/modules" /usr/share/initramfs-tools/modules.d/*; do
@@ -219,7 +226,6 @@ esac
 # klibc
 ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
 ln -s /lib/klibc-*.so ${DESTDIR}/lib
-rm -f ${DESTDIR}/bin/kinit* ${DESTDIR}/bin/gzip
 
 copy_exec /usr/share/initramfs-tools/init /init
 
@@ -267,6 +273,12 @@ else
 	rm -f ${DESTDIR}/bin/busybox
 	copy_exec ${BUSYBOXDIR}/busybox /bin/busybox
 	ln -s ${BUSYBOXDIR}/busybox ${DESTDIR}/bin/sh
+	# klibc's version is just wrong; patch sent upstream by maks
+	rm -f ${DESTDIR}/bin/chroot
+	# klibc's version can't display mounts, which casper needs; fuse
+	# needs /bin/mount to exist, so add a symlink
+	rm -f ${DESTDIR}/bin/mount
+	ln -s busybox ${DESTDIR}/bin/mount
 fi
 
 # Modutils
@@ -290,7 +302,25 @@ if [ -e "${CONFDIR}/DSDT.aml" ]; then
 fi
 
 [ "${verbose}" = y ] && echo "Building cpio ${outfile} initramfs"
-(cd "${DESTDIR}" && find . | cpio --quiet --dereference -o -H newc | gzip >"${outfile}") || exit 1
+(
+# work around lack of "set -o pipefail" for the following pipe:
+# cd "${DESTDIR}" && find . | cpio --quiet --dereference -o -H newc | gzip >"${outfile}"
+exec 3>&1
+eval `
+    # http://cfaj.freeshell.org/shell/cus-faq-2.html
+    exec 4>&1 >&3 3>&-
+    cd  "${DESTDIR}" 
+    {
+        find . 4>&-; echo "ec1=$?;" >&4
+    } | {
+        cpio --quiet --dereference -o -H newc 4>&-; echo "ec2=$?;" >&4
+    } | gzip >"${outfile}"
+    echo "ec3=$?;" >&4
+`
+if [ "$ec1" -ne 0 ]; then exit "$ec1"; fi
+if [ "$ec2" -ne 0 ]; then exit "$ec2"; fi
+if [ "$ec3" -ne 0 ]; then exit "$ec3"; fi
+) || exit 1
 
 if [ -s "${__TMPCPIOGZ}" ]; then
 	cat "${__TMPCPIOGZ}" >>"${outfile}" || exit 1
