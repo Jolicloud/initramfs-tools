@@ -19,6 +19,13 @@ if [ -z "${resume}" ]; then
 	exit 0
 fi
 
+if [ -e /conf/page_size.conf ]; then
+	. /conf/page_size.conf
+else
+	PAGE_SIZE=4096 # fallback
+fi
+export PAGE_SIZE
+
 case $resume in
 LABEL=*)
 	resume="${resume#LABEL=}"
@@ -57,7 +64,7 @@ esac
 
 . ./scripts/functions
 
-if [ ! -e "${resume}" ] || ! /lib/udev/vol_id "${resume}" >/dev/null 2>&1; then
+if [ ! -e "${resume}" ] || ! /sbin/blkid -p "${resume}" >/dev/null 2>&1; then
 	log_begin_msg "Waiting for resume device..."
 
 	# Default delay is 5s
@@ -71,7 +78,7 @@ if [ ! -e "${resume}" ] || ! /lib/udev/vol_id "${resume}" >/dev/null 2>&1; then
 	fi
 
 	slumber=$(( ${slumber} * 10 ))
-	while [ ! -e "${resume}" ] || ! /lib/udev/vol_id "${resume}" >/dev/null 2>&1; do
+	while [ ! -e "${resume}" ] || ! /sbin/blkid -p "${resume}" >/dev/null 2>&1; do
 		/bin/sleep 0.1
 		slumber=$(( ${slumber} - 1 ))
 		[ ${slumber} -gt 0 ] || break
@@ -86,7 +93,12 @@ if [ ! -e "${resume}" ] || ! /lib/udev/vol_id "${resume}" >/dev/null 2>&1; then
 fi
 
 magic=SWAPSPACE2S1SUSPEND
-str=$(dd if=$resume bs=1 skip=4076 count=19)
+if [ -n "${resume_offset}" ]; then
+	offset=$(($PAGE_SIZE * $resume_offset + 4076))
+else
+	offset=4076
+fi
+str=$(dd if=$resume bs=1 skip=$offset count=19 2>/dev/null)
 magic_found=
 
 if [ "$str" = "$magic" ]; then
@@ -105,9 +117,9 @@ fi
 
 # hardcode path, uswsusp ships an resume binary too
 if [ -n "${resume_offset}" ]; then
-	/bin/resume ${resume} ${resume_offset}
+	/bin/resume ${resume} ${resume_offset} >/dev/null 2>&1
 else
-	/bin/resume ${resume}
+	/bin/resume ${resume} >/dev/null 2>&1
 fi
 
 # Not reached if resume is successful

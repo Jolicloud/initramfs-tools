@@ -8,7 +8,7 @@ get_fstype ()
 	local FS FSTYPE FSSIZE RET
 	FS="${1}"
 
-	# vol_id has a more complete list of file systems,
+	# blkid has a more complete list of file systems,
 	# but fstype is more robust
 	eval $(fstype "${FS}" 2> /dev/null)
 
@@ -16,8 +16,8 @@ get_fstype ()
 		FSTYPE="unknown"
 	fi
 
-	if [ "$FSTYPE" = "unknown" ] && [ -x /lib/udev/vol_id ]; then
-		FSTYPE=$(/lib/udev/vol_id -t "${FS}" 2> /dev/null)
+	if [ "$FSTYPE" = "unknown" ] && [ -x /sbin/blkid ]; then
+		FSTYPE=$(/sbin/blkid -s TYPE -o value "${FS}" 2> /dev/null)
 	fi
 	RET=$?
 
@@ -164,8 +164,8 @@ able to reboot again and resume the installation.
 		else
 			FSTYPE="${LOOPFSTYPE}"
 		fi
-		if [ "$FSTYPE" = "unknown" ] && [ -x /lib/udev/vol_id ]; then
-			FSTYPE=$(/lib/udev/vol_id -t "/host/${LOOP#/}")
+		if [ "$FSTYPE" = "unknown" ] && [ -x /sbin/blkid ]; then
+			FSTYPE=$(/sbin/blkid -s TYPE -o value "/host/${LOOP#/}")
 			[ -z "$FSTYPE" ] && FSTYPE="unknown"
 		fi
 

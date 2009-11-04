@@ -162,9 +162,10 @@ if [ ! -e "${MODULESDIR}/modules.dep" ]; then
 fi
 
 DESTDIR="$(mktemp -t -d mkinitramfs_XXXXXX)" || exit 1
+chmod 755 "${DESTDIR}"
 __TMPCPIOGZ="$(mktemp -t mkinitramfs-OL_XXXXXX)" || exit 1
 
-DPKG_ARCH=`dpkg --print-installation-architecture`
+DPKG_ARCH=`dpkg --print-architecture`
 
 # Export environment for hook scripts.
 #
@@ -226,12 +227,16 @@ esac
 # klibc
 ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
 ln -s /lib/klibc-*.so ${DESTDIR}/lib
+rm -f ${DESTDIR}/bin/kinit* ${DESTDIR}/bin/gzip
 
 copy_exec /usr/share/initramfs-tools/init /init
 
 # add existant boot scripts
 for b in $(cd /usr/share/initramfs-tools/scripts/ && find . \
 	-regextype posix-extended -regex '.*/[[:alnum:]_]+$' -type f); do
+	option=$(sed '/^OPTION=/!d;$d;s/^OPTION=//;s/[[:space:]]*$//' "/usr/share/initramfs-tools/scripts/${b}")
+	[ -z "${option}" ] || eval test -n \"\${$option}\" -a \"\${$option}\" != \"n\" || continue
+
 	[ -d "${DESTDIR}/scripts/$(dirname "${b}")" ] \
 		|| mkdir -p "${DESTDIR}/scripts/$(dirname "${b}")"
 	cp -p "/usr/share/initramfs-tools/scripts/${b}" \
@@ -239,12 +244,16 @@ for b in $(cd /usr/share/initramfs-tools/scripts/ && find . \
 done
 for b in $(cd "${CONFDIR}/scripts" && find . \
 	-regextype posix-extended -regex '.*/[[:alnum:]_]+$' -type f); do
+	option=$(sed '/^OPTION=/!d;$d;s/^OPTION=//;s/[[:space:]]*$//' "${CONFDIR}/scripts/${b}")
+	[ -z "${option}" ] || eval test -n \"\${$option}\" -a \"\${$option}\" != \"n\" || continue
+
 	[ -d "${DESTDIR}/scripts/$(dirname "${b}")" ] \
 		|| mkdir -p "${DESTDIR}/scripts/$(dirname "${b}")"
 	cp -p "${CONFDIR}/scripts/${b}" "${DESTDIR}/scripts/$(dirname "${b}")/"
 done
 
 echo "DPKG_ARCH=${DPKG_ARCH}" > ${DESTDIR}/conf/arch.conf
+echo "PAGE_SIZE=$(getconf PAGESIZE)" > ${DESTDIR}/conf/page_size.conf
 copy_exec "${CONFDIR}/initramfs.conf" /conf
 for i in ${EXTRA_CONF}; do
 	if [ -e "${CONFDIR}/conf.d/${i}" ]; then
@@ -269,6 +278,13 @@ if [ "${BUSYBOX}" = "n" ] || [ ! -e ${BUSYBOXDIR}/busybox ]; then
 		echo "Warning: Busybox is required for successful boot!"
 	fi
 else
+	# Busybox is configured to prefer its own applets, so remove
+	# duplication from klibc.
+	for cmd in `${BUSYBOXDIR}/busybox | sed -n '/functions:$/,$p' \
+		| tail -n +2 \
+		| sed -e 's/[[:space:]]*//g; s/,$//; s/,/\n/g; /busybox/d'`; do
+		rm -f ${DESTDIR}/bin/${cmd}
+	done
 	rm -f ${DESTDIR}/bin/sh
 	rm -f ${DESTDIR}/bin/busybox
 	copy_exec ${BUSYBOXDIR}/busybox /bin/busybox
@@ -279,6 +295,12 @@ else
 	# needs /bin/mount to exist, so add a symlink
 	rm -f ${DESTDIR}/bin/mount
 	ln -s busybox ${DESTDIR}/bin/mount
+	# ... but some scripts expect /bin/sleep to exist. Boo.
+	ln -s busybox ${DESTDIR}/bin/sleep
+	# Useless
+	for cmd in minips nuke sh.shared; do
+		rm -f ${DESTDIR}/bin/${cmd}
+	done
 fi
 
 # Modutils
@@ -288,13 +310,16 @@ copy_exec /sbin/rmmod /sbin
 mkdir -p "${DESTDIR}/etc/modprobe.d"
 cp -a /etc/modprobe.d/* "${DESTDIR}/etc/modprobe.d/"
 
+# util-linux
+copy_exec /sbin/blkid /sbin
+
 # workaround: libgcc always needed on old-abi arm
 if [ "$DPKG_ARCH" = arm ] || [ "$DPKG_ARCH" = armeb ]; then
 	cp -a /lib/libgcc_s.so.1 "${DESTDIR}/lib/"
 fi
 
-run_scripts /usr/share/initramfs-tools/hooks
-run_scripts "${CONFDIR}"/hooks
+run_scripts /usr/share/initramfs-tools/hooks optional
+run_scripts "${CONFDIR}"/hooks optional
 
 # Apply DSDT to initramfs
 if [ -e "${CONFDIR}/DSDT.aml" ]; then

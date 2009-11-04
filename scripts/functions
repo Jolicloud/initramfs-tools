@@ -254,6 +254,11 @@ reduce_prereqs()
 call_scripts()
 {
 	for cs_x in ${runlist}; do
+		if [ x"$1" = "xoptional" ]; then
+			option=$(sed '/^OPTION=/!d;$d;s/^OPTION=//;s/[[:space:]]*$//' "${initdir}/${cs_x}")
+			[ -z "${option}" ] || eval test -n \"\${$option}\" -a \"\${$option}\" != \"n\" || continue
+		fi
+
 		# mkinitramfs verbose output
 		if [ "${verbose}" = "y" ]; then
 			echo "Calling hook ${cs_x}"
@@ -272,7 +277,7 @@ run_scripts()
 	[ ! -d ${initdir} ] && return
 	get_prereqs
 	reduce_prereqs
-	call_scripts
+	call_scripts $2
 }
 
 # Load custom modules first

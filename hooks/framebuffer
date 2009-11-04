@@ -1,5 +1,6 @@
 #!/bin/sh
 
+OPTION=USPLASH
 PREREQ=""
 
 prereqs()
@@ -15,11 +16,14 @@ prereqs)
 	;;
 esac
 
-# Hooks for loading extra kernel bits into the initramfs
-
 . /usr/share/initramfs-tools/hook-functions
 
-fbcon=n
+copy_modules_dir kernel/drivers/char/agp
+copy_modules_dir kernel/drivers/gpu
+
+manual_add_modules fbcon
+manual_add_modules vesafb
+manual_add_modules vga16fb
 
 for x in ${MODULESDIR}/initrd/*; do
 	x=${x##*/}
@@ -33,12 +37,5 @@ for x in ${MODULESDIR}/initrd/*; do
 		;;
 	esac
 
-	force_load ${x}
+	manual_add_modules ${x}
 done
-
-# And add vga16fb for usplash to use as well
-manual_add_modules vga16fb
-
-if [ ${fbcon} = "y" ]; then
-	force_load fbcon
-fi

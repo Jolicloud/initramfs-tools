@@ -1,7 +1,5 @@
 #!/bin/sh
 
-echo "Loading, please wait..."
-
 [ -d /dev ] || mkdir -m 0755 /dev
 [ -d /root ] || mkdir -m 0700 /root
 [ -d /sys ] || mkdir /sys
@@ -10,6 +8,8 @@ echo "Loading, please wait..."
 mkdir -p /var/lock
 mount -t sysfs -o nodev,noexec,nosuid none /sys 
 mount -t proc -o nodev,noexec,nosuid none /proc 
+
+grep -q '\<quiet\>' /proc/cmdline || echo "Loading, please wait..."
 
 # Note that this only becomes /dev on the real filesystem if udev's scripts
 # are used; which they will be, but it's worth pointing out
@@ -31,6 +31,7 @@ export ROOT=
 export ROOTDELAY=
 export ROOTFLAGS=
 export ROOTFSTYPE=
+export IPOPTS=
 export break=
 export init=/sbin/init
 export quiet=n

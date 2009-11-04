@@ -38,6 +38,13 @@ add_modules_from_file()
 	done
 }
 
+# Is this module available?
+have_module()
+{
+	modprobe --set-version="${version}" --ignore-install \
+		--show-depends "${1}" >/dev/null 2>&1
+}
+
 # Add dependent modules + eventual firmware
 manual_add_modules()
 {
@@ -220,7 +227,7 @@ dep_add_modules()
 	# findout root block device + fstype
 	eval "$(mount | awk '/\/dev\// {if ($3 == "/") {print "root=" $1 "\nFSTYPE=" $5; exit}}')"
 	if [ "${root}" = "/dev/root" ] ; then
-		root="/dev/disk/by-uuid/"$(/lib/udev/vol_id --uuid ${root}) 2>/dev/null
+		root="/dev/disk/by-uuid/"$(/sbin/blkid -s UUID -o value ${root}) 2>/dev/null
 	fi
 	root="$(readlink -f ${root})"
 
@@ -323,14 +330,14 @@ auto_add_modules()
 	;;
 	net)
 		for x in 3c59x 8139cp 8139too 8390 atl1 atl1e b44 bmac \
-		bnx2 cxgb3 defxx dl2k e100 e1000 e1000e ehea epic100 \
+		cxgb3 defxx dl2k e100 e1000 e1000e ehea epic100 \
 		ep93xx_eth eql fealnx famachi forcedeth gelic_net \
 		hp100 igb ipg mace mv643xx_eth myri10ge \
 		natsemi ne2k-pci netconsole niu ns83820 pcnet32 qla3xxx \
 		r8169 s2io sis900 skge sky2 slhc smc911x starfire \
 		sundance sungem sungem_phy sunhme sunvnet tg3 tlan de2104x \
 		de4x5 dmfe tulip winbond-840 xircom_cb xircom_tulip_cb \
-		typhon via-rhine via-velocity yellowfin; do
+		typhon via-rhine via-velocity virtio_net yellowfin; do
 			manual_add_modules "${x}"
 		done
 	;;
@@ -348,6 +355,7 @@ auto_add_modules()
 	;;
 	block)
 		copy_modules_dir kernel/drivers/block
+		copy_modules_dir kernel/drivers/usb/storage
 	;;
 	# FIXME: can be removed after Lenny release
 	ieee1394)
@@ -411,7 +419,7 @@ check_minkver()
 	curversion="${1}"
 	initdir="${2}"
 	if [ -z "${initdir}" ]; then
-		DPKG_ARCH=$(dpkg --print-installation-architecture)
+		DPKG_ARCH=$(dpkg --print-architecture)
 		case ${DPKG_ARCH} in
 			ia64|hppa)
 				minversion="2.6.15"

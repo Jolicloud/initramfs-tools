@@ -16,7 +16,15 @@ if [ -z "$number" ] || [ -z "$suffix" ]; then
   exit 0
 fi
 
-manual_add_modules compcache
+if have_module ramzswap; then
+  name=ramzswap
+  manual_add_modules ramzswap
+elif have_module compcache; then
+  name=compcache
+  manual_add_modules compcache
+else
+  exit 0
+fi
 
 copy_exec /sbin/swapon
 
@@ -62,8 +70,18 @@ if [ "\${BOOT}" = "casper" ]; then
     fi
 fi
 
+EOF
+
+if [ "$name" = ramzswap ]; then
+  cat >>"$DESTDIR"/scripts/init-top/compcache <<EOF
+modprobe -q --ignore-install ramzswap disksize_kb="$kbytes"
+EOF
+else
+  cat >>"$DESTDIR"/scripts/init-top/compcache <<EOF
 modprobe -q --ignore-install compcache compcache_size_kbytes="$kbytes"
 EOF
+fi
+
 chmod 0755 "$DESTDIR"/scripts/init-top/compcache
 
 # vim:set et sw=2 sts=2:

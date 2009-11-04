@@ -1,6 +1,7 @@
 #!/bin/sh
 
-PREREQ=""
+OPTION=USPLASH
+PREREQ="udev"
 prereqs()
 {
 	echo "$PREREQ"
@@ -77,26 +78,15 @@ case ${FB} in
 matroxfb)
 	FB=matroxfb_base
 	;;
-uvesafb)
-	mknod -m 640 /dev/mem c 1 1
-	mknod -m 666 /dev/zero c 1 5
-	;;
-*)
-	;;
 esac
 
 if [ -n "${FB}" ]; then
-	unset MODPROBE_OPTIONS
-	modprobe -q fbcon
-	modprobe -q ${FB} ${OPTS}
-fi
-
-if [ -e /proc/fb ]; then
-	while read fbno desc; do
-		if [ $(($fbno < 32)) ]; then
-			mknod /dev/fb${fbno} c 29 ${fbno}
-		fi
-	done < /proc/fb
+	# Some framebuffer devices need character devices :-/
+	udevadm settle
+	MODPROBE_OPTIONS=-q modprobe ${FB} ${OPTS}
+	# Wait for the framebuffer devices to be ready
+	udevadm settle
 else
-	mknod /dev/fb0 c 29 0
+	# If we have no graphics devices yet, wait for udev to settle
+	[ -d /sys/class/graphics/fb0 ] || udevadm settle
 fi

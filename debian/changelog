@@ -1,3 +1,228 @@
+initramfs-tools (0.92bubuntu53) karmic; urgency=low
+
+  * Explicitly check for fb0 so we don't false-positive on the graphics
+    subsystem having been initialised (should cure some issues with usplash
+    using svgalib instead of KMS, and vanishing part way through).
+  * Don't force load the vesafb driver, we never did this before, so it
+    seems silly to do it now.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Wed, 14 Oct 2009 04:41:37 +0100
+
+initramfs-tools (0.92bubuntu52) karmic; urgency=low
+
+  * Include all usb/storage drivers, not just usb-storage.ko  LP: #419231
+
+ -- Scott James Remnant <scott@ubuntu.com>  Fri, 09 Oct 2009 15:34:43 +0100
+
+initramfs-tools (0.92bubuntu51) karmic; urgency=low
+
+  * scripts/init-top/framebuffer: wait for udev to settle before loading
+    command-line specified framebuffer driver to ensure that any needed
+    device nodes are available.  LP: #437871.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Sat, 03 Oct 2009 07:55:35 +0100
+
+initramfs-tools (0.92bubuntu50) karmic; urgency=low
+
+  LP: #392039, #431812.
+  * hooks/framebuffer:
+    - rename from hooks/kernelextras, this is much more descriptive and
+      actually matches the associated script
+    - copy kernel-mode-setting drivers (drivers/gpu) into the initramfs
+    - include the vesafb driver, which we previously relied on being in
+      the special initrd directory
+    - don't force load fbcon
+    - don't force load things from the initrd directory
+  * scripts/init-top/framebuffer:
+    - add udev as a pre-requisite
+    - remove mknods since udev will make those now
+    - remove intel_agp and i915 code
+    - don't unset MODPROBE_OPTIONS, just override for the modprobe call
+      (since we want video= to override the blacklist)
+    - if we didn't pick up a framebuffer from vga= or video=, and don't
+      have one from udev, wait for udev to finish then if we still don't
+      have one, load vesafb
+    - settle after loading drivers to ensure the device is ready
+  * debian/control:
+    - increase dependency on udev to that which loads fbcon
+    - add breaks on older usplash to force upgrade
+
+ -- Scott James Remnant <scott@ubuntu.com>  Wed, 23 Sep 2009 14:25:00 -0700
+
+initramfs-tools (0.92bubuntu49) karmic; urgency=low
+
+  * Re-add the OPTION=VAR checking to scripts/functions, since we actually do
+    need this when calling the hooks at initramfs generation; but add a second
+    argument to call_scripts, "optional", that we check for before doing these
+    checks since we definitely don't want this to be conditional in the
+    initramfs at runtime.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Tue, 22 Sep 2009 09:44:00 -0700
+
+initramfs-tools (0.92bubuntu48) karmic; urgency=low
+
+   * Don't do OPTION=VAR checking at runtime, only do it when assembling the
+     initramfs; this spares us having to add extra config files to the
+     initramfs to enable functionality that's already been selected.
+     LP: #433773.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Tue, 22 Sep 2009 00:17:13 -0700
+
+initramfs-tools (0.92bubuntu47) karmic; urgency=low
+
+  * Silence output when trying to resume, since the only output is bitching
+    that we can't resume because we didn't hibernate in the first place.
+    LP: #432585.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Mon, 21 Sep 2009 16:07:10 -0700
+
+initramfs-tools (0.92bubuntu46) karmic; urgency=low
+
+  FFE LP: #427356.
+
+  * mkinitramfs: Allow scripts to specify OPTION=VAR, and unless VAR is
+    set to something other than "n", the script will not be included.
+  * scripts/functions: Likewise when running scripts (for hooks)
+
+  * Make usplash-related components optional, you need to set USPLASH=y
+    for these to be included:
+    - hooks/kernelextras: which includes the KMS driver
+    - scripts/init-top/framebuffer: which loads it
+
+ -- Scott James Remnant <scott@ubuntu.com>  Tue, 15 Sep 2009 03:30:12 +0100
+
+initramfs-tools (0.92bubuntu45) karmic; urgency=low
+
+  * Depend on busybox-initramfs (>= 1:1.13.3-1ubuntu5) to ensure that we
+    have gzip (LP: #428282).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 14 Sep 2009 10:23:40 +0100
+
+initramfs-tools (0.92bubuntu44) karmic; urgency=low
+
+  * Revert mxcfb changes of 0.92bubuntu40 and 0.92bubuntu41 as a more complete
+    workaround was put in usplash.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Fri, 11 Sep 2009 21:46:45 +0200
+
+initramfs-tools (0.92bubuntu43) karmic; urgency=low
+
+  * Move "Loading, please wait..." message to after /proc is mounted, so
+    that we can inspect /proc/cmdline.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 04 Sep 2009 14:23:05 +0100
+
+initramfs-tools (0.92bubuntu42) karmic; urgency=low
+
+  * Don't display "Loading, please wait..." message when 'quiet' is in
+    /proc/cmdline.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 03 Sep 2009 23:31:28 +0100
+
+initramfs-tools (0.92bubuntu41) karmic; urgency=low
+
+  *  fix quoting for mxcfb in scripts/init-top/framebuffer
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sun, 30 Aug 2009 10:28:06 +0200
+
+initramfs-tools (0.92bubuntu40) karmic; urgency=low
+
+  * add a hack to scripts/init-top/framebuffer for handling the yet broken
+    mxcfb as described in LP bug #420555, so usplash can be used on the
+    imx51 architecture based devices
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 29 Aug 2009 11:37:27 +0200
+
+initramfs-tools (0.92bubuntu39) karmic; urgency=low
+
+  * auto_add_modules net: Load virtio_net, to make testing in kvm easier.
+  * init: Export IPOPTS (LP: #364626).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue, 11 Aug 2009 12:37:56 +0100
+
+initramfs-tools (0.92bubuntu38) karmic; urgency=low
+
+  * change --print-installation-architecture to --print-architecture in
+    mkinitramfs and hook-functions to quieten down dpkg warning during
+    update-initramfs
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 07 Jul 2009 21:33:50 +0200
+
+initramfs-tools (0.92bubuntu37) karmic; urgency=low
+
+  * update-initramfs: Fix run_bootloader() to check for grub2
+  patch from debian bug #511514
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 07 Jul 2009 19:56:58 +0200
+
+initramfs-tools (0.92bubuntu36) karmic; urgency=low
+
+  * add missing colon in the regex and a filename for the grep from the next
+    upload ... d'oh
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 07 Jul 2009 19:28:16 +0200
+
+initramfs-tools (0.92bubuntu35) karmic; urgency=low
+
+  * update-initramfs: check whether kernel-img.conf exists and postinst_hook
+    is set before calling flash-kernel. (patch from Loic Minier to work
+    around shortcomings described in launchpad bug 365053 (not the desired
+    solution yet which needs to happen in debian but we need it for
+    livecd-rootfs to work on armel))
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 07 Jul 2009 16:49:10 +0200
+
+initramfs-tools (0.92bubuntu34) karmic; urgency=low
+
+  * Remove bnx2 from the initramfs; it needs firmware, and at this stage we
+    only support network modules that don't need firmware loading (LP:
+    #394783).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue, 07 Jul 2009 11:45:58 +0100
+
+initramfs-tools (0.92bubuntu33) karmic; urgency=low
+
+  * Cope with new compcache module naming.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 06 Jul 2009 14:12:07 +0100
+
+initramfs-tools (0.92bubuntu32) karmic; urgency=low
+
+  * Copy in KMS drivers (currently just i915 and the AGP drivers) if we can,
+    so that we can load them before starting usplash. NOTE that this whole
+    edifice is not intended to be used by default on most systems for
+    Karmic, and that the general intent is to make the initramfs smaller
+    rather than larger; however, we're still going to need usplash in the
+    initramfs for some use cases (e.g. dm-crypt), so we might as well get
+    this working now.
+  * Fix formatting error in initramfs-tools(8).
+  * 'set -e' in initramfs-tools.postrm.
+  * Fix handling of resume_offset: if it's set then we need to check in a
+    different location for the swap signature.
+  * Remove kinit and gzip from the initramfs. The first record I can find of
+    this Ubuntu change is in a merge from Debian, and I can't see any
+    justification for it since neither binary is actually used by any
+    initramfs scripts.
+  * Remove klibc utilities if busybox is in use (patch based on Debian
+    #338405; LP: #327106). Leave a symlink for /bin/sleep since some scripts
+    expect that to exist.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue, 23 Jun 2009 14:19:02 +0100
+
+initramfs-tools (0.92bubuntu31) karmic; urgency=low
+
+  * Set the permissions on the initramfs root to 755, as otherwise
+    unionfs-fuse (which may be used via casper) can't service requests made
+    by non-root users.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 04 Jun 2009 02:58:57 +0100
+
+initramfs-tools (0.92bubuntu30) karmic; urgency=low
+
+  * Replace all instances of vol_id with blkid, and depend on util-linux
+
+ -- Scott James Remnant <scott@ubuntu.com>  Thu, 07 May 2009 12:52:20 +0100
+
 initramfs-tools (0.92bubuntu29) jaunty; urgency=low
 
   * copy_exec: also avoid picking sse2, neon, and vfp hwcaps versions of libs.

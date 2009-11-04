@@ -11,8 +11,9 @@ Vcs-Git: git://git.debian.org/git/kernel/initramfs-tools.git
 
 Package: initramfs-tools
 Architecture: all
-Depends: klibc-utils (>= 1.5.9-1), busybox-initramfs, cpio, module-init-tools, udev (>= 117-5), findutils (>= 4.2.24)
+Depends: klibc-utils (>= 1.5.9-1), busybox-initramfs (>= 1:1.13.3-1ubuntu5), cpio, module-init-tools, udev (>= 147~-5), findutils (>= 4.2.24), util-linux (>> 2.15~rc1)
 Provides: linux-initramfs-tool
+Breaks: usplash (<< 0.5.38)
 Description: tools for generating an initramfs
  This package contains tools to create and boot an initramfs for packaged 2.6
  Linux kernel. The initramfs is a gzipped cpio archive. At boot time, the
