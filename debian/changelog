@@ -1,3 +1,14 @@
+initramfs-tools (1:0.92bjolicloud1) robby; urgency=low
+
+  [Benjamin Ryzman]
+  * Initial jolicloud commit
+
+  [Adam McDaniel]
+  * Setting Epoch to force downgrade from accidental upgrade to broken
+    initramfs-tools (0.93.3jolicloud1) package.
+
+ -- Adam McDaniel <adam@jolicloud.org>  Tue, 03 Nov 2009 13:06:08 -0700
+
 initramfs-tools (0.92bubuntu29) jaunty; urgency=low
 
   * copy_exec: also avoid picking sse2, neon, and vfp hwcaps versions of libs.
