@@ -45,7 +45,7 @@ manual_add_modules()
 	local mam_x firmwares firmware
 
 	for mam_x in $(modprobe --set-version="${version}" --ignore-install \
-	--show-depends "${1}" 2>/dev/null | awk '/^insmod/ { print $2 }'); do
+	--quiet --show-depends "${1}" | awk '/^insmod/ { print $2 }'); do
 		# Prune duplicates
 		if [ -e "${DESTDIR}/${mam_x}" ]; then
 			continue
