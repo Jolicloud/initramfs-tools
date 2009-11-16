@@ -147,6 +147,10 @@ copy_exec() {
 	fi
 
 	# Copy the dependant libraries
+	if ! command -v ldd >/dev/null 2>&1 ; then
+		echo "WARNING: no ldd around - install libc-bin"
+		exit 1
+	fi
 	for x in $(ldd ${source} 2>/dev/null | sed -e '
 	    /\//!d;
 	    /linux-gate/d;
