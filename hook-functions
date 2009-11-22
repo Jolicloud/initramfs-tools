@@ -398,19 +398,9 @@ auto_add_modules()
 		done
 	;;
 	net)
-		for x in 3c59x 8139cp 8139too 8390 atl1 atl1e b44 bmac \
-		bnx2 cxgb cxgb3 de2104x de4x5 defxx dl2k dmfe \
-		e100 e1000 e1000e ehea epic100 \
-		ep93xx_eth eql fealnx famachi forcedeth gelic_net \
-		hp100 igb ipg ixgb ixgbe mace mlx4_core mv643xx_eth myri10ge \
-		natsemi ne2k-pci netconsole netxen_nic niu ns83820 \
-		pcnet32 qla3xxx \
-		r8169 s2io sfc sis900 skge sky2 slhc smc91x starfire \
-		sundance sungem sungem_phy sunhme sunvnet tehuti tg3 tlan \
-		tulip typhoon via-rhine via-velocity virtio_net winbond-840 \
-		xircom_cb xircom_tulip_cb yellowfin; do
-			manual_add_modules "${x}"
-		done
+		copy_modules_dir kernel/drivers/net \
+			appletalk arcnet bonding can hamradio irda pcmcia \
+			tokenring usb wan wimax wireless
 	;;
 	ide)
 		copy_modules_dir kernel/drivers/ide
