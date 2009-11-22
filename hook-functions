@@ -188,14 +188,24 @@ copy_exec() {
 copy_modules_dir()
 {
 	local x_mod
+	local exclude
+	local dir="$1"
+	shift
 
-	if ! [ -d "${MODULESDIR}/${1}" ]; then
+	if ! [ -d "${MODULESDIR}/${dir}" ]; then
 		return;
 	fi
 	if [ "${verbose}" = "y" ]; then
-		echo "Copying module directory ${1}"
+		echo "Copying module directory ${dir}"
+		if [ $# -ge 1 ]; then
+		    echo "(excluding $*)"
+		fi
 	fi
-	for x_mod in $(find "${MODULESDIR}/${1}" -name '*.ko' -print); do
+	while [ $# -ge 1 ]; do
+		exclude="$exclude -name $1 -prune -o "
+		shift
+	done
+	for x_mod in $(find "${MODULESDIR}/${dir}" ${exclude} -name '*.ko' -print); do
 		manual_add_modules $(basename ${x_mod} .ko)
 	done
 }
