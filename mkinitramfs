@@ -191,6 +191,12 @@ if [ -f "${MODULESDIR}/modules.order" ]; then
 	      "${DESTDIR}${MODULESDIR}/modules.order"
 fi
 
+# Copy the modules.dep file in
+if [ -f "${MODULESDIR}/modules.dep" ]; then
+	cp -p "${MODULESDIR}/modules.dep" \
+	      "${DESTDIR}${MODULESDIR}/modules.dep"
+fi
+
 # MODULES=list case.  Always honour.
 for x in "${CONFDIR}/modules" /usr/share/initramfs-tools/modules.d/*; do
 	if [ -f "${x}" ]; then
