@@ -485,6 +485,22 @@ EOF
 
 }
 
+# cache boot scripts order
+cache_run_scripts()
+{
+	DESTDIR=${1}
+	scriptdir=${2}
+	initdir=${DESTDIR}${scriptdir}
+	[ ! -d ${initdir} ] && return
+
+	runlist=$(get_prereq_pairs | tsort)
+	for crs_x in ${runlist}; do
+		[ -f ${initdir}/${crs_x} ] || continue
+		echo "${scriptdir}/${crs_x}" >> ${initdir}/ORDER
+		echo "[ -e /conf/param.conf ] && . /conf/param.conf" >> ${initdir}/ORDER
+	done
+}
+
 # minimal supported kernel version
 check_minkver()
 {

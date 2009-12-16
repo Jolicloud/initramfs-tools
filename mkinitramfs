@@ -269,6 +269,11 @@ fi
 run_scripts /usr/share/initramfs-tools/hooks
 run_scripts "${CONFDIR}"/hooks
 
+# cache boot run order
+for b in $(cd "${DESTDIR}/scripts" && find . -mindepth 1 -type d); do
+	cache_run_scripts "${DESTDIR}" "/scripts/${b#./}"
+done
+
 # generate module deps
 depmod -a -b "${DESTDIR}" ${version}
 rm "${DESTDIR}/lib/modules/${version}"/modules.*map

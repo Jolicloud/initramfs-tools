@@ -186,9 +186,22 @@ reduce_prereqs()
 	done
 }
 
+get_prereq_pairs()
+{
+	set_initlist
+	for gp_x in ${initlist}; do
+		echo ${gp_x} ${gp_x}
+		prereqs=$(${initdir}/${gp_x} prereqs)
+		for prereq in ${prereqs}; do
+			echo ${prereq} ${gp_x}
+		done
+	done
+}
+
 call_scripts()
 {
 	for cs_x in ${runlist}; do
+		[ -f ${initdir}/${cs_x} ] || continue
 		# mkinitramfs verbose output
 		if [ "${verbose}" = "y" ]; then
 			echo "Calling hook ${cs_x}"
@@ -205,9 +218,17 @@ run_scripts()
 {
 	initdir=${1}
 	[ ! -d ${initdir} ] && return
-	get_prereqs
-	reduce_prereqs
-	call_scripts
+	
+	if [ -f ${initdir}/ORDER ]; then
+		. ${initdir}/ORDER
+	elif command -v tsort >/dev/null 2>&1; then
+		runlist=$(get_prereq_pairs | tsort)
+		call_scripts $2
+	else
+		get_prereqs
+		reduce_prereqs
+		call_scripts
+	fi
 }
 
 # Load custom modules first
