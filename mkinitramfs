@@ -247,6 +247,10 @@ fi
 run_scripts /usr/share/initramfs-tools/hooks
 run_scripts "${CONFDIR}"/hooks
 
+# generate module deps
+depmod -a -b "${DESTDIR}" ${version}
+rm "${DESTDIR}/lib/modules/${version}"/modules.*map
+
 # Apply DSDT to initramfs
 if [ -e "${CONFDIR}/DSDT.aml" ]; then
 	copy_exec "${CONFDIR}/DSDT.aml" /

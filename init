@@ -177,7 +177,6 @@ if [ -n "${noresume}" ]; then
 	unset resume
 fi
 
-depmod -a
 maybe_break top
 
 # Don't do log messages here to avoid confusing usplash
