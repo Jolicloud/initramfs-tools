@@ -18,7 +18,7 @@ esac
 # klibc
 ln -s /usr/lib/klibc/bin/* ${DESTDIR}/bin
 ln -s /lib/klibc-*.so ${DESTDIR}/lib
-rm -f ${DESTDIR}/bin/kinit* ${DESTDIR}/bin/gzip ${DESTDIR}/bin/zcat ${DESTDIR}/bin/gunzip
+rm -f ${DESTDIR}/bin/kinit* ${DESTDIR}/bin/gzip ${DESTDIR}/bin/zcat
 if [ "${BUSYBOX}" = "n" ] || [ ! -e ${BUSYBOXDIR}/busybox ]; then
 	mv ${DESTDIR}/bin/sh.shared ${DESTDIR}/bin/sh
 fi

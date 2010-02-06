@@ -21,13 +21,20 @@ if [ "$KEYMAP" != "y" ] && [ "$KEYMAP" != "Y" ]; then
 fi
 
 # Step 1 - Basic tools
-if [ ! -x /bin/loadkeys ] || [ ! -r /etc/console/boottime.kmap.gz ]; then
+if [ ! -x /bin/loadkeys ] ||
+! ( [ -r /etc/console/boottime.kmap.gz ] \
+	|| [ -r /etc/console-setup/cached.kmap.gz ] ); then
 	exit 0
 fi
 
 . /usr/share/initramfs-tools/hook-functions
 copy_exec /bin/loadkeys /bin
-cp /etc/console/boottime.kmap.gz ${DESTDIR}/etc/
+
+if [ -e /etc/console-setup/cached.kmap.gz ]; then
+	cp /etc/console-setup/cached.kmap.gz ${DESTDIR}/etc/boottime.kmap.gz
+else
+	cp /etc/console/boottime.kmap.gz ${DESTDIR}/etc/
+fi
 
 # Step 2 - Check for UTF8 console
 if [ ! -x /usr/bin/kbd_mode ]; then
