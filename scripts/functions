@@ -50,7 +50,7 @@ panic()
 	modprobe i8042
 	modprobe atkbd
 	echo $@
-	PS1='(initramfs) ' /bin/sh -i </dev/console >/dev/console 2>&1
+	REASON="$@" PS1='(initramfs) ' /bin/sh -i </dev/console >/dev/console 2>&1
 }
 
 maybe_break()
