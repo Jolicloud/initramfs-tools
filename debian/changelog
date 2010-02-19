@@ -1,3 +1,12 @@
+initramfs-tools (1:0.92bjolicloud3) jolicloud-robby; urgency=low
+
+  * Change references from vol_id to newer blkid
+  * initramfs-tools now depends on util-linux (>= 2.16-1) for blkid
+  * Ensure /sbin/blkid is properly installed on the initramfs image
+  * Update all previous initramfs images, not just the current/latest image
+
+ -- Adam McDaniel <adam@jolicloud.org>  Fri, 19 Feb 2010 00:59:20 -0700
+
 initramfs-tools (1:0.92bjolicloud2) robby; urgency=low
 
   * Includes modules.dep in mkinitramfs's cpio archive output
