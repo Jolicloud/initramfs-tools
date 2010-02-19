@@ -57,7 +57,7 @@ esac
 
 . ./scripts/functions
 
-if [ ! -e "${resume}" ] || ! /lib/udev/vol_id "${resume}" >/dev/null 2>&1; then
+if [ ! -e "${resume}" ] || ! /sbin/blkid -p "${resume}" >/dev/null 2>&1; then
 	log_begin_msg "Waiting for resume device..."
 
 	# Default delay is 5s
@@ -71,7 +71,7 @@ if [ ! -e "${resume}" ] || ! /lib/udev/vol_id "${resume}" >/dev/null 2>&1; then
 	fi
 
 	slumber=$(( ${slumber} * 10 ))
-	while [ ! -e "${resume}" ] || ! /lib/udev/vol_id "${resume}" >/dev/null 2>&1; do
+	while [ ! -e "${resume}" ] || ! /sbin/blkid -p "${resume}" >/dev/null 2>&1; do
 		/bin/sleep 0.1
 		slumber=$(( ${slumber} - 1 ))
 		[ ${slumber} -gt 0 ] || break
