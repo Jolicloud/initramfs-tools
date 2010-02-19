@@ -294,6 +294,9 @@ copy_exec /sbin/rmmod /sbin
 mkdir -p "${DESTDIR}/etc/modprobe.d"
 cp -a /etc/modprobe.d/* "${DESTDIR}/etc/modprobe.d/"
 
+# util-linux
+copy_exec /sbin/blkid /sbin
+
 # workaround: libgcc always needed on old-abi arm
 if [ "$DPKG_ARCH" = arm ] || [ "$DPKG_ARCH" = armeb ]; then
 	cp -a /lib/libgcc_s.so.1 "${DESTDIR}/lib/"
