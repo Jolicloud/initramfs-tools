@@ -1,3 +1,9 @@
+initramfs-tools (1:0.92bjolicloud2) robby; urgency=low
+
+  * Includes modules.dep in mkinitramfs's cpio archive output
+
+ -- Adam McDaniel <adam@jolicloud.org>  Fri, 04 Dec 2009 13:33:58 +0100
+
 initramfs-tools (1:0.92bjolicloud1) robby; urgency=low
 
   [Benjamin Ryzman]
