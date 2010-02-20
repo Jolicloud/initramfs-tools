@@ -71,8 +71,13 @@ manual_add_modules()
 			# Only print warning for missing fw of loaded module
 			# or forced loaded module
 			if [ ! -e "/lib/firmware/${firmware}" ] \
-			&& [ ! -e "/lib/firmware/${version}/${firmware}" ] \
-			&& [ -e /proc/modules ]; then
+			&& [ ! -e "/lib/firmware/${version}/${firmware}" ] ; then
+				# Only warn about missing firmware if
+				# /proc/modules exists
+				if [ ! -e /proc/modules ] ; then
+					continue
+                                fi
+
 				if grep -q "^$(basename "${mam_x}" .ko)[[:space:]]" \
 				/proc/modules \
 				|| grep -q "^$(basename "${mam_x}" .ko)" \
