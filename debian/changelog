@@ -1,4 +1,11 @@
-initramfs-tools (1:0.92bjolicloud3) jolicloud-robby; urgency=low
+initramfs-tools (1:0.92bjolicloud4) robby; urgency=low
+
+  * Revert "Update all previous initramfs images, not just the
+    current/latest image"
+
+ -- Adam McDaniel <adam@jolicloud.org>  Wed, 24 Feb 2010 15:52:59 -0700
+
+initramfs-tools (1:0.92bjolicloud3) robby; urgency=low
 
   * Change references from vol_id to newer blkid
   * initramfs-tools now depends on util-linux (>= 2.16-1) for blkid
