@@ -36,6 +36,7 @@ export ROOTDELAY=
 export ROOTFLAGS=
 export ROOTFSTYPE=
 export IP=
+export BOOTIF=
 export break=
 export init=/sbin/init
 export quiet=n
@@ -240,6 +241,7 @@ unset ROOTFSTYPE
 unset ROOTDELAY
 unset ROOT
 unset IP
+unset BOOTIF
 unset blacklist
 unset break
 unset noresume
