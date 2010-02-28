@@ -1,4 +1,4 @@
-.TH INITRAMFS.CONF 5  "2010/03/25" "Linux" "initramfs.conf manual"
+.TH INITRAMFS.CONF 5  "2010/04/04" "Linux" "initramfs.conf manual"
 
 .SH NAME
 initramfs.conf \- configuration file for mkinitramfs
@@ -47,6 +47,13 @@ If set to 'y', the console keymap will be loaded during the initramfs stage.
 The keymap will anyway be loaded by the initscripts later, and the packages
 that might need input will normally set this variable automatically, so there
 should normally be no need to set this.
+
+.TP                                                                            
+\fB COMPRESS                                                                   
+Specifies the compression method used for the initramfs image.                 
+.B mkinitramfs                                                                 
+will default to gzip if the kernel lacks support (CONFIG_RD) or the            
+corresponding userspace utility is not present. 
 
 .TP
 \fB UMASK

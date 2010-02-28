@@ -123,6 +123,20 @@ case "${version}" in
 	;;
 esac
 
+# Check userspace and kernel support for compressed initramfs images
+compress=${COMPRESS}
+if command -v ${compress} >/dev/null 2>&1; then
+	compress=gzip
+	[ "${verbose}" = y ] && \
+		echo "No ${COMPRESS} in ${PATH}, using gzip"
+fi
+
+if ! `grep -q -i config_rd_${COMPRESS}=y /boot/config-${version}` ; then
+	compress=gzip
+	[ "${verbose}" = y ] && \
+		echo "linux-2.6 misses ${COMPRESS} support, using gzip"
+fi
+
 if [ -d "${outfile}" ]; then
 	echo "${outfile} is a directory"
 	exit 1
@@ -273,7 +287,7 @@ eval `
         find . 4>&-; echo "ec1=$?;" >&4
     } | {
         cpio --quiet --dereference -o -H newc 4>&-; echo "ec2=$?;" >&4
-    } | gzip >"${outfile}"
+    } | ${compress} >"${outfile}"
     echo "ec3=$?;" >&4
 `
 if [ "$ec1" -ne 0 ]; then exit "$ec1"; fi
