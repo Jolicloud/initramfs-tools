@@ -45,6 +45,7 @@ export rootmnt=/root
 export debug=
 export panic=
 export blacklist=
+export resume=
 export resume_offset=
 
 # Bring in the main config
@@ -121,7 +122,7 @@ for x in $(cat /proc/cmdline); do
 		BOOT=${x#boot=}
 		;;
 	resume=*)
-		RESUME="${x#resume=}"
+		resume="${x#resume=}"
 		;;
 	resume_offset=*)
 		resume_offset="${x#resume_offset=}"
@@ -169,10 +170,9 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
-if [ -z "${noresume}" ]; then
-	export resume=${RESUME}
-else
+if [ -n "${noresume}" ]; then
 	export noresume
+	unset resume
 fi
 
 depmod -a
