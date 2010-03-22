@@ -299,33 +299,45 @@ configure_networking()
 
 	# support ip options see linux sources
 	# Documentation/filesystems/nfsroot.txt
-	case ${IP} in
-	none|off)
-		# Do nothing
-		;;
-	""|on|any)
-		# Bring up device
-		ipconfig -t 180 ${DEVICE}
-		;;
-	dhcp|bootp|rarp|both)
-		ipconfig -t 180 -c ${IP} -d ${DEVICE}
-		;;
-	*)
-		ipconfig -t 180 -d $IP
+	# Documentation/frv/booting.txt
 
-		# grab device entry from ip option
-		NEW_DEVICE=${IP#*:*:*:*:*:*}
-		if [ "${NEW_DEVICE}" != "${IP}" ]; then
-			NEW_DEVICE=${NEW_DEVICE%:*}
-		else
-			# wrong parse, possibly only a partial string
-			NEW_DEVICE=
+	for ROUNDTTT in 2 3 4 6 9 16 25 36 64 100; do
+
+		# The NIC is to be configured if this file does not exist.
+		# Ip-Config tries to create this file and when it succeds
+		# creating the file, ipconfig is not run again.
+		if [ -e /tmp/net-"${DEVICE}".conf ]; then
+			break;
 		fi
-		if [ -n "${NEW_DEVICE}" ]; then
-			DEVICE="${NEW_DEVICE}"
-		fi
-		;;
-	esac
+
+		case ${IP} in
+		none|off)
+			# Do nothing
+			;;
+		""|on|any)
+			# Bring up device
+			ipconfig -t ${ROUNDTTT} ${DEVICE}
+			;;
+		dhcp|bootp|rarp|both)
+			ipconfig -t ${ROUNDTTT} -c ${IP} -d ${DEVICE}
+			;;
+		*)
+			ipconfig -t ${ROUNDTTT} -d $IP
+
+			# grab device entry from ip option
+			NEW_DEVICE=${IP#*:*:*:*:*:*}
+			if [ "${NEW_DEVICE}" != "${IP}" ]; then
+				NEW_DEVICE=${NEW_DEVICE%:*}
+			else
+				# wrong parse, possibly only a partial string
+				NEW_DEVICE=
+			fi
+			if [ -n "${NEW_DEVICE}" ]; then
+				DEVICE="${NEW_DEVICE}"
+			fi
+			;;
+		esac
+	done
 
 	# source ipconfig output
 	if [ -n "${DEVICE}" ]; then
