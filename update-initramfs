@@ -141,7 +141,7 @@ backup_booted_initramfs()
 }
 
 # nuke generated copy
-remove_initramfs()
+remove_initramfs_bak()
 {
 	[ -z "${initramfs_bak}" ] && return 0
 	rm -f "${initramfs_bak}"
@@ -161,7 +161,7 @@ generate_initramfs()
 		set_sha1
 	else
 		mkinitramfs_return="$?"
-		remove_initramfs
+		remove_initramfs_bak
 		rm -f "${initramfs}.new"
 		if [ "$mkinitramfs_return" = "2" ]; then
 			# minversion wasn't met, exit 0
@@ -445,7 +445,7 @@ delete()
 
 	delete_sha1
 
-	rm -f "${initramfs}"
+	rm -f "${initramfs}" "${initramfs}.bak"
 }
 
 # Check for update mode on existing and modified initramfs
