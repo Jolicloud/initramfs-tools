@@ -284,10 +284,10 @@ dep_add_modules()
 		|| [ "${root#/dev/dm-}" != "${root}" ]; then
 		minor=$((0x$(stat --format "%T" ${root}) % 256))
 		block=$(ls -1 /sys/block/dm-${minor}/slaves | head -n 1)
-		# lvm on luks or luks on lvm
-		if [ "${block#dm-}" != "${block}" ]; then
+		# lvm on luks or luks on lvm, possibly lvm snapshots
+		while [ "${block#dm-}" != "${block}" ]; do
 			block=$(ls -1 /sys/block/${block}/slaves | head -n 1)
-		fi
+		done
 		# lvm on md or luks on md
 		if [ "${block#md}" != "${block}" ]; then
 			block=$(awk "/^${block}/{print substr(\$5, 1, 4); exit}" \
