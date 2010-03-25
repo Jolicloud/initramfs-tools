@@ -213,7 +213,7 @@ run_bootloader()
 		run_lilo
 		return 0
 	fi
-	if command -v elilo >/dev/null 2>&1; then
+	if [-r /etc/elilo.conf] && command -v elilo >/dev/null 2>&1; then
 		elilo
 		return 0
 	fi
