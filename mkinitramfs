@@ -131,8 +131,8 @@ fi
 MODULESDIR="/lib/modules/${version}"
 
 if [ ! -e "${MODULESDIR}" ]; then
-	echo "Cannot find ${MODULESDIR}"
-	exit 1
+	echo "WARNING: missing ${MODULESDIR}"
+	echo "Device driver support needs thus be built-in linux image!"
 fi
 if [ ! -e "${MODULESDIR}/modules.dep" ]; then
 	depmod ${version}
