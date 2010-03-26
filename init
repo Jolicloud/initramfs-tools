@@ -169,6 +169,9 @@ for x in $(cat /proc/cmdline); do
 	blacklist=*)
 		blacklist=${x#blacklist=}
 		;;
+	netconsole=*)
+		netconsole=${x#netconsole=}
+		;;
 	esac
 done
 
@@ -176,6 +179,8 @@ if [ -n "${noresume}" ]; then
 	export noresume
 	unset resume
 fi
+
+[ -n "${netconsole}" ] && modprobe netconsole netconsole="${netconsole}"
 
 maybe_break top
 
