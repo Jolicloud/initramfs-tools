@@ -22,6 +22,8 @@ if ! mount -t devtmpfs -o mode=0755 none /dev; then
 	[ -e /dev/console ] || mknod -m 0600 /dev/console c 5 1
 	[ -e /dev/null ] || mknod /dev/null c 1 3
 fi
+mkdir /dev/pts
+mount -t devpts -o noexec,nosuid,gid=5,mode=0620 none /dev/pts || true
 > /dev/.initramfs-tools
 mkdir /dev/.initramfs
 
