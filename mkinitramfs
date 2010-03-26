@@ -256,6 +256,10 @@ if [ -e "${CONFDIR}/DSDT.aml" ]; then
 	copy_exec "${CONFDIR}/DSDT.aml" /
 fi
 
+# Remove any looping or broken symbolic links, since they break cpio.
+find "${DESTDIR}" -type l -printf '%p %Y\n' | sed -n 's/ [LN]$//p' \
+	| xargs -rL1 rm -f
+
 [ "${verbose}" = y ] && echo "Building cpio ${outfile} initramfs"
 (
 # work around lack of "set -o pipefail" for the following pipe:
