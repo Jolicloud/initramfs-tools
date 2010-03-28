@@ -263,17 +263,18 @@ dep_add_modules()
 	fi
 	root="$(readlink -f ${root})"
 
-	# find out real rootfs on auto type
-	if [ "${FSTYPE}" = "auto" ]; then
-		eval "$(/usr/lib/klibc/bin/fstype ${root})"
-	fi
+	# do not trust mount, check superblock
+	eval "$(/usr/lib/klibc/bin/fstype ${root})"
 
 	# check that fstype rootfs recognition
 	if [ "${FSTYPE}" = "unknown" ]; then
-		echo "mkinitramfs: unknown fstype on root ${root}"
-		echo "mkinitramfs: workaround is MODULES=most" 
-		echo "mkinitramfs: Error please report bug on initramfs-tools" 
+		FSTYPE=$(blkid -o value -s TYPE "${root}")
+		if [  -z "${FSTYPE}" ]; then
+			echo "mkinitramfs: unknown fstype on root ${root}"
+			echo "mkinitramfs: workaround is MODULES=most" 
+			echo "Error please report bug on initramfs-tools" 
 		exit 1
+		fi
 	fi
 
 	# Add rootfs
