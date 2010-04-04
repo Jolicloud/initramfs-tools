@@ -11,7 +11,7 @@ errors_to="2>/dev/null"
 # BUSYBOXDIR="/usr/lib/initramfs-tools/bin/"
 export BUSYBOXDIR="/bin"
 
-OPTIONS=`getopt -o d:ko:r:v -n "$0" -- "$@"`
+OPTIONS=`getopt -o c:d:ko:r:v -n "$0" -- "$@"`
 
 # Check for non-GNU getopt
 if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
@@ -20,6 +20,10 @@ eval set -- "$OPTIONS"
 
 while true; do
 	case "$1" in
+	-c)
+		compress="$2"
+		shift 2
+		;;
 	-d)
 		CONFDIR="$2"
 		shift 2
@@ -124,8 +128,13 @@ case "${version}" in
 esac
 
 # Check userspace and kernel support for compressed initramfs images
-compress=${COMPRESS}
-if command -v ${compress} >/dev/null 2>&1; then
+if [ -z "${compress}" ]; then
+	compress=${COMPRESS}
+else
+	COMPRESS=${compress}
+fi
+
+if ! command -v ${compress} >/dev/null 2>&1; then
 	compress=gzip
 	[ "${verbose}" = y ] && \
 		echo "No ${COMPRESS} in ${PATH}, using gzip"

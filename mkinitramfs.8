@@ -5,6 +5,8 @@ mkinitramfs \- low-level tool for generating an initramfs image
 
 .SH SYNOPSIS
 .B mkinitramfs
+.RB [ \-c
+.IR compress ]
 .RB [ \-d
 .IR confdir ]
 .RB [ \-k ]
@@ -44,6 +46,13 @@ uses it as initial root file system. All finding of the root device
 happens in this early userspace.
 
 .SH OPTIONS
+.TP
+\fB \-c \fI compress
+Override the
+.B COMPRESS
+setting in
+.IR initramfs.conf .
+
 .TP
 \fB \-d \fI confdir
 Set an alternate configuration directory.
