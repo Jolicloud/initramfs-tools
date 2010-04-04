@@ -1,31 +1,5 @@
 # Local filesystem mounting			-*- shell-script -*-
 
-# Parameter: device node to check
-# Echos fstype to stdout
-# Return value: indicates if an fs could be recognized
-get_fstype ()
-{
-	local FS FSTYPE FSSIZE RET
-	FS="${1}"
-
-	# vol_id has a more complete list of file systems,
-	# but fstype is more robust
-	eval $(fstype "${FS}" 2> /dev/null)
-	if [ "$FSTYPE" = "unknown" ] &&  command -v blkid >/dev/null 2>&1 ; then
-		FSTYPE=$(blkid -o value -s TYPE "${FS}")
-	elif [ "$FSTYPE" = "unknown" ] && [ -x /lib/udev/vol_id ]; then
-		FSTYPE=$(/lib/udev/vol_id -t "${FS}" 2> /dev/null)
-	fi
-	RET=$?
-
-	if [ -z "${FSTYPE}" ]; then
-		FSTYPE="unknown"
-	fi
-
-	echo "${FSTYPE}"
-	return ${RET}
-}
-
 pre_mountroot()
 {
 	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/local-top"
