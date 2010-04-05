@@ -396,7 +396,7 @@ auto_add_modules()
 {
 	case "$1" in
 	base)
-		for x in ehci-hcd ohci-hcd uhci-hcd usbhid ext2 \
+		for x in ehci-hcd ohci-hcd uhci-hcd usbhid btrfs ext2 \
 		ext3 ext4 ext4dev isofs jfs nfs reiserfs udf xfs af_packet \
 		atkbd i8042 virtio_pci; do
 			manual_add_modules "${x}"
