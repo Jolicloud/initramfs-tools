@@ -1,4 +1,4 @@
-initramfs-tools (0.94) UNRELEASED; urgency=low
+initramfs-tools (0.94) unstable; urgency=low
 
   * The "Litte Bang" release
 
