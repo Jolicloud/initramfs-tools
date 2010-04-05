@@ -1,3 +1,136 @@
+initramfs-tools (0.94) UNRELEASED; urgency=low
+
+  * The "Litte Bang" release
+
+  [ maximilian attems ]
+  * Nuke kernelextras hooks.
+  * Create a klibc hook script.
+  * Redefinde MODULES=most to not carry any fb driver per default.
+  * Nuke framebuffer boot script.
+  * Revert "hook-functions: Add hid_* modules."
+  * Move busybox addition to a hook script.
+  * mkinitramfs fix comment.
+  * hook-functions: Fix mounted /sys check for openvz container.
+  * initramfs-tools.8: fix boot example script to execute.
+    scripts/functions. (closes: #545728)
+  * Fix out-of-date-standards-version.
+  * /etc/kernel hook script support for make deb-pkg generated linux-images
+    and kernel-package. (closes: #523735, #561289)
+  * update-initramfs: allow -t takeover on delete.
+  * /etc/kernel/postrm.d/i-t: use now takeover on delete.
+    (closes: #524534, #547365, #559619)
+  * Nuke useless unused dir.
+  * kernel hook scripts: Fix typo, add comments.
+  * hook-funcitions: Only warn about missing firmware if /proc/modules
+    exists. (closes: #560266, #575154)
+  * mkinitramfs: Be opportunistic when calling modprobe thus showing
+    errors. (closes: #554873)
+  * copy_exec: Check if ldd is around.
+  * scripts/local: Use blkid as backup fstype detection. (closes: #568527)
+  * mkinitramfs: only copy modprobe conf files. (closes: #506533)
+  * blacklist earlier at init-top stage.
+  * scripts/local: fix blkid invocation.
+  * init: export and unset BOOTIF.
+  * init: rexport resume to reallow it's hardcoded usage. (closes: #572858)
+  * update-initramfs: -d delete .bak file. (closes: #559535)
+  * control: bump standards version without changes.
+  * control: Clean up Uploaders field.
+  * switch from cdbs to debhelper 7.
+  * update-initramfs: Stop second guessing lilo usage. (closes: #574553)
+  * mkinitramfs: allow to build initramfs for unmodular linux images.
+    (closes: #415474, #433708)
+  * initramfs.conf.5: document UMASK variable for sensitive initramfs.
+    (closes: #536195)
+  * update-initramfs: only run elilo if configured. (closes: #534201)
+  * update-initramfs: fix previous elilo commit.
+  * MODULES=DEP Use driver/module syfs attribute. (closes: #567189)
+  * panic: quote variable.
+  * MODULES=DEP: Check rootfs on mkinitramfs. (closes: #519800)
+  * Use ata_generic driver on all_generic_ide bootarg
+  * scripts/functions: add get_fstype() from scripts/local. (closes: #487409)
+  * mkinitramfs.8: update date.
+  * Keep acpi modules in initramfs so that udev can load them early.
+  * mkinitramfs: no longer copy depmod.
+  * init: Silence "Loading essential drivers..." on quiet boot.
+  * hook-functions: Add btrfs to base modules.
+  * init: export BOOT for casper and friends.
+  * hooks/klibc: Keep gzip in initramfs.
+  * modernize docs to todays standards.
+  * examples: shipp old framebuffer boot script.
+  * initramfs.conf.5, update-initramfs.conf.5: Add FILES section.
+    (closes: #565386)
+  * mkinitramfs: be silent if no modules.map was generated in first place.
+  * debian/control: Add a breaks cryptsetup.
+
+  [ Tormod Volden ]
+  * blacklist boot hook write to /etc/modprobe.d/initramfs.conf.
+    (closes: #541864)
+
+  [ Michael Prokop ]
+  * Fix path to nfsroot.txt in documentation.
+  * hook-functions: Avoid firmware copy error. (closes: #570678)
+
+  [ Joey Hess ]
+  * scripts/local: avoid mount -t unknown. (closes: #567065)
+
+  [ Avi Rozen ]
+  * mkinitramfs: add all usb storage devices. (closes: #543568)
+
+  [ Ferenc Wagner ]
+  * initramfs-tools: make the panic argument available in the rescue
+    shell. (closes: #569033)
+
+  [ Maximilian Gass ]
+  * mkinitramfs: KEYMAP option fails to work due to missing keymap.
+    (closes: #565416)
+
+  [ Vagrant Cascadian ]
+  * configure_networking: support BOOTIF variable set by pxelinux.
+    (closes: #535008)
+
+  [ Ben Hutchings ]
+  * copy_modules_dir: Take a list of exclusions after the base directory.
+  * auto_add_modules: Copy all modules from net, excluding some
+    subdirectories.
+
+  [ Scott James Remnant ]
+  * init: Mount devtmpfs on /dev.
+  * mkinitramfs: Call depmod before packing the initramfs.
+    (closes: #465760, #562561)
+  * init: load the netconsole module with netconsole bootarg
+  * init: mount /dev/pts as well as /dev.
+
+  [ Ben Collins ]
+  * update-initramfs: Default to not keep .bak backups.
+
+  [ Piotr Lewandowski ]
+  * update-initramfs breaks if /etc/mtab is a symlink to /proc/mounts.
+    (closes: #525606)
+
+  [ Martin Michlmayr ]
+  * MODULES=dep fix boot with MMC. (closes: #548711)
+
+  [ Nikolaus Schulz ]
+  * hook-functions: let dep_add_modules() recurse into lvm slave devices.
+    (closes: 573761)
+
+  [ Anna Jonna Armannsdottir ]
+  * configure_networking: Try repeatedly ipconfig with increasing
+    timeout.
+
+  [ Colin Watson ]
+  * mkinitramfs: Filter out looping or broken symlinks from the
+    initramfs. (closes: #575157)
+  * mkinitramfs: set initramfs root to 755.
+
+  [ Bert Schulze ]
+  * initramfs-tools: support different compression tools in mkinitramfs.
+    (closes: #533903)
+  * mkinitramfs: -c compression support / commandline override.
+    (closes: #576429)
+
+ -- maximilian attems <maks@debian.org>  Mon, 05 Apr 2010 05:25:48 +0200
+
 initramfs-tools (0.93.4) unstable; urgency=medium
 
   [ Aaron M. Ucko ]
