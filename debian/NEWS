@@ -1,11 +1,7 @@
 initramfs-tools (0.94) unstable; urgency=low
 
-  * For better boot speed and due to unusual complications framebuffer, AGP
-    and KMS drivers are dropped out of the generic MODULES=most case.
-    The dropped framebuffer boot script is shipped in the examples for
-    packagers of userspace boot graphics. They may also need to ship
-    a hook file adding the mentioned graphics drivers, but in a more
-    complete way. For the majority of boxes this is not necessary.
+  * To improve boot speed and avoid some complications, video drivers are
+    no longer included in the initramfs by default (MODULES=most).
 
  -- maximilian attems <maks@debian.org>  Mon, 05 Apr 2010 08:10:34 +0200
 
