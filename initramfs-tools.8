@@ -1,4 +1,4 @@
-.TH INITRAMFS-TOOLS 8  "2009/06/23" "Linux" "mkinitramfs script overview"
+.TH INITRAMFS-TOOLS 8  "2010/04/05" "Linux" "mkinitramfs script overview"
 
 .SH NAME
 initramfs-tools \- an introduction to writing scripts for mkinitramfs
@@ -122,6 +122,10 @@ spawns a shell in the initramfs image at chosen run-time
 The default is premount without any arg.
 Beware that if both "panic" and "break" are present,
 initramfs will not spawn any shells but reboot instead.
+
+.TP
+\fB\fI netconsole
+loads netconsole linux modules with the chosen args.
 
 .TP
 \fB\fI all_generic_ide
