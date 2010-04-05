@@ -40,6 +40,7 @@ export ROOTDELAY=
 export ROOTFLAGS=
 export ROOTFSTYPE=
 export IP=
+export BOOT=
 export BOOTIF=
 export break=
 export init=/sbin/init
@@ -249,6 +250,7 @@ unset ROOTFSTYPE
 unset ROOTDELAY
 unset ROOT
 unset IP
+unset BOOT
 unset BOOTIF
 unset blacklist
 unset break
