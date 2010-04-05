@@ -190,9 +190,9 @@ maybe_break top
 run_scripts /scripts/init-top
 
 maybe_break modules
-log_begin_msg "Loading essential drivers"
+[ "$quiet" != "y" ] && log_begin_msg "Loading essential drivers"
 load_modules
-log_end_msg
+[ "$quiet" != "y" ] && log_end_msg
 
 maybe_break premount
 [ "$quiet" != "y" ] && log_begin_msg "Running /scripts/init-premount"
