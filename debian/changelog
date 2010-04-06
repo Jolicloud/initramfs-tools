@@ -1,3 +1,9 @@
+initramfs-tools (0.94.2) unstable; urgency=low
+
+  * debian/control: amend Breaks for exp mdadm.
+
+ -- maximilian attems <maks@debian.org>  Tue, 06 Apr 2010 23:50:06 +0200
+
 initramfs-tools (0.94.1) unstable; urgency=low
 
   * debian/control: Add a breaks mdadm.
