@@ -104,59 +104,37 @@ manual_add_modules()
 	done
 }
 
-# $1 is the source path (e.g. /usr/bin/time)
-# $2 is the relative destination (e.g. /usr or /usr/time)
-#
-# The destination is interpreted in the same way "cp" would, meaning
-# (assuming /bin is a directory):
-#
-#   "copy_exec /usr/bin/time /bin"        -> /bin/time
-#   "copy_exec /usr/bin/time /bin/mytime" -> /bin/mytime
-# 
-# If $2 is left out, the same destination path as for the source arg will
-# be used and directories will be created as needed, so:
-#
-#   "copy_exec /usr/bin/time"             -> /usr/bin/time
-#
+# $1 = file to copy to ramdisk
+# $2 (optional) Name for the file on the ramdisk
+# Location of the image dir is assumed to be $DESTDIR
+# We never overwrite the target if it exists.
 copy_exec() {
-	local source target destination final_destination x nonoptlib
+	local src target x nonoptlib
 	local libname dirname
 
-	source="${1}"
-	if [ -n "${2}" ]; then
-		target="${2}"
-	else
-		if [ ! -e "${DESTDIR}/$(dirname "${1}")" ]; then
-			mkdir -p "${DESTDIR}/$(dirname "${1}")"
-		fi
-		target="${1}"
-	fi
+	src="${1}"
+	target="${2:-$1}"
+
+	[ -f "${src}" ] || return 1
 
 	if [ -d "${DESTDIR}/${target}" ]; then
-		destination="${target}/$(basename "${source}")"
+		# check if already copied
+		[ -e "${DESTDIR}/$target/${src##*/}" ] && return 0
 	else
-		destination="${target}"
+		[ -e "${DESTDIR}/$target" ] && return 0
+		#FIXME: inst_dir
+		mkdir -p "${DESTDIR}/${target%/*}"
 	fi
-	final_destination="${DESTDIR}/${destination}"
 
-	if [ -L "$final_destination" ]; then
-		if [ $(readlink "${final_destination}") != "${source}" ]; then
-			echo "W:copy_exec: Not copying ${source} to \$DESTDIR${destination}, which is already a copy of $(readlink ${final_destination})" >&2
-			return
-		fi
-	else
-		ln -s ${source} ${DESTDIR}/${destination}
-		if [ "${verbose}" = "y" ]; then
-			echo "Adding binary ${source}"
-		fi
-	fi
+	[ "${verbose}" = "y" ] && echo "Adding binary ${src}"
+	ln -s "${src}" "${DESTDIR}/${target}"
 
 	# Copy the dependant libraries
 	if ! command -v ldd >/dev/null 2>&1 ; then
 		echo "WARNING: no ldd around - install libc-bin"
 		exit 1
 	fi
-	for x in $(ldd ${source} 2>/dev/null | sed -e '
+	for x in $(ldd ${src} 2>/dev/null | sed -e '
 	    /\//!d;
 	    /linux-gate/d;
 	    /=>/ {s/.*=>[[:blank:]]*\([^[:blank:]]*\).*/\1/};
@@ -174,12 +152,11 @@ copy_exec() {
 		libname=$(basename "${x}")
 		dirname=$(dirname "${x}")
 
+		# FIXME inst_lib
 		mkdir -p "${DESTDIR}/${dirname}"
 		if [ ! -e "${DESTDIR}/${dirname}/${libname}" ]; then
 			ln -s "${x}" "${DESTDIR}/${dirname}"
-			if [ "${verbose}" = "y" ]; then
-				echo "Adding library ${x}"
-			fi
+			[ "${verbose}" = "y" ] && echo "Adding library ${x}"
 		fi
 	done
 }
