@@ -161,9 +161,9 @@ if [ ! -e "${MODULESDIR}/modules.dep" ]; then
 	depmod ${version}
 fi
 
-DESTDIR="$(mktemp -t -d mkinitramfs_XXXXXX)" || exit 1
+DESTDIR="$(mktemp -d ${TMPDIR:-/tmp}/mkinitramfs_XXXXXX)" || exit 1
 chmod 755 "${DESTDIR}"
-__TMPCPIOGZ="$(mktemp -t mkinitramfs-OL_XXXXXX)" || exit 1
+__TMPCPIOGZ="$(mktemp ${TMPDIR:-/tmp}/mkinitramfs-OL_XXXXXX)" || exit 1
 
 DPKG_ARCH=`dpkg --print-architecture`
 
