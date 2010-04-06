@@ -256,6 +256,11 @@ if [ -n "${ROOT}" ]; then
 	echo "ROOT=${ROOT}" > ${DESTDIR}/conf/conf.d/root
 fi
 
+if ! command -v ldd >/dev/null 2>&1 ; then
+	echo "WARNING: no ldd around - install libc-bin"
+	exit 1
+fi
+
 # module-init-tools
 copy_exec /sbin/modprobe /sbin
 copy_exec /sbin/rmmod /sbin
