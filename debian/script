@@ -2,6 +2,9 @@
 
 exec >&3
 
+echo "-- initramfs sizes"
+ls -lh /boot/initrd.img-2.6.*
+
 echo "-- /proc/cmdline"
 cat /proc/cmdline
 echo
