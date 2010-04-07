@@ -8,12 +8,12 @@ USETRIGGERS=true
 mode=""
 version=""
 
-set -e
+set -eu
 
 [ -r ${CONF} ] && . ${CONF}
 
 if	   $USETRIGGERS						\
-	&& [ x"$DPKG_MAINTSCRIPT_PACKAGE" != x ]		\
+	&& [ x"${DPKG_MAINTSCRIPT_PACKAGE:-}" != x ]		\
 	&& [ $# = 1 ]	 					\
 	&& [ x"$1" = x-u ]					\
 	&& dpkg-trigger --check-supported 2>/dev/null
