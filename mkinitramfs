@@ -7,7 +7,6 @@ export PATH='/usr/bin:/sbin:/bin'
 keep="n"
 CONFDIR="/etc/initramfs-tools"
 verbose="n"
-errors_to="2>/dev/null"
 # BUSYBOXDIR="/usr/lib/initramfs-tools/bin/"
 export BUSYBOXDIR="/bin"
 
@@ -86,7 +85,7 @@ for i in /usr/share/initramfs-tools/conf-hooks.d/*; do
 	fi
 done
 
-if [ -n "${UMASK}" ]; then
+if [ -n "${UMASK:-}" ]; then
 	umask "${UMASK}"
 fi
 
@@ -128,7 +127,7 @@ case "${version}" in
 esac
 
 # Check userspace and kernel support for compressed initramfs images
-if [ -z "${compress}" ]; then
+if [ -z "${compress:-}" ]; then
 	compress=${COMPRESS}
 else
 	COMPRESS=${compress}
@@ -252,7 +251,7 @@ for i in ${EXTRA_CONF}; do
 done
 
 # ROOT hardcoding
-if [ -n "${ROOT}" ]; then
+if [ -n "${ROOT:-}" ]; then
 	echo "ROOT=${ROOT}" > ${DESTDIR}/conf/conf.d/root
 fi
 

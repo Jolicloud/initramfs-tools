@@ -175,10 +175,10 @@ copy_modules_dir()
 		fi
 	fi
 	while [ $# -ge 1 ]; do
-		exclude="$exclude -name $1 -prune -o "
+		exclude="${exclude:-} -name $1 -prune -o "
 		shift
 	done
-	for x_mod in $(find "${MODULESDIR}/${dir}" ${exclude} -name '*.ko' -print); do
+	for x_mod in $(find "${MODULESDIR}/${dir}" ${exclude:-} -name '*.ko' -print); do
 		manual_add_modules $(basename ${x_mod} .ko)
 	done
 }
@@ -367,7 +367,7 @@ dep_add_modules()
 # The modules "most" classes added per default to the initramfs
 auto_add_modules()
 {
-	case "$1" in
+	case "${1:-}" in
 	base)
 		for x in ehci-hcd ohci-hcd uhci-hcd usbhid btrfs ext2 \
 		ext3 ext4 ext4dev isofs jfs nfs reiserfs udf xfs af_packet \
@@ -479,10 +479,10 @@ check_minkver()
 {
 	local curversion initdir DPKG_ARCH minversion cm_x tmp
 
-	curversion="${1}"
-	initdir="${2}"
+	curversion="${1:-}"
+	initdir="${2:-}"
 	if [ -z "${initdir}" ]; then
-		case ${DPKG_ARCH} in
+		case ${DPKG_ARCH:-} in
 			ia64|hppa)
 				minversion="2.6.15"
 			;;
@@ -498,7 +498,7 @@ check_minkver()
 		return 0
 	fi
 	set_initlist
-	for cm_x in ${initlist}; do
+	for cm_x in ${initlist:-}; do
 		# sed: keep last line starting with MINKVER=,
 		#      remove MINKVER= and trailing space
 		minver=$(sed '/^MINKVER=/!d;$!d;s/^MINKVER=//;s/[[:space:]]*$//' "${initdir}/${cm_x}")

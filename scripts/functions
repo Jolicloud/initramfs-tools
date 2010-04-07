@@ -189,7 +189,7 @@ reduce_prereqs()
 get_prereq_pairs()
 {
 	set_initlist
-	for gp_x in ${initlist}; do
+	for gp_x in ${initlist:-}; do
 		echo ${gp_x} ${gp_x}
 		prereqs=$(${initdir}/${gp_x} prereqs)
 		for prereq in ${prereqs}; do
@@ -223,7 +223,7 @@ run_scripts()
 		. ${initdir}/ORDER
 	elif command -v tsort >/dev/null 2>&1; then
 		runlist=$(get_prereq_pairs | tsort)
-		call_scripts $2
+		call_scripts ${2:-}
 	else
 		get_prereqs
 		reduce_prereqs
