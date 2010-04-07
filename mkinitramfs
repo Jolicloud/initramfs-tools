@@ -289,8 +289,9 @@ if [ -e "${CONFDIR}/DSDT.aml" ]; then
 fi
 
 # Remove any looping or broken symbolic links, since they break cpio.
+[ "${verbose}" = y ] && xargs_verbose="-t"
 find "${DESTDIR}" -type l -printf '%p %Y\n' | sed -n 's/ [LN]$//p' \
-	| xargs -rL1 rm -f
+	| xargs ${xargs_verbose:-} -rL1 rm -f
 
 [ "${verbose}" = y ] && echo "Building cpio ${outfile} initramfs"
 (
