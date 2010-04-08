@@ -9,6 +9,11 @@ echo "-- /proc/cmdline"
 cat /proc/cmdline
 echo
 
+if [ -r  /etc/initramfs-tools/conf.d/resume ]; then
+	echo "-- resume"
+	cat  /etc/initramfs-tools/conf.d/resume
+fi
+
 echo "-- /proc/filesystems"
 grep -v nodev /proc/filesystems
 echo
