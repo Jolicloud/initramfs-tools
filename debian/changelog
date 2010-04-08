@@ -1,3 +1,10 @@
+initramfs-tools (0.94.3) unstable; urgency=low
+
+  * debian/control: Add Breaks against experimental findutils.
+    (closes: #576677)
+
+ -- maximilian attems <maks@debian.org>  Thu, 08 Apr 2010 03:50:28 +0200
+
 initramfs-tools (0.94.2) unstable; urgency=low
 
   * debian/control: amend Breaks for exp mdadm.
