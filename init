@@ -127,7 +127,7 @@ for x in $(cat /proc/cmdline); do
 		BOOT=${x#boot=}
 		;;
 	resume=*)
-		resume="${x#resume=}"
+		RESUME="${x#resume=}"
 		;;
 	resume_offset=*)
 		resume_offset="${x#resume_offset=}"
@@ -181,6 +181,8 @@ done
 if [ -n "${noresume}" ]; then
 	export noresume
 	unset resume
+else 
+	resume=${RESUME:-}
 fi
 
 [ -n "${netconsole}" ] && modprobe netconsole netconsole="${netconsole}"
