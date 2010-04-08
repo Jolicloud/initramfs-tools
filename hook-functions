@@ -156,8 +156,7 @@ copy_exec() {
 # Copy entire subtrees to the initramfs
 copy_modules_dir()
 {
-	local x_mod
-	local exclude
+	local kmod exclude
 	local dir="$1"
 	shift
 
@@ -174,7 +173,7 @@ copy_modules_dir()
 		exclude="${exclude:-} -name $1 -prune -o "
 		shift
 	done
-	for x_mod in $(find "${MODULESDIR}/${dir}" ${exclude:-} -name '*.ko' -print); do
+	for kmod in $(find "${MODULESDIR}/${dir}" ${exclude:-} -name '*.ko' -print); do
 		manual_add_modules $(basename ${x_mod} .ko)
 	done
 }
