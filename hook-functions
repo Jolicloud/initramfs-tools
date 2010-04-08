@@ -42,27 +42,23 @@ add_modules_from_file()
 # Add dependent modules + eventual firmware
 manual_add_modules()
 {
-	local mam_x firmwares firmware
+	local kmod firmware
 
-	for mam_x in $(modprobe --set-version="${version}" --ignore-install \
+	for kmod in $(modprobe --set-version="${version}" --ignore-install \
 	--quiet --show-depends "${1}" | awk '/^insmod/ { print $2 }'); do
 		# Prune duplicates
-		if [ -e "${DESTDIR}/${mam_x}" ]; then
+		if [ -e "${DESTDIR}/${kmod}" ]; then
 			continue
 		fi
 
-		mkdir -p "${DESTDIR}/$(dirname "${mam_x}")"
-		ln -s "${mam_x}" "${DESTDIR}/$(dirname "${mam_x}")"
+		mkdir -p "${DESTDIR}/$(dirname "${kmod}")"
+		ln -s "${kmod}" "${DESTDIR}/$(dirname "${kmod}")"
 		if [ "${verbose}" = "y" ]; then
-			echo "Adding module ${mam_x}"
+			echo "Adding module ${kmod}"
 		fi
 
-		# Add firmware files if necessary
-		firmwares=$(modinfo -F firmware "${mam_x}")
-		if [ -z "${firmwares}" ]; then
-			continue
-		fi
-		for firmware in $firmwares; do
+		# Add required firmware
+		for firmware in $(modinfo -F firmware "${kmod}"); do
 			if [ -e "${DESTDIR}/lib/firmware/${firmware}" ] \
 			|| [ -e "${DESTDIR}/lib/firmware/${version}/${firmware}" ]; then
 				continue
@@ -78,11 +74,11 @@ manual_add_modules()
 					continue
                                 fi
 
-				if grep -q "^$(basename "${mam_x}" .ko)[[:space:]]" \
+				if grep -q "^$(basename "${kmod}" .ko)[[:space:]]" \
 				/proc/modules \
-				|| grep -q "^$(basename "${mam_x}" .ko)" \
+				|| grep -q "^$(basename "${kmod}" .ko)" \
 				"${CONFDIR}/modules"; then
-					echo "W: Possible missing firmware /lib/firmware/${firmware} for module $(basename ${mam_x} .ko)" >&2
+					echo "W: Possible missing firmware /lib/firmware/${firmware} for module $(basename ${kmod} .ko)" >&2
 				fi
 				continue
 			fi
