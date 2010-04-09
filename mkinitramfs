@@ -139,7 +139,7 @@ if ! command -v ${compress} >/dev/null 2>&1; then
 		echo "No ${COMPRESS} in ${PATH}, using gzip"
 fi
 
-if ! `grep -q -i config_rd_${COMPRESS}=y /boot/config-${version}` ; then
+if ! `grep -q -i ^config_rd_${COMPRESS%p} /boot/config-${version}` ; then
 	compress=gzip
 	[ "${verbose}" = y ] && \
 		echo "linux-2.6 misses ${COMPRESS} support, using gzip"
