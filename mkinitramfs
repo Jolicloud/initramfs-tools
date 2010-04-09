@@ -145,6 +145,8 @@ if ! `grep -q -i ^config_rd_${COMPRESS%p} /boot/config-${version}` ; then
 		echo "linux-2.6 misses ${COMPRESS} support, using gzip"
 fi
 
+[ "${compress}" = lzop ] && compress="lzop -9"
+
 if [ -d "${outfile}" ]; then
 	echo "${outfile} is a directory"
 	exit 1
