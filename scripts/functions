@@ -323,7 +323,7 @@ configure_networking()
 			if [ -z "$bootif_mac" ]; then
 				bootif_mac="$x"
 			else
-				bootif_mac="$x:$bootif_mac"
+				bootif_mac="$bootif_mac:$x"
 			fi
 		done
 		unset IFS
