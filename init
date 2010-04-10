@@ -175,6 +175,9 @@ for x in $(cat /proc/cmdline); do
 	netconsole=*)
 		netconsole=${x#netconsole=}
 		;;
+	BOOTIF=*)
+		BOOTIF=${x#BOOTIF=}
+		;;
 	esac
 done
 
