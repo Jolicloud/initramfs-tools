@@ -363,10 +363,10 @@ configure_networking()
 			;;
 		""|on|any)
 			# Bring up device
-			ipconfig -t ${ROUNDTTT} ${DEVICE}
+			ipconfig -t ${ROUNDTTT} "${DEVICE}"
 			;;
 		dhcp|bootp|rarp|both)
-			ipconfig -t ${ROUNDTTT} -c ${IP} -d ${DEVICE}
+			ipconfig -t ${ROUNDTTT} -c ${IP} -d "${DEVICE}"
 			;;
 		*)
 			ipconfig -t ${ROUNDTTT} -d $IP
@@ -391,7 +391,8 @@ configure_networking()
 		# source specific bootdevice
 		. /tmp/net-${DEVICE}.conf
 	else
-		# source any interface as not exaclty specified
+		# source any interface...
+		# ipconfig should have quit after first response
 		. /tmp/net-*.conf
 	fi
 }
