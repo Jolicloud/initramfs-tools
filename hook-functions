@@ -305,6 +305,12 @@ dep_add_modules()
 	elif [ "${root#/dev/mmcblk}" != "${root}" ]; then
 		block=${root#/dev/}
 		block=${block%%p[0-9]*}
+
+	# DAC960 - good old mylex raid - root dev format /dev/rd/cXdXpX
+	elif [ "${root#/dev/rd/c}" != "${root}" ]; then
+		block="rd!c${root#/dev/rd/c}"
+		block=${block%%p[0-9]*}
+
 	# classical root device
 	else
 		block=${root#/dev/}
