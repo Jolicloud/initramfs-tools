@@ -12,7 +12,6 @@ Package: initramfs-tools
 Architecture: all
 Recommends: busybox (>= 1:1.01-3) | busybox-initramfs
 Depends: klibc-utils (>= 1.5.9-1), cpio, module-init-tools, udev (>= 0.086-1), findutils (>= 4.2.24), ${misc:Depends}
-Breaks: cryptsetup (<= 2:1.1.0-2), mdadm (= 3.1.1-1+incremental+4), mdadm (= 3.1.1-1+incremental+3), mdadm (= 3.1.1-1+incremental+2), mdadm (= 3.1.1-1+incremental+1), findutils (= 4.5.7-1)
 Provides: linux-initramfs-tool
 Description: tools for generating an initramfs
  This package contains tools to create and boot an initramfs for packaged 2.6
