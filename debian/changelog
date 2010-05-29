@@ -1,3 +1,52 @@
+initramfs-tools (0.95) unstable; urgency=low
+
+  [ maximilian attems ]
+  * update TODO list.
+  * hook-functions: refactor copy_exec.
+  * mkinitramfs: check only once for existing ldd.
+  * mkinitramfs: Use eventual TMPDIR definition.
+  * mkinitramfs: guard against empty EXTRA_CONF.
+  * update-initramfs: Use nounset.
+  * mkinitramfs: Fix several unbound variables.
+  * mkinitramfs: On verbose indicate what we rm.
+  * bug script: include sizes of generated initramfs.
+  * debian/script: add generated resume param to bug.
+  * hook-functions: manual_add_modules simplify.
+  * hook-functions: copy_modules_dir() small simplifications.
+  * mkinitramfs.8: Fix wrong sourcing in boot script. (Closes: #545728)
+  * initramfs-tools.8: Mention /scritps/functions.
+  * initramfs-tools.8: cryptopts param gone.
+  * initramfs-tools.8: document BOOTIF variable.
+  * configure_networking(): work with empty DEVICE string.
+    (Closes: #566295, #575766)
+  * hook-functions: add hid-apple. (Closes: #577253)
+  * Revert "mkinitramfs: only copy modprobe conf files". (Closes: #577981)
+  * initramfs-tools: change license to GPL.
+  * hook-functions: re-add hid-microsoft. (Closes: #577253)
+  * initramfs-tools: drop outdated breaks.
+  * debian/copyright: add boilerplate to keep lintian happy.
+  * hook-functions: Fix copy_modules_dir().
+
+  [ Axel Beckert ]
+  * mkinitramfs.8: Add information about $TMPDIR environment variable.
+
+  [ bert schulze ]
+  * mkinitramfs: add LZO support.
+  * mkinitramfs: use -9 for lzop.
+
+  [ Vagrant Cascadian ]
+  * configure_networking: pxelinux BOOTIF fixes.
+  * init: add BOOTIF bootarg.
+
+  [ Michael Prokop ]
+  * Support booting from USB 3 xHCI-based controllers.
+
+  [ Claus Herwig ]
+  * mkinitramfs: fix MODULES=dep on mylex raid devices (DAC960).
+    (Closes: #579702)
+
+ -- maximilian attems <maks@debian.org>  Fri, 28 May 2010 17:22:56 -0700
+
 initramfs-tools (0.94.4) unstable; urgency=low
 
   * init: fix hardcoded resume handling. (Closes: #576700)
