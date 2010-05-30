@@ -29,7 +29,7 @@ fi
 usage()
 {
 	if [ -n "${1:-}" ]; then
-		printf "${@}\n\n" >&2
+		printf "${*}\n\n" >&2
 	fi
 	cat >&2 << EOF
 Usage: ${0} [OPTION]...
@@ -64,7 +64,7 @@ chrooted()
 mild_panic()
 {
 	if [ -n "${1:-}" ]; then
-		printf "${@}\n" >&2
+		printf "${*}\n" >&2
 	fi
 	exit 0
 }
@@ -72,7 +72,7 @@ mild_panic()
 panic()
 {
 	if [ -n "${1:-}" ]; then
-		printf "${@}\n" >&2
+		printf "${*}\n" >&2
 	fi
 	exit 1
 }
@@ -80,7 +80,7 @@ panic()
 verbose()
 {
 	if [ "${verbose}" = 1 ]; then
-		printf "${@}\n"
+		printf "${*}\n"
 	fi
 }
 
