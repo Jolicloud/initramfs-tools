@@ -7,6 +7,8 @@ KPKGCONF=/etc/kernel-img.conf
 USETRIGGERS=true
 mode=""
 version=""
+update_initramfs=yes
+backup_initramfs=no
 
 set -eu
 
@@ -26,7 +28,7 @@ fi
 
 usage()
 {
-	if [ -n "${1}" ]; then
+	if [ -n "${1:-}" ]; then
 		printf "${@}\n\n" >&2
 	fi
 	cat >&2 << EOF
@@ -61,7 +63,7 @@ chrooted()
 
 mild_panic()
 {
-	if [ -n "${1}" ]; then
+	if [ -n "${1:-}" ]; then
 		printf "${@}\n" >&2
 	fi
 	exit 0
@@ -69,7 +71,7 @@ mild_panic()
 
 panic()
 {
-	if [ -n "${1}" ]; then
+	if [ -n "${1:-}" ]; then
 		printf "${@}\n" >&2
 	fi
 	exit 1
@@ -127,6 +129,7 @@ backup_booted_initramfs()
 	fi
 
 	# keep booted initramfs
+	boot_initramfs=
 	uptime_days=$(awk '{printf "%d", $1 / 3600 / 24}' /proc/uptime)
 	if [ -n "$uptime_days" ]; then
 		boot_initramfs=$(find "${initramfs}.bak" -mtime +${uptime_days})
@@ -295,6 +298,7 @@ set_current_version()
 
 set_linked_version()
 {
+	linktarget=
 	if [ -e /initrd.img ] && [ -L /initrd.img ]; then
 		linktarget="$(basename "$(readlink /initrd.img)")"
 	fi
@@ -313,6 +317,10 @@ set_linked_version()
 set_highest_version()
 {
 	get_sorted_versions
+	if [ -z "${version_list}" ]; then
+		version=
+		return
+	fi
 	set -- ${version_list}
 	version=${1}
 }
