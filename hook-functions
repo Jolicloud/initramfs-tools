@@ -148,7 +148,7 @@ copy_exec() {
 		mkdir -p "${DESTDIR}/${dirname}"
 		if [ ! -e "${DESTDIR}/${dirname}/${libname}" ]; then
 			ln -s "${x}" "${DESTDIR}/${dirname}"
-			[ "${verbose}" = "y" ] && echo "Adding library ${x}"
+			[ "${verbose}" = "y" ] && echo "Adding library ${x}" || true
 		fi
 	done
 }
