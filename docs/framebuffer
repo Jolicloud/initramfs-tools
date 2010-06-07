@@ -21,14 +21,16 @@ esac
 # 1) options are comma-separated
 # 2) options can be in either of these three forms:
 #    <arg>=<value>, <arg>:<value>, <boolean-arg>.
-# 3) the "mode" option has the form <xres>x<yres>[M][R][-<bpp>][@<refresh>][i][m]
-#    and may or may not start with "mode="
+# 3) the "mode" or "mode_option" option (name depends on the framebuffer driver)
+#    has the form <xres>x<yres>[M][R][-<bpp>][@<refresh>][i][m]
+#    and may or may not start with "mode=" or "mode_option="
+#    -> please adjust as necessary in the parse_video_opts() function
 #
 # When the options are used with modules, they need to be space-separated
 # and the following conversions are needed:
 #	<arg>:<value> -> <arg>=<value>
 #	<boolean-arg> -> <boolean-arg>=1
-#	<modevalue>   -> mode=<modevalue>
+#	<modevalue>   -> mode=<modevalue> or mode_option=<modevalue>
 parse_video_opts()
 {
 	local OPTS="$1"
@@ -48,7 +50,10 @@ parse_video_opts()
 			echo -n "${opt%:*}=${opt#*:} "
 		# Presumably a modevalue without the "mode=" prefix
 		elif [ "${opt}" != "${opt#[0-9]*x[0-9]}" ]; then
+		  	# Adjust: mode= option?
 			echo -n "mode=$opt "
+			# ... or mode_option= option?
+			# echo -n "mode_option=$opt "
 		# Presumably a boolean
 		else
 			echo -n "${opt}=1 "
