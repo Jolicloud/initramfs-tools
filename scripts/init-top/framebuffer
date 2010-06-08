@@ -78,8 +78,8 @@ matroxfb)
 	FB=matroxfb_base
 	;;
 uvesafb)
-	mknod -m 640 /dev/mem c 1 1
-	mknod -m 666 /dev/zero c 1 5
+	[ -c /dev/mem ] || mknod -m 640 /dev/mem c 1 1
+	[ -c /dev/zero ] || mknod -m 666 /dev/zero c 1 5
 	;;
 *)
 	;;
