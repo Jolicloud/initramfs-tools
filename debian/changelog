@@ -6,7 +6,7 @@ initramfs-tools (0.96.1) unstable; urgency=low
   * docs/framebuffer: Document mode vs. mode_option option in
     framebuffer example script. [Closes: #439846]
   * hook-functions: make device name handling for /proc/mdstat
-    more flexible for MODULES=dep. [Closes: #584520, #514756]
+    more flexible for MODULES=dep. [Closes: #549680, #514756]
   * mkinitramfs / scripts/functions + initramfs-tools.8:
     Support dashes inside scripts names. [Closes: #566056]
   * hook-functions: handle ubifs in dep_add_modules() and return
