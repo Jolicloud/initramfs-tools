@@ -1,3 +1,22 @@
+initramfs-tools (0.96.1) unstable; urgency=low
+
+  * hook-functions: Make sure copy_exec hook function does not
+    exit with a non-zero return value in non-verbose mode.
+    [Closes: #584520]
+  * docs/framebuffer: Document mode vs. mode_option option in
+    framebuffer example script. [Closes: #439846]
+  * hook-functions: make device name handling for /proc/mdstat
+    more flexible for MODULES=dep. [Closes: #584520, #514756]
+  * mkinitramfs / scripts/functions + initramfs-tools.8:
+    Support dashes inside scripts names. [Closes: #566056]
+  * hook-functions: handle ubifs in dep_add_modules() and return
+    since ubifs root is a char device, (see issue #582858).
+  * mkinitramfs: warn if TMPDIR is mounted noexec + fall back
+    to not cache run scripts then. [Closes: #576678]
+  * Add myself to uploaders.
+
+ -- Michael Prokop <mika@debian.org>  Tue, 08 Jun 2010 15:59:08 +0200
+
 initramfs-tools (0.95.1) unstable; urgency=low
 
   [ Michael Prokop ]
