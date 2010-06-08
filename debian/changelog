@@ -1,3 +1,9 @@
+initramfs-tools (1:0.92bjolicloud5) robby; urgency=low
+
+  * Fix spurious mknod error messages
+
+ -- Benjamin Ryzman <benjamin@jolicloud.org>  Tue, 08 Jun 2010 17:49:39 +0200
+
 initramfs-tools (1:0.92bjolicloud4) robby; urgency=low
 
   * Revert "Update all previous initramfs images, not just the
