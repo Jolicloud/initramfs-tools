@@ -237,6 +237,10 @@ dep_add_modules()
 	# most of the commands below only work with block devices.
 	if [ "${FSTYPE}" = "ubifs" ]; then
 		manual_add_modules "${FSTYPE}"
+		# add some modules required by ubifs on which it doesn's depend
+		manual_add_modules deflate
+		manual_add_modules zlib
+		manual_add_modules lzo
 		return
 	fi
 
@@ -415,6 +419,11 @@ auto_add_modules()
 	block)
 		copy_modules_dir kernel/drivers/block
 	;;
+	ubi)
+		for x in deflate zlib lzo ubi ubifs; do
+			manual_add_modules "${x}"
+		done
+	;;
 	ieee1394)
 		for x in ohci1394 sbp2; do
 			manual_add_modules "${x}"
@@ -447,6 +456,7 @@ auto_add_modules()
 		auto_add_modules ata
 		auto_add_modules i2o
 		auto_add_modules dasd
+		auto_add_modules ubi
 		auto_add_modules ieee1394
 		auto_add_modules firewire
 		auto_add_modules mmc
