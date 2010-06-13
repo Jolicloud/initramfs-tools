@@ -146,7 +146,7 @@ backup_booted_initramfs()
 # nuke generated copy
 remove_initramfs_bak()
 {
-	[ -z "${initramfs_bak}" ] && return 0
+	[ -z "${initramfs_bak:-}" ] && return 0
 	rm -f "${initramfs_bak}"
 	verbose "Removing ${initramfs_bak}"
 }
