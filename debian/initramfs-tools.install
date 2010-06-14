@@ -11,3 +11,4 @@ update-initramfs	usr/sbin
 debian/script		usr/share/bug/initramfs-tools
 debian/lintian/initramfs-tools	usr/share/lintian/overrides
 kernel			etc
+bash_completion.d	etc
