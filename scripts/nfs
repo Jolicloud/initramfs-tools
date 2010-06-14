@@ -4,7 +4,7 @@
 
 retry_nr=0
 
-# parse nfs bootargs and mount nfs 
+# parse nfs bootargs and mount nfs
 do_nfsmount()
 {
 

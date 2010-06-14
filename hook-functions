@@ -183,7 +183,7 @@ sys_walk_mod_add()
 {
 	local driver_path module
 	device_path="$1"
-	
+
 	while [ "${device_path}" != "/sys" ]; do
 		sys_walk_modalias ${device_path}
 		driver_path="$(readlink -f ${device_path}/driver/module)"

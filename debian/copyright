@@ -13,7 +13,7 @@ http://git.debian.org/?p=kernel/initramfs-tools.git;a=shortlog
 Authors: Adam Conrad <adconrad@ubuntu.com>,
 	 Ben Collins <bcollins@ubuntu.com>,
 	 David Härdeman <david@hardeman.nu>,
-	 Jeff Bailey <jbailey@ubuntu.com>, 
+	 Jeff Bailey <jbailey@ubuntu.com>,
 	 maximilian attems <maks@debian.org>,
 	 Scott James Remnant <scott@ubuntu.com>
 

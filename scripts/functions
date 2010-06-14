@@ -218,7 +218,7 @@ run_scripts()
 {
 	initdir=${1}
 	[ ! -d ${initdir} ] && return
-	
+
 	if [ -f ${initdir}/ORDER ]; then
 		. ${initdir}/ORDER
 	elif command -v tsort >/dev/null 2>&1; then

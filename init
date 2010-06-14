@@ -8,8 +8,8 @@ echo "Loading, please wait..."
 [ -d /proc ] || mkdir /proc
 [ -d /tmp ] || mkdir /tmp
 mkdir -p /var/lock
-mount -t sysfs -o nodev,noexec,nosuid none /sys 
-mount -t proc -o nodev,noexec,nosuid none /proc 
+mount -t sysfs -o nodev,noexec,nosuid none /sys
+mount -t proc -o nodev,noexec,nosuid none /proc
 
 # Note that this only becomes /dev on the real filesystem if udev's scripts
 # are used; which they will be, but it's worth pointing out
@@ -184,7 +184,7 @@ done
 if [ -n "${noresume}" ]; then
 	export noresume
 	unset resume
-else 
+else
 	resume=${RESUME:-}
 fi
 

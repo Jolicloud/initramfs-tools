@@ -247,7 +247,7 @@ initramfs-tools (0.93.4) unstable; urgency=medium
   * initramfs-tools.8: Convert hyphen to minus sign.
   * control: bump versioned dep on debhelper.
   * control: bump standards version without changes.
-  * hook-functions: Fix loading of entries without newline in 
+  * hook-functions: Fix loading of entries without newline in
     /etc/initramfs-tools/modules. (closes: #532745)
   * MODULES=most: Add virtio_net to initramfs. (closes: #533894)
 
@@ -537,7 +537,7 @@ initramfs-tools (0.92d) unstable; urgency=low
       each message.
     - initramfs-tools.preinst: Try to use UUID for resume device.
     - add boot script loading ide-generic on all_generic_ide cmdline.
-      Thanks Frans Pop <elendil@planet.nl> for report. (closes: #485786) 
+      Thanks Frans Pop <elendil@planet.nl> for report. (closes: #485786)
   * init: add possible mountroot break (closes: #488963)
   * initramfs-tools.8: document UUID usage for root and all_generic_ide.
     (closes: #489186)
@@ -744,7 +744,7 @@ initramfs-tools (0.90) unstable; urgency=low
  -- maximilian attems <maks@debian.org>  Thu, 09 Aug 2007 21:30:29 +0200
 
 initramfs-tools (0.89) unstable; urgency=low
-  
+
   Release "L'\xE9lecteur c'est notoire N'a pas tout' sa raison"
 
   [ Joey Hess ]
