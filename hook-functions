@@ -220,16 +220,16 @@ dep_add_modules()
 
 	# require mounted sysfs
 	if [ ! -d /sys/devices/ ]; then
-		echo "mkinitramfs: MODULES dep requires mounted sysfs on /sys"
+		echo "mkinitramfs: MODULES dep requires mounted sysfs on /sys" >&2
 		exit 1
 	fi
 
 	# findout root block device + fstype
 	eval "$(mount | awk '/\/dev\// {if ($3 == "/") {print "root=" $1 "\nFSTYPE=" $5; exit}}')"
 	if [ -z "$root" ]; then
-		echo "mkinitramfs: failed to determine root device"
-		echo "mkinitramfs: workaround is MODULES=most"
-		echo "Error please report bug on initramfs-tools and include the output of 'mount'"
+		echo "mkinitramfs: failed to determine root device" >&2
+		echo "mkinitramfs: workaround is MODULES=most" >&2
+		echo "Error please report bug on initramfs-tools and include the output of 'mount'" >&2
 		exit 1
 	fi
 
@@ -252,10 +252,10 @@ dep_add_modules()
 	if [ "${FSTYPE}" = "unknown" ]; then
 		FSTYPE=$(blkid -o value -s TYPE "${root}")
 		if [  -z "${FSTYPE}" ]; then
-			echo "mkinitramfs: unknown fstype on root ${root}"
-			echo "mkinitramfs: workaround is MODULES=most" 
-			echo "Error please report bug on initramfs-tools" 
-		exit 1
+			echo "mkinitramfs: unknown fstype on root ${root}" >&2
+			echo "mkinitramfs: workaround is MODULES=most" >&2
+			echo "Error please report bug on initramfs-tools" >&2
+			exit 1
 		fi
 	fi
 
@@ -349,9 +349,9 @@ dep_add_modules()
 
 	# Error out if /sys lack block dev
 	if [ -z "${block}" ] || [ ! -e /sys/block/${block} ]; then
-		echo "mkinitramfs: for root ${root} missing ${block} /sys/block/ entry"
-		echo "mkinitramfs: workaround is MODULES=most" 
-		echo "mkinitramfs: Error please report the bug" 
+		echo "mkinitramfs: for root ${root} missing ${block} /sys/block/ entry" >&2
+		echo "mkinitramfs: workaround is MODULES=most" >&2
+		echo "mkinitramfs: Error please report the bug" >&2
 		exit 1
 	fi
 

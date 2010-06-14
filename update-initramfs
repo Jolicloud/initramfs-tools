@@ -170,7 +170,7 @@ generate_initramfs()
 			# minversion wasn't met, exit 0
 			exit 0
 		fi
-		echo "update-initramfs: failed for ${initramfs}"
+		echo "update-initramfs: failed for ${initramfs}" >&2
 		exit $mkinitramfs_return
 	fi
 }
@@ -180,7 +180,7 @@ run_lilo()
 {
 	# show lilo errors on failure
 	if ! lilo -t  > /dev/null 2>&1 ; then
-		echo "ERROR lilo fails for new ${initramfs}:"
+		echo "ERROR lilo fails for new ${initramfs}:" >&2
 		echo
 		lilo -t
 	fi
@@ -460,7 +460,7 @@ while getopts "k:cudyvtb:h?" flag; do
 	b)
 		BOOTDIR="${OPTARG}"
 		if [ ! -d "${BOOTDIR}" ]; then
-			echo "Error: ${BOOTDIR} is not a directory."
+			echo "Error: ${BOOTDIR} is not a directory." >&2
 			exit 1
 		fi
 		;;
@@ -473,7 +473,7 @@ done
 shift $((${OPTIND} - 1))
 
 if [ $# -ne 0 ]; then
-	echo "Invalid argument for option -k."	
+	echo "Invalid argument for option -k." >&2
 	usage
 fi
 

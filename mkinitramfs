@@ -148,7 +148,7 @@ fi
 [ "${compress}" = lzop ] && compress="lzop -9"
 
 if [ -d "${outfile}" ]; then
-	echo "${outfile} is a directory"
+	echo "${outfile} is a directory" >&2
 	exit 1
 fi
 
@@ -266,7 +266,7 @@ if [ -n "${ROOT:-}" ]; then
 fi
 
 if ! command -v ldd >/dev/null 2>&1 ; then
-	echo "WARNING: no ldd around - install libc-bin"
+	echo "WARNING: no ldd around - install libc-bin" >&2
 	exit 1
 fi
 
