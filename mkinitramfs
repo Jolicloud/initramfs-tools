@@ -69,7 +69,7 @@ for i in /usr/share/initramfs-tools/conf.d/* ${CONFDIR}/conf.d/*; do
 		| grep '^[[:alnum:]][[:alnum:]\._-]*$' | grep -v '\.dpkg-.*$')";
 done
 # FIXME: deprecated those settings on mkinitramfs run
-#        these conf dirs are for boot scripts and land on initramfs
+# 	 these conf dirs are for boot scripts and land on initramfs
 for i in ${EXTRA_CONF}; do
 	if [ -e  ${CONFDIR}/conf.d/${i} ]; then
 		. ${CONFDIR}/conf.d/${i}
@@ -198,7 +198,7 @@ done
 # Copy the modules.order file in
 if [ -f "${MODULESDIR}/modules.order" ]; then
 	cp -p "${MODULESDIR}/modules.order" \
-	      "${DESTDIR}${MODULESDIR}/modules.order"
+		"${DESTDIR}${MODULESDIR}/modules.order"
 fi
 
 # MODULES=list case.  Always honour.
@@ -313,15 +313,15 @@ find "${DESTDIR}" -type l -printf '%p %Y\n' | sed -n 's/ [LN]$//p' \
 # cd "${DESTDIR}" && find . | cpio --quiet --dereference -o -H newc | gzip >"${outfile}" || exit 1
 exec 3>&1
 eval `
-    # http://cfaj.freeshell.org/shell/cus-faq-2.html
-    exec 4>&1 >&3 3>&-
-    cd  "${DESTDIR}"
-    {
-        find . 4>&-; echo "ec1=$?;" >&4
-    } | {
-        cpio --quiet --dereference -o -H newc 4>&-; echo "ec2=$?;" >&4
-    } | ${compress} >"${outfile}"
-    echo "ec3=$?;" >&4
+	# http://cfaj.freeshell.org/shell/cus-faq-2.html
+	exec 4>&1 >&3 3>&-
+	cd  "${DESTDIR}"
+	{
+		find . 4>&-; echo "ec1=$?;" >&4
+	} | {
+		cpio --quiet --dereference -o -H newc 4>&-; echo "ec2=$?;" >&4
+	} | ${compress} >"${outfile}"
+	echo "ec3=$?;" >&4
 `
 if [ "$ec1" -ne 0 ]; then exit "$ec1"; fi
 if [ "$ec2" -ne 0 ]; then exit "$ec2"; fi

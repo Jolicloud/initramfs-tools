@@ -72,7 +72,7 @@ manual_add_modules()
 				# /proc/modules exists
 				if [ ! -e /proc/modules ] ; then
 					continue
-                                fi
+				fi
 
 				if grep -q "^$(basename "${kmod}" .ko)[[:space:]]" \
 				/proc/modules \
@@ -127,10 +127,10 @@ copy_exec() {
 
 	# Copy the dependant libraries
 	for x in $(ldd ${src} 2>/dev/null | sed -e '
-	    /\//!d;
-	    /linux-gate/d;
-	    /=>/ {s/.*=>[[:blank:]]*\([^[:blank:]]*\).*/\1/};
-	    s/[[:blank:]]*\([^[:blank:]]*\) (.*)/\1/' 2>/dev/null); do
+		/\//!d;
+		/linux-gate/d;
+		/=>/ {s/.*=>[[:blank:]]*\([^[:blank:]]*\).*/\1/};
+		s/[[:blank:]]*\([^[:blank:]]*\) (.*)/\1/' 2>/dev/null); do
 
 		# Try to use non-optimised libraries where possible.
 		# We assume that all HWCAP libraries will be in tls,
@@ -166,7 +166,7 @@ copy_modules_dir()
 	if [ "${verbose}" = "y" ]; then
 		echo "Copying module directory ${dir}"
 		if [ $# -ge 1 ]; then
-		    echo "(excluding $*)"
+			echo "(excluding $*)"
 		fi
 	fi
 	while [ $# -ge 1 ]; do
@@ -274,7 +274,7 @@ dep_add_modules()
 		# lvm on md or luks on md
 		if [ "${block#md}" != "${block}" ]; then
 			block=$(grep "^${block}" /proc/mdstat | \
-			        awk "{gsub(/^${block} : .* (multipath|linear|raid[[:digit:]]+)\ /,\"\")};1")
+				awk "{gsub(/^${block} : .* (multipath|linear|raid[[:digit:]]+)\ /,\"\")};1")
 			block="${block%%\[*}"
 		fi
 		# luks or lvm on cciss or ida
@@ -531,8 +531,8 @@ check_minkver()
 	fi
 	set_initlist
 	for cm_x in ${initlist:-}; do
-		# sed: keep last line starting with MINKVER=,
-		#      remove MINKVER= and trailing space
+		# sed:  keep last line starting with MINKVER=,
+		#	remove MINKVER= and trailing space
 		minver=$(sed '/^MINKVER=/!d;$!d;s/^MINKVER=//;s/[[:space:]]*$//' "${initdir}/${cm_x}")
 		if [ -z "${tmp}" ]; then
 			continue
