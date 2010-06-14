@@ -18,6 +18,7 @@ if [ -e /etc/udev/udev.conf ]; then
 	. /etc/udev/udev.conf
 fi
 if ! mount -t devtmpfs -o mode=0755 none /dev; then
+	echo "W: devtmpfs not available, falling back to tmpfs for /dev"
 	mount -t tmpfs -o size=$tmpfs_size,mode=0755 udev /dev
 	[ -e /dev/console ] || mknod -m 0600 /dev/console c 5 1
 	[ -e /dev/null ] || mknod /dev/null c 1 3
