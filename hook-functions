@@ -3,7 +3,7 @@
 catenate_cpiogz() {
 	# Sanity check
 	if [ ! -e "${1}" ]; then
-		echo "W:catenate_cpiogz: arg1='${1}' does not exist." >&2
+		echo "W: catenate_cpiogz: arg1='${1}' does not exist." >&2
 		return
 	fi
 
@@ -29,7 +29,7 @@ add_modules_from_file()
 {
 	# Sanity check
 	if [ ! -e "${1}" ]; then
-		echo "W:add_modules_from_file: arg1='${1}' does not exist." >&2
+		echo "W: add_modules_from_file: arg1='${1}' does not exist." >&2
 		return
 	fi
 

@@ -224,8 +224,8 @@ list)
 	# nothing to add
 	;;
 *)
-	echo "mkinitramfs: Warning unsupported MODULES setting: ${MODULES}."
-	echo "mkinitramfs: Falling back to MODULES=most."
+	echo "W: mkinitramfs: unsupported MODULES setting: ${MODULES}."
+	echo "W: mkinitramfs: Falling back to MODULES=most."
 	auto_add_modules
 	;;
 esac
@@ -286,7 +286,7 @@ run_scripts "${CONFDIR}"/hooks
 
 # cache boot run order
 if [ -n "$NOEXEC" ]; then
-	echo "Warning: TMPDIR is mounted noexec, will not cache run scripts."
+	echo "W: TMPDIR is mounted noexec, will not cache run scripts."
 else
 	for b in $(cd "${DESTDIR}/scripts" && find . -mindepth 1 -type d); do
 		cache_run_scripts "${DESTDIR}" "/scripts/${b#./}"
