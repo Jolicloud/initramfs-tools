@@ -46,6 +46,12 @@ if [ -r /etc/crypttab ]; then
 	echo
 fi
 
+if [ -r /proc/mdstat ]; then
+	echo "-- /proc/mdstat"
+	cat /proc/mdstat
+	echo
+fi
+
 if grep -q "MODULES=dep" /etc/initramfs-tools/initramfs.conf ; then
 	echo "-- /sys/block"
 	ls /sys/block
