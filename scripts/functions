@@ -200,6 +200,8 @@ get_prereq_pairs()
 
 call_scripts()
 {
+	# allow hooks to abort build:
+	set -e
 	for cs_x in ${runlist}; do
 		[ -f ${initdir}/${cs_x} ] || continue
 		# mkinitramfs verbose output
@@ -212,6 +214,7 @@ call_scripts()
 			. /conf/param.conf
 		fi
 	done
+	set +e
 }
 
 run_scripts()
