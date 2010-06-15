@@ -273,9 +273,7 @@ dep_add_modules()
 		done
 		# lvm on md or luks on md
 		if [ "${block#md}" != "${block}" ]; then
-			block=$(grep "^${block}" /proc/mdstat | \
-				awk "{gsub(/^${block} : .* (multipath|linear|raid[[:digit:]]+)\ /,\"\")};1")
-			block="${block%%\[*}"
+			block=$(sed -ne 's/multipath/[/' -e 's/linear/[/' -e 's/raid[0-9][0-9]*/[/' -e 's/\([hs]d[a-z][a-z]*\)[0-9][0-9]*/\1/g' -e '/^'${block}' :/s/^[^[]*\[ \([^\[]*\)\[.*$/\1/p' </proc/mdstat)
 		fi
 		# luks or lvm on cciss or ida
 		if [ "${block#cciss}" != "${block}" ] \
@@ -287,28 +285,15 @@ dep_add_modules()
 	# md root new naming scheme /dev/md/X
 	elif [ "${root#/dev/md/}" != "${root}" ]; then
 		root=${root#/dev/md/}
-		block=$(grep "^md${root}" /proc/mdstat | \
-			awk "{gsub(/^md${root} : .* (multipath|linear|raid[[:digit:]]+)\ /,\"\")};1")
-		block="${block%%\[*}"
 		# drop the partition number only for sdX and hdX devices
 		# and keep it for other devices like loop#, dm-# devices
-		case "$block" in
-			sd*) block=${block%%[0-9]*};;
-			hd*) block=${block%%[0-9]*};;
-		esac
+		block=$(sed -ne 's/multipath/[/' -e 's/linear/[/' -e 's/raid[0-9][0-9]*/[/' -e 's/\([hs]d[a-z][a-z]*\)[0-9][0-9]*/\1/g' -e '/^md'$root' :/s/^[^[]*\[ \([^\[]*\)\[.*$/\1/p' </proc/mdstat)
 	# md root /dev/mdX
 	elif [ "${root#/dev/md}" != "${root}" ]; then
 		root=${root#/dev/md}
-		block=$(grep "^md${root}" /proc/mdstat | \
-			awk "{gsub(/^md${root} : .* (multipath|linear|raid[[:digit:]]+)\ /,\"\")};1")
-		block="${block%%\[*}"
 		# drop the partition number only for sdX and hdX devices
 		# and keep it for other devices like loop#, dm-# devices
-		case "$block" in
-			sd*) block=${block%%[0-9]*};;
-			hd*) block=${block%%[0-9]*};;
-		esac
-
+		block=$(sed -ne 's/multipath/[/' -e 's/linear/[/' -e 's/raid[0-9][0-9]*/[/' -e 's/\([hs]d[a-z][a-z]*\)[0-9][0-9]*/\1/g' -e '/^md'$root' :/s/^[^[]*\[ \([^\[]*\)\[.*$/\1/p' </proc/mdstat)
 	# cciss device
 	elif [ "${root#/dev/cciss/}" != "${root}" ]; then
 		block=${root#/dev/cciss/*}
