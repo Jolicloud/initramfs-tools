@@ -456,7 +456,6 @@ auto_add_modules()
 		auto_add_modules ata
 		auto_add_modules i2o
 		auto_add_modules dasd
-		auto_add_modules ubi
 		auto_add_modules ieee1394
 		auto_add_modules firewire
 		auto_add_modules mmc
