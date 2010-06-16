@@ -365,6 +365,10 @@ dep_add_modules()
 		manual_add_modules mmc_block
 	fi
 
+	if [ -e /sys/bus/virtio ] ; then
+		manual_add_modules virtio_pci
+	fi
+
 	if [ -e /sys/bus/i2o/devices/ ]; then
 		force_load i2o_block
 		force_load i2o_config
