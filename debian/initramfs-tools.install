@@ -1,3 +1,4 @@
+lsinitramfs		usr/bin
 mkinitramfs		usr/sbin
 mkinitramfs-kpkg	usr/sbin
 init			usr/share/initramfs-tools

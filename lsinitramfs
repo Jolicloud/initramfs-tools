@@ -1,0 +1,14 @@
+#!/bin/sh
+
+usage()
+{
+	echo "Usage: $(basename $0) <initramfs file>"
+	exit 1
+}
+
+[ $# -eq 0 ] && usage
+
+for i in $*; do
+	echo $i
+	zcat $i | cpio --extract --verbose --quiet --list
+done

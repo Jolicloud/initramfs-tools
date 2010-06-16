@@ -1,0 +1,31 @@
+.TH LSINITRAMFS 8  "2010/06/16" "Linux" "lsinitramfs manual"
+
+.SH NAME
+lsinitramfs \- list content of an initramfs image
+
+.SH SYNOPSIS
+.B lsinitramfs
+.IR initramfsfile
+
+.SH DESCRIPTION
+The
+.B lsinitramfs
+lists the content of given initramfs images. It allows to quickly
+check the content of this specific initramfs.
+
+.SH EXAMPLES
+
+List initramfs of current running kernel:
+
+.PP
+.B lsinitramfs /boot/initrd.img-$(uname -r)
+
+.SH AUTHOR
+The initramfs-tools are written by Maximilian Attems <maks@debian.org>
+and numerous others.
+
+.SH SEE ALSO
+.BR
+.IR initramfs-tools (8),
+.IR mkinitramfs (8),
+.IR update-initramfs (8).
