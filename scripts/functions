@@ -288,7 +288,7 @@ get_fstype ()
 	local FS FSTYPE FSSIZE RET
 	FS="${1}"
 
-	# vol_id has a more complete list of file systems,
+	# blkid has a more complete list of file systems,
 	# but fstype is more robust
 	eval $(fstype "${FS}" 2> /dev/null)
 	if [ "$FSTYPE" = "unknown" ] &&  command -v blkid >/dev/null 2>&1 ; then
