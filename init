@@ -43,6 +43,7 @@ export ROOTFSTYPE=
 export IP=
 export BOOT=
 export BOOTIF=
+export UBIMTD=
 export break=
 export init=/sbin/init
 export quiet=n
@@ -126,6 +127,9 @@ for x in $(cat /proc/cmdline); do
 		;;
 	boot=*)
 		BOOT=${x#boot=}
+		;;
+	ubi.mtd=*)
+		UBIMTD=${x#ubi.mtd=}
 		;;
 	resume=*)
 		RESUME="${x#resume=}"
@@ -258,6 +262,7 @@ unset ROOT
 unset IP
 unset BOOT
 unset BOOTIF
+unset UBIMTD
 unset blacklist
 unset break
 unset noresume
