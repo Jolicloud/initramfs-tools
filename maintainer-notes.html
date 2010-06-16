@@ -193,7 +193,7 @@ on.</p>
 
 <li>Adjust debian/changelog accordingly:
 <pre>
-<b>git-dch --debian-branch=&quot;$(git branch | awk -F\*\  '/^* / { print $2}' )&quot; --since=$(dpkg-parsechangelog | awk '/^Version:/ {print $2}') -S --id-length=7 --meta</b>
+<b>git-dch --debian-branch=&quot;$(git branch | awk -F\* '/^* / { print $2}' )&quot; --since=$(dpkg-parsechangelog | awk '/^Version:/ {print $2}') -S --id-length=7 --meta</b>
 </pre>
 </li>
 
