@@ -123,17 +123,12 @@ reduce_satisfied()
 			;;
 		esac
 		# skip non executable scripts
-		if [ ! -x ${initdir}/${rs_y} ]; then
-			continue
-		fi
+		[ ! -x ${initdir}/${rs_y} ] && continue
 		# skip directories
-		if [ -d ${initdir}/${rs_y} ]; then
-			continue
-		fi
+		[ -d ${initdir}/${rs_y} ] && continue
 		# skip bad syntax
-		if [ ! sh -n ${initdir}/${rs_y} ]; then
-			continue
-		fi
+		[ ! sh -n ${initdir}/${rs_y} ] && continue
+
 		tmpdeplist="${tmpdeplist} ${rs_y}"
 	done
 	deplist=${tmpdeplist}
