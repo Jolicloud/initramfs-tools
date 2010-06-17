@@ -17,7 +17,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	exit 0
 fi
 
-for i in "$*" ; do
+for i in "$@" ; do
 	if ! [ -r "$i" ] ; then
 		echo "Specified file could not be read." >&2
 		exit 1
