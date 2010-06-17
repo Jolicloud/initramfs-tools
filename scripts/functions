@@ -94,14 +94,14 @@ set_initlist()
 		fi
 
 		# skip directories
-		if [ -d ${si_x} ]; then
+		if [ -d ${si_x} ; then
 			[ "${verbose}" = "y" ] \
 			&& echo "$si_x ignored: a directory"
 			continue
 		fi
 
 		# skip bad syntax
-		if [ ! sh -n ${si_x} ]; then
+		if ! sh -n ${si_x} ; then
 			[ "${verbose}" = "y" ] \
 			&& echo "$si_x ignored: bad syntax"
 			continue
