@@ -69,14 +69,14 @@ mountroot()
 		delay=${ROOTDELAY}
 	fi
 
-	# loop until nfsmount succeds
+	# loop until nfsmount succeeds
+	do_nfsmount
 	while [ ${retry_nr} -lt ${delay} ] && [ ! -e ${rootmnt}${init} ]; do
-		[ ${retry_nr} -gt 0 ] && \
 		[ "$quiet" != "y" ] && log_begin_msg "Retrying nfs mount"
+		/bin/sleep 1
 		do_nfsmount
 		retry_nr=$(( ${retry_nr} + 1 ))
-		[ ! -e ${rootmnt}${init} ] && /bin/sleep 1
-		[ ${retry_nr} -gt 0 ] && [ "$quiet" != "y" ] && log_end_msg
+		[ "$quiet" != "y" ] && log_end_msg
 	done
 
 	[ "$quiet" != "y" ] && log_begin_msg "Running /scripts/nfs-bottom"
