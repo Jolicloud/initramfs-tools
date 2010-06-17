@@ -94,7 +94,7 @@ set_initlist()
 		fi
 
 		# skip directories
-		if [ -d ${si_x} ; then
+		if [ -d ${si_x} ]; then
 			[ "${verbose}" = "y" ] \
 			&& echo "$si_x ignored: a directory"
 			continue
@@ -127,7 +127,7 @@ reduce_satisfied()
 		# skip directories
 		[ -d ${initdir}/${rs_y} ] && continue
 		# skip bad syntax
-		[ ! sh -n ${initdir}/${rs_y} ] && continue
+		sh -n ${initdir}/${rs_y} || continue
 
 		tmpdeplist="${tmpdeplist} ${rs_y}"
 	done
