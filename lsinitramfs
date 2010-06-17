@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -eu
+
 usage()
 {
 	echo "Usage: $(basename $0) <initramfs file>"
