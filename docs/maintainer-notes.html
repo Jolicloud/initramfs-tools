@@ -193,13 +193,14 @@ on.</p>
 
 <li>Adjust debian/changelog accordingly:
 <pre>
-<b>git-dch --debian-branch=&quot;$(git branch | awk -F\* '/^* / { print $2}' )&quot; --since=$(dpkg-parsechangelog | awk '/^Version:/ {print $2}') -S --id-length=7 --meta</b>
+<b>% git-dch --debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp; '/^* / { print $2}' )&quot; \
+  --since=&quot;$(dpkg-parsechangelog | awk '/^Version:/ {print $2}')&quot; -S --id-length=7 --meta</b>
 </pre>
 </li>
 
 <li>Build package:
 <pre>
-<b>% git-buildpackage --git-debian-branch=&quot;$(git branch | awk -F\*\  '/^* / { print $2}' )&quot; -tc</b>
+<b>% git-buildpackage --git-debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp;'/^* / { print $2}' )&quot; -tc</b>
 </pre>
 </ol>
 
@@ -207,12 +208,15 @@ on.</p>
 
 <h2><a name="contribute">4. Contribute</a></h2>
 
-<p>TODO / WIP:</p>
-
 <ol>
 <li>Create patch:
 <pre>
-<b>% git format-patch HEAD</b>
+<b>% git format-patch -s -p origin/master</b>
+</pre>
+
+<li>Send patch file(s) to maintainers via mail (requires Debian package git-email):
+<pre>
+<b>% git send-email --to=initramfs-tools@packages.qa.debian.org $PATCHFILE[S]</b>
 </pre>
 </ol>
 
