@@ -26,12 +26,9 @@ pre_mountroot()
 	if [ ! -e "${ROOT}" ] || ! $(get_fstype "${ROOT}" >/dev/null); then
 		log_begin_msg "Waiting for root file system"
 
-		# Default delay is 180s
-		if [ -z "${ROOTDELAY}" ]; then
-			slumber=180
-		else
-			slumber=${ROOTDELAY}
-		fi
+		# Default delay is 30s
+		slumber=${ROOTDELAY:-30}
+
 		if [ -x /sbin/usplash_write ]; then
 			/sbin/usplash_write "TIMEOUT ${slumber}" || true
 		fi
