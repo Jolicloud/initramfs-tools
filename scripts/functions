@@ -100,6 +100,13 @@ set_initlist()
 			continue
 		fi
 
+		# skip bad syntax
+		if [ ! sh -n ${si_x} ]; then
+			[ "${verbose}" = "y" ] \
+			&& echo "$si_x ignored: bad syntax"
+			continue
+		fi
+
 		initlist="${initlist} ${si_x#${initdir}/}"
 	done
 }
@@ -121,6 +128,10 @@ reduce_satisfied()
 		fi
 		# skip directories
 		if [ -d ${initdir}/${rs_y} ]; then
+			continue
+		fi
+		# skip bad syntax
+		if [ ! sh -n ${initdir}/${rs_y} ]; then
 			continue
 		fi
 		tmpdeplist="${tmpdeplist} ${rs_y}"
