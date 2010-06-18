@@ -80,7 +80,7 @@ or online at <a
 </pre>
 </li>
 
-<li>Set environment variables (e.g. through your ~/.bashrc or ~/.zshrc) for git and git-dch:
+<li>Set environment variables (e.g. through your ~/.bashrc or ~/.zshrc) for git and devscripts (git dch):
 <pre>
 <b>export DEBEMAIL=$mailaddress
 export DEBFULLNAME=$yourname
@@ -130,7 +130,7 @@ export GIT_COMMITTER_NAME=$yourname</b>
 </pre>
 
 <b>NOTE:</b> Use 'Closes: #BUGID' for closing a bugreport and 'Thanks: Fullname
-&lt;<code><i>mailaddress</i></code>&gt;' for giving credits in your commit message. git-dch will use
+&lt;<code><i>mailaddress</i></code>&gt;' for giving credits in your commit message. git dch will use
 this information for generating the changelog using the --meta option later
 on.
 
@@ -200,14 +200,14 @@ on.
 
 <li>Adjust debian/changelog accordingly:
 <pre>
-<b>% git-dch --debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp; '/^* / { print $2}' )&quot; \
+<b>% git dch --debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp; '/^* / { print $2}' )&quot; \
   --since=&quot;$(dpkg-parsechangelog | awk '/^Version:/ {print $2}')&quot; -S --id-length=7 --meta</b>
 </pre>
 </li>
 
 <li>Build package:
 <pre>
-<b>% git-buildpackage --git-debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp;'/^* / { print $2}' )&quot; -tc</b>
+<b>% git buildpackage --git-debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp;'/^* / { print $2}' )&quot; -tc</b>
 </pre>
 </li>
 
@@ -222,14 +222,14 @@ on.
 
 <li>Adjust debian/changelog accordingly:
 <pre>
-<b>% git-dch --debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp; '/^* / { print $2}' )&quot; \
+<b>% git dch --debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp; '/^* / { print $2}' )&quot; \
   --since=&quot;$(dpkg-parsechangelog | awk '/^Version:/ {print $2}')&quot; -S --id-length=7 --meta</b>
 </pre>
 </li>
 
 <li>Build package:
 <pre>
-<b>% git-buildpackage --git-debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp;'/^* / { print $2}' )&quot; -tc [-us -uc]</b>
+<b>% git buildpackage --git-debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp;'/^* / { print $2}' )&quot; -tc [-us -uc]</b>
 </pre>
 </li>
 
@@ -265,13 +265,13 @@ on.
 <li>Creating changelog:
 
 <pre>
-<b>% git-dch --debian-branch debian --release --since <code><i>HASH</i></code></b>
+<b>% git dch --debian-branch master --release --since <code><i>HASH</i></code></b>
 </pre>
 
 or more dynamically:
 
 <pre>
-<b>% git-dch --meta --release --since v$(dpkg-parsechangelog | awk '/^Version:/ {print $2}') --debian-branch=&quot;$(git branch | awk -F\*\  '/^* / { print $2}' )&quot; [--id-length=7] [--full]</b>
+<b>% git dch --meta --release --since v$(dpkg-parsechangelog | awk '/^Version:/ {print $2}') --debian-branch=&quot;$(git branch | awk -F\*\  '/^* / { print $2}' )&quot; [--id-length=7] [--full]</b>
 </pre>
 
 <b>NOTE:</b> we do not use history based sorting for the changelog entries but
