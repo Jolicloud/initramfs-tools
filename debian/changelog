@@ -1,3 +1,68 @@
+initramfs-tools (0.97) unstable; urgency=low
+
+  [ Martin Michlmayr ]
+  * [e65ee48] Produce an error when root cannot be determined with
+    MODULES=dep
+  * [bb66fc2] hook-functions/init/scripts/local: add support for ubifs.
+    (Closes: #582858) - thanks to Martin Michlmayr <tbm@cyrius.com>
+
+  [ Ferenc Wagner ]
+  * [1d66ae1] scripts/nfs: cleanup retry logic
+
+  [ Colin Watson ]
+  * [3054e3e] initramfs-tools: work around 'find -printf %Y' bug
+
+  [ maximilian attems ]
+  * [a8a5ce4] script: Add update-initramfs.conf to bug report
+  * [cc6077a] update-initramfs: Fix another unbound variable (Closes:
+    #583695)
+  * [b1f74e6] get_fstype: reference blkid in comment - thanks to
+    Christoph Anton Mitterer <calestyo@scientia.net>
+  * [eb93a7e] pre_mountroot(): reduce timeout to 30 seconds
+  * [38563fe] scripts/functions: On panic change to tty1 if chvt around
+    - thanks to Colin Watson <cjwatson@ubuntu.com>
+  * [2031379] mkinitramfs: No point in hardcoding busybox path
+  * [68c87cd] mkinitramfs: check syntax of boot and hook scripts
+  * [ae02e4b] scripts/functions: beautify a bit reduce_satisfied()
+  * [22d996c] maintainer doc: use git commands without the dash
+  * [6147641] nfsmount: more small cleanups
+  * [e967b03] mkinitramfs, lsinitramfs: Better error message for
+    non-GNU getopt
+  * Add lsinitramfs (to list content of an initramfs image) ([a39db63]
+    [969f8fd] [fafede5] [2f3eb88])
+
+  [ Michael Prokop ]
+  * [2a8c990] hook-functions/mkinitramfs/update-initramfs: consequently
+    output error messages to stderr
+  * [04b8619] init: display warning message if devtmpfs could not be
+    mounted. - thanks to Ferenc Wagner <wferi@niif.hu>
+  * [60afd2a] code cleanup: drop trailing whitespaces.
+  * [ab28c77] code cleanup: consequently replace spaces in indentions
+    with tabs to unify coding stile
+  * [3a02c6f] code cleanup: consequently use "W:" for warnings.
+  * [b1fff5e] add bash-completion for update-initramfs (Closes: #537139)
+    - thanks to Stéphane Jourdois <stephane@jourdois.fr>
+  * [5697c3b] hook-functions: replace awk calls with sed in
+    dep_add_modules() (Closes: #585991) - thanks to Thorsten Glaser
+    <tg@mirbsd.de>
+  * [7afab22] debian/script: append /proc/mdstat (iff present) to
+    bugreports
+  * [5b565be] scripts/functions: allow hooks to abort build (Closes:
+    #396388)
+  * [528ba78] hook-functions: do not install ubi module by default via
+    auto_add_modules()
+  * [ecb8416] lsinitramfs: be more defensive against cmdline options
+  * [2ff4ba2] scripts/functions: fix usage of test for script execution
+  * [74f71c9] scripts/functions: fix another sh -n usage and fix typo
+  * [91f5947] hook-functions: install virtio_pci module if
+    /sys/bus/virtio is present and using modules=dep (Closes: #585992) -
+    thanks to Vincent Danjean <vdanjean@debian.org>
+  * [d25f610] slightly improve manpage lsinitramfs.8
+  * Provide maintainer-notes.html, being "Maintainer documentation for
+    initramfs-tools" ([7fc1ee5] [afafea4] [e506ee7] [d53a839] [6af23c2])
+
+ -- Michael Prokop <mika@debian.org>  Fri, 18 Jun 2010 12:28:04 +0200
+
 initramfs-tools (0.96.1) unstable; urgency=low
 
   * hook-functions: Make sure copy_exec hook function does not
