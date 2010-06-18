@@ -66,12 +66,12 @@ Use root=/dev/nfs for NFS to kick to in. NFSOPTS can be looked up in
 \fB\fI ip
 tells how to configure the ip address. Allows to specify an different
 NFS server than the DHCP server. See Documentation/filesystems/nfsroot.txt
-in any recent Linux source for details. Optional paramater for NFS root.
+in any recent Linux source for details. Optional parameter for NFS root.
 
 .TP
 \fB\fI BOOTIF
-is a mac adress in pxelinux format with leading "01-" and "-" as separations.
-pxelinux passes mac adress of network card used to PXE boot on with this
+is a mac address in pxelinux format with leading "01-" and "-" as separations.
+pxelinux passes mac address of network card used to PXE boot on with this
 bootarg.
 
 .TP
@@ -259,7 +259,7 @@ sets if a keymap needs to be added to initramfs.
 .TP
 \fB\fI MODULES
 specifies which kind of modules should land on initramfs.
-This setting shouldn't be overriden by hook script, but can guide them
+This setting shouldn't be overridden by hook script, but can guide them
 on how much they need to include on initramfs.
 
 
@@ -496,12 +496,12 @@ init sets several variables for the boot scripts environment.
 
 .TP
 \fB\fI ROOT
-correponds to the root boot option.
+corresponds to the root boot option.
 Advanced boot scripts like cryptsetup or live-initramfs need to play tricks.
 Otherwise keep it alone.
 .TP
 \fB\fI ROOTDELAY, ROOTFLAGS, ROOTFSTYPE, IP
-correponds to the rootdelay, rootflags, rootfstype or ip boot option.
+corresponds to the rootdelay, rootflags, rootfstype or ip boot option.
 .TP
 \fB\fI DPKG_ARCH
 allows arch specific boot actions.
@@ -521,10 +521,10 @@ passes the path to init(8) usually /sbin/init.
 .TP
 \fB\fI readonly
 is the default for mounting the root corresponds to the ro bootarg.
-Overriden by rw bootarg.
+Overridden by rw bootarg.
 .TP
 \fB\fI rootmnt
-is the path where root gets mounted usualy /root.
+is the path where root gets mounted usually /root.
 .TP
 \fB\fI debug
 indicates that a debug log is captured for further investigation.

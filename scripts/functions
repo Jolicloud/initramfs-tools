@@ -220,7 +220,7 @@ call_scripts()
 			echo "Calling hook ${cs_x}"
 		fi
 		${initdir}/${cs_x}
-		# allow boot scripts to modify exported boot paramaters
+		# allow boot scripts to modify exported boot parameters
 		if [ -e /conf/param.conf ]; then
 			. /conf/param.conf
 		fi
