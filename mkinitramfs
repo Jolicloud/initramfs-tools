@@ -14,7 +14,7 @@ export BUSYBOXDIR
 OPTIONS=`getopt -o c:d:ko:r:v -n "$0" -- "$@"`
 
 # Check for non-GNU getopt
-if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+if [ $? != 0 ] ; then echo "W: non-GNU getopt" >&2 ; exit 1 ; fi
 
 eval set -- "$OPTIONS"
 
