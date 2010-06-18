@@ -62,12 +62,7 @@ mountroot()
 	wait_for_udev 10
 
 	# Default delay is around 180s
-	# FIXME: add usplash_write info
-	if [ -z "${ROOTDELAY}" ]; then
-		delay=180
-	else
-		delay=${ROOTDELAY}
-	fi
+	delay=${ROOTDELAY:-180}
 
 	# loop until nfsmount succeeds
 	do_nfsmount
