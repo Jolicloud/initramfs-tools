@@ -12,17 +12,40 @@ if [ "$#" -eq 0 ] ; then
 	exit 1
 fi
 
-if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-	usage
-	exit 0
-fi
+cpio_args="--extract --quiet --list"
 
-for i in "$@" ; do
-	if ! [ -r "$i" ] ; then
+OPTIONS=`getopt -o hl --long help,long -n "$0" -- "$@"`
+# Check for non-GNU getopt
+if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+
+eval set -- "$OPTIONS"
+
+while true; do
+        case "$1" in
+        -h|--help)
+		usage
+		exit 0
+	;;
+	-l|--long)
+		cpio_args="${cpio_args:+${cpio_args} --verbose}"
+		shift
+	;;
+	--)
+		shift
+		break
+	;;
+	*)
+		echo "Internal error!" >&2
+		exit 1
+	esac
+done
+
+for initramfs in "$@" ; do
+	if ! [ -r "${initramfs}" ] ; then
 		echo "Specified file could not be read." >&2
 		exit 1
 	else
-		echo "$i"
-		zcat "$i" | cpio --extract --verbose --quiet --list
+		echo "${initramfs}"
+		zcat "${initramfs}" | cpio ${cpio_args}
 		fi
 done
