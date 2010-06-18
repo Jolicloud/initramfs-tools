@@ -1,13 +1,13 @@
 initramfs-tools (0.94) unstable; urgency=low
 
-  * To improve boot speed and avoid some complications, video drivers are
+    To improve boot speed and avoid some complications, video drivers are
     no longer included in the initramfs by default (MODULES=most).
 
  -- maximilian attems <maks@debian.org>  Mon, 05 Apr 2010 08:10:34 +0200
 
 initramfs-tools (0.76) unstable; urgency=low
 
-  * This release features nfs auto detection in the initramfs.
+    This release features nfs auto detection in the initramfs.
     The boot paramaters are parsed according to the linux source
     Documentation/kernel-parameters.txt and more specifically
     Documentation/nfsroot.txt.
@@ -20,7 +20,7 @@ initramfs-tools (0.76) unstable; urgency=low
 
 initramfs-tools (0.61) unstable; urgency=low
 
-  * This release moves the initramfs-tools confdir from /etc/mkinitramfs to
+    This release moves the initramfs-tools confdir from /etc/mkinitramfs to
     /etc/initramfs-tools. Packages are encouraged to ship files as scripts
     under /usr/share/initramfs-tools.
 
@@ -31,7 +31,7 @@ initramfs-tools (0.61) unstable; urgency=low
 
 initramfs-tools (0.10) breezy; urgency=low
 
-  * This release includes hardware auto detection in the initramfs.
+    This release includes hardware auto detection in the initramfs.
     This means two things in particular that are important:
 
     1) the resulting initramfs will be huge.  Like 10 megs huge.
