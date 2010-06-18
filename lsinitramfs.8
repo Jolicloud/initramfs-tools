@@ -5,22 +5,36 @@ lsinitramfs \- list content of an initramfs image
 
 .SH SYNOPSIS
 .B lsinitramfs
-.RB [ \-l ]
-.IR initramfsfile
-.RB [ \-h ]
+.RI [ options ] " <initramfsfile> " [ <initramfsfile> ]
+.br
 
 .SH DESCRIPTION
 The
 .B lsinitramfs
-lists the content of given initramfs images. It allows to quickly
-check the content of this specific initramfs.
+command lists the content of given initramfs images. It allows to quickly check
+the content of one (or multiple) specified initramfs files.
 
-.SH EXAMPLES
+.SH OPTIONS
 
-List initramfs of current running kernel:
+.TP
+.B -h
+Display usage information and exit.
+
+.TP
+.B -l
+Display long and more verbose listing of initramfs content.
+
+.SH USAGE EXAMPLES
+
+List initramfs content of current running kernel:
 
 .PP
 .B lsinitramfs /boot/initrd.img-$(uname -r)
+
+List content of two initramfs files in verbose mode:
+
+.PP
+.B lsinitramfs -l /boot/vmlinuz-2.6.31-grml64 /boot/vmlinuz-2.6.33-grml64
 
 .SH AUTHOR
 The initramfs-tools are written by Maximilian Attems <maks@debian.org>
