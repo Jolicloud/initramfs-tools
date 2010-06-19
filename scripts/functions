@@ -107,7 +107,7 @@ set_initlist()
 			continue
 		fi
 
-		initlist="${initlist} ${si_x#${initdir}/}"
+		initlist="${initlist:-} ${si_x#${initdir}/}"
 	done
 }
 

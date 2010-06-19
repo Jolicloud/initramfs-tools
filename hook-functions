@@ -532,7 +532,7 @@ check_minkver()
 		# sed:  keep last line starting with MINKVER=,
 		#	remove MINKVER= and trailing space
 		minver=$(sed '/^MINKVER=/!d;$!d;s/^MINKVER=//;s/[[:space:]]*$//' "${initdir}/${cm_x}")
-		if [ -z "${tmp}" ]; then
+		if [ -z "${tmp:-}" ]; then
 			continue
 		elif dpkg --compare-versions "${curversion}" lt "${minver}"; then
 			echo "W: ${cm_x} hook script requires at least kernel version ${minver}" >&2
