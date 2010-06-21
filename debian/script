@@ -57,3 +57,7 @@ if grep -q "MODULES=dep" /etc/initramfs-tools/initramfs.conf ; then
 	ls /sys/block
 	echo
 fi
+
+echo "-- mkinitramfs hooks"
+ls /usr/share/initramfs-tools/hooks /etc/initramfs-tools/hooks/
+echo
