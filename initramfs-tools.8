@@ -1,4 +1,4 @@
-.TH INITRAMFS-TOOLS 8  "2010/04/10" "Linux" "mkinitramfs script overview"
+.TH INITRAMFS-TOOLS 8  "2010/06/22" "Linux" "mkinitramfs script overview"
 
 .SH NAME
 initramfs-tools \- an introduction to writing scripts for mkinitramfs
@@ -9,38 +9,28 @@ will be used during different phases of execution. Each of these will be
 discussed separately below with the help of an imaginary tool which performs a
 frobnication of a lvm partition prior to mounting the root partition.
 
-Valid boot and hook scripts names consist solely of alphabetics, numerics,
-dashes and underscores. Other scripts are discarded.
+.SH Kernel Command Line
+The root filesystem used by the kernel is specified by the boot loader as
+always. The traditional \fBroot=/dev/sda1\fR style device specification is
+allowed. If a label is used, as in \fBroot=LABEL=rootPart\fR the initrd will
+search all available devices for a filesystem with the appropriate label, and
+mount that device as the root filesystem.  \fBroot=UUID=uuidnumber\fR will
+mount the partition with that UUID as the root filesystem.
 
-.SS Hook scripts
-These are used when an initramfs image is created and not included in the
-image itself. They can however cause files to be included in the image.
-
-.SS Boot scripts
-These are included in the initramfs image and normally executed during
-kernel boot in the early user-space before the root partition has been
-mounted.
-
-.SH INIT SCRIPT
-The script which is executed first and is in charge of running all other
-scripts can be found in /usr/share/initramfs-tools/init. It takes a number of
-arguments which influence the boot procedure:
-
-.SS Boot options
-
-The init and root are usually passed by the boot loader for local boot.
-The other parameters are optional.
+.SS Standard
 
 .TP
-\fB\fI init
+\fB\fI init= "<path to real init>"
 the binary to hand over execution to on the root fs after the initramfs scripts are done.
 
 .TP
-\fB\fI root
+\fB\fI root= "<path to blockdevice>"
 the device node to mount as the root file system.
 The recommended usage is to specify the UUID as followed "root=UUID=xxx".
-As normal device names are not stable and may change depending on the
-boot order.
+
+.TP
+\fB\fI rootfstype
+set the root file system type.
 
 .TP
 \fB\fI rootdelay
@@ -50,10 +40,6 @@ The default is 180 seconds.
 .TP
 \fB\fI rootflags
 set the file system mount option string.
-
-.TP
-\fB\fI rootfstype
-set the root file system type.
 
 .TP
 \fB\fI nfsroot
@@ -106,6 +92,7 @@ mounts the rootfs read-write.
 disables load of specific modules.
 Use blacklist=module1,module2,module3 bootparameter.
 
+.SS Debug
 .TP
 \fB\fI panic
 sets an timeout on panic.
@@ -135,6 +122,21 @@ loads generic IDE/ATA chipset support on boot.
 
 
 .SH HOOK SCRIPTS
+
+Valid boot and hook scripts names consist solely of alphabetics, numerics,
+dashes and underscores. Other scripts are discarded.
+
+.SS Hook scripts
+These are used when an initramfs image is created and not included in the
+image itself. They can however cause files to be included in the image.
+Hook scripts are executed under errexit. Thus a hook script can abort the
+mkinitramfs build on possible errors (exitcode != 0).
+
+.SS Boot scripts
+These are included in the initramfs image and normally executed during
+kernel boot in the early user-space before the root partition has been
+mounted.
+
 
 Hooks can be found in two places: /usr/share/initramfs-tools/hooks and
 /etc/initramfs-tools/hooks. They are executed during generation of the
