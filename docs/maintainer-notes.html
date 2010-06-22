@@ -80,14 +80,17 @@ or online at <a
 </pre>
 </li>
 
-<li>Set environment variables (e.g. through your ~/.bashrc or ~/.zshrc) for git and devscripts (git dch):
+<li>Set environment variables (e.g. through your ~/.bashrc or ~/.zshrc) for devscripts (git dch):
 <pre>
 <b>export DEBEMAIL=$mailaddress
-export DEBFULLNAME=$yourname
-export GIT_AUTHOR_EMAIL=$mailaddress
-export GIT_AUTHOR_NAME=$yourname
-export GIT_COMMITTER_EMAIL=$mailaddress
-export GIT_COMMITTER_NAME=$yourname</b>
+export DEBFULLNAME=$yourname</b>
+</pre>
+</li>
+
+<li>Set user name and email address for git (drop the --global option to use configuration per-repo basis):
+<pre>
+<b>% git config --global user.name  "$yourname"
+% git config --global user.email "$mailaddress"</b>
 </pre>
 </li>
 
