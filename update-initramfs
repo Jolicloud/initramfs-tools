@@ -222,9 +222,11 @@ run_bootloader()
 	fi
 	if [ -r /etc/zipl.conf ]; then
 		zipl
+		return 0
 	fi
 	if flash-kernel --supported >/dev/null 2>&1; then
 		flash-kernel ${version}
+		return 0
 	fi
 }
 
