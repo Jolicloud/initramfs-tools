@@ -9,6 +9,8 @@ bootopt=""
 # kernel-package passes an extra arg
 if [ -n "$2" ]; then
 	if [ -n "${KERNEL_PACKAGE_VERSION}" ]; then
+		# exit if custom kernel does not need an initramfs
+		[ "$INITRD" = 'No' ] && exit 0
 		bootdir=$(dirname "$2")
 		bootopt="-b ${bootdir}"
 	else
