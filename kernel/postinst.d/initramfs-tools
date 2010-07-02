@@ -28,4 +28,4 @@ if [ -n "$DEB_MAINT_PARAMS" ]; then
 fi
 
 # we're good - create initramfs.  update runs do_bootloader
-update-initramfs -c -t -k "${version}" ${bootopt}
+update-initramfs -c -t -k "${version}" ${bootopt} >&2
