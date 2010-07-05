@@ -134,8 +134,9 @@ else
 	COMPRESS=${compress}
 fi
 
-if ! command -v ${compress} >/dev/null 2>&1; then
+if ! command -v "${compress}" >/dev/null 2>&1; then
 	compress=gzip
+	COMPRESS=GZIP
 	[ "${verbose}" = y ] && \
 		echo "No ${COMPRESS} in ${PATH}, using gzip"
 fi
@@ -321,7 +322,7 @@ eval `
 		find . 4>&-; echo "ec1=$?;" >&4
 	} | {
 		cpio --quiet --dereference -o -H newc 4>&-; echo "ec2=$?;" >&4
-	} | ${compress} >"${outfile}"
+	} | "${compress}" >"${outfile}"
 	echo "ec3=$?;" >&4
 `
 if [ "$ec1" -ne 0 ]; then exit "$ec1"; fi
