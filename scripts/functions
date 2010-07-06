@@ -211,7 +211,6 @@ get_prereq_pairs()
 
 call_scripts()
 {
-	# allow hooks to abort build:
 	set -e
 	for cs_x in ${runlist}; do
 		[ -f ${initdir}/${cs_x} ] || continue
@@ -219,7 +218,12 @@ call_scripts()
 		if [ "${verbose}" = "y" ]; then
 			echo "Calling hook ${cs_x}"
 		fi
-		${initdir}/${cs_x}
+		${initdir}/${cs_x} && ec=$? || ec=$?
+		# allow hooks to abort build:
+		if [ "$ec" -ne 0 ]; then
+			echo "E: ${initdir}/${cs_x} failed with return $ec."
+			exit $ec
+		fi
 		# allow boot scripts to modify exported boot paramaters
 		if [ -e /conf/param.conf ]; then
 			. /conf/param.conf
