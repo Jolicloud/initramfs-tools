@@ -1,3 +1,10 @@
+initramfs-tools (0.97.2) unstable; urgency=high
+
+  * [ce732c3] initramfs-tools: output name of script that errexits.
+    (Closes: 586554)
+
+ -- maximilian attems <maks@debian.org>  Tue, 06 Jul 2010 12:58:37 +0200
+
 initramfs-tools (0.97.1) unstable; urgency=high
 
   * [90d99e4] mkinitramfs: Fix initramfs generation without COMPRESS set.
