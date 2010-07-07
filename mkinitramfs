@@ -138,7 +138,7 @@ fi
 
 if ! command -v "${compress}" >/dev/null 2>&1; then
 	compress=gzip
-	COMPRESS=GZIP
+	COMPRESS=gzip
 	[ "${verbose}" = y ] && \
 		echo "No ${COMPRESS} in ${PATH}, using gzip"
 fi
