@@ -327,9 +327,18 @@ eval `
 	} | "${compress}" >"${outfile}"
 	echo "ec3=$?;" >&4
 `
-if [ "$ec1" -ne 0 ]; then exit "$ec1"; fi
-if [ "$ec2" -ne 0 ]; then exit "$ec2"; fi
-if [ "$ec3" -ne 0 ]; then exit "$ec3"; fi
+if [ "$ec1" -ne 0 ]; then
+	echo "E: mkinitramfs failure find $ec1 cpio $ec2 $compress $ec3"
+	exit "$ec1"
+fi
+if [ "$ec2" -ne 0 ]; then
+	echo "E: mkinitramfs failure cpio $ec2 $compress $ec3"
+	exit "$ec2"
+fi
+if [ "$ec3" -ne 0 ]; then
+	echo "E: mkinitramfs failure $compress $ec3"
+	exit "$ec3"
+fi
 ) || exit 1
 
 if [ -s "${__TMPCPIOGZ}" ]; then
