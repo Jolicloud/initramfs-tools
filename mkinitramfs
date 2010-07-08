@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -eu
-
 umask 0022
 export PATH='/usr/bin:/sbin:/bin'
 
