@@ -4,7 +4,7 @@ Priority: optional
 Uploaders: maximilian attems <maks@debian.org>, Michael Prokop <mika@debian.org>
 Maintainer: Debian kernel team <debian-kernel@lists.debian.org>
 Build-Depends: debhelper (>= 7.0)
-Standards-Version: 3.8.4
+Standards-Version: 3.9.0
 Vcs-Browser: http://git.debian.org/?p=kernel/initramfs-tools.git
 Vcs-Git: git://git.debian.org/git/kernel/initramfs-tools.git
 
