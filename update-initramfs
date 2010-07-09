@@ -504,11 +504,8 @@ if [ "${version}" = "all" ] \
 		OPTS="${OPTS} -y"
 	fi
 	for u_version in ${version_list}; do
-		# Don't stop if one version doesn't work.
-		set +e
 		verbose "Execute: ${0} -${mode} -k \"${u_version}\" ${OPTS}"
 		"${0}" -${mode} -k "${u_version}" ${OPTS}
-		set -e
 	done
 	exit 0
 fi
