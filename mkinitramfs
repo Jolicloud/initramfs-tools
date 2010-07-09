@@ -322,7 +322,7 @@ eval `
 		find . 4>&-; echo "ec1=$?;" >&4
 	} | {
 		cpio --quiet --dereference -o -H newc 4>&-; echo "ec2=$?;" >&4
-	} | "${compress}" >"${outfile}"
+	} | ${compress} >"${outfile}"
 	echo "ec3=$?;" >&4
 `
 if [ "$ec1" -ne 0 ]; then
