@@ -227,24 +227,48 @@ run_scripts /scripts/init-bottom
 mount -n -o move /sys ${rootmnt}/sys
 mount -n -o move /proc ${rootmnt}/proc
 
+validate_init() {
+	checktarget="${1}"
+
+	# Work around absolute symlinks
+	if [ -d "${rootmnt}" ] && [ -h "${rootmnt}${checktarget}" ]; then
+		case $(readlink "${rootmnt}${checktarget}") in /*)
+			checktarget="$(chroot ${rootmnt} readlink ${checktarget})"
+			;;
+		esac
+	fi
+
+	# Make sure the specified init can be executed
+	if [ ! -x "${rootmnt}${checktarget}" ]; then
+		return 1
+	fi
+
+	# Upstart uses /etc/init as configuration directory :-/
+	if [ -d "${rootmnt}${checktarget}" ]; then
+		return 1
+	fi
+}
+
 # Check init bootarg
-if [ -n "${init}" ] && [ ! -x "${rootmnt}${init}" ]; then
-	echo "Target filesystem doesn't have ${init}."
-	init=
+if [ -n "${init}" ]; then
+	if ! validate_init "$init"; then
+		echo "Target filesystem doesn't have requested ${init}."
+		init=
+	fi
 fi
 
 # Search for valid init
 if [ -z "${init}" ] ; then
-	for init in /sbin/init /etc/init /bin/init /bin/sh; do
-		if [ ! -x "${rootmnt}${init}" ]; then
-			continue
+	for inittest in /sbin/init /etc/init /bin/init /bin/sh; do
+		if validate_init "${inittest}"; then
+			init="$inittest"
+			break
 		fi
-		break
 	done
 fi
 
 # No init on rootmount
-if [ ! -x "${rootmnt}${init}" ]; then
+if ! validate_init "${init}" ; then
 	panic "No init found. Try passing init= bootarg."
 fi
 
