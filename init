@@ -257,19 +257,22 @@ if [ -n "${init}" ]; then
 	fi
 fi
 
-# Search for valid init
-if [ -z "${init}" ] ; then
-	for inittest in /sbin/init /etc/init /bin/init /bin/sh; do
-		if validate_init "${inittest}"; then
-			init="$inittest"
-			break
-		fi
-	done
-fi
+# Common case: /sbin/init is present
+if [ ! -x "${rootmnt}/sbin/init" ]; then
+	# ... if it's not available search for valid init
+	if [ -z "${init}" ] ; then
+		for inittest in /sbin/init /etc/init /bin/init /bin/sh; do
+			if validate_init "${inittest}"; then
+				init="$inittest"
+				break
+			fi
+		done
+	fi
 
-# No init on rootmount
-if ! validate_init "${init}" ; then
-	panic "No init found. Try passing init= bootarg."
+	# No init on rootmount
+	if ! validate_init "${init}" ; then
+		panic "No init found. Try passing init= bootarg."
+	fi
 fi
 
 maybe_break init
