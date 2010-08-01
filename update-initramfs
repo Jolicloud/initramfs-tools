@@ -10,7 +10,7 @@ version=""
 update_initramfs=yes
 backup_initramfs=no
 
-set -eu
+set -e
 
 [ -r ${CONF} ] && . ${CONF}
 
