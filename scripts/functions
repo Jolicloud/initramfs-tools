@@ -222,7 +222,8 @@ call_scripts()
 		# allow hooks to abort build:
 		if [ "$ec" -ne 0 ]; then
 			echo "E: ${initdir}/${cs_x} failed with return $ec."
-			exit $ec
+			# only errexit on mkinitramfs
+			[ -n "${version}" ] && exit $ec
 		fi
 		# allow boot scripts to modify exported boot parameters
 		if [ -e /conf/param.conf ]; then
