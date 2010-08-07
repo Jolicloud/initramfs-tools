@@ -190,6 +190,14 @@ run_lilo()
 # Invoke bootloader
 run_bootloader()
 {
+	# invoke policy conformant bootloader hooks
+	if [ -d /etc/initramfs/post-update.d/ ]; then
+		run-parts --arg=${version} --arg=${initramfs} \
+			/etc/initramfs/post-update.d/
+		return 0
+	fi
+
+	# FIXME: to be removed postsqueeze release
 	# if both lilo and grub around, figure out if lilo needs to be run
 	if ( command -v update-grub >/dev/null 2>&1 \
 		|| [ -e /boot/grub/menu.lst ] || [ -e /boot/grub/grub.cfg ] ) \
