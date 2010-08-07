@@ -1,3 +1,55 @@
+initramfs-tools (0.98) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * [7faeb32] fix typos in manpage, scripts/functions and
+    conf/initramfs.conf - thanks lintian
+  * [f1360c9] debian/NEWS: drop asterisk chars to make lintian happy
+  * [c4a1981] install doc-base file for doc-base-registration
+  * [f813bd9] add debian/source/format with "3.0 (native)" to make
+    lintian happy
+  * [38ee1a0] maintainer-notes: document "git remote prune origin" -
+    thanks to maximilian attems <maks@debian.org>
+  * [2390db8] maintainer-notes: use git config instead of environment
+    variables - thanks to Gerfried Fuchs <rhonda@deb.at>
+  * [c85bb1f] some minor rewording of sentences about development
+    mailinglists
+  * [7af6ef4] mkinitramfs: do not execute compress command under quotes
+    (Closes: #588517)
+  * [b65a486] update-initramfs: stop buildprocess if any script is
+    failing
+  * [e7daaf7] init: provide validate_init() wrapper to support absolute
+    symlinks. (Closes: #590744)
+  * [a0c3140] init: provide fastforward path for the common case when
+    validating init binary.
+  * [b343994] Bump Standards-Version to 3.9.1.
+
+  [ maximilian attems ]
+  * [837f261] mkinitramfs: set nounset and errexit
+  * [be71015] reportbug: list the mkinitramfs hook scripts of reporting
+    box
+  * [295bca7] initramfs-tools.8: Enhance documentation of boot option
+  * [c327689] update-initramfs: run_bootloader() return after zipl and
+    flash-kernel
+  * [089a903] mkinitramfs: set COMPRESS=gzip to be more consistent. -
+    thanks to Colin Watson <cjwatson@ubuntu.com>
+  * [210c83c] control: conform to latest policy without changes
+  * [9613412] mkinitramfs: Provide error code of failed mkinitramfs
+    creation
+  * [51a8d5f] revert mkinitramfs errexit and nounset
+  * [6bcb867] Maintainer notes document dev mailinglists
+  * [7c6221d] maintainer notes: underline that mail to one of the 2
+    lists is good
+  * [762ae2a] update-initramfs: revert nounset (Closes: #588915)
+  * [a4e1a9e] initramfs-tools: only allow hook scripts to errexit on
+    mkinitramfs
+  * [6f0b646] update-initramfs: run_bootloader() invoke Initramfs hooks
+
+  [ Stephen Powell ]
+  * [09d251a] postinst hook: respect INITRD variable
+  * [ff6116f] Redirect STDOUT to STDERR for post{inst,rm} hooks
+
+ -- Michael Prokop <mika@debian.org>  Sat, 07 Aug 2010 09:41:39 -0400
+
 initramfs-tools (0.97.2) unstable; urgency=high
 
   * [ce732c3] initramfs-tools: output name of script that errexits.
