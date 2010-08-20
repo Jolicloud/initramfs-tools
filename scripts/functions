@@ -372,9 +372,9 @@ configure_networking()
 		# The NIC is to be configured if this file does not exist.
 		# Ip-Config tries to create this file and when it succeds
 		# creating the file, ipconfig is not run again.
-		if [ -e /tmp/net-"${DEVICE}".conf ]; then
-			break;
-		fi
+		for x in /tmp/net-"${DEVICE}".conf /tmp/net-*.conf ; do
+			[ -e "$x" ] && break 2
+		done
 
 		case ${IP} in
 		none|off)
