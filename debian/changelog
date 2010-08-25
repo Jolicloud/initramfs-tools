@@ -1,3 +1,11 @@
+initramfs-tools (0.98.1) unstable; urgency=high
+
+  [ Vagrant Cascadian ]
+  * [85fbb23] configure_networking(): Look for presence of
+    /tmp/net-*.conf files to not recall ipconfig. (Closes: #584583)
+
+ -- maximilian attems <maks@debian.org>  Wed, 25 Aug 2010 22:13:18 +0200
+
 initramfs-tools (0.98) unstable; urgency=low
 
   [ Michael Prokop ]
