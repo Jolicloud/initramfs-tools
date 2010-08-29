@@ -13,9 +13,13 @@ grep -q '\<quiet\>' /proc/cmdline || echo "Loading, please wait..."
 
 # Note that this only becomes /dev on the real filesystem if udev's scripts
 # are used; which they will be, but it's worth pointing out
-mount -t tmpfs -o mode=0755 udev /dev
-[ -e /dev/console ] || mknod -m 0600 /dev/console c 5 1
-[ -e /dev/null ] || mknod /dev/null c 1 3
+if ! mount -t devtmpfs -o mode=0755 none /dev; then
+	mount -t tmpfs -o mode=0755 none /dev
+	mknod -m 0600 /dev/console c 5 1
+	mknod /dev/null c 1 3
+fi
+mkdir /dev/pts
+mount -t devpts -o noexec,nosuid,gid=5,mode=0620 none /dev/pts || true
 > /dev/.initramfs-tools
 mkdir /dev/.initramfs
 
@@ -32,6 +36,7 @@ export ROOTDELAY=
 export ROOTFLAGS=
 export ROOTFSTYPE=
 export IPOPTS=
+export HWADDR=
 export break=
 export init=/sbin/init
 export quiet=n
@@ -134,6 +139,9 @@ for x in $(cat /proc/cmdline); do
 	ip=*)
 		IPOPTS="${x#ip=}"
 		;;
+	hwaddr=*)
+		HWADDR="${x#hwaddr=}"
+		;;
 	boot=*)
 		BOOT=${x#boot=}
 		;;
@@ -183,6 +191,9 @@ for x in $(cat /proc/cmdline); do
 	blacklist=*)
 		blacklist=${x#blacklist=}
 		;;
+	netconsole=*)
+		netconsole=${x#netconsole=}
+		;;
 	esac
 done
 
@@ -192,7 +203,8 @@ else
 	export noresume
 fi
 
-depmod -a
+[ -n "${netconsole}" ] && modprobe netconsole netconsole=${netconsole}
+
 maybe_break top
 
 # export BOOT variable value for compcache,

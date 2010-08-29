@@ -70,6 +70,14 @@ if [ "\${BOOT}" = "casper" ]; then
     fi
 fi
 
+for x in \$(cat /proc/cmdline); do
+        case \${x} in
+        nocompcache)
+                exit 0
+        ;;
+        esac
+done
+
 EOF
 
 if [ "$name" = ramzswap ]; then

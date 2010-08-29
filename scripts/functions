@@ -85,13 +85,16 @@ panic()
 
 	modprobe i8042
 	modprobe atkbd
+
+	run_scripts /scripts/panic
+
 	echo $@
 	PS1='(initramfs) ' /bin/sh -i </dev/console >/dev/console 2>&1
 }
 
 maybe_break()
 {
-	if [ "${break}" = "$1" ]; then
+	if echo "${break}" | egrep -q "(,|^)$1(,|$)"; then
 		panic "Spawning shell within the initramfs"
 	fi
 }
@@ -251,9 +254,22 @@ reduce_prereqs()
 	done
 }
 
+get_prereq_pairs()
+{
+	set_initlist
+	for gp_x in ${initlist}; do
+		echo ${gp_x} ${gp_x}
+		prereqs=$(${initdir}/${gp_x} prereqs)
+		for prereq in ${prereqs}; do
+			echo ${prereq} ${gp_x}
+		done
+	done
+}
+
 call_scripts()
 {
 	for cs_x in ${runlist}; do
+		[ -f ${initdir}/${cs_x} ] || continue
 		if [ x"$1" = "xoptional" ]; then
 			option=$(sed '/^OPTION=/!d;$d;s/^OPTION=//;s/[[:space:]]*$//' "${initdir}/${cs_x}")
 			[ -z "${option}" ] || eval test -n \"\${$option}\" -a \"\${$option}\" != \"n\" || continue
@@ -275,9 +291,32 @@ run_scripts()
 {
 	initdir=${1}
 	[ ! -d ${initdir} ] && return
-	get_prereqs
-	reduce_prereqs
-	call_scripts $2
+
+	if [ -f ${initdir}/ORDER ]; then
+		. ${initdir}/ORDER
+	elif [ -x /usr/bin/tsort ]; then
+		runlist=$(get_prereq_pairs | tsort)
+		call_scripts $2
+	else
+		get_prereqs
+		reduce_prereqs
+		call_scripts $2
+	fi
+}
+
+cache_run_scripts()
+{
+	DESTDIR=${1}
+	scriptdir=${2}
+	initdir=${DESTDIR}${scriptdir}
+	[ ! -d ${initdir} ] && return
+
+	runlist=$(get_prereq_pairs | tsort)
+	for crs_x in ${runlist}; do
+		[ -f ${initdir}/${crs_x} ] || continue
+		echo "${scriptdir}/${crs_x}" >> ${initdir}/ORDER
+		echo "[ -e /conf/param.conf ] && . /conf/param.conf" >> ${initdir}/ORDER
+	done
 }
 
 # Load custom modules first
@@ -328,7 +367,20 @@ configure_networking()
 	# networking already configured thus bail out
 	[ -n "${DEVICE}" ] && [ -e /tmp/net-"${DEVICE}".conf ] && return 0
 
-	# support ip options see linux sources Documentation/nfsroot.txt
+	if [ "${HWADDR}" ]; then
+		# select interface by MAC address
+		HWADDR="$(echo "${HWADDR}" | tr A-Z- a-z:)"
+		local iface
+		for iface in /sys/class/net/*; do
+			[ -f "$iface/address" ] || continue
+			if [ "$(cat "$iface/address")" = "${HWADDR}" ]; then
+				DEVICE="${iface#/sys/class/net/}"
+			fi
+		done
+	fi
+
+	# support ip options see linux sources
+	# Documentation/filesystems/nfsroot.txt
 	case ${IPOPTS} in
 	none|off)
 		# Do nothing

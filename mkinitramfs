@@ -253,7 +253,6 @@ for b in $(cd "${CONFDIR}/scripts" && find . \
 done
 
 echo "DPKG_ARCH=${DPKG_ARCH}" > ${DESTDIR}/conf/arch.conf
-echo "PAGE_SIZE=$(getconf PAGESIZE)" > ${DESTDIR}/conf/page_size.conf
 copy_exec "${CONFDIR}/initramfs.conf" /conf
 for i in ${EXTRA_CONF}; do
 	if [ -e "${CONFDIR}/conf.d/${i}" ]; then
@@ -303,6 +302,8 @@ else
 	done
 fi
 
+copy_exec /usr/lib/initramfs-tools/bin/wait-for-root /sbin
+
 # Modutils
 copy_exec /sbin/modprobe /sbin
 copy_exec /sbin/depmod /sbin
@@ -321,10 +322,23 @@ fi
 run_scripts /usr/share/initramfs-tools/hooks optional
 run_scripts "${CONFDIR}"/hooks optional
 
+# cache run order
+for b in $(cd "${DESTDIR}/scripts" && find . \
+	-mindepth 1 -type d); do
+	cache_run_scripts "${DESTDIR}" "/scripts/${b#./}"
+done
+
+# generate module deps
+depmod -a -b "${DESTDIR}" ${version}
+rm "${DESTDIR}"/lib/modules/${version}/modules.*map
+
 # Apply DSDT to initramfs
 if [ -e "${CONFDIR}/DSDT.aml" ]; then
 	copy_exec "${CONFDIR}/DSDT.aml" /
 fi
+
+# Remove any looping or broken symbolic links, since they break cpio.
+(cd "${DESTDIR}" && find . -type l -printf '%p %Y\n' | sed -n 's/ [LN]$//p' | xargs -rL1 rm -f)
 
 [ "${verbose}" = y ] && echo "Building cpio ${outfile} initramfs"
 (

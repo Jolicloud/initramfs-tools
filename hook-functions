@@ -69,23 +69,29 @@ manual_add_modules()
 			continue
 		fi
 		for firmware in $firmwares; do
-			if [ -e "${DESTDIR}/lib/firmware/${version}/${firmware}" ]; then
+			if [ -e "${DESTDIR}/lib/firmware/${firmware}" ] \
+			|| [ -e "${DESTDIR}/lib/firmware/${version}/${firmware}" ]; then
 				continue
 			fi
 
 			# Only print warning for missing fw of loaded module
 			# or forced loaded module
-			if [ ! -e "/lib/firmware/${version}/${firmware}" ]; then
-				if grep -q "^$(basename "${mam_x}" .ko)" \
+			if [ ! -e "/lib/firmware/${firmware}" ] \
+			&& [ ! -e "/lib/firmware/${version}/${firmware}" ]; then
+				if grep -q "^$(basename "${mam_x}" .ko)[[:space:]]" \
 				/proc/modules \
 				|| grep -q "^$(basename "${mam_x}" .ko)" \
 				"${CONFDIR}/modules"; then
-					echo "W: Possible missing firmware /lib/firmware/${version}/${firmware} for module $(basename ${mam_x} .ko)" >&2
+					echo "W: Possible missing firmware /lib/firmware/${firmware} for module $(basename ${mam_x} .ko)" >&2
 				fi
 				continue
 			fi
 
-			copy_exec "/lib/firmware/${version}/${firmware}"
+			if [ -e "/lib/firmware/${version}/${firmware}" ]; then
+				copy_exec "/lib/firmware/${version}/${firmware}"
+			else
+				copy_exec "/lib/firmware/${firmware}"
+			fi
 			if [ "${verbose}" = "y" ]; then
 				echo "Adding firmware ${firmware}"
 			fi
@@ -254,7 +260,7 @@ dep_add_modules()
 		if [ "${block#dm-}" != "${block}" ]; then
 			block=$(ls -1 /sys/block/${block}/slaves | head -n 1)
 		fi
-		block=${block%[0-9]*}
+		block=${block%%[0-9]*}
 	# md root new naming scheme /dev/md/X
 	elif [ "${root#/dev/md/}" != "${root}" ]; then
 		root=${root#/dev/md/}
@@ -265,10 +271,14 @@ dep_add_modules()
 		root=${root#/dev/}
 		block=$(awk "/^${root}/{print substr(\$5, 1, 3); exit}" \
 			/proc/mdstat)
+    # mmc always uses numbering in the devicename (mmcblk[0-9])
+	elif [ "${root#/dev/mmc}" != "${root}" ]; then
+		block=${root#/dev/}
+		block=${block%%p[0-9]*}
 	# classical root device
 	else
 		block=${root#/dev/}
-		block=${block%[0-9]*}
+		block=${block%%[0-9]*}
 	fi
 
 	# Error out if /sys lack block dev

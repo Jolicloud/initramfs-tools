@@ -1,6 +1,6 @@
 #!/bin/sh
 
-OPTION=USPLASH
+OPTION=FRAMEBUFFER
 PREREQ="udev"
 prereqs()
 {
@@ -88,5 +88,17 @@ if [ -n "${FB}" ]; then
 	udevadm settle
 else
 	# If we have no graphics devices yet, wait for udev to settle
+	[ -d /sys/class/graphics/fbcon ] || udevadm settle
 	[ -d /sys/class/graphics/fb0 ] || udevadm settle
+	[ -d /sys/class/drm/card0 ] || udevadm settle
 fi
+
+# Force fb mode via /sys interface
+for x in $(cat /proc/cmdline); do
+	case ${x} in
+	fbmode=*)
+		MODE=${x#*=}
+		echo "$MODE" > /sys/class/graphics/fb0/mode
+		;;
+	esac
+done

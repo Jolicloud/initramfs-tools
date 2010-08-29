@@ -40,7 +40,7 @@ powerpc|ppc64)
 	fi
 	;;
 i386|amd64|ia64|lpia)
-	force_load fan
-	force_load thermal
+	manual_add_modules fan
+	manual_add_modules thermal
 	;;
 esac

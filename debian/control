@@ -4,16 +4,17 @@ Priority: optional
 Uploaders: Jeff Bailey <jbailey@ubuntu.com>, maximilian attems <maks@debian.org>, David Härdeman <david@hardeman.nu>
 Maintainer: Ubuntu Kernel Team <kernel-team@lists.ubuntu.com>
 XSBC-Original-Maintainer: Debian kernel team <debian-kernel@lists.debian.org>
-Build-Depends: debhelper (>= 4.0.0), cdbs
+Build-Depends: debhelper (>= 4.0.0), cdbs, pkg-config, libudev-dev
 Standards-Version: 3.7.3
 Vcs-Browser: http://git.debian.org/?p=kernel/initramfs-tools.git
 Vcs-Git: git://git.debian.org/git/kernel/initramfs-tools.git
 
 Package: initramfs-tools
 Architecture: all
-Depends: klibc-utils (>= 1.5.9-1), busybox-initramfs (>= 1:1.13.3-1ubuntu5), cpio, module-init-tools, udev (>= 147~-5), findutils (>= 4.2.24), util-linux (>> 2.15~rc1)
+Depends: initramfs-tools-bin (= ${binary:Version}), klibc-utils (>= 1.5.9-1), busybox-initramfs (>= 1:1.13.3-1ubuntu5), cpio, module-init-tools, udev (>= 147~-5), findutils (>= 4.2.24), util-linux (>> 2.15~rc1)
 Provides: linux-initramfs-tool
-Breaks: usplash (<< 0.5.38)
+Breaks: mountall (<< 2.0~)
+Conflicts: usplash (<< 0.5.50)
 Description: tools for generating an initramfs
  This package contains tools to create and boot an initramfs for packaged 2.6
  Linux kernel. The initramfs is a gzipped cpio archive. At boot time, the
@@ -22,3 +23,10 @@ Description: tools for generating an initramfs
  klibc provides utilities to setup root. Having the root on EVMS, MD, LVM2,
  LUKS or NFS is also supported.
  Any boot loader with initrd support is able to load an initramfs archive.
+
+Package: initramfs-tools-bin
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libc6 (>= 2.11) [armel amd64 i386 powerpc sparc], libc6.1 (>= 2.11) [ia64]
+Description: binaries used by initramfs-tools
+ This package contains binaries used inside the initramfs images generated
+ by initramfs-tools.

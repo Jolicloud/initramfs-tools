@@ -15,6 +15,15 @@ prereqs)
 	;;
 esac
 
+# blacklist vga16fb when vga= or video= given
+for x in $(cat /proc/cmdline); do
+        case ${x} in
+	vga=*|video=*)
+		echo "blacklist vga16fb" >> /etc/modprobe.d/initramfs
+		;;
+	esac
+done
+
 # sanity check
 [ -z "${blacklist}" ] && exit 0
 

@@ -8,3 +8,15 @@ pre-build::
 	for x in `find scripts/ -maxdepth 1 -type d | tail -n+2`; do \
 	  chmod -R +x $$x; \
 	done
+
+install/initramfs-tools::
+	mkdir -p debian/initramfs-tools/usr/share/initramfs-tools/scripts/panic
+	sed -e "/^OPTION=/d" \
+		< scripts/init-top/keymap \
+		> debian/initramfs-tools/usr/share/initramfs-tools/scripts/panic/keymap
+
+build/initramfs-tools-bin::
+	make -C src
+
+cleanbuilddir/initramfs-tools-bin::
+	make -C src clean

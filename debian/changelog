@@ -1,3 +1,270 @@
+initramfs-tools (0.92bubuntu78) lucid; urgency=low
+
+  * hooks/compcache: Escape $-expansions inside <<EOF (thanks, Eugene San;
+    LP: #569317).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 26 Apr 2010 16:15:57 +0100
+
+initramfs-tools (0.92bubuntu77) lucid; urgency=low
+
+  * Add a new 'fixrtc' script that tries to set the system clock forward
+    based on the last mount time of the root disk; without this kludge,
+    systems without a working RTC will end up in a perpetual reboot loop.
+    Thanks to Dave Martin <Dave.Martin@arm.com> for the patch.  LP: #563618.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Fri, 23 Apr 2010 14:55:24 -0700
+
+initramfs-tools (0.92bubuntu76) lucid; urgency=low
+
+  * hooks/compcache: add option to disable usage of compcache completely on
+    the kernel cmdline using the nocompcache option
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 22 Apr 2010 14:53:05 +0200
+
+initramfs-tools (0.92bubuntu75) lucid; urgency=low
+
+  * When specifying a network interface by MAC address, set DEVICE to (e.g.)
+    eth0 rather than /sys/class/net/eth0 (LP: #546964).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 21 Apr 2010 12:40:42 +0100
+
+initramfs-tools (0.92bubuntu74) lucid; urgency=low
+
+  * debian/control, debian/rules:
+    - force libc6 dependency to >= 2.11 (and libc6.1 on ia64, the libc6
+      has a different packages name on this architecture) to workaround a
+      bug in libapt  when it orders the install for essential packages
+      (LP: #559582)
+      This can be removed after lucid
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 16 Apr 2010 13:13:50 +0200
+
+initramfs-tools (0.92bubuntu73) lucid; urgency=low
+
+  * Change to ${DESTDIR} before running find to filter out looping or broken
+    symlinks, to avoid tickling a find bug.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 14 Apr 2010 23:33:22 +0100
+
+initramfs-tools (0.92bubuntu72) lucid; urgency=low
+
+  * make sure we can use mmc cards for / and add a proper sysfs handler,
+    (mmc always uses numbering in the device name like mmcblk[0-9]p[0-n], make
+    sure hook-functions only cuts off the partition but not the device number)
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 14 Apr 2010 11:40:30 +0200
+
+initramfs-tools (0.92bubuntu71) lucid; urgency=low
+
+  * init:
+    - mount /dev/pts as well as /dev so we can redirect the console early. 
+    - load the netconsole module when netconsole=* placed on the kernel
+      command-line.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Fri, 26 Mar 2010 14:45:26 +0000
+
+initramfs-tools (0.92bubuntu70) lucid; urgency=low
+
+  * Filter out looping or broken symlinks from the initramfs, since they
+    cause cpio to explode (LP: #540686).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 26 Mar 2010 13:08:05 +0000
+
+initramfs-tools (0.92bubuntu69) lucid; urgency=low
+
+  * scripts/init-top/blacklist: move vga16fb blacklisting before the
+    bail-out logic.
+  * scripts/init-top/framebuffer: create "fbmode" argument to force allow
+    foring a mode via fb /sys interfaces, for framebuffers that do not
+    correctly handle setting mode via module options.
+
+ -- Kees Cook <kees@ubuntu.com>  Sat, 20 Mar 2010 13:12:25 -0700
+
+initramfs-tools (0.92bubuntu68) lucid; urgency=low
+
+  * Backport from Debian:
+    - hook-functions: Cope with partitions over 9 (LP: #539577).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 19 Mar 2010 18:57:43 +0000
+
+initramfs-tools (0.92bubuntu67) lucid; urgency=low
+
+  * debian/control:
+    - make the Breaks: upslash (<< 0.5.50) a Conflicts to help the
+      apt resolver on hardy to lucid upgrades
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 05 Mar 2010 13:25:29 +0100
+
+initramfs-tools (0.92bubuntu66) lucid; urgency=low
+
+  * scripts/local-premount/resume: wait-for-root will handle both UUID= and
+    /dev/disk/by-uuid, but /bin/resume from klibc will only handle the latter,
+    so revert the changes from 0.92bubuntu59 that dropped our fix-up of
+    device name.  LP: #499940.
+  * scripts/local-premount/resume: also recognize 'swsuspend' as a valid fs
+    type for a hibernation partition, since this is what udev returns for the
+    in-kernel hibernate/resume handling.  Thanks to Peter Clifton for noticing
+    this!
+  * scripts/local-premount/resume: call 'plymouth message' before resuming,
+    to notify the user of the reason for the delay if the plymouth theme
+    supports it.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Mon, 22 Feb 2010 00:20:22 -0800
+
+initramfs-tools (0.92bubuntu65) lucid; urgency=low
+
+  * scripts/init-premount/blacklist: Move to init-top so it has a chance
+    of running before udev.
+  * scripts/init-top/blacklist: Automatically blacklist vga16fb when vga=
+    or video= specified on kernel command-line. 
+
+ -- Scott James Remnant <scott@ubuntu.com>  Wed, 17 Feb 2010 12:35:22 +0000
+
+initramfs-tools (0.92bubuntu64) lucid; urgency=low
+
+  * Allow specifying multiple break points using a comma delimiter.
+
+ -- Evan Dandrea <evand@ubuntu.com>  Wed, 10 Feb 2010 11:18:26 +0000
+
+initramfs-tools (0.92bubuntu63) lucid; urgency=low
+
+  * init, scripts/functions: Add support for specifying a network interface
+    by MAC address, using hwaddr= on the command line or HWADDR in an
+    initramfs configuration file (LP: #473036).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 05 Feb 2010 11:49:34 -0800
+
+initramfs-tools (0.92bubuntu62) lucid; urgency=low
+
+  * src/wait-for-root.c:
+    - device records we obtain from udev may not have a device node name
+      yet, check to avoid strcmp between NULL and our path.  LP: #499422.
+    - device records from the queue may not exist at all, check to avoid
+      calling udev_device_unref on NULL (which should be safe anyway).
+    - eliminate a race condition; by checking the filesystem before the
+      queue, there was a small chance that udev could finish processing
+      between our calls
+
+ -- Scott James Remnant <scott@ubuntu.com>  Tue, 22 Dec 2009 19:30:01 +0000
+
+initramfs-tools (0.92bubuntu61) lucid; urgency=low
+
+  * init: Mount devtmpfs on /dev, falling back to a tmpfs if not supported
+    by the kernel.
+
+  * src/wait-for-root.c: accept the timeout on the command-line too rather
+    than using an environment variable.
+  * scripts/local: Pass $ROOTDELAY or 30
+  * scripts/local-premount/resume: pass $RESUMEDELAY or 5
+
+ -- Scott James Remnant <scott@ubuntu.com>  Mon, 21 Dec 2009 23:06:53 +0000
+
+initramfs-tools (0.92bubuntu60) lucid; urgency=low
+
+  * src/wait-for-root.c:
+    - Fix a bug where we checked queue entries for ID_FS_TYPE too; would
+      mean we thought a device directly named (e.g. /dev/md0) wasn't
+      in the queue when it was, and wouldn't wait for it.
+    - Fix another bug where we didn't clear udev_device after iterating
+      the queue.
+    - Rather than mucking around with sequence numbers in the queue, just
+      wait using the monitor if we identify the device as being in the
+      queue.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Fri, 18 Dec 2009 14:47:30 +0000
+
+initramfs-tools (0.92bubuntu59) lucid; urgency=low
+
+  * src/wait-for-root.c: handle the case where we're given UUID= or LABEL=
+    and the device already exists (we need to stat the /dev/disk path).
+  * scripts/local-premount/resume: this means we can use wait-for-root for
+    resume handling too.
+  * mkinitramfs: drop the PAGE_SIZE conf, it's no longer needed since we
+    rely on udev finding out it's a hibernated image through blkid.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Fri, 18 Dec 2009 04:34:04 +0000
+
+initramfs-tools (0.92bubuntu58) lucid; urgency=low
+
+  * Add new initramfs-tools-bin package containing a binary that uses
+    libudev to wait for udev to create the udev device, or wait for udev
+    to finish processing if we catch it in the act, and returns the
+    filesystem type as already probed by udev.
+    - This avoids calls to udevadm settle, which make us wait for irrelevant
+      modules that we don't need.
+    - This avoids duplicate calls to blkid, which since they probe the block
+      device directly, are expensive
+    - This does not use fstype; which avoids issues with that and blkid
+      returning different answers (since everything else throughout the
+      entire system now uses blkid)
+  * scripts/local: Rewrite to use wait-for-root rather than looping over
+    our own shell attempts to do the same.
+  * mkinitramfs:
+    - include wait-for-root
+    - mkinitramfs: Don't quote modules.*map, so we actually expand it.
+  * hooks/thermal:
+    - don't force load fan or thermal, they're generally built-in and if not
+      will be loaded by udev anyway
+  * scripts/panic/keymap:
+    - auto-generated from the init-top keymap file, with the OPTION= removed,
+      so keymap will always be set on panic
+
+  * Remove accidentally included test initramfs.  :-)
+
+ -- Scott James Remnant <scott@ubuntu.com>  Fri, 18 Dec 2009 03:18:28 +0000
+
+initramfs-tools (0.92bubuntu57) lucid; urgency=low
+
+  * debian/initramfs-tools.dirs:
+    - add scripts/panic directory
+
+  * scripts/functions:
+    - if tsort is available, use it instead of custom sorting code
+    - if a pre-cached order file is available, use that instead
+    - run panic scripts before giving a root shell
+  * mkinitramfs:
+    - generate a pre-cached order file for each scripts directory in the
+      output initramfs
+    - call depmod before packing the initramfs, so it contains the output
+      already
+  * init:
+    - drop depmod call
+
+ -- Scott James Remnant <scott@ubuntu.com>  Wed, 16 Dec 2009 17:47:49 +0000
+
+initramfs-tools (0.92bubuntu56) lucid; urgency=low
+
+  * scripts/init-top/keymap: We don't need to load keymaps unless we're
+    loading the framebuffer module (and thus have a splash screen). 
+
+ -- Scott James Remnant <scott@ubuntu.com>  Tue, 15 Dec 2009 14:57:29 +0000
+
+initramfs-tools (0.92bubuntu55) lucid; urgency=low
+
+  * hooks/framebuffer: Change the inclusion option from USPLASH to
+    FRAMEBUFFER, in hindsight that option name wasn't very forward-thinking
+    of me.
+  * scripts/init-top/framebuffer:
+    - Make conditional on new option name.
+    - As well as waiting for fb0 to show up, we also should wait for fbcon
+      and dri/card0 to show up as well, since we'll almost certainly want
+      a console and direct rendering.
+
+ -- Scott James Remnant <scott@ubuntu.com>  Mon, 30 Nov 2009 23:45:44 +0000
+
+initramfs-tools (0.92bubuntu54) lucid; urgency=low
+
+  * hook-functions: check both /lib/firmware/$(uname -r) and /lib/firmware
+    for the firmware that we wish to copy; in any cases where we want to
+    suppress a firmware-using module from the initramfs, we should do that
+    explicitly and not by accidentally failing to include the firmware.
+    LP: #328550.
+  * hook-functions: cherry pick fix from Debian upstream version to not warn
+    about missing firmware for modules whose names are merely /like/ those of
+    modules listed in /proc/modules.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 19 Nov 2009 00:47:55 -0600
+
 initramfs-tools (0.92bubuntu53) karmic; urgency=low
 
   * Explicitly check for fb0 so we don't false-positive on the graphics
