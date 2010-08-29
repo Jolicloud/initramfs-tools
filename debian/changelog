@@ -1,3 +1,10 @@
+initramfs-tools (1:0.92bjolicloud6+l78) robby-lucid; urgency=low
+
+  * New upstream release. Tie to robby-lucid.
+  * Changed source format to "3.0 (git)"
+
+ -- Adam McDaniel <adam@jolicloud.org>  Sat, 28 Aug 2010 23:37:38 -0600
+
 initramfs-tools (0.92bubuntu78) lucid; urgency=low
 
   * hooks/compcache: Escape $-expansions inside <<EOF (thanks, Eugene San;
