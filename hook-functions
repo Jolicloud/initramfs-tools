@@ -394,7 +394,7 @@ auto_add_modules()
 	case "${1:-}" in
 	base)
 		for x in ehci-hcd ohci-hcd uhci-hcd usbhid xhci hid-apple \
-		hid-microsoft \
+		hid-cherry hid-logitech hid-microsoft \
 		btrfs ext2 ext3 ext4 ext4dev isofs jfs nfs reiserfs udf xfs \
 		af_packet atkbd i8042 virtio_pci; do
 			manual_add_modules "${x}"
