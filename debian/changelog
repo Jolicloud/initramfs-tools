@@ -1,3 +1,11 @@
+initramfs-tools (0.98.2) unstable; urgency=high
+
+  [ Eckhart Wörner ]
+  * [97f20c5] initramfs-tools: Add hid-cherry and hid-logitech to
+    initramfs (Closes: #595827)
+
+ -- maximilian attems <maks@debian.org>  Tue, 07 Sep 2010 12:54:01 +0200
+
 initramfs-tools (0.98.1) unstable; urgency=high
 
   [ Vagrant Cascadian ]
