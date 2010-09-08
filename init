@@ -13,7 +13,7 @@ grep -q '\<quiet\>' /proc/cmdline || echo "Loading, please wait..."
 
 # Note that this only becomes /dev on the real filesystem if udev's scripts
 # are used; which they will be, but it's worth pointing out
-if ! mount -t devtmpfs -o mode=0755 none /dev; then
+if ! mount -t devtmpfs -o mode=0755 none /dev 2>/dev/null; then
 	mount -t tmpfs -o mode=0755 none /dev
 	mknod -m 0600 /dev/console c 5 1
 	mknod /dev/null c 1 3
