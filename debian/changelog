@@ -1,3 +1,9 @@
+initramfs-tools (1:0.92bjolicloud7+l78) robby-lucid; urgency=low
+
+  * Inhibit a spurious warning message early in init script
+
+ -- Adam McDaniel <adam@jolicloud.org>  Tue, 07 Sep 2010 23:24:51 -0600
+
 initramfs-tools (1:0.92bjolicloud6+l78) robby-lucid; urgency=low
 
   * New upstream release. Tie to robby-lucid.
