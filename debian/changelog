@@ -1,3 +1,9 @@
+initramfs-tools (0.98.3) unstable; urgency=high
+
+  * [365e06b] Ubuntu merge: Conflict with older versions of usplash.
+
+ -- maximilian attems <maks@debian.org>  Fri, 10 Sep 2010 09:40:10 +0200
+
 initramfs-tools (0.98.2) unstable; urgency=high
 
   [ Eckhart Wörner ]
