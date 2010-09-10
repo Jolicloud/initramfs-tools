@@ -14,6 +14,7 @@ Recommends: busybox (>= 1:1.01-3) | busybox-initramfs
 Depends: klibc-utils (>= 1.5.9-1), cpio, module-init-tools, udev (>= 0.086-1), findutils (>= 4.2.24), ${misc:Depends}
 Suggests: bash-completion
 Provides: linux-initramfs-tool
+Conflicts: usplash (<< 0.5.50)
 Description: tools for generating an initramfs
  This package contains tools to create and boot an initramfs for packaged 2.6
  Linux kernel. The initramfs is a gzipped cpio archive. At boot time, the
