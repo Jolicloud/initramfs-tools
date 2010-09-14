@@ -344,6 +344,11 @@ fi
 (
 # work around lack of "set -o pipefail" for the following pipe:
 # cd "${DESTDIR}" && find . | cpio --quiet --dereference -o -H newc | gzip >"${outfile}"
+compress="gzip"
+# lzop compression was introduced in 2.6.35.4-1 kernel
+if dpkg --compare-versions "${version}" ge "2.6.35.4-1"; then
+    compress="lzop"
+fi
 exec 3>&1
 eval `
     # http://cfaj.freeshell.org/shell/cus-faq-2.html
@@ -353,7 +358,7 @@ eval `
         find . 4>&-; echo "ec1=$?;" >&4
     } | {
         cpio --quiet --dereference -o -H newc 4>&-; echo "ec2=$?;" >&4
-    } | gzip >"${outfile}"
+    } | ${compress} >"${outfile}"
     echo "ec3=$?;" >&4
 `
 if [ "$ec1" -ne 0 ]; then exit "$ec1"; fi

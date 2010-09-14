@@ -11,7 +11,7 @@ Vcs-Git: git://git.debian.org/git/kernel/initramfs-tools.git
 
 Package: initramfs-tools
 Architecture: all
-Depends: initramfs-tools-bin (= ${binary:Version}), klibc-utils (>= 1.5.9-1), busybox-initramfs (>= 1:1.13.3-1ubuntu5), cpio, module-init-tools, udev (>= 147~-5), findutils (>= 4.2.24), util-linux (>> 2.15~rc1)
+Depends: initramfs-tools-bin (= ${binary:Version}), klibc-utils (>= 1.5.9-1), busybox-initramfs (>= 1:1.13.3-1ubuntu5), cpio, module-init-tools, udev (>= 147~-5), findutils (>= 4.2.24), util-linux (>> 2.15~rc1), lzop
 Provides: linux-initramfs-tool
 Breaks: mountall (<< 2.0~)
 Conflicts: usplash (<< 0.5.50)
