@@ -1,3 +1,10 @@
+initramfs-tools (1:0.92bjolicloud8+l78) robby-lucid; urgency=low
+
+  * Introduce lzop compression of initrd image, but only for kernels
+    later than 2.6.35.4
+
+ -- Adam McDaniel <adam@jolicloud.org>  Tue, 14 Sep 2010 15:53:34 -0600
+
 initramfs-tools (1:0.92bjolicloud7+l78) robby-lucid; urgency=low
 
   * Inhibit a spurious warning message early in init script
