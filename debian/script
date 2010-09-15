@@ -22,6 +22,12 @@ echo "-- lsmod"
 lsmod
 echo
 
+if [ -r /etc/initramfs-tools/modules ]; then
+	echo "-- /etc/initramfs-tools/modules"
+	sed 's/#.*$//;/^[[:space:]]*$/d' /etc/initramfs-tools/modules
+	echo
+fi
+
 if [ -r /etc/kernel-img.conf ]; then
 	echo "-- /etc/kernel-img.conf"
 	cat /etc/kernel-img.conf
