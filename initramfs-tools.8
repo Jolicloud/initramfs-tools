@@ -1,4 +1,4 @@
-.TH INITRAMFS-TOOLS 8  "2010/06/22" "Linux" "mkinitramfs script overview"
+.TH INITRAMFS-TOOLS 8  "2010/09/23" "Linux" "mkinitramfs script overview"
 
 .SH NAME
 initramfs-tools \- an introduction to writing scripts for mkinitramfs
@@ -374,14 +374,14 @@ contains the following subdirectories.
 \fB\fI
 init-top
 the scripts in this directory are the first scripts to be executed after sysfs
-and procfs have been mounted and /dev/console and /dev/null have been created.
-No other device files are present yet.
+and procfs have been mounted.
+It also runs the udev hook for populating the /dev tree (udev will keep
+running until init-bottom).
 
 .TP
 \fB\fI
 init-premount
-runs the udev hooks for populating the /dev tree (udev will keep running until
-init-bottom) after modules specified by hooks and /etc/initramfs-tools/modules
+happens after modules specified by hooks and /etc/initramfs-tools/modules
 have been loaded.
 
 .TP
@@ -401,14 +401,14 @@ been mounted.
 \fB\fI
 local-bottom OR nfs-bottom
 are run after the rootfs has been mounted (local) or the NFS root share has
-been mounted. udev is stopped.
+been mounted.
 
 .TP
 \fB\fI
 init-bottom
 are the last scripts to be executed before procfs and sysfs are moved to the
 real rootfs and execution is turned over to the init binary which should now be
-found in the mounted rootfs.
+found in the mounted rootfs. udev is stopped.
 
 .SS Boot parameters
 .TP
