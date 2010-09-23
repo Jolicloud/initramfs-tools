@@ -31,6 +31,7 @@ powerpc|ppc64)
 	manual_add_modules windfarm_lm75_sensor
 	manual_add_modules windfarm_max6690_sensor
 	manual_add_modules windfarm_pid
+	manual_add_modules windfarm_pm121
 	manual_add_modules windfarm_pm112
 	manual_add_modules windfarm_pm81
 	manual_add_modules windfarm_pm91
