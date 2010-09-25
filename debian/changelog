@@ -1,3 +1,12 @@
+initramfs-tools (0.98.4) unstable; urgency=high
+
+  * [bfb0742] reportbug: list force loaded modules.
+  * [a103aea] hooks/thermal: Add windfarm_pm121 for powerpc on initramfs.
+  * [1c64a45] initramfs-tools.8: udev gets loaded earlier.
+    (Closes: #596984)
+
+ -- maximilian attems <maks@debian.org>  Sat, 25 Sep 2010 20:25:30 +0200
+
 initramfs-tools (0.98.3) unstable; urgency=high
 
   * [365e06b] Ubuntu merge: Conflict with older versions of usplash.
