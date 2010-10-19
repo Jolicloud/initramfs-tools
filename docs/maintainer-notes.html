@@ -211,13 +211,13 @@ any stale remote branches locally by executing:
 <li>Adjust debian/changelog accordingly:
 <pre>
 <b>% git dch --debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp; '/^* / { print $2}' )&quot; \
-  --since=&quot;$(dpkg-parsechangelog | awk '/^Version:/ {print $2}')&quot; -S --id-length=7 --meta</b>
+  --since=&quot;v$(dpkg-parsechangelog | awk '/^Version:/ {print $2}')&quot; -S --id-length=7 --meta</b>
 </pre>
 </li>
 
 <li>Build package:
 <pre>
-<b>% git buildpackage --git-debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp;'/^* / { print $2}' )&quot; -tc</b>
+<b>% git buildpackage --git-ignore-new --git-debian-branch=&quot;$(git branch | awk -F\*\&nbsp;&nbsp;'/^* / { print $2}' )&quot; -tc</b>
 </pre>
 </li>
 
