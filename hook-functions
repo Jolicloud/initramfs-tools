@@ -226,10 +226,18 @@ dep_add_modules()
 
 	# findout root block device + fstype
 	eval "$(mount | awk '/\/dev\// {if ($3 == "/") {print "root=" $1 "\nFSTYPE=" $5; exit}}')"
+
+	# On failure fallback to /proc/mounts if readable
+	if [ -z "$root" ] && [ -r /proc/mounts ]; then
+		eval "$(awk '/\/dev\// {if ($2 == "/") {print "root=" $1 "\nFSTYPE=" $5; exit}}' /proc/mounts)"
+	fi
+
+	# recheck root device
 	if [ -z "$root" ]; then
 		echo "mkinitramfs: failed to determine root device" >&2
 		echo "mkinitramfs: workaround is MODULES=most" >&2
-		echo "Error please report bug on initramfs-tools and include the output of 'mount'" >&2
+		echo "Error please report bug on initramfs-tools" >&2
+		echo "Include the output of 'mount' and 'cat /proc/mounts'" >&2
 		exit 1
 	fi
 
