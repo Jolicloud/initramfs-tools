@@ -1,3 +1,16 @@
+initramfs-tools (0.98.5) unstable; urgency=high
+
+  [ maximilian attems ]
+  * [6b6cbe0] mkininitramfs: MODULES=dep fallback to /proc/mounts for
+    rootdev (Closes: #600453)
+  * [f3b696b] Small enhancements to Maintainer docs.
+
+  [ Marc Herbert ]
+  * [478ba89] Minor documentation fix in /etc/initramfs-tools/modules.
+    (LP: #177263)
+
+ -- maximilian attems <maks@debian.org>  Thu, 21 Oct 2010 13:53:17 +0200
+
 initramfs-tools (0.98.4) unstable; urgency=high
 
   * [bfb0742] reportbug: list force loaded modules.
