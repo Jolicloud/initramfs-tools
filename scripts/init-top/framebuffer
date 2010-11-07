@@ -93,6 +93,11 @@ else
 	[ -d /sys/class/drm/card0 ] || udevadm settle
 fi
 
+if [ ! -d /sys/class/graphics/fb0 ]; then
+	MODPROBE_OPTIONS=-q modprobe uvesafb
+	udevadm settle
+fi
+
 # Force fb mode via /sys interface
 for x in $(cat /proc/cmdline); do
 	case ${x} in
