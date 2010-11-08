@@ -1,3 +1,9 @@
+initramfs-tools (1:0.92bjolicloud9+l78) robby-lucid; urgency=low
+
+  * If KMS isn't available, load uvesafb as the framebuffer driver.
+
+ -- Adam McDaniel <adam@jolicloud.org>  Sun, 07 Nov 2010 15:15:57 +0100
+
 initramfs-tools (1:0.92bjolicloud8+l78) robby-lucid; urgency=low
 
   * Introduce lzop compression of initrd image, but only for kernels
