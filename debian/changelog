@@ -1,3 +1,10 @@
+initramfs-tools (1:0.92bjolicloud10+l78) robby-lucid; urgency=low
+
+  * Simplify the uswsusp resume text message in plymouth to just
+    "Resuming..."
+
+ -- Adam McDaniel <adam@jolicloud.org>  Tue, 30 Nov 2010 19:02:30 +0100
+
 initramfs-tools (1:0.92bjolicloud9+l78) robby-lucid; urgency=low
 
   * If KMS isn't available, load uvesafb as the framebuffer driver.
