@@ -62,7 +62,7 @@ SWAPTYPE=$(wait-for-root "${resume}" ${RESUMEDELAY:-5})
 case "${SWAPTYPE}" in
     swsuspend|s1suspend|s2suspend|ulsuspend|tuxonice)
 	if [ -x /bin/plymouth ] && plymouth --ping; then
-		plymouth message --text="Resuming from $resume"
+		plymouth message --text="Resuming..."
 	fi
 
 	# hardcode path, uswsusp ships an resume binary too
