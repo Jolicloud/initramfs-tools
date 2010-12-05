@@ -297,12 +297,16 @@ dep_add_modules()
 	# md root new naming scheme /dev/md/X
 	elif [ "${root#/dev/md/}" != "${root}" ]; then
 		root=${root#/dev/md/}
+		# strip partion number
+		root=${root%%p[0-9]*}
 		# drop the partition number only for sdX and hdX devices
 		# and keep it for other devices like loop#, dm-# devices
 		block=$(sed -ne 's/multipath/[/' -e 's/linear/[/' -e 's/raid[0-9][0-9]*/[/' -e 's/\([hs]d[a-z][a-z]*\)[0-9][0-9]*/\1/g' -e '/^md'$root' :/s/^[^[]*\[ \([^\[]*\)\[.*$/\1/p' </proc/mdstat)
 	# md root /dev/mdX
 	elif [ "${root#/dev/md}" != "${root}" ]; then
 		root=${root#/dev/md}
+		# strip partion number
+		root=${root%%p[0-9]*}
 		# drop the partition number only for sdX and hdX devices
 		# and keep it for other devices like loop#, dm-# devices
 		block=$(sed -ne 's/multipath/[/' -e 's/linear/[/' -e 's/raid[0-9][0-9]*/[/' -e 's/\([hs]d[a-z][a-z]*\)[0-9][0-9]*/\1/g' -e '/^md'$root' :/s/^[^[]*\[ \([^\[]*\)\[.*$/\1/p' </proc/mdstat)
