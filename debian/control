@@ -15,6 +15,7 @@ Depends: klibc-utils (>= 1.5.9-1), cpio, module-init-tools, udev (>= 0.086-1), f
 Suggests: bash-completion
 Provides: linux-initramfs-tool
 Conflicts: usplash (<< 0.5.50)
+Breaks: cryptsetup (<< 2:1.1.0-2.1)
 Description: tools for generating an initramfs
  This package contains tools to create and boot an initramfs for packaged 2.6
  Linux kernel. The initramfs is a gzipped cpio archive. At boot time, the
