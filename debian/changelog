@@ -1,3 +1,19 @@
+initramfs-tools (0.98.6) unstable; urgency=high
+
+  [ Milan Kupcevic ]
+  * [dd40f3a] initramfs-tools: Load PowerMac G5 thermal modules.
+    (Closes: #603981)
+
+  [ maximilian attems ]
+  * [c103d08] initramfs-tools: cryptsetup Lenny dist upgrade fix.
+    (Closes: #607090)
+
+  [ Ben Hutchings ]
+  * [1e46a47] Fix condition for adding IDE or SCSI disk driver when
+    MODULES=dep
+
+ -- maximilian attems <maks@debian.org>  Thu, 16 Dec 2010 14:45:29 +0100
+
 initramfs-tools (0.98.5) unstable; urgency=high
 
   [ maximilian attems ]
