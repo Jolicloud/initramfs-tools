@@ -338,6 +338,10 @@ dep_add_modules()
 		block="rd!c${root#/dev/rd/c}"
 		block=${block%%p[0-9]*}
 
+	# etherd device
+	elif [ "${root#/dev/etherd/}" != "${root}" ]; then
+		block=${root#/dev/etherd/*}
+		block="etherd!${block%p*}"
 	# classical root device
 	else
 		block=${root#/dev/}
