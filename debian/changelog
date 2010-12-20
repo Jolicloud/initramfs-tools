@@ -1,3 +1,14 @@
+initramfs-tools (0.98.7) unstable; urgency=high
+
+  [ Aad dame ]
+  * [1caecd2] initramfs-tools: Fix MODULES=dep on an AOE device.
+    (Closes: #607509)
+
+  [ maximilian attems ]
+  * [78337a4] MODULES=dep Fix partitioned raid setup (Closes: #605824)
+
+ -- maximilian attems <maks@debian.org>  Mon, 20 Dec 2010 12:56:01 +0100
+
 initramfs-tools (0.98.6) unstable; urgency=high
 
   [ Milan Kupcevic ]
