@@ -229,7 +229,7 @@ dep_add_modules()
 
 	# On failure fallback to /proc/mounts if readable
 	if [ -z "$root" ] && [ -r /proc/mounts ]; then
-		eval "$(awk '/\/dev\// {if ($2 == "/") {print "root=" $1 "\nFSTYPE=" $5; exit}}' /proc/mounts)"
+		eval "$(awk '!/^rootfs / {if ($2 == "/") {print "root=" $1 "\nFSTYPE=" $3; exit}}' /proc/mounts)"
 	fi
 
 	# recheck root device
