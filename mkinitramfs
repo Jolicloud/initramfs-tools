@@ -232,6 +232,9 @@ list)
 	;;
 esac
 
+# Resolve hidden dependencies
+hidden_dep_add_modules
+
 # Have to do each file, because cpio --dereference doesn't recurse down
 # symlinks.
 

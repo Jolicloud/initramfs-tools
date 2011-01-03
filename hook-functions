@@ -484,6 +484,20 @@ auto_add_modules()
 	esac
 }
 
+# 'depmod' only looks at symbol dependencies; there is no way for
+# modules to declare explicit dependencies through module information,
+# so dependencies on e.g. crypto providers are hidden.  Until this is
+# fixed, we need to handle those hidden dependencies.
+hidden_dep_add_modules()
+{
+	for dep in "lib/libcrc32c crc32c"; do
+		set -- $dep
+		if [ -f "${DESTDIR}/lib/modules/${version}/kernel/$1.ko" ]; then
+			manual_add_modules "$2"
+		fi
+	done
+}
+
 # mkinitramfs help message
 usage()
 {
