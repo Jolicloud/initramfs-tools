@@ -1,3 +1,18 @@
+initramfs-tools (0.98.8) unstable; urgency=high
+
+  [ maximilian attems ]
+  * [67c1d32] initramfs-tools: MODULES=dep fix for ubifs /
+    (Closes: #608339)
+  * [ca4d08a] mkinitramfs: Fix noexec /tmp detection for long device
+    names. (Closes: #608865) Thanks to Ian Campbell <ijc@hellion.org.uk>
+
+  [ Ben Hutchings ]
+  * [78d9e04] initramfs-tools: Handle hidden dependency of libcrc32c on
+    crc32c. (Closes: #608538)
+
+
+ -- maximilian attems <maks@debian.org>  Fri, 28 Jan 2011 15:11:10 +0100
+
 initramfs-tools (0.98.7) unstable; urgency=high
 
   [ Aad dame ]
