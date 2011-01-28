@@ -169,7 +169,7 @@ chmod 755 "${DESTDIR}"
 
 # do not execute cache_run_scripts() if mounted with noexec
 NOEXEC=""
-fs=$(df $DESTDIR | tail -1 | awk '{print $6}')
+fs=$(df -P $DESTDIR | tail -1 | awk '{print $6}')
 if [ -n "$fs" ] && mount | grep -q "on $fs .*noexec" ; then
 	NOEXEC=1
 fi
