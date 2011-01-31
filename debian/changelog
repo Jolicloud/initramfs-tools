@@ -1,3 +1,17 @@
+initramfs-tools (1:0.92bjolicloud11+l78) robby-1.2; urgency=low
+
+  * Revert "If KMS isn't available, load uvesafb as the framebuffer
+    driver."
+
+    This is due to regressions of uvesafb severely complicating nvidia/nouveau
+    fallback. Unfortunately, removing uvesafb complicates other non-KMS devices
+    causing plymouth to fall back to a text-based bootup. A more intellegent
+    method of juggling uvesafb/nouveau/non-KMS will soon be required.
+
+    This reverts commit 4035d0ac717bc7ab4ab2cbce3ccbfb01ca5a8683.
+
+ -- Adam McDaniel <adam@jolicloud.org>  Mon, 31 Jan 2011 09:16:27 -0700
+
 initramfs-tools (1:0.92bjolicloud10+l78) robby-lucid; urgency=low
 
   * Simplify the uswsusp resume text message in plymouth to just
