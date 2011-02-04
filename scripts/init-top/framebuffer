@@ -93,6 +93,38 @@ else
 	[ -d /sys/class/drm/card0 ] || udevadm settle
 fi
 
+detect_nvidia_legacy_71 () {
+	device=$(lspci -m -n | grep '"0300" "10de"' | cut -d' ' -f 4)
+	case $device in
+		'"002[089cd]"')
+			return 0
+			;;
+		'"00a0"')
+			return 0
+			;;
+		'"010[013]"')
+			return 0
+			;;
+		'"015[0123]"')
+			return 0
+			;;
+		*)
+			return 1;
+	esac
+}
+
+if [ ! -d /sys/class/graphics/fb0 ]; then
+	# Force load nouveau if nvidia-legacy-71 hardware detected. All other
+	# nvidia-legacy, nvidia-current, and non-KMS video cards should use
+	# uvesafb.
+	if detect_nvidia_legacy_71; then
+		MODPROBE_OPTIONS=-q modprobe nouveau
+	else
+		MODPROBE_OPTIONS=-q modprobe uvesafb
+	fi
+	udevadm settle
+fi
+
 # Force fb mode via /sys interface
 for x in $(cat /proc/cmdline); do
 	case ${x} in
