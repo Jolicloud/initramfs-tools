@@ -25,6 +25,11 @@ manual_add_modules fbcon
 manual_add_modules vesafb
 manual_add_modules vga16fb
 
+# Programs used for detecting nvidia-legacy-71 hardware during framebuffer init
+copy_exec /usr/bin/lspci /bin
+copy_exec /usr/bin/cut /bin
+copy_exec /bin/grep /bin
+
 for x in ${MODULESDIR}/initrd/*; do
 	x=${x##*/}
 	x=${x%.*}
