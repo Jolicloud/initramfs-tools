@@ -1,3 +1,12 @@
+initramfs-tools (1:0.92bjolicloud12+l78) robby-1.2; urgency=low
+
+  * Add logic to avoid uvesafb on nvidia-legacy-71, otherwise load it
+    normally for all non-KMS devices.
+  * Add support programs used for detecting nvidia-legacy-71 hardware
+    during framebuffer init
+
+ -- Adam McDaniel <adam@jolicloud.org>  Fri, 04 Feb 2011 17:23:16 +0100
+
 initramfs-tools (1:0.92bjolicloud11+l78) robby-1.2; urgency=low
 
   * Revert "If KMS isn't available, load uvesafb as the framebuffer
