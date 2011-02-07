@@ -1,3 +1,9 @@
+initramfs-tools (1:0.92bjolicloud13+l78) robby-1.2; urgency=low
+
+  * Corrected the syntax in the nvidia-legacy-71 detector function.
+
+ -- Adam McDaniel <adam@jolicloud.org>  Mon, 07 Feb 2011 14:00:33 +0100
+
 initramfs-tools (1:0.92bjolicloud12+l78) robby-1.2; urgency=low
 
   * Add logic to avoid uvesafb on nvidia-legacy-71, otherwise load it
