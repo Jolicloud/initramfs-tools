@@ -6,8 +6,10 @@ Maintainer: Ubuntu Kernel Team <kernel-team@lists.ubuntu.com>
 XSBC-Original-Maintainer: Debian kernel team <debian-kernel@lists.debian.org>
 Build-Depends: debhelper (>= 4.0.0), cdbs, pkg-config, libudev-dev
 Standards-Version: 3.7.3
-Vcs-Browser: http://git.debian.org/?p=kernel/initramfs-tools.git
-Vcs-Git: git://git.debian.org/git/kernel/initramfs-tools.git
+XS-Debian-Vcs-Browser: http://git.debian.org/?p=kernel/initramfs-tools.git
+XS-Debian-Vcs-Git: git://git.debian.org/git/kernel/initramfs-tools.git
+Vcs-Browser: https://github.com/jolicloud/initramfs-tools
+Vcs-Git: git://github.com/jolicloud/initramfs-tools.git
 
 Package: initramfs-tools
 Architecture: all
